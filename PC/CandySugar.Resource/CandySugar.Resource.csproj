@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\img1.png" />
+    <None Remove="Assets\img2.png" />
+    <None Remove="Assets\img3.png" />
+    <None Remove="Assets\img4.png" />
+    <None Remove="Assets\img5.png" />
+    <None Remove="Assets\站酷快乐体2016修订版.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\img1.png" />
+    <Resource Include="Assets\img2.png" />
+    <Resource Include="Assets\img3.png" />
+    <Resource Include="Assets\img4.png" />
+    <Resource Include="Assets\img5.png" />
+    <Resource Include="Assets\站酷快乐体2016修订版.ttf" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HandyControls" Version="3.3.10" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.5.0-ci168" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CandySugar.Resource\CandySugar.Resource.csproj" />
+  </ItemGroup>
+
+</Project>

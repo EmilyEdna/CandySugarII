@@ -1,0 +1,3 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ImageSource x:Key="i5">/CandySugar.Resource;component/Assets/img5.png</ImageSource>
+</ResourceDictionary>

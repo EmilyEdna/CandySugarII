@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="SugarThemePink">#FFFF9999</SolidColorBrush>
+    <SolidColorBrush x:Key="SugarThemeBlue">#FF10AEC2</SolidColorBrush>
+    <SolidColorBrush x:Key="SugarThemeWhite">#FFFFFFFF</SolidColorBrush>
+    <SolidColorBrush x:Key="SugarThemeGreen">#FF2CCFA0</SolidColorBrush>
+    <SolidColorBrush x:Key="SugarThemeRed">#FFED556A</SolidColorBrush>
+    <SolidColorBrush x:Key="SugarThemeOrange">#FFFDBB53</SolidColorBrush>
+    <SolidColorBrush x:Key="SugarThemeBlack">#FF000000</SolidColorBrush>
+</ResourceDictionary>
