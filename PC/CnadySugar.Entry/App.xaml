@@ -14,14 +14,12 @@
             <s:ApplicationLoader.MergedDictionaries>
                 <hc:ThemeResources />
                 <hc:Theme />
-                <ResourceDictionary Source="/CandySugar.Resource;component/Styles/Asset.xaml" />
-
+                <ResourceDictionary Source="/CandySugar.Resource;component/MergedStyle.xaml" />
+                <ResourceDictionary Source="CandyStyle.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
-
-                <ResourceDictionary Source="/CandySugar.Resource;component/Styles/LightTheme.xaml" />
             </s:ApplicationLoader.MergedDictionaries>
         </s:ApplicationLoader>
     </Application.Resources>
