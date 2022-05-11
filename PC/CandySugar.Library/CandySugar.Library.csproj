@@ -16,4 +16,8 @@
     <ProjectReference Include="..\CandySugar.Resource\CandySugar.Resource.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Converters\" />
+  </ItemGroup>
+
 </Project>

@@ -24,4 +24,19 @@
     <Resource Include="Assets\站酷快乐体2016修订版.ttf" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Properties\CandySoft.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CandySoft.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\CandySoft.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>CandySoft.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
 </Project>

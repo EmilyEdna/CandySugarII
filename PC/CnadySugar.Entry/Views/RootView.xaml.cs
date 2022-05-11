@@ -7,8 +7,8 @@ namespace CnadySugar.Entry.Views
 {
     public partial class RootView : CandyWindow
     {
-        public RootView()
-        {
+        public RootView():base()
+        {          
             InitializeComponent();
         }
 

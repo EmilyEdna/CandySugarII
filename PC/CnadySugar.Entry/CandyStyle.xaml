@@ -10,5 +10,27 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="ResizeMode" Value="NoResize" />
         <Setter Property="FontFamily" Value="{StaticResource FontStyle}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="lib:CandyWindow">
+                    <Grid>
+                        <Grid.Clip>
+                            <RectangleGeometry
+                                RadiusX="15"
+                                RadiusY="15"
+                                Rect="{x:Static lib:StaticResource.RectProperty}" />
+                        </Grid.Clip>
+                        <Image Source="{StaticResource SugarThemeBG}" Stretch="Fill">
+                            <Image.Effect>
+                                <BlurEffect KernelType="Gaussian" Radius="60" />
+                            </Image.Effect>
+                        </Image>
+                        <Canvas>
+                            <ContentPresenter />
+                        </Canvas>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>

@@ -8,9 +8,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sugar="http://ctrl.sugar.com"
     xmlns:viewModels="clr-namespace:CnadySugar.Entry.ViewModels"
+    x:Name="window"
     d:DataContext="{d:DesignInstance Type=viewModels:RootViewModel}"
     Style="{StaticResource window}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <sugar:CandyHeadTemplate VerticalAlignment="Top" MouseMove="CandyHeadTemplate_MouseMove" />
+    <sugar:CandyHeadTemplate
+        Width="{Binding Width, ElementName=window}"
+        VerticalAlignment="Top"
+        MouseMove="CandyHeadTemplate_MouseMove" />
 </lib:CandyWindow>
