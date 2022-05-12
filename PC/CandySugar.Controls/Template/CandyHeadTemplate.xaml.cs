@@ -1,4 +1,5 @@
-﻿using CandySugar.Library.Template;
+﻿using CandySugar.Library;
+using CandySugar.Library.Template;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,19 @@ namespace CandySugar.Controls.Template
         public CandyHeadTemplate()
         {
             InitializeComponent();
+
+        }
+
+        private void ToggleButton_Checked(object sender, RoutedEventArgs e)
+        {
+            this.ThemeName.Text = "Dark";
+            StaticResource.ThemeChange("Light", "Dark");
+        }
+
+        private void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            this.ThemeName.Text = "Light";
+            StaticResource.ThemeChange("Dark", "Light");
         }
     }
 }

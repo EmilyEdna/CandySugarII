@@ -22,8 +22,8 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.05*" />
-                    <ColumnDefinition Width="0.2*" />
-                    <ColumnDefinition Width="0.6*" />
+                    <ColumnDefinition Width="0.7*" />
+                    <ColumnDefinition Width="0.1*" />
                     <ColumnDefinition Width="0.12*" />
                 </Grid.ColumnDefinitions>
                 <Image
@@ -33,7 +33,7 @@
                     SnapsToDevicePixels="True"
                     Source="{StaticResource i5}"
                     Stretch="Uniform" />
-                <Menu Grid.Column="1">
+                <Menu Grid.Column="1" Background="{DynamicResource SugarThemePink}">
                     <MenuItem
                         Height="30"
                         HorizontalAlignment="Center"
@@ -50,6 +50,29 @@
                         </MenuItem>
                     </MenuItem>
                 </Menu>
+                <WrapPanel
+                    Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                    <ToggleButton
+                        Background="{DynamicResource SugarThemeBlue}"
+                        Checked="ToggleButton_Checked"
+                        Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                        Unchecked="ToggleButton_Unchecked">
+                        <md:ToggleButtonAssist.SwitchTrackOnBackground>
+                            <SolidColorBrush Color="Black" />
+                        </md:ToggleButtonAssist.SwitchTrackOnBackground>
+                        <md:ToggleButtonAssist.SwitchTrackOffBackground>
+                            <SolidColorBrush Color="LightCyan" />
+                        </md:ToggleButtonAssist.SwitchTrackOffBackground>
+                    </ToggleButton>
+                    <TextBlock
+                        x:Name="ThemeName"
+                        Margin="0,2,0,0"
+                        Foreground="{DynamicResource SugarThemeWhite}"
+                        Text="Light" />
+                </WrapPanel>
                 <UniformGrid
                     Grid.Column="3"
                     Width="90"
