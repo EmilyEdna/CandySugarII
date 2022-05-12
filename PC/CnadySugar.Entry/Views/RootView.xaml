@@ -6,15 +6,22 @@
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:lib="http://lib.sugar.com"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:sugar="http://ctrl.sugar.com"
     xmlns:viewModels="clr-namespace:CnadySugar.Entry.ViewModels"
     x:Name="window"
     d:DataContext="{d:DesignInstance Type=viewModels:RootViewModel}"
-    Style="{StaticResource window}"
+    Style="{StaticResource CandyWindow}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <sugar:CandyHeadTemplate
-        Width="{Binding Width, ElementName=window}"
-        VerticalAlignment="Top"
-        MouseMove="CandyHeadTemplate_MouseMove" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <sugar:CandyHeadTemplate
+            Width="{Binding Width, ElementName=window}"
+            VerticalAlignment="Top"
+            MouseMove="CandyHeadTemplate_MouseMove" />
+    </Grid>
 </lib:CandyWindow>
