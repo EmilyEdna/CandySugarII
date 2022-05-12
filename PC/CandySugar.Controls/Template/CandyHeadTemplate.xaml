@@ -13,7 +13,6 @@
     mc:Ignorable="d">
     <Grid>
         <md:ColorZone
-            x:Name="Border"
             Height="30"
             VerticalAlignment="Top"
             Background="{DynamicResource SugarThemePink}"
@@ -24,7 +23,7 @@
                     <ColumnDefinition Width="0.05*" />
                     <ColumnDefinition Width="0.7*" />
                     <ColumnDefinition Width="0.1*" />
-                    <ColumnDefinition Width="0.12*" />
+                    <ColumnDefinition Width="0.07*" />
                 </Grid.ColumnDefinitions>
                 <Image
                     Width="25"
@@ -75,16 +74,17 @@
                 </WrapPanel>
                 <UniformGrid
                     Grid.Column="3"
-                    Width="90"
+                    Width="60"
                     Margin="0,0,10,0"
                     HorizontalAlignment="Right"
-                    Columns="3">
+                    Columns="2">
                     <Button
                         Width="25"
                         Height="25"
                         md:ShadowAssist.ShadowDepth="Depth2"
-                        Background="{Binding Background, ElementName=Border}"
+                        Background="{DynamicResource SugarThemePink}"
                         BorderBrush="Transparent"
+                        Click="MineSize_Clicked"
                         Foreground="{DynamicResource SugarThemeWhite}"
                         Style="{DynamicResource MaterialDesignFloatingActionMiniButton}">
                         <md:PackIcon
@@ -96,21 +96,9 @@
                         Width="25"
                         Height="25"
                         md:ShadowAssist.ShadowDepth="Depth2"
-                        Background="{Binding Background, ElementName=Border}"
+                        Background="{DynamicResource SugarThemePink}"
                         BorderBrush="Transparent"
-                        Foreground="{DynamicResource SugarThemeWhite}"
-                        Style="{DynamicResource MaterialDesignFloatingActionMiniButton}">
-                        <md:PackIcon
-                            Width="15"
-                            Height="15"
-                            Kind="ArrowExpand" />
-                    </Button>
-                    <Button
-                        Width="25"
-                        Height="25"
-                        md:ShadowAssist.ShadowDepth="Depth2"
-                        Background="{Binding Background, ElementName=Border}"
-                        BorderBrush="Transparent"
+                        Click="Close_Clicked"
                         Foreground="{DynamicResource SugarThemeWhite}"
                         Style="{DynamicResource MaterialDesignFloatingActionMiniButton}">
                         <md:PackIcon

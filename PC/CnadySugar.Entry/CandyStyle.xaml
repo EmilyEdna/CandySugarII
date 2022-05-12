@@ -273,7 +273,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="lib:CandyWindow">
-                    <Grid Opacity=".8">
+                    <Grid>
                         <Grid.Clip>
                             <RectangleGeometry
                                 RadiusX="15"

@@ -1,5 +1,6 @@
 ﻿using CandySugar.Library;
 using CandySugar.Library.Template;
+using CandySugar.Resource.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,17 @@ namespace CandySugar.Controls.Template
         {
             this.ThemeName.Text = "Light";
             StaticResource.ThemeChange("Dark", "Light");
+        }
+
+        private void MineSize_Clicked(object sender, RoutedEventArgs e)
+        {
+            Window.GetWindow(this).Visibility = Visibility.Collapsed;
+        }
+
+        private void Close_Clicked(object sender, RoutedEventArgs e)
+        {
+            var parentWindow = Window.GetWindow(this);
+            parentWindow.Close();
         }
     }
 }
