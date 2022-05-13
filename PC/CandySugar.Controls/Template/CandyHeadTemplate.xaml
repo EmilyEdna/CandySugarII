@@ -25,13 +25,13 @@
                     <ColumnDefinition Width="0.1*" />
                     <ColumnDefinition Width="0.08*" />
                 </Grid.ColumnDefinitions>
-                <!--<Image
+                <Image
                     Width="25"
                     Height="25"
                     RenderOptions.BitmapScalingMode="LowQuality"
                     SnapsToDevicePixels="True"
                     Source="{StaticResource i5}"
-                    Stretch="Uniform" />-->
+                    Stretch="Uniform" />
                 <Menu Grid.Column="1" Background="{DynamicResource SugarThemeDefault}">
                     <MenuItem
                         Height="30"

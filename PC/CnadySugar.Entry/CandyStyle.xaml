@@ -283,14 +283,44 @@
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch"
                             Source="{DynamicResource SugarThemeBG}"
-                            Stretch="Fill">
+                            Stretch="UniformToFill">
                             <Image.Effect>
-                                <BlurEffect KernelType="Gaussian" Radius="0" />
+                                <BlurEffect KernelType="Gaussian" Radius="20" />
                             </Image.Effect>
                         </Image>
                         <Canvas>
                             <ContentPresenter />
                         </Canvas>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="CandyLoginWindow" TargetType="lib:CandyWindow">
+        <Setter Property="AllowsTransparency" Value="True" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="WindowStyle" Value="None" />
+        <Setter Property="WindowState" Value="Normal" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="ResizeMode" Value="NoResize" />
+        <Setter Property="FontFamily" Value="{DynamicResource FontStyle}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="lib:CandyWindow">
+                    <Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                        <Grid.Background>
+                            <SolidColorBrush Opacity=".62" Color="White" />
+                        </Grid.Background>
+                        <Grid.Clip>
+                            <RectangleGeometry
+                                RadiusX="15"
+                                RadiusY="15"
+                                Rect="0,0,400,300" />
+                        </Grid.Clip>
+                        <Grid>
+                            <ContentPresenter />
+                        </Grid>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
