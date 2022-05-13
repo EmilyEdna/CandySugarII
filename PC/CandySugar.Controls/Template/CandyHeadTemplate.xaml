@@ -21,9 +21,9 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.05*" />
-                    <ColumnDefinition Width="0.7*" />
+                    <ColumnDefinition Width="0.6*" />
                     <ColumnDefinition Width="0.1*" />
-                    <ColumnDefinition Width="0.07*" />
+                    <ColumnDefinition Width="0.08*" />
                 </Grid.ColumnDefinitions>
                 <Image
                     Width="25"
@@ -74,10 +74,10 @@
                 </WrapPanel>
                 <UniformGrid
                     Grid.Column="3"
-                    Width="60"
+                    Width="90"
                     Margin="0,0,10,0"
                     HorizontalAlignment="Right"
-                    Columns="2">
+                    Columns="3">
                     <Button
                         Width="25"
                         Height="25"
@@ -91,6 +91,20 @@
                             Width="15"
                             Height="15"
                             Kind="ArrowCollapse" />
+                    </Button>
+                    <Button
+                        Width="25"
+                        Height="25"
+                        md:ShadowAssist.ShadowDepth="Depth2"
+                        Background="{DynamicResource SugarThemePink}"
+                        BorderBrush="Transparent"
+                        Click="MaxSize_Clicked"
+                        Foreground="{DynamicResource SugarThemeWhite}"
+                        Style="{DynamicResource MaterialDesignFloatingActionMiniButton}">
+                        <md:PackIcon
+                            Width="15"
+                            Height="15"
+                            Kind="ArrowExpand" />
                     </Button>
                     <Button
                         Width="25"

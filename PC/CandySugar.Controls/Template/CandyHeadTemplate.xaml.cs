@@ -51,5 +51,10 @@ namespace CandySugar.Controls.Template
             var parentWindow = Window.GetWindow(this);
             parentWindow.Close();
         }
+
+        private void MaxSize_Clicked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

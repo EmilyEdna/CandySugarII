@@ -17,6 +17,5 @@ namespace CandySugar.Library.Template
             this.Width = CandySoft.Default.ScreenWidth;
             this.Height = CandySoft.Default.ScreenHeight;
         }
-
     }
 }

@@ -11,6 +11,7 @@
     xmlns:viewModels="clr-namespace:CnadySugar.Entry.ViewModels"
     x:Name="window"
     d:DataContext="{d:DesignInstance Type=viewModels:RootViewModel}"
+    Loaded="CandyWindow_Loaded"
     Style="{StaticResource CandyWindow}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">

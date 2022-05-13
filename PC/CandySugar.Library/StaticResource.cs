@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 
 namespace CandySugar.Library
 {
     public class StaticResource
     {
-        public static Rect RectProperty = new Rect(0, 0, CandySoft.Default.ScreenWidth, CandySoft.Default.ScreenHeight);
 
         public static void ThemeChange(string Orginal, string Target)
         {
@@ -20,6 +20,41 @@ namespace CandySugar.Library
             var Index = AppResources.IndexOf(OrginalTheme);
             Resource.Source = new Uri($"pack://application:,,,/CandySugar.Resource;component/Styles/{Target}Theme.xaml");
             AppResources[Index] = Resource;
+        }
+
+        public static List<T> FindVisualChild<T>(DependencyObject obj) where T : DependencyObject
+        {
+            try
+            {
+                List<T> TList = new List<T> { };
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+                {
+                    DependencyObject child = VisualTreeHelper.GetChild(obj, i);
+                    if (child != null && child is T)
+                    {
+                        TList.Add((T)child);
+                        List<T> childOfChildren = FindVisualChild<T>(child);
+                        if (childOfChildren != null)
+                        {
+                            TList.AddRange(childOfChildren);
+                        }
+                    }
+                    else
+                    {
+                        List<T> childOfChildren = FindVisualChild<T>(child);
+                        if (childOfChildren != null)
+                        {
+                            TList.AddRange(childOfChildren);
+                        }
+                    }
+                }
+                return TList;
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message);
+                return null;
+            }
         }
     }
 }
