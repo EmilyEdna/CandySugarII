@@ -4,6 +4,7 @@ using CandySugar.Resource.Properties;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace CnadySugar.Entry.Views
 {
@@ -25,6 +26,12 @@ namespace CnadySugar.Entry.Views
         private void CandyWindow_Loaded(object sender, RoutedEventArgs e)
         {
             StaticResource.GridClipContent(this, CandySoft.Default.ScreenWidth, CandySoft.Default.ScreenHeight);
+        }
+
+        private void CandyWindow_StateChanged(object sender, System.EventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized) StarAnime("Max");
+            else StarAnime("Min");
         }
     }
 }

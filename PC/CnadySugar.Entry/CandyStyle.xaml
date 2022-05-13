@@ -273,10 +273,19 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="lib:CandyWindow">
-                    <Grid x:Name="GridContent">
-                        <Image Source="{DynamicResource SugarThemeBG}" Stretch="Fill">
+                    <Grid
+                        x:Name="GridContent"
+                        Width="{TemplateBinding Width}"
+                        Height="{TemplateBinding Height}"
+                        MaxWidth="{TemplateBinding MaxWidth}"
+                        MaxHeight="{TemplateBinding MaxHeight}">
+                        <Image
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Source="{DynamicResource SugarThemeBG}"
+                            Stretch="Fill">
                             <Image.Effect>
-                                <BlurEffect KernelType="Gaussian" Radius="50" />
+                                <BlurEffect KernelType="Gaussian" Radius="0" />
                             </Image.Effect>
                         </Image>
                         <Canvas>
@@ -287,5 +296,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-
 </ResourceDictionary>

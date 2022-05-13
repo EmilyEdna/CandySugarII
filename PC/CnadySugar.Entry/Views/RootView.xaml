@@ -7,21 +7,55 @@
     xmlns:lib="http://lib.sugar.com"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:res="http://res.sugar.com"
     xmlns:sugar="http://ctrl.sugar.com"
     xmlns:viewModels="clr-namespace:CnadySugar.Entry.ViewModels"
     x:Name="window"
     d:DataContext="{d:DesignInstance Type=viewModels:RootViewModel}"
     Loaded="CandyWindow_Loaded"
+    StateChanged="CandyWindow_StateChanged"
     Style="{StaticResource CandyWindow}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
+    <lib:CandyWindow.Resources>
+        <Storyboard x:Key="Max">
+            <DoubleAnimation
+                Storyboard.TargetName="window"
+                Storyboard.TargetProperty="Height"
+                From="{Binding ScreenHeight, ElementName=window}"
+                To="{Binding MaxHeight, Source={x:Static res:CandySoft.Default}}"
+                Duration="0:0:0.8" />
+            <DoubleAnimation
+                Storyboard.TargetName="window"
+                Storyboard.TargetProperty="Width"
+                From="{Binding ScreenWidth, ElementName=window}"
+                To="{Binding MaxWidth, Source={x:Static res:CandySoft.Default}}"
+                Duration="0:0:0.8" />
+        </Storyboard>
+        <Storyboard x:Key="Min">
+            <DoubleAnimation
+                Storyboard.TargetName="window"
+                Storyboard.TargetProperty="Height"
+                From="{Binding MaxHeight, ElementName=window}"
+                To="{Binding ScreenHeight, Source={x:Static res:CandySoft.Default}}"
+                Duration="0:0:0.8" />
+            <DoubleAnimation
+                Storyboard.TargetName="window"
+                Storyboard.TargetProperty="Width"
+                From="{Binding MaxWidth, ElementName=window}"
+                To="{Binding ScreenWidth, Source={x:Static res:CandySoft.Default}}"
+                Duration="0:0:0.8" />
+        </Storyboard>
+    </lib:CandyWindow.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.1*" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <sugar:CandyHeadTemplate
+            x:Name="Head"
             Width="{Binding Width, ElementName=window}"
+            MaxWidth="{Binding MaxWidth, ElementName=window}"
             VerticalAlignment="Top"
             MouseMove="CandyHeadTemplate_MouseMove" />
     </Grid>

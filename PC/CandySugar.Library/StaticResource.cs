@@ -26,14 +26,14 @@ namespace CandySugar.Library
         /// <summary>
         /// 主题切换
         /// </summary>
-        /// <param name="Orginal"></param>
+        /// <param name="Original"></param>
         /// <param name="Target"></param>
-        public static void ThemeChange(string Orginal, string Target)
+        public static void ThemeChange(string Original, string Target)
         {
             var AppResources = Application.Current.Resources.MergedDictionaries;
             ResourceDictionary Resource = new ResourceDictionary();
-            var OrginalTheme = AppResources.FirstOrDefault(t => t.Source != null && t.Source.ToString().Contains($"{Orginal}Theme.xaml"));
-            var Index = AppResources.IndexOf(OrginalTheme);
+            var OriginalTheme = AppResources.FirstOrDefault(t => t.Source != null && t.Source.ToString().Contains($"{Original}Theme.xaml"));
+            var Index = AppResources.IndexOf(OriginalTheme);
             Resource.Source = new Uri($"pack://application:,,,/CandySugar.Resource;component/Styles/{Target}Theme.xaml");
             AppResources[Index] = Resource;
         }

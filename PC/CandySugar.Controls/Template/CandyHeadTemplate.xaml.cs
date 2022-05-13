@@ -1,20 +1,7 @@
 ﻿using CandySugar.Library;
 using CandySugar.Library.Template;
 using CandySugar.Resource.Properties;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CandySugar.Controls.Template
 {
@@ -55,23 +42,14 @@ namespace CandySugar.Controls.Template
         private void MaxSize_Clicked(object sender, RoutedEventArgs e)
         {
             var parentWindow = Window.GetWindow(this);
-
             if (parentWindow.WindowState == WindowState.Normal)
             {
                 parentWindow.WindowState = WindowState.Maximized;
-                parentWindow.Width = SystemParameters.PrimaryScreenWidth;
-                parentWindow.Height = SystemParameters.PrimaryScreenHeight;
-                CandySoft.Default.ScreenWidth = SystemParameters.PrimaryScreenWidth;
-                CandySoft.Default.ScreenHeight = SystemParameters.PrimaryScreenHeight;
                 StaticResource.GridClipContent(parentWindow, SystemParameters.PrimaryScreenWidth, SystemParameters.PrimaryScreenHeight);
             }
             else
             {
                 parentWindow.WindowState = WindowState.Normal;
-                CandySoft.Default.ScreenWidth = (SystemParameters.PrimaryScreenWidth / 10) * 6;
-                CandySoft.Default.ScreenHeight = (SystemParameters.PrimaryScreenHeight / 10) * 7;
-                parentWindow.Width = CandySoft.Default.ScreenWidth;
-                parentWindow.Height = CandySoft.Default.ScreenHeight;
                 StaticResource.GridClipContent(parentWindow, CandySoft.Default.ScreenWidth, CandySoft.Default.ScreenHeight);
             }
         }
