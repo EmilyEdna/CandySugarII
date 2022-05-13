@@ -153,7 +153,7 @@
                             PopupAnimation="Slide">
                             <Border
                                 x:Name="SubMenuBorder"
-                                Background="{DynamicResource SugarThemePink}"
+                                Background="{DynamicResource SugarThemeDefault}"
                                 CornerRadius="0"
                                 Effect="{DynamicResource MaterialDesignShadowDepth1}">
                                 <Border Background="{TemplateBinding Background}" CornerRadius="0">
@@ -274,9 +274,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="lib:CandyWindow">
                     <Grid x:Name="GridContent">
-                        <Image Source="{StaticResource SugarThemeBG}" Stretch="Fill">
+                        <Image Source="{DynamicResource SugarThemeBG}" Stretch="Fill">
                             <Image.Effect>
-                                <BlurEffect KernelType="Gaussian" Radius="60" />
+                                <BlurEffect KernelType="Gaussian" Radius="50" />
                             </Image.Effect>
                         </Image>
                         <Canvas>

@@ -6,5 +6,6 @@
     <SolidColorBrush x:Key="SugarThemeGreen">#FF2CCFA0</SolidColorBrush>
     <SolidColorBrush x:Key="SugarThemeRed">#FFED556A</SolidColorBrush>
     <SolidColorBrush x:Key="SugarThemeOrange">#FFFDBB53</SolidColorBrush>
-    <SolidColorBrush x:Key="SugarThemeDefault">#FF000000</SolidColorBrush>
+    <SolidColorBrush x:Key="SugarThemeBlack">#FF000000</SolidColorBrush>
+    <SolidColorBrush x:Key="SugarThemeDefault">#FFFF9999</SolidColorBrush>
 </ResourceDictionary>
