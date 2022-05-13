@@ -5,13 +5,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace CandySugar.Library
 {
     public class StaticResource
     {
-
+        /// <summary>
+        /// 设置窗体动态图形
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        public static void GridClipContent(Window window, double width, double height)
+        {
+            var GridContent = (Grid)window.Template.FindName("GridContent", window);
+            GridContent.Clip = new RectangleGeometry(new Rect(0, 0, width, height), 15, 15);
+        }
+        /// <summary>
+        /// 主题切换
+        /// </summary>
+        /// <param name="Orginal"></param>
+        /// <param name="Target"></param>
         public static void ThemeChange(string Orginal, string Target)
         {
             var AppResources = Application.Current.Resources.MergedDictionaries;
@@ -21,7 +37,12 @@ namespace CandySugar.Library
             Resource.Source = new Uri($"pack://application:,,,/CandySugar.Resource;component/Styles/{Target}Theme.xaml");
             AppResources[Index] = Resource;
         }
-
+        /// <summary>
+        /// 查找子控件
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public static List<T> FindVisualChild<T>(DependencyObject obj) where T : DependencyObject
         {
             try

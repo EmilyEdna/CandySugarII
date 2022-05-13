@@ -24,8 +24,7 @@ namespace CnadySugar.Entry.Views
 
         private void CandyWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            var GridContent = (Grid)this.Template.FindName("GridContent", this);
-            GridContent.Clip = new RectangleGeometry(new Rect(0, 0, CandySoft.Default.ScreenWidth, CandySoft.Default.ScreenHeight), 15, 15);
+            StaticResource.GridClipContent(this, CandySoft.Default.ScreenWidth, CandySoft.Default.ScreenHeight);
         }
     }
 }
