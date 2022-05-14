@@ -10,14 +10,15 @@ using System.Windows;
 
 namespace CnadySugar.Entry.ViewModels
 {
-    public class LoginViewModel: PropertyChangedBase
+    public class LoginViewModel : PropertyChangedBase
     {
         public IContainer Container;
-        public LoginViewModel(IContainer Container)
+        public IWindowManager WindowManager;
+        public LoginViewModel(IContainer Container, IWindowManager WindowManager)
         {
+            this.WindowManager = WindowManager;
             this.Container = Container;
         }
-
 
         private string _Account;
         public string Account
@@ -33,10 +34,10 @@ namespace CnadySugar.Entry.ViewModels
             set => SetAndNotify(ref _PassWord, value);
         }
 
-        public  void LoginAction()
+        public void LoginAction()
         {
-
-
+            WindowManager.ShowWindow(Container.Get<RootViewModel>());
+            Application.Current.MainWindow.Close();
         }
     }
 }

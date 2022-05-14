@@ -56,15 +56,8 @@
                 RadiusX="10"
                 RadiusY="10">
                 <Rectangle.Fill>
-                    <SolidColorBrush Opacity="0.5" Color="SkyBlue" />
+                    <SolidColorBrush Opacity="0.5" Color="Khaki" />
                 </Rectangle.Fill>
-                <Rectangle.Effect>
-                    <DropShadowEffect
-                        BlurRadius="15"
-                        Opacity="0.5"
-                        ShadowDepth="10"
-                        Color="Beige" />
-                </Rectangle.Effect>
             </Rectangle>
             <lib:CandyTextBox
                 Canvas.Left="100"
@@ -90,7 +83,7 @@
                 Canvas.Left="100"
                 Canvas.Top="160"
                 Width="200"
-                Background="CadetBlue"
+                Background="DeepSkyBlue"
                 BorderThickness="0"
                 Command="{s:Action LoginAction}"
                 Content="登录"

@@ -2,6 +2,7 @@
 using CandySugar.Library.Template;
 using CandySugar.Resource.Properties;
 using System.Windows;
+using System.Windows.Media.Animation;
 
 namespace CandySugar.Controls.Template
 {
@@ -36,7 +37,12 @@ namespace CandySugar.Controls.Template
         private void Close_Clicked(object sender, RoutedEventArgs e)
         {
             var parentWindow = Window.GetWindow(this);
-            parentWindow.Close();
+            Storyboard story = ((Storyboard)parentWindow.FindResource("Hidden"));
+            if (story != null)
+            {
+                story.Completed += delegate { parentWindow.Close(); };
+                story.Begin(parentWindow);
+            };
         }
 
         private void MaxSize_Clicked(object sender, RoutedEventArgs e)

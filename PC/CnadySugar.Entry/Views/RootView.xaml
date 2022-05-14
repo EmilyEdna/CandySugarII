@@ -22,14 +22,14 @@
             <DoubleAnimation
                 Storyboard.TargetName="window"
                 Storyboard.TargetProperty="Height"
-                From="{Binding ScreenHeight, ElementName=window}"
-                To="{Binding MaxHeight, Source={x:Static res:CandySoft.Default}}"
+                From="{Binding ScreenHeight, Source={x:Static res:CandySoft.Default}}"
+                To="{Binding MaxHeight, ElementName=window}"
                 Duration="0:0:0.8" />
             <DoubleAnimation
                 Storyboard.TargetName="window"
                 Storyboard.TargetProperty="Width"
-                From="{Binding ScreenWidth, ElementName=window}"
-                To="{Binding MaxWidth, Source={x:Static res:CandySoft.Default}}"
+                From="{Binding ScreenWidth, Source={x:Static res:CandySoft.Default}}"
+                To="{Binding MaxWidth, ElementName=window}"
                 Duration="0:0:0.8" />
         </Storyboard>
         <Storyboard x:Key="Min">
@@ -46,7 +46,24 @@
                 To="{Binding ScreenWidth, Source={x:Static res:CandySoft.Default}}"
                 Duration="0:0:0.8" />
         </Storyboard>
+        <Storyboard x:Key="Show">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="window" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="Hidden">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="window" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
     </lib:CandyWindow.Resources>
+    <lib:CandyWindow.Triggers>
+        <EventTrigger RoutedEvent="Loaded">
+            <BeginStoryboard Storyboard="{StaticResource Show}" />
+        </EventTrigger>
+    </lib:CandyWindow.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.1*" />

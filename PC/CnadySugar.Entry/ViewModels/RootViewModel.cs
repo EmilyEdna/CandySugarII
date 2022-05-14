@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace CnadySugar.Entry.ViewModels
 {
-    public class RootViewModel : PropertyChangedBase
+    public class RootViewModel : Conductor<IScreen>
     {
     }
 }
