@@ -69,8 +69,9 @@ namespace CandySugar.Library.PropertyAttach
                 };
                 placeholderTextBlock.SetBinding(TextBlock.TextProperty, binding);
                 placeholderTextBlock.FontStyle = FontStyles.Normal;
+                placeholderTextBlock.VerticalAlignment =  VerticalAlignment.Bottom;
                 placeholderTextBlock.Foreground = new SolidColorBrush(Colors.Black);
-
+               
                 var placeholderVisualBrush = new VisualBrush
                 {
                     AlignmentX = AlignmentX.Left,
@@ -80,7 +81,7 @@ namespace CandySugar.Library.PropertyAttach
                 };
 
                 txt.Background = placeholderVisualBrush;
-
+                txt.VerticalContentAlignment = VerticalAlignment.Bottom;
                 txt.TextChanged += PlaceholderTextBox_TextChanged;
                 txt.Unloaded += PlaceholderTextBox_Unloaded;
 

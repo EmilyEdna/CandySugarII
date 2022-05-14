@@ -66,18 +66,26 @@
                         Color="Beige" />
                 </Rectangle.Effect>
             </Rectangle>
-            <TextBox
+            <lib:CandyTextBox
                 Canvas.Left="100"
                 Canvas.Top="50"
                 Width="200"
-                lib:TextBoxDependencyProperty.Placeholder="Account"
-                Text="{Binding Account, Mode=TwoWay}" />
-            <TextBox
+                PlaceHolder="Account"
+                Text="{Binding Account, Mode=TwoWay}">
+                <lib:CandyTextBox.Icon>
+                    <md:PackIcon Kind="Account" />
+                </lib:CandyTextBox.Icon>
+            </lib:CandyTextBox>
+            <lib:CandyTextBox
                 Canvas.Left="100"
                 Canvas.Top="100"
                 Width="200"
-                lib:TextBoxDependencyProperty.Placeholder="PassWord"
-                Text="{Binding PassWord, Mode=TwoWay}" />
+                PlaceHolder="PassWord"
+                Text="{Binding PassWord, Mode=TwoWay}">
+                <lib:CandyTextBox.Icon>
+                    <md:PackIcon Kind="Password" />
+                </lib:CandyTextBox.Icon>
+            </lib:CandyTextBox>
             <Button
                 Canvas.Left="100"
                 Canvas.Top="160"

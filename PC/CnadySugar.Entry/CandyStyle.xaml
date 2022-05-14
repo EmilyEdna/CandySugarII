@@ -326,4 +326,68 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+
+    <Style BasedOn="{x:Null}" TargetType="lib:CandyTextBox">
+        <Setter Property="BorderThickness" Value="0,0,0,1" />
+        <Setter Property="Height" Value="30" />
+        <Setter Property="MaxHeight" Value="30" />
+        <Setter Property="VerticalContentAlignment" Value="Bottom" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="lib:CandyTextBox">
+                    <Grid>
+                        <Border Background="Transparent" BorderThickness="0,0,0,1">
+                            <Border.BorderBrush>
+                                <SolidColorBrush Opacity=".62" Color="Black" />
+                            </Border.BorderBrush>
+                        </Border>
+                        <Grid VerticalAlignment="Bottom">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="22" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <ContentPresenter
+                                x:Name="Icon"
+                                Margin="0,0,0,1"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Content="{TemplateBinding Icon}"
+                                ContentSource="Icon"
+                                SnapsToDevicePixels="True" />
+                            <TextBlock
+                                x:Name="PlaceHolder"
+                                Grid.Column="1"
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Bottom"
+                                Text="{TemplateBinding PlaceHolder}">
+                                <TextBlock.Foreground>
+                                    <SolidColorBrush Opacity="0.3" Color="Black" />
+                                </TextBlock.Foreground>
+                            </TextBlock>
+                            <TextBlock
+                                x:Name="TextContent"
+                                Grid.Column="1"
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Bottom"
+                                Text="{TemplateBinding Text}"
+                                Visibility="Collapsed" />
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="TextContent" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PlaceHolder" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource Self}, Converter={StaticResource ToBool}}" Value="False">
+                            <Setter TargetName="PlaceHolder" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="TextContent" Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
