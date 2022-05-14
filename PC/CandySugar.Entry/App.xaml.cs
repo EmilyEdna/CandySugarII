@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace CnadySugar.Entry
+namespace CandySugar.Entry
 {
     public partial class App : Application
     {

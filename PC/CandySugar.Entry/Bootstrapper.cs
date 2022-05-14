@@ -1,11 +1,11 @@
-﻿using CnadySugar.Entry.ViewModels;
+﻿using CandySugar.Entry.ViewModels;
 using Stylet;
 using StyletIoC;
 using System;
 using System.Windows;
 using System.Windows.Threading;
 
-namespace CnadySugar.Entry
+namespace CandySugar.Entry
 {
     public class Bootstrapper : Bootstrapper<LoginViewModel>
     {

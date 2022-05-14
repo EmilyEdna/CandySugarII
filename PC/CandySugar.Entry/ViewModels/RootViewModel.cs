@@ -2,7 +2,7 @@
 using Stylet;
 using System.Windows;
 
-namespace CnadySugar.Entry.ViewModels
+namespace CandySugar.Entry.ViewModels
 {
     public class RootViewModel : Conductor<IScreen>
     {

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace CnadySugar.Entry.ViewModels
+namespace CandySugar.Entry.ViewModels
 {
     public class LoginViewModel : PropertyChangedBase
     {

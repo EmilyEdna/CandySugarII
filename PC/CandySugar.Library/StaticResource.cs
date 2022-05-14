@@ -1,4 +1,5 @@
-﻿using CandySugar.Resource.Properties;
+﻿using CandySugar.Library.TemplateModel;
+using CandySugar.Resource.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,81 @@ namespace CandySugar.Library
 {
     public class StaticResource
     {
+        public static List<SilderModel> InitMenu()
+        {
+            List<SilderModel> model = new List<SilderModel>();
+            model.Add(new SilderModel
+            {
+                 FuncName=0,
+                 IconName=null,
+                 Name="首页",
+                 Hidden=false,
+            });
+            model.Add(new SilderModel
+            {
+                FuncName = 1,
+                IconName = null,
+                Name = "小说",
+                Hidden = false,
+            });
+            model.Add(new SilderModel
+            {
+                FuncName = 2,
+                IconName = null,
+                Name = "轻小说",
+                Hidden = false,
+            });
+            model.Add(new SilderModel
+            {
+                FuncName = 3,
+                IconName = null,
+                Name = "动漫",
+                Hidden = false,
+            });
+            model.Add(new SilderModel
+            {
+                FuncName = 4,
+                IconName = null,
+                Name = "H动漫",
+                Hidden = true,
+            });
+            model.Add(new SilderModel
+            {
+                FuncName = 5,
+                IconName = null,
+                Name = "壁纸",
+                Hidden = false,
+            });
+            model.Add(new SilderModel
+            {
+                FuncName = 6,
+                IconName = null,
+                Name = "音乐",
+                Hidden=false,
+            });
+            model.Add(new SilderModel
+            {
+                FuncName = 7,
+                IconName = null,
+                Name = "教育",
+                Hidden=true,
+            });
+            model.Add(new SilderModel
+            {
+                FuncName = 8,
+                IconName = null,
+                Name = "设置",
+                Hidden=false,
+            });
+            model.Add(new SilderModel
+            {
+                FuncName = 9,
+                IconName = null,
+                Name = "下载",
+                Hidden = false,
+            });
+            return model;
+        }
         /// <summary>
         /// 设置窗体动态图形
         /// </summary>

@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace CnadySugar.Entry.Views
+namespace CandySugar.Entry.Views
 {
     /// <summary>
     /// LoginView.xaml 的交互逻辑
