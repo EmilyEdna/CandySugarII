@@ -73,8 +73,9 @@
                 Canvas.Left="100"
                 Canvas.Top="100"
                 Width="200"
-                PlaceHolder="PassWord"
-                Text="{Binding PassWord, Mode=TwoWay}">
+                IsPassWord="True"
+                PassWord="{Binding PassWord, Mode=TwoWay}"
+                PlaceHolder="PassWord">
                 <lib:CandyTextBox.Icon>
                     <md:PackIcon Kind="Password" />
                 </lib:CandyTextBox.Icon>
