@@ -3,4 +3,5 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:lib="http://lib.sugar.com">
     <lib:NullToBoolConvert x:Key="ToBool" />
+    <lib:BoolToVisibleConvert x:Key="ToShow" />
 </ResourceDictionary>

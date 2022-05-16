@@ -24,4 +24,9 @@
   <ItemGroup>
     <ProjectReference Include="..\CandySugar.Controls\CandySugar.Controls.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="SDKCore">
+      <HintPath>..\..\Lib\SDKCore.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>
