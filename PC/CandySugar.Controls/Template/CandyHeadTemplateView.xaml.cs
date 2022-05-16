@@ -9,7 +9,7 @@ namespace CandySugar.Controls.Template
     /// <summary>
     /// CandyHeadTemplate.xaml 的交互逻辑
     /// </summary>
-    public partial class CandyHeadTemplateView : CandyHead
+    public partial class CandyHeadTemplateView : CandyControl
     {
         public CandyHeadTemplateView()
         {

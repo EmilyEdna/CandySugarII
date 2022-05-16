@@ -7,7 +7,7 @@ using System.Windows.Controls;
 
 namespace CandySugar.Library.Template
 {
-    public class CandyHead: UserControl
+    public class CandyControl: UserControl
     {
 
     }

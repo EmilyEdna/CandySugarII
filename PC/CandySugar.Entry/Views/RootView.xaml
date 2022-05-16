@@ -76,14 +76,15 @@
             MaxWidth="{Binding MaxWidth, ElementName=window}"
             VerticalAlignment="Top"
             MouseMove="CandyHeadTemplate_MouseMove" />
-        <Frame
+
+        <ContentControl
             Grid.Column="1"
             Height="{c:Binding (Height-30),
                                ElementName=window}"
             Margin="0,30,0,0"
             HorizontalAlignment="Left"
+            VerticalAlignment="Top"
             BorderThickness="0"
-            NavigationUIVisibility="Hidden"
-            Source="/CandySugar.Controls;component/Template/CandySilderTemplateView.xaml" />
+            Content="{Binding SilderView}" />
     </Grid>
 </lib:CandyWindow>

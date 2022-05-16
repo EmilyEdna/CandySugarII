@@ -67,6 +67,9 @@ namespace CandySugar.Entry.ViewModels
 
         public async void LoginAction()
         {
+            WindowManager.ShowWindow(Container.Get<RootViewModel>());
+            Application.Current.MainWindow.Close();
+            return;
             if (Check())
             {
                 WindowManager.ShowWindow(Container.Get<RootViewModel>());
