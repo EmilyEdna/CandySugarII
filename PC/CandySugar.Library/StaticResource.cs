@@ -18,73 +18,75 @@ namespace CandySugar.Library
             List<SilderModel> model = new List<SilderModel>();
             model.Add(new SilderModel
             {
-                 FuncName=0,
-                 IconName=null,
-                 Name="首页",
-                 Hidden=false,
+                FuncName = 0,
+                IconName = null,
+                Name = "首页",
+                Hidden = CandySoft.Default.IsAdmin ? false : false,
+                BackImage= "pack://application:,,,/CandySugar.Resource;component/Assets/Img6.jpg"
             });
             model.Add(new SilderModel
             {
                 FuncName = 1,
                 IconName = null,
                 Name = "小说",
-                Hidden = false,
+                Hidden = CandySoft.Default.IsAdmin ? false : false,
+                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img7.jpg"
             });
             model.Add(new SilderModel
             {
                 FuncName = 2,
                 IconName = null,
                 Name = "轻小说",
-                Hidden = false,
+                Hidden = CandySoft.Default.IsAdmin ? false : false,
+                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img8.jpg"
             });
             model.Add(new SilderModel
             {
                 FuncName = 3,
                 IconName = null,
                 Name = "动漫",
-                Hidden = false,
+                Hidden = CandySoft.Default.IsAdmin ? false : false,
+                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img6.jpg"
             });
             model.Add(new SilderModel
             {
                 FuncName = 4,
                 IconName = null,
                 Name = "H动漫",
-                Hidden = true,
+                Hidden = CandySoft.Default.IsAdmin ? false : true,
+                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img9.jpg"
             });
             model.Add(new SilderModel
             {
                 FuncName = 5,
                 IconName = null,
                 Name = "壁纸",
-                Hidden = false,
+                Hidden = CandySoft.Default.IsAdmin ? false : false,
+                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img10.jpg"
             });
             model.Add(new SilderModel
             {
                 FuncName = 6,
                 IconName = null,
                 Name = "音乐",
-                Hidden=false,
+                Hidden = CandySoft.Default.IsAdmin ? false : false,
+                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img11.jpg"
             });
             model.Add(new SilderModel
             {
                 FuncName = 7,
                 IconName = null,
                 Name = "教育",
-                Hidden=true,
+                Hidden = CandySoft.Default.IsAdmin ? false : true,
+                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img12.jpg"
             });
             model.Add(new SilderModel
             {
                 FuncName = 8,
                 IconName = null,
-                Name = "设置",
-                Hidden=false,
-            });
-            model.Add(new SilderModel
-            {
-                FuncName = 9,
-                IconName = null,
                 Name = "下载",
-                Hidden = false,
+                Hidden = CandySoft.Default.IsAdmin ? false : false,
+                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img13.jpg"
             });
             return model;
         }

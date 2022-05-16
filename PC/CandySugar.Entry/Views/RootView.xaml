@@ -70,7 +70,7 @@
             <RowDefinition Height="0.1*" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <sugar:CandyHeadTemplate
+        <sugar:CandyHeadTemplateView
             x:Name="Head"
             Width="{Binding Width, ElementName=window}"
             MaxWidth="{Binding MaxWidth, ElementName=window}"
@@ -84,6 +84,6 @@
             HorizontalAlignment="Left"
             BorderThickness="0"
             NavigationUIVisibility="Hidden"
-            Source="/CandySugar.Controls;component/Template/CandySilderTemplate.xaml" />
+            Source="/CandySugar.Controls;component/Template/CandySilderTemplateView.xaml" />
     </Grid>
 </lib:CandyWindow>

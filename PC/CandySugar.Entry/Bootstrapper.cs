@@ -1,9 +1,12 @@
-﻿using CandySugar.Entry.ViewModels;
+﻿using CandySugar.Controls;
+using CandySugar.Entry.ViewModels;
 using Stylet;
 using StyletIoC;
 using System;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
+using XExten.Advance.StaticFramework;
 
 namespace CandySugar.Entry
 {
@@ -18,6 +21,7 @@ namespace CandySugar.Entry
 
         protected override void ConfigureIoC(IStyletIoCBuilder builder)
         {
+            builder.AddModule(new ControlModule());
         }
 
         /// <summary>

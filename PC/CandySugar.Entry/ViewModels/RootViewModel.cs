@@ -6,5 +6,6 @@ namespace CandySugar.Entry.ViewModels
 {
     public class RootViewModel : Conductor<IScreen>
     {
+
     }
 }

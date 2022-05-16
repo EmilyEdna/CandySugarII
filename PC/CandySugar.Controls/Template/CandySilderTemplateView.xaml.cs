@@ -18,9 +18,9 @@ namespace CandySugar.Controls.Template
     /// <summary>
     /// CandySilderTemplate.xaml 的交互逻辑
     /// </summary>
-    public partial class CandySilderTemplate : Page
+    public partial class CandySilderTemplateView : Page
     {
-        public CandySilderTemplate()
+        public CandySilderTemplateView()
         {
             InitializeComponent();
         }

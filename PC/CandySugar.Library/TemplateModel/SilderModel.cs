@@ -11,6 +11,7 @@ namespace CandySugar.Library.TemplateModel
         public string Name { get; set; }
         public int FuncName { get; set; }
         public string IconName { get; set; }
+        public string BackImage { get; set; }
         public bool Hidden { get; set; }
     }
 }
