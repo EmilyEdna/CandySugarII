@@ -389,4 +389,63 @@
         </Setter>
     </Style>
 
+    <Style x:Key="SilderMenu" TargetType="lib:CandyButton">
+        <Setter Property="Width" Value="200" />
+        <Setter Property="Height" Value="30" />
+        <Setter Property="Margin" Value="0,1" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="lib:CandyButton">
+                    <Grid
+                        x:Name="GridContent"
+                        Background="{TemplateBinding Background}"
+                        Visibility="{TemplateBinding Visibility}">
+                        <Border
+                            x:Name="mark"
+                            Background="Transparent"
+                            BorderBrush="Transparent"
+                            BorderThickness="0" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="44" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid
+                                x:Name="IconWrapper"
+                                Width="30"
+                                Visibility="Visible">
+                                <ContentPresenter
+                                    x:Name="Icon"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Content="{TemplateBinding Icon}"
+                                    ContentSource="Icon"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </Grid>
+                            <StackPanel
+                                Grid.Column="1"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center">
+                                <TextBlock
+                                    FontSize="12"
+                                    Foreground="{DynamicResource SugarThemeRed}"
+                                    Text="{TemplateBinding Content}" />
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="mark" Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Opacity=".6" Color="LightGray" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

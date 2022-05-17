@@ -16,7 +16,7 @@
     <Grid>
         <Rectangle Fill="{DynamicResource SugarThemeDefault}" Opacity=".4" />
         <ListBox
-            Margin="0,50,0,0"
+            Margin="0,40,0,0"
             VerticalAlignment="Top"
             Background="Transparent"
             BorderThickness="0"
@@ -26,31 +26,20 @@
             Style="{StaticResource WrapPanelVerticalListBox}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid
-                        Width="200"
-                        Height="30"
-                        Margin="5"
-                        VerticalAlignment="Top">
-                        <Grid.Background>
+                    <lib:CandyButton
+                        Content="{Binding Name}"
+                        Style="{StaticResource SilderMenu}"
+                        Visibility="{Binding Show, Converter={StaticResource ToShow}}">
+                        <lib:CandyButton.Icon>
+                            <md:PackIcon Foreground="{DynamicResource SugarThemeRed}" Kind="{Binding IconName}" />
+                        </lib:CandyButton.Icon>
+                        <lib:CandyButton.Background>
                             <ImageBrush
                                 ImageSource="{Binding BackImage}"
-                                Opacity="1"
+                                Opacity=".6"
                                 Stretch="UniformToFill" />
-                        </Grid.Background>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="22" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Foreground="Black">
-                                <md:PackIcon Kind="Settings" />
-                            </TextBlock>
-                            <TextBlock
-                                Grid.Column="1"
-                                Foreground="Black"
-                                Text="123123" />
-                        </Grid>
-                    </Grid>
+                        </lib:CandyButton.Background>
+                    </lib:CandyButton>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

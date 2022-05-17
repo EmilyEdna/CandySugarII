@@ -33,5 +33,20 @@ namespace CandySugar.Entry.Views
             if (this.WindowState == WindowState.Maximized) StarAnime("Max");
             else StarAnime("Min");
         }
+
+        private void TaskbarIcon_TrayMouseDoubleClick(object sender, RoutedEventArgs e)
+        {
+            this.window.Visibility = Visibility.Visible;
+        }
+
+        private void ProcessClick(object sender, RoutedEventArgs e)
+        {
+            Storyboard story = ((Storyboard)this.FindResource("Hidden"));
+            if (story != null)
+            {
+                story.Completed += delegate { Application.Current.Shutdown(0); };
+                story.Begin(this);
+            };
+        }
     }
 }

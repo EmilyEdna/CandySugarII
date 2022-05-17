@@ -22,6 +22,9 @@
     <Content Include="favicon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Hardcodet.Wpf.TaskbarNotification.Core" Version="2.0.0" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\CandySugar.Controls\CandySugar.Controls.csproj" />
   </ItemGroup>
   <ItemGroup>

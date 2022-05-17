@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\favicon.ico" />
     <None Remove="Assets\img1.png" />
     <None Remove="Assets\img10.jpg" />
     <None Remove="Assets\img11.jpg" />
@@ -21,6 +22,10 @@
     <None Remove="Assets\img8.jpg" />
     <None Remove="Assets\img9.jpg" />
     <None Remove="Assets\站酷快乐体2016修订版.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\favicon.ico" />
   </ItemGroup>
 
   <ItemGroup>
