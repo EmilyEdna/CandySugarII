@@ -35,5 +35,20 @@
     <Setting Name="Cache" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">60</Value>
     </Setting>
+    <Setting Name="Girl" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Module" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="K12" Type="System.String" Scope="User">
+      <Value Profile="(Default)">rating:safe</Value>
+    </Setting>
+    <Setting Name="K15" Type="System.String" Scope="User">
+      <Value Profile="(Default)">rating:questionable</Value>
+    </Setting>
+    <Setting Name="K18" Type="System.String" Scope="User">
+      <Value Profile="(Default)">rating:explicit</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

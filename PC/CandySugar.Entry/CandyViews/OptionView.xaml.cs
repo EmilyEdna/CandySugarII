@@ -1,4 +1,5 @@
-﻿using CandySugar.Library.Template;
+﻿using CandySugar.Library;
+using CandySugar.Library.Template;
 using CandySugar.Resource.Properties;
 using System;
 using System.Collections.Generic;
@@ -57,11 +58,19 @@ namespace CandySugar.Entry.CandyViews
             StarAnime("OpenWindow");
             if (CandySoft.Default.PlayBox) DPlayer.IsChecked = true;
             else VLC.IsChecked = true;
+
+            var rb = StaticResource.FindVisualChild<RadioButton>(Konachan).FirstOrDefault(t => t.CommandParameter.ToString() == CandySoft.Default.Module.ToString());
+            rb.IsChecked = true;
         }
 
         private void PlayBoxChecked(object sender, RoutedEventArgs e)
         {
             CandySoft.Default.PlayBox = ((RadioButton)sender).CommandParameter.ToString().AsInt() == 1;
+        }
+
+        private void ModuelEvent(object sender, RoutedEventArgs e)
+        {
+            CandySoft.Default.Module = (sender as RadioButton).CommandParameter.ToString().AsInt();
         }
     }
 }

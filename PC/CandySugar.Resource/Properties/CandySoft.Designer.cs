@@ -154,5 +154,65 @@ namespace CandySugar.Resource.Properties {
                 this["Cache"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Girl {
+            get {
+                return ((bool)(this["Girl"]));
+            }
+            set {
+                this["Girl"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int Module {
+            get {
+                return ((int)(this["Module"]));
+            }
+            set {
+                this["Module"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("rating:safe")]
+        public string K12 {
+            get {
+                return ((string)(this["K12"]));
+            }
+            set {
+                this["K12"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("rating:questionable")]
+        public string K15 {
+            get {
+                return ((string)(this["K15"]));
+            }
+            set {
+                this["K15"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("rating:explicit")]
+        public string K18 {
+            get {
+                return ((string)(this["K18"]));
+            }
+            set {
+                this["K18"] = value;
+            }
+        }
     }
 }

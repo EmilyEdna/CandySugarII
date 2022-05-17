@@ -283,6 +283,7 @@
                     FontSize="14" />
             </Canvas>
             <Grid
+                x:Name="Konachan"
                 Width="340"
                 Height="40"
                 HorizontalAlignment="Center"
@@ -292,32 +293,36 @@
                     Height="20"
                     HorizontalAlignment="Left"
                     BorderBrush="Transparent"
-                    CommandParameter="2"
-                    Content="12X"
+                    Checked="ModuelEvent"
+                    CommandParameter="1"
+                    Content="All"
                     GroupName="Module" />
                 <RadioButton
                     Width="50"
                     Height="20"
                     Margin="0,0,160,0"
                     BorderBrush="Transparent"
-                    CommandParameter="3"
-                    Content="15X"
+                    Checked="ModuelEvent"
+                    CommandParameter="2"
+                    Content="12X"
                     GroupName="Module" />
                 <RadioButton
                     Width="50"
                     Height="20"
                     Margin="0,0,35,0"
                     BorderBrush="Transparent"
-                    CommandParameter="4"
-                    Content="18X"
+                    Checked="ModuelEvent"
+                    CommandParameter="3"
+                    Content="15X"
                     GroupName="Module" />
                 <RadioButton
                     Width="50"
                     Height="20"
                     Margin="90,0,0,0"
                     BorderBrush="Transparent"
-                    CommandParameter="5"
-                    Content="All"
+                    Checked="ModuelEvent"
+                    CommandParameter="4"
+                    Content="18X"
                     GroupName="Module" />
             </Grid>
             <Canvas
@@ -329,7 +334,7 @@
                     Width="100"
                     Height="29.333"
                     VerticalContentAlignment="Center"
-                    Content="首页显示："
+                    Content="看板首页："
                     FontFamily="{StaticResource FontStyle}"
                     FontSize="14" />
             </Canvas>
@@ -338,7 +343,7 @@
                 Height="40"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
-                <CheckBox Content="是否显示看板娘" />
+                <CheckBox Content="是否显示看板娘" IsChecked="{Binding Girl, Source={x:Static res:CandySoft.Default}}" />
             </Grid>
         </ListBox>
         <TextBlock Canvas.Left="80" Canvas.Top="580">
@@ -352,20 +357,13 @@
                 Text="Emilyednasion@gmail.com" />
         </TextBlock>
         <Button
-            Canvas.Left="250"
-            Canvas.Top="545"
-            Background="{StaticResource SugarThemeDefault}"
-            BorderThickness="0"
-            Content="保存"
-            FontFamily="{StaticResource FontStyle}" />
-        <Button
             Canvas.Left="320"
             Canvas.Top="545"
             Background="{StaticResource SugarThemeDefault}"
             BorderThickness="0"
             Click="HandleEvent"
             CommandParameter="1"
-            Content="取消"
+            Content="关闭"
             FontFamily="{StaticResource FontStyle}" />
         <Grid
             x:Name="GiftContent"
