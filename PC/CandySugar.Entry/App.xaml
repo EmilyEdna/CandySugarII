@@ -14,14 +14,10 @@
             <s:ApplicationLoader.MergedDictionaries>
                 <hc:ThemeResources />
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml" />
-
                 <ResourceDictionary Source="ConvertStyle.xaml" />
-
                 <ResourceDictionary Source="pack://application:,,,/CandySugar.Resource;component/Styles/LightTheme.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/CandySugar.Resource;component/MergedStyle.xaml" />
-
                 <ResourceDictionary Source="CandyStyle.xaml" />
-                <!--<hc:Theme />-->
             </s:ApplicationLoader.MergedDictionaries>
         </s:ApplicationLoader>
     </Application.Resources>

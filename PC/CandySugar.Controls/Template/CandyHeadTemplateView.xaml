@@ -74,10 +74,23 @@
                 </WrapPanel>
                 <UniformGrid
                     Grid.Column="3"
-                    Width="90"
+                    Width="120"
                     Margin="0,0,10,0"
                     HorizontalAlignment="Right"
-                    Columns="3">
+                    Columns="4">
+                    <Button
+                        Width="25"
+                        Height="25"
+                        md:ShadowAssist.ShadowDepth="Depth2"
+                        Background="{DynamicResource SugarThemePink}"
+                        BorderBrush="Transparent"
+                        Foreground="{DynamicResource SugarThemeWhite}"
+                        Style="{DynamicResource MaterialDesignFloatingActionMiniButton}">
+                        <md:PackIcon
+                            Width="15"
+                            Height="15"
+                            Kind="Settings" />
+                    </Button>
                     <Button
                         Width="25"
                         Height="25"
