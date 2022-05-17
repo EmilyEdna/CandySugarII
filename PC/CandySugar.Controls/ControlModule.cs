@@ -13,6 +13,7 @@ namespace CandySugar.Controls
     {
         protected override void Load()
         {
+            Bind<CandyHeadTemplateViewModel>().ToSelf();
             Bind<CandySilderTemplateViewModel>().ToSelf();
         }
     }

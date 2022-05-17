@@ -327,6 +327,21 @@
         </Setter>
     </Style>
 
+    <Style x:Key="CandyOptionWindow" TargetType="lib:CandyWindow">
+        <Setter Property="WindowStyle" Value="None" />
+        <Setter Property="AllowsTransparency" Value="True" />
+        <Setter Property="WindowState" Value="Normal" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="ResizeMode" Value="NoResize" />
+        <Setter Property="Width" Value="400" />
+        <Setter Property="Height" Value="600" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
+        <Setter Property="FontFamily" Value="{DynamicResource FontStyle}" />
+    </Style>
+
     <Style BasedOn="{x:Null}" TargetType="lib:CandyTextBox">
         <Setter Property="BorderThickness" Value="0,0,0,1" />
         <Setter Property="Height" Value="30" />

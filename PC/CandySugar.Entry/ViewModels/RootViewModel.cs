@@ -1,5 +1,6 @@
 ﻿using CandySugar.Controls.Template;
 using CandySugar.Controls.TemplateViewModel;
+using CandySugar.Entry.CandyViewModels;
 using CandySugar.Resource.Properties;
 using Stylet;
 using StyletIoC;
@@ -19,8 +20,16 @@ namespace CandySugar.Entry.ViewModels
             {
                 DataContext = Container.Get<CandySilderTemplateViewModel>()
             };
+            HeadViewModel = Container.Get<CandyHeadTemplateViewModel>();
         }
 
         public CandySilderTemplateView SilderView { get; set; }
+        public CandyHeadTemplateViewModel HeadViewModel { get; set; }
+
+
+        public void SettingAction()
+        {
+            WindowManager.ShowWindow(Container.Get<OptionViewModel>());
+        }
     }
 }
