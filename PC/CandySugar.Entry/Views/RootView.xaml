@@ -70,8 +70,8 @@
             <ThicknessAnimation
                 Storyboard.TargetName="SilderHander"
                 Storyboard.TargetProperty="Margin"
-                From="-300,0,0,0"
-                To="0"
+                From="0"
+                To="150,0,0,0"
                 Duration="0:0:0.5" />
         </Storyboard>
         <Storyboard x:Key="CloseSilder">
@@ -84,8 +84,8 @@
             <ThicknessAnimation
                 Storyboard.TargetName="SilderHander"
                 Storyboard.TargetProperty="Margin"
-                From="0"
-                To="-300,0,0,0"
+                From="150,0,0,0"
+                To="0"
                 Duration="0:0:0.5" />
         </Storyboard>
     </lib:CandyWindow.Resources>
@@ -106,31 +106,26 @@
             VerticalAlignment="Top"
             DataContext="{Binding HeadViewModel}"
             MouseMove="CandyHeadTemplate_MouseMove" />
-        <Grid Grid.Column="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150" />
-                <ColumnDefinition Width="10" />
-            </Grid.ColumnDefinitions>
-            <ContentControl
-                x:Name="SilderMenu"
-                Width="150"
-                Height="{c:Binding (Height-30),
-                                   ElementName=window}"
-                Margin="0,30,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                BorderThickness="0"
-                Content="{Binding SilderView}" />
-            <StackPanel
-                x:Name="SilderHander"
-                Grid.Column="1"
-                Width="10"
-                VerticalAlignment="Center">
-                <TextBlock PreviewMouseLeftButtonDown="TextBlock_PreviewMouseLeftButtonDown">
-                    <md:PackIcon x:Name="SilderIcon" Kind="MenuLeft" />
-                </TextBlock>
-            </StackPanel>
-        </Grid>
+        <ContentControl
+            x:Name="SilderMenu"
+            Width="150"
+            Height="{c:Binding (Height-30),
+                               ElementName=window}"
+            Margin="0,30,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            BorderThickness="0"
+            Content="{Binding SilderView}" />
+        <StackPanel
+            x:Name="SilderHander"
+            Width="10"
+            Margin="150,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center">
+            <TextBlock PreviewMouseLeftButtonDown="TextBlock_PreviewMouseLeftButtonDown">
+                <md:PackIcon x:Name="SilderIcon" Kind="MenuLeft" />
+            </TextBlock>
+        </StackPanel>
         <tb:TaskbarIcon IconSource="{StaticResource fav}" TrayMouseDoubleClick="TaskbarIcon_TrayMouseDoubleClick">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu FontFamily="{StaticResource FontStyle}" Style="{StaticResource ContextMenuBaseStyle}">
