@@ -30,12 +30,6 @@ namespace CandySugar.Entry.Views
             StaticResource.GridClipContent(this, CandySoft.Default.ScreenWidth, CandySoft.Default.ScreenHeight);
         }
 
-        private void CandyWindow_StateChanged(object sender, System.EventArgs e)
-        {
-            if (this.WindowState == WindowState.Maximized) StarAnime("Max");
-            else StarAnime("Min");
-        }
-
         private void TaskbarIcon_TrayMouseDoubleClick(object sender, RoutedEventArgs e)
         {
             this.window.Visibility = Visibility.Visible;

@@ -15,39 +15,10 @@
     x:Name="window"
     d:DataContext="{d:DesignInstance Type=viewModels:RootViewModel}"
     Loaded="CandyWindow_Loaded"
-    StateChanged="CandyWindow_StateChanged"
     Style="{StaticResource CandyWindow}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <lib:CandyWindow.Resources>
-        <Storyboard x:Key="Max">
-            <DoubleAnimation
-                Storyboard.TargetName="window"
-                Storyboard.TargetProperty="Height"
-                From="{Binding ScreenHeight, Source={x:Static res:CandySoft.Default}}"
-                To="{Binding MaxHeight, ElementName=window}"
-                Duration="0:0:0.3" />
-            <DoubleAnimation
-                Storyboard.TargetName="window"
-                Storyboard.TargetProperty="Width"
-                From="{Binding ScreenWidth, Source={x:Static res:CandySoft.Default}}"
-                To="{Binding MaxWidth, ElementName=window}"
-                Duration="0:0:0.3" />
-        </Storyboard>
-        <Storyboard x:Key="Min">
-            <DoubleAnimation
-                Storyboard.TargetName="window"
-                Storyboard.TargetProperty="Height"
-                From="{Binding MaxHeight, ElementName=window}"
-                To="{Binding ScreenHeight, Source={x:Static res:CandySoft.Default}}"
-                Duration="0:0:0.3" />
-            <DoubleAnimation
-                Storyboard.TargetName="window"
-                Storyboard.TargetProperty="Width"
-                From="{Binding MaxWidth, ElementName=window}"
-                To="{Binding ScreenWidth, Source={x:Static res:CandySoft.Default}}"
-                Duration="0:0:0.3" />
-        </Storyboard>
         <Storyboard x:Key="Show">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="window" Storyboard.TargetProperty="Opacity">
                 <EasingDoubleKeyFrame KeyTime="0" Value="0" />
