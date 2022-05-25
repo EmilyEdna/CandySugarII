@@ -1,4 +1,5 @@
-﻿using CandySugar.Controls.TemplateViewModel;
+﻿using CandySugar.Controls.ContentViewModel;
+using CandySugar.Controls.TemplateViewModel;
 using Stylet;
 using StyletIoC;
 using System;
@@ -15,6 +16,7 @@ namespace CandySugar.Controls
         {
             Bind<CandyHeadTemplateViewModel>().ToSelf();
             Bind<CandySilderTemplateViewModel>().ToSelf();
+            Bind<NovelViewModel>().ToSelf();
         }
     }
 }

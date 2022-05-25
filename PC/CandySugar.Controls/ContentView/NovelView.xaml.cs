@@ -1,5 +1,4 @@
-﻿using CandySugar.Controls.TemplateViewModel;
-using CandySugar.Library.Template;
+﻿using CandySugar.Library.Template;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,14 +14,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CandySugar.Controls.Template
+namespace CandySugar.Controls.ContentView
 {
     /// <summary>
-    /// CandySilderTemplate.xaml 的交互逻辑
+    /// NovelView.xaml 的交互逻辑
     /// </summary>
-    public partial class CandySilderTemplateView : CandyControl
+    public partial class NovelView : CandyControl
     {
-        public CandySilderTemplateView()
+        public NovelView()
         {
             InitializeComponent();
         }

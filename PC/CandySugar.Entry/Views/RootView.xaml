@@ -9,6 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:res="http://res.sugar.com"
+    xmlns:s="https://github.com/canton7/Stylet"
     xmlns:sugar="http://ctrl.sugar.com"
     xmlns:tb="http://www.hardcodet.net/taskbar"
     xmlns:viewModels="clr-namespace:CandySugar.Entry.ViewModels"
@@ -77,6 +78,12 @@
             VerticalAlignment="Top"
             DataContext="{Binding HeadViewModel}"
             MouseMove="CandyHeadTemplate_MouseMove" />
+        <ContentControl
+            x:Name="RightContent"
+            Height="{c:Binding (Height-30),
+                               ElementName=window}"
+            Margin="0,30,0,0"
+            Content="{Binding Ctrl}" />
         <ContentControl
             x:Name="SilderMenu"
             Width="150"

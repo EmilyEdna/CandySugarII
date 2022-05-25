@@ -1,6 +1,7 @@
 ﻿using CandySugar.Controls.Template;
 using CandySugar.Controls.TemplateViewModel;
 using CandySugar.Entry.CandyViewModels;
+using CandySugar.Library.Template;
 using CandySugar.Resource.Properties;
 using Stylet;
 using StyletIoC;
@@ -26,10 +27,20 @@ namespace CandySugar.Entry.ViewModels
         public CandySilderTemplateView SilderView { get; set; }
         public CandyHeadTemplateViewModel HeadViewModel { get; set; }
 
+        private CandyControl _Ctrl;
+        public CandyControl Ctrl {
+            get => _Ctrl;
+            set => SetAndNotify(ref _Ctrl, value);
+        }
 
         public void SettingAction()
         {
             WindowManager.ShowWindow(Container.Get<OptionViewModel>());
+        }
+
+        public void ScreenActivity(CandyControl input)
+        {
+            Ctrl = input;
         }
     }
 }

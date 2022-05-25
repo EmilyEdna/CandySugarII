@@ -38,7 +38,13 @@
                         Height="30"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Header="文件"
+                        Header="首页"
+                        Style="{StaticResource CandyMenuItem}" />
+                    <MenuItem
+                        Height="30"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Header="下载"
                         Style="{StaticResource CandyMenuItem}">
                         <MenuItem Header="退出" Style="{StaticResource CandyMenuItem}">
                             <MenuItem.Icon>

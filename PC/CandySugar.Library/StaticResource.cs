@@ -1,8 +1,10 @@
-﻿using CandySugar.Library.TemplateModel;
+﻿using CandySugar.Library.Template;
+using CandySugar.Library.TemplateModel;
 using CandySugar.Resource.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,19 +20,11 @@ namespace CandySugar.Library
             List<SilderModel> model = new List<SilderModel>();
             model.Add(new SilderModel
             {
-                FuncName = 0,
-                IconName = "StarThreePoints",
-                Name = "首页",
-                Show = true,
-                BackImage= "pack://application:,,,/CandySugar.Resource;component/Assets/Img6.jpg"
-            });
-            model.Add(new SilderModel
-            {
                 FuncName = 1,
                 IconName = "BookOpenVariant",
                 Name = "小说",
                 Show = true,
-                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img7.jpg"
+                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img6.jpg"
             });
             model.Add(new SilderModel
             {
@@ -38,7 +32,7 @@ namespace CandySugar.Library
                 IconName = "BookOpenVariant",
                 Name = "轻小说",
                 Show = true,
-                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img8.jpg"
+                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img7.jpg"
             });
             model.Add(new SilderModel
             {
@@ -46,7 +40,7 @@ namespace CandySugar.Library
                 IconName = "TelevisionAmbientLight",
                 Name = "动漫",
                 Show = true,
-                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img6.jpg"
+                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img8.jpg"
             });
             model.Add(new SilderModel
             {
@@ -59,33 +53,33 @@ namespace CandySugar.Library
             model.Add(new SilderModel
             {
                 FuncName = 5,
-                IconName = "ImageFilterVintage",
-                Name = "壁纸",
+                IconName = "RabbitVariant",
+                Name = "漫画",
                 Show = true,
                 BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img10.jpg"
             });
             model.Add(new SilderModel
             {
                 FuncName = 6,
-                IconName = "MusicNoteEighth",
-                Name = "音乐",
+                IconName = "ImageFilterVintage",
+                Name = "壁纸",
                 Show = true,
                 BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img11.jpg"
             });
             model.Add(new SilderModel
             {
                 FuncName = 7,
-                IconName = "AccountTieWoman",
-                Name = "教育",
-                Show = CandySoft.Default.IsAdmin ? true : false,
+                IconName = "MusicNoteEighth",
+                Name = "音乐",
+                Show = true,
                 BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img12.jpg"
             });
             model.Add(new SilderModel
             {
                 FuncName = 8,
-                IconName = "CloudDownload",
-                Name = "下载",
-                Show = true,
+                IconName = "AccountTieWoman",
+                Name = "教育",
+                Show = CandySoft.Default.IsAdmin ? true : false,
                 BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img13.jpg"
             });
             return model;
@@ -154,6 +148,19 @@ namespace CandySugar.Library
                 MessageBox.Show(ee.Message);
                 return null;
             }
+        }
+        /// <summary>
+        /// 创建内容对象
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="method"></param>
+        /// <param name="parent"></param>
+        /// <param name="current"></param>
+        public static void CreateControl<T>(MethodInfo method, object parent, object current) where T : UserControl
+        {
+            var instance = (CandyControl)Activator.CreateInstance(typeof(T));
+            instance.DataContext = current;
+            method.Invoke(parent, new[] { instance });
         }
     }
 }

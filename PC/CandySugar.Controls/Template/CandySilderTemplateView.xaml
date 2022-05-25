@@ -9,8 +9,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:res="http://res.sugar.com"
+    xmlns:s="https://github.com/canton7/Stylet"
     xmlns:viewmodel="clr-namespace:CandySugar.Controls.TemplateViewModel"
-    x:Name="head"
+    x:Name="Silder"
     Width="200"
     d:DataContext="{d:DesignInstance Type=viewmodel:CandySilderTemplateViewModel}"
     d:DesignHeight="450"
@@ -35,6 +36,8 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <lib:CandyButton
+                            s:View.ActionTarget="{Binding DataContext, ElementName=Silder}"
+                            Command="{s:Action ActivityAction}"
                             Content="{Binding Name}"
                             Style="{StaticResource SilderMenu}"
                             Visibility="{Binding Show, Converter={StaticResource ToShow}}">
@@ -47,6 +50,12 @@
                                     Opacity=".6"
                                     Stretch="UniformToFill" />
                             </lib:CandyButton.Background>
+                            <lib:CandyButton.CommandParameter>
+                                <MultiBinding Converter="{StaticResource ToMulti}">
+                                    <Binding Path="FuncName" />
+                                    <Binding ElementName="Silder" Path="." />
+                                </MultiBinding>
+                            </lib:CandyButton.CommandParameter>
                         </lib:CandyButton>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
