@@ -1,6 +1,6 @@
 ﻿using CandySugar.Library;
 using CandySugar.Resource.Properties;
-using SDKCore;
+using Sdk.Core;
 using Stylet;
 using StyletIoC;
 using System;
@@ -96,19 +96,19 @@ namespace CandySugar.Entry.ViewModels
             if (this.Account.ToLower().Equals("emilyedna") && this.PassWord.Equals("admin"))
             {
                 CandySoft.Default.IsAdmin = true;
-                return License.Register(new LicenseModel
+                return SdkLicense.Register(new SkdLicenseModel
                 {
                     Account = this.Account,
-                    PassWord = DateTime.Now.ToString("yyyyMMdd")
+                    Password = DateTime.Now.ToString("yyyyMMdd")
                 });
             }
             else
             {
                 CandySoft.Default.IsAdmin = false;
-                return License.Register(new LicenseModel
+                return SdkLicense.Register(new SkdLicenseModel
                 {
                     Account = this.Account,
-                    PassWord = this.PassWord
+                    Password = this.PassWord
                 });
             }
         }
