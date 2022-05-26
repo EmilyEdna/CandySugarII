@@ -131,7 +131,11 @@
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
             ScrollViewer.VerticalScrollBarVisibility="Disabled"
             Style="{DynamicResource SimpleListBox}">
-            <Canvas Width="340" Height="30">
+            <Canvas
+                Width="340"
+                Height="30"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
                 <Label
                     Width="100"
                     Height="29.333"
@@ -344,6 +348,53 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
                 <CheckBox Content="是否显示看板娘" IsChecked="{Binding Girl, Source={x:Static res:CandySoft.Default}}" />
+            </Grid>
+            <Canvas
+                Width="340"
+                Height="30"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                <Label
+                    Width="100"
+                    Height="29.333"
+                    VerticalContentAlignment="Center"
+                    Content="查询模式："
+                    FontFamily="{StaticResource FontStyle}"
+                    FontSize="14" />
+            </Canvas>
+            <Grid
+                x:Name="Querys"
+                Width="340"
+                Height="40"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                <RadioButton
+                    Width="100"
+                    Height="20"
+                    HorizontalAlignment="Left"
+                    BorderBrush="Transparent"
+                    Checked="QueryModuelEvent"
+                    CommandParameter="1"
+                    Content="Multi模式"
+                    GroupName="QueryModule" />
+                <RadioButton
+                    Width="100"
+                    Height="20"
+                    Margin="0,0,90,0"
+                    BorderBrush="Transparent"
+                    Checked="QueryModuelEvent"
+                    CommandParameter="2"
+                    Content="Rest模式"
+                    GroupName="QueryModuelEvent" />
+                <RadioButton
+                    Width="100"
+                    Height="20"
+                    Margin="60,0,0,0"
+                    BorderBrush="Transparent"
+                    Checked="QueryModuelEvent"
+                    CommandParameter="3"
+                    Content="Client模式"
+                    GroupName="QueryModule" />
             </Grid>
         </ListBox>
         <TextBlock Canvas.Left="80" Canvas.Top="580">

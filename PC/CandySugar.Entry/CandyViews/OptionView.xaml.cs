@@ -59,8 +59,10 @@ namespace CandySugar.Entry.CandyViews
             if (CandySoft.Default.PlayBox) DPlayer.IsChecked = true;
             else VLC.IsChecked = true;
 
-            var rb = StaticResource.FindVisualChild<RadioButton>(Konachan).FirstOrDefault(t => t.CommandParameter.ToString() == CandySoft.Default.Module.ToString());
-            rb.IsChecked = true;
+            var QueryModule = StaticResource.FindVisualChild<RadioButton>(Querys).FirstOrDefault(t => t.CommandParameter.ToString() == CandySoft.Default.QueryModule.ToString());
+            QueryModule.IsChecked = true;
+            var KonachanModule = StaticResource.FindVisualChild<RadioButton>(Konachan).FirstOrDefault(t => t.CommandParameter.ToString() == CandySoft.Default.Module.ToString());
+            KonachanModule.IsChecked = true;
         }
 
         private void PlayBoxChecked(object sender, RoutedEventArgs e)
@@ -71,6 +73,11 @@ namespace CandySugar.Entry.CandyViews
         private void ModuelEvent(object sender, RoutedEventArgs e)
         {
             CandySoft.Default.Module = (sender as RadioButton).CommandParameter.ToString().AsInt();
+        }
+
+        private void QueryModuelEvent(object sender, RoutedEventArgs e)
+        {
+            CandySoft.Default.QueryModule = (sender as RadioButton).CommandParameter.ToString().AsInt();
         }
     }
 }

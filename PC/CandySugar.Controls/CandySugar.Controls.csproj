@@ -14,4 +14,10 @@
     <ProjectReference Include="..\CandySugar.Library\CandySugar.Library.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Sdk.Component">
+      <HintPath>..\..\Lib\Sdk.Component.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

@@ -17,5 +17,16 @@ namespace CandySugar.Controls.ContentViewModel
             this.WindowManager = WindowManager;
             this.Container = Container;
         }
+        #region Property
+        #endregion
+
+        #region Override
+        protected override void OnViewLoaded()
+        {
+        }
+        #endregion
+
+        #region Method
+        #endregion
     }
 }

@@ -50,5 +50,8 @@
     <Setting Name="K18" Type="System.String" Scope="User">
       <Value Profile="(Default)">rating:explicit</Value>
     </Setting>
+    <Setting Name="QueryModule" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

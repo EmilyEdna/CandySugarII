@@ -214,5 +214,17 @@ namespace CandySugar.Resource.Properties {
                 this["K18"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int QueryModule {
+            get {
+                return ((int)(this["QueryModule"]));
+            }
+            set {
+                this["QueryModule"] = value;
+            }
+        }
     }
 }
