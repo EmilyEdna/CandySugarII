@@ -60,15 +60,15 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Image
-                Grid.Row="1"
-                Margin="0,0,30,0"
-                Opacity=".6"
-                Source="{StaticResource i2}"
-                Stretch="UniformToFill"
-                Visibility="{c:Binding Girl,
-                                       Source={x:Static res:CandySoft.Default},
-                                       FalseToVisibility=Collapsed}" />
+            <WrapPanel Grid.Row="1" Width="{Binding Width, ElementName=Silder}">
+                <Image
+                    Opacity=".6"
+                    Source="{StaticResource i2}"
+                    Stretch="Uniform"
+                    Visibility="{c:Binding Girl,
+                                           Source={x:Static res:CandySoft.Default},
+                                           FalseToVisibility=Collapsed}" />
+            </WrapPanel>
         </Grid>
     </Grid>
 </lib:CandyControl>

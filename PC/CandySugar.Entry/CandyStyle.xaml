@@ -308,10 +308,10 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="lib:CandyWindow">
-                    <Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
-                        <Grid.Background>
-                            <SolidColorBrush Opacity=".62" Color="White" />
-                        </Grid.Background>
+                    <Grid
+                        Width="{TemplateBinding Width}"
+                        Height="{TemplateBinding Height}"
+                        Background="{DynamicResource SugarThemeSmoke}">
                         <Grid.Clip>
                             <RectangleGeometry
                                 RadiusX="15"

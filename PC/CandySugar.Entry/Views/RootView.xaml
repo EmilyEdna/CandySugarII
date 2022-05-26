@@ -37,27 +37,39 @@
                 Storyboard.TargetName="SilderMenu"
                 Storyboard.TargetProperty="Width"
                 From="0"
-                To="150"
+                To="200"
                 Duration="0:0:0.5" />
             <ThicknessAnimation
                 Storyboard.TargetName="SilderHander"
                 Storyboard.TargetProperty="Margin"
                 From="0"
-                To="150,0,0,0"
+                To="200,0,0,0"
+                Duration="0:0:0.5" />
+            <ThicknessAnimation
+                Storyboard.TargetName="RightContent"
+                Storyboard.TargetProperty="Margin"
+                From="0,30,0,0"
+                To="200,30,0,0"
                 Duration="0:0:0.5" />
         </Storyboard>
         <Storyboard x:Key="CloseSilder">
             <DoubleAnimation
                 Storyboard.TargetName="SilderMenu"
                 Storyboard.TargetProperty="Width"
-                From="150"
+                From="200"
                 To="0"
                 Duration="0:0:0.5" />
             <ThicknessAnimation
                 Storyboard.TargetName="SilderHander"
                 Storyboard.TargetProperty="Margin"
-                From="150,0,0,0"
+                From="200,0,0,0"
                 To="0"
+                Duration="0:0:0.5" />
+            <ThicknessAnimation
+                Storyboard.TargetName="RightContent"
+                Storyboard.TargetProperty="Margin"
+                From="200,30,0,0"
+                To="0,30,0,0"
                 Duration="0:0:0.5" />
         </Storyboard>
     </lib:CandyWindow.Resources>
@@ -82,11 +94,11 @@
             x:Name="RightContent"
             Height="{c:Binding (Height-30),
                                ElementName=window}"
-            Margin="0,30,0,0"
+            Margin="200,30,0,0"
             Content="{Binding Ctrl}" />
         <ContentControl
             x:Name="SilderMenu"
-            Width="150"
+            Width="200"
             Height="{c:Binding (Height-30),
                                ElementName=window}"
             Margin="0,30,0,0"
@@ -97,7 +109,7 @@
         <StackPanel
             x:Name="SilderHander"
             Width="10"
-            Margin="150,0,0,0"
+            Margin="200,0,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Center">
             <TextBlock PreviewMouseLeftButtonDown="TextBlock_PreviewMouseLeftButtonDown">

@@ -1,6 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ImageSource x:Key="SugarThemeBG">/CandySugar.Resource;component/Assets/img3.png</ImageSource>
-    <SolidColorBrush x:Key="SugarThemePink">#FFF916D6</SolidColorBrush>
+    <SolidColorBrush x:Key="SugarThemePink">#FFFF9999</SolidColorBrush>
+    <SolidColorBrush x:Key="SugarThemeAlis">#FFB0C4DE</SolidColorBrush>
+    <SolidColorBrush x:Key="SugarThemeSmoke">#FF8A2BE2</SolidColorBrush>
     <SolidColorBrush x:Key="SugarThemeBlue">#FF2A38C4</SolidColorBrush>
     <SolidColorBrush x:Key="SugarThemeWhite">#FFFFFFFF</SolidColorBrush>
     <SolidColorBrush x:Key="SugarThemeGreen">#FF3BA606</SolidColorBrush>

@@ -28,16 +28,14 @@
         <Border
             Height="40"
             VerticalAlignment="Top"
+            Background="{DynamicResource SugarThemeAlis}"
             MouseMove="Border_MouseMove">
-            <Border.Background>
-                <SolidColorBrush Opacity=".62" Color="#FF9999" />
-            </Border.Background>
             <UniformGrid Margin="0,0,20,0" HorizontalAlignment="Right">
                 <Button
                     Width="28"
                     Height="28"
                     md:ShadowAssist.ShadowDepth="Depth2"
-                    Background="{DynamicResource SugarThemePink}"
+                    Background="{DynamicResource SugarThemeDefault}"
                     BorderBrush="Transparent"
                     Click="Button_Click"
                     Foreground="{DynamicResource SugarThemeWhite}"
@@ -60,7 +58,7 @@
                 RadiusX="10"
                 RadiusY="10">
                 <Rectangle.Fill>
-                    <SolidColorBrush Opacity="0.5" Color="Khaki" />
+                    <SolidColorBrush Opacity="1" Color="White" />
                 </Rectangle.Fill>
             </Rectangle>
             <lib:CandyTextBox
