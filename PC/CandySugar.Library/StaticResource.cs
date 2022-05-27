@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Sdk.Component.Plugins;
 
 namespace CandySugar.Library
 {
@@ -24,6 +25,7 @@ namespace CandySugar.Library
                 IconName = "BookOpenVariant",
                 Name = "小说",
                 Show = true,
+                Query="XS",
                 BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img6.jpg"
             });
             model.Add(new SilderModel
@@ -32,6 +34,7 @@ namespace CandySugar.Library
                 IconName = "BookOpenVariant",
                 Name = "轻小说",
                 Show = true,
+                Query = "LXS",
                 BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img7.jpg"
             });
             model.Add(new SilderModel
@@ -40,6 +43,7 @@ namespace CandySugar.Library
                 IconName = "TelevisionAmbientLight",
                 Name = "动漫",
                 Show = true,
+                Query = "DM",
                 BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img8.jpg"
             });
             model.Add(new SilderModel
@@ -47,6 +51,7 @@ namespace CandySugar.Library
                 FuncName = 4,
                 IconName = "TelevisionAmbientLight",
                 Name = "H动漫",
+                Query = "HDM",
                 Show = CandySoft.Default.IsAdmin ? true : false,
                 BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img9.jpg"
             });
@@ -56,6 +61,7 @@ namespace CandySugar.Library
                 IconName = "RabbitVariant",
                 Name = "漫画",
                 Show = true,
+                Query = "MH",
                 BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img10.jpg"
             });
             model.Add(new SilderModel
@@ -64,6 +70,7 @@ namespace CandySugar.Library
                 IconName = "ImageFilterVintage",
                 Name = "壁纸",
                 Show = true,
+                Query = "BZ",
                 BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img11.jpg"
             });
             model.Add(new SilderModel
@@ -72,6 +79,7 @@ namespace CandySugar.Library
                 IconName = "MusicNoteEighth",
                 Name = "音乐",
                 Show = true,
+                Query = "YY",
                 BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img12.jpg"
             });
             model.Add(new SilderModel
@@ -79,6 +87,7 @@ namespace CandySugar.Library
                 FuncName = 8,
                 IconName = "AccountTieWoman",
                 Name = "教育",
+                Query = "JY",
                 Show = CandySoft.Default.IsAdmin ? true : false,
                 BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img13.jpg"
             });
@@ -161,6 +170,31 @@ namespace CandySugar.Library
             var instance = (CandyControl)Activator.CreateInstance(typeof(T));
             instance.DataContext = current;
             method.Invoke(parent, new[] { instance });
+        }
+        /// <summary>
+        /// 返回实现方式
+        /// </summary>
+        /// <returns></returns>
+        public static SdkImpl ImplType()
+        {
+            if (CandySoft.Default.QueryModule == 1) return SdkImpl.Multi;
+            else if (CandySoft.Default.QueryModule == 2) return SdkImpl.Rest;
+            else if (CandySoft.Default.QueryModule == 3) return SdkImpl.RPC;
+            else return SdkImpl.User;
+        }
+        /// <summary>
+        /// 代理
+        /// </summary>
+        /// <returns></returns>
+        public static SdkProxy Proxy()
+        {
+            return new SdkProxy
+            {
+                IP = CandySoft.Default.IP,
+                Port = CandySoft.Default.Port,
+                UserName = CandySoft.Default.PA,
+                PassWord = CandySoft.Default.PP
+            };
         }
     }
 }

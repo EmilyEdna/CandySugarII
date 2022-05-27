@@ -19,7 +19,7 @@ namespace CandySugar.Entry.ViewModels
         public LoginViewModel(IContainer Container, IWindowManager WindowManager)
         {
             this.WindowManager = WindowManager;
-            this.Container = Container;
+            this.Container = Container;     
         }
         #region Property
         private string _Account;
@@ -67,9 +67,9 @@ namespace CandySugar.Entry.ViewModels
 
         public async void LoginAction()
         {
-            WindowManager.ShowWindow(Container.Get<RootViewModel>());
-            Application.Current.MainWindow.Close();
-            return;
+            this.Account = "EmilyEdna";
+            this.PassWord = DateTime.Now.ToString("yyyyMMdd");
+
             if (Check())
             {
                 WindowManager.ShowWindow(Container.Get<RootViewModel>());

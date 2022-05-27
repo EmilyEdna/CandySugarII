@@ -10,8 +10,8 @@ namespace CandySugar.Library.Converters
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            return new Dictionary<int, object> {
-                { (int)values[0],values[1] }
+            return new Dictionary<object, object> {
+                { values[0],values[1] }
             };
         }
 

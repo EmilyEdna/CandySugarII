@@ -2,6 +2,7 @@
     x:Class="CandySugar.Controls.Template.CandyHeadTemplateView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Name="Head"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:lib="http://lib.sugar.com"
@@ -9,6 +10,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:s="https://github.com/canton7/Stylet"
+    xmlns:viewmodels="clr-namespace:CandySugar.Controls.TemplateViewModel"
+    d:DataContext="{d:DesignInstance Type=viewmodels:CandyHeadTemplateViewModel}"
     d:DesignHeight="30"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -22,7 +25,8 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.05*" />
-                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="0.13*" />
+                    <ColumnDefinition Width="0.37*" />
                     <ColumnDefinition Width="0.1*" />
                     <ColumnDefinition Width="0.12*" />
                 </Grid.ColumnDefinitions>
@@ -33,7 +37,28 @@
                     SnapsToDevicePixels="True"
                     Source="{StaticResource i5}"
                     Stretch="Uniform" />
-                <Menu Grid.Column="1" Background="{DynamicResource SugarThemeDefault}">
+                <lib:CandyTextBox
+                    x:Name="SearchBox"
+                    Grid.Column="1"
+                    PlaceHolder="搜你所想(ง •_•)ง↗[Go]"
+                    ShowDropList="True"
+                    Source="{Binding MenuVlaue}"
+                    Style="{StaticResource CandySearchText}">
+                    <lib:CandyTextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{s:Action SearchAction}">
+                            <KeyBinding.CommandParameter>
+                                <MultiBinding Converter="{StaticResource ToMulti}">
+                                    <Binding ElementName="SearchBox" Path="SelectType" />
+                                    <Binding ElementName="SearchBox" Path="Text" />
+                                </MultiBinding>
+                            </KeyBinding.CommandParameter>
+                        </KeyBinding>
+                    </lib:CandyTextBox.InputBindings>
+                    <lib:CandyTextBox.Icon>
+                        <md:PackIcon Kind="Search" />
+                    </lib:CandyTextBox.Icon>
+                </lib:CandyTextBox>
+                <Menu Grid.Column="2" Background="{DynamicResource SugarThemeDefault}">
                     <MenuItem
                         Height="30"
                         HorizontalAlignment="Center"
@@ -57,7 +82,7 @@
                     </MenuItem>
                 </Menu>
                 <WrapPanel
-                    Grid.Column="2"
+                    Grid.Column="3"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Orientation="Horizontal">
@@ -80,7 +105,7 @@
                         Text="Light" />
                 </WrapPanel>
                 <UniformGrid
-                    Grid.Column="3"
+                    Grid.Column="4"
                     Width="120"
                     Margin="0,0,10,0"
                     HorizontalAlignment="Right"

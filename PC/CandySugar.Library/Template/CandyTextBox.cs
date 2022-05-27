@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,6 +32,25 @@ namespace CandySugar.Library.Template
             get { return (bool)GetValue(IsPassWordProperty); }
             set { SetValue(IsPassWordProperty, value); }
         }
+        public bool ShowDropList
+        {
+            get { return (bool)GetValue(ShowDropListProperty); }
+            set { SetValue(ShowDropListProperty, value); }
+        }
+        public string SelectType
+        {
+            get { return (string)GetValue(SelectTypeProperty); }
+            set { SetValue(SelectTypeProperty, value); }
+        }
+        public IEnumerable Source
+        {
+            get { return (IEnumerable)GetValue(SourceProperty); }
+            set { SetValue(SourceProperty, value); }
+        }
+        public static readonly DependencyProperty SelectTypeProperty =
+            DependencyProperty.Register("SelectType", typeof(string), typeof(CandyTextBox), new PropertyMetadata(""));
+        public static readonly DependencyProperty ShowDropListProperty =
+            DependencyProperty.Register("ShowDropList", typeof(bool), typeof(CandyTextBox), new PropertyMetadata(false));
         public static readonly DependencyProperty IsPassWordProperty =
             DependencyProperty.Register("IsPassWord", typeof(bool), typeof(CandyTextBox), new PropertyMetadata(false));
         public static readonly DependencyProperty PassWordProperty =
@@ -39,6 +59,8 @@ namespace CandySugar.Library.Template
             DependencyProperty.Register("Icon", typeof(object), typeof(CandyTextBox), new PropertyMetadata(null));
         public static readonly DependencyProperty PlaceHolderProperty =
             DependencyProperty.Register("PlaceHolder", typeof(string), typeof(CandyTextBox), new PropertyMetadata(""));
+        public static readonly DependencyProperty SourceProperty =
+            DependencyProperty.Register("Source", typeof(IEnumerable), typeof(CandyTextBox), new PropertyMetadata(null));
 
         protected override void OnTextChanged(TextChangedEventArgs e)
         {
@@ -126,6 +148,5 @@ namespace CandySugar.Library.Template
                 SelectionStart = selectionStart;
             }
         }
-
     }
 }

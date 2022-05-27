@@ -66,6 +66,7 @@
                 Canvas.Top="50"
                 Width="200"
                 PlaceHolder="Account"
+                Style="{StaticResource CandyTextBoxStyle}"
                 Text="{Binding Account, Mode=TwoWay}">
                 <lib:CandyTextBox.Icon>
                     <md:PackIcon Kind="Account" />
@@ -82,7 +83,8 @@
                 Width="200"
                 IsPassWord="True"
                 PassWord="{Binding PassWord, Mode=TwoWay}"
-                PlaceHolder="PassWord">
+                PlaceHolder="PassWord"
+                Style="{StaticResource CandyTextBoxStyle}">
                 <lib:CandyTextBox.Icon>
                     <md:PackIcon Kind="Password" />
                 </lib:CandyTextBox.Icon>

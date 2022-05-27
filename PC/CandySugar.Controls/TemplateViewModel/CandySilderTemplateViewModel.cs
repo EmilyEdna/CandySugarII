@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using XExten.Advance.LinqFramework;
 
 namespace CandySugar.Controls.TemplateViewModel
 {
@@ -33,12 +34,12 @@ namespace CandySugar.Controls.TemplateViewModel
             set => SetAndNotify(ref _SilderMenu, value);
         }
 
-        public void ActivityAction(Dictionary<int, object> input)
+        public void ActivityAction(Dictionary<object, object> input)
         {
             var parentDataContext = Window.GetWindow((CandySilderTemplateView)input.Values.FirstOrDefault()).DataContext;
             var parentMethodInfo = parentDataContext.GetType().GetMethod("ScreenActivity");
 
-            switch (input.Keys.FirstOrDefault())
+            switch ((int)input.Keys.FirstOrDefault())
             {
                 case 1:
                      StaticResource.CreateControl<NovelView>(parentMethodInfo, parentDataContext,Container.Get<NovelViewModel>());

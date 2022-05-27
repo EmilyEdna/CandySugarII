@@ -342,7 +342,10 @@
         <Setter Property="FontFamily" Value="{DynamicResource FontStyle}" />
     </Style>
 
-    <Style BasedOn="{x:Null}" TargetType="lib:CandyTextBox">
+    <Style
+        x:Key="CandyTextBoxStyle"
+        BasedOn="{x:Null}"
+        TargetType="lib:CandyTextBox">
         <Setter Property="BorderThickness" Value="0,0,0,1" />
         <Setter Property="Height" Value="30" />
         <Setter Property="MaxHeight" Value="30" />
@@ -352,47 +355,71 @@
             <Setter.Value>
                 <ControlTemplate TargetType="lib:CandyTextBox">
                     <Grid>
-                        <Border Background="Transparent" BorderThickness="0,0,0,1">
-                            <Border.BorderBrush>
-                                <SolidColorBrush Opacity=".62" Color="Black" />
-                            </Border.BorderBrush>
-                        </Border>
-                        <Grid VerticalAlignment="Bottom">
+                        <Border
+                            Background="Transparent"
+                            BorderBrush="{TemplateBinding Foreground}"
+                            BorderThickness="0,0,0,1"
+                            Opacity=".62" />
+                        <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="22" />
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="40" />
                             </Grid.ColumnDefinitions>
-                            <ContentPresenter
-                                x:Name="Icon"
-                                Margin="0,0,0,1"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Content="{TemplateBinding Icon}"
-                                ContentSource="Icon"
-                                SnapsToDevicePixels="True" />
-                            <TextBlock
-                                x:Name="PlaceHolder"
+                            <Grid VerticalAlignment="Bottom">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="22" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter
+                                    x:Name="Icon"
+                                    Margin="0,0,0,1"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Content="{TemplateBinding Icon}"
+                                    ContentSource="Icon"
+                                    SnapsToDevicePixels="True" />
+                                <TextBlock
+                                    x:Name="PlaceHolder"
+                                    Grid.Column="1"
+                                    Margin="5,0,0,0"
+                                    VerticalAlignment="Bottom"
+                                    Foreground="DodgerBlue"
+                                    Opacity=".6"
+                                    Text="{TemplateBinding PlaceHolder}" />
+                                <TextBlock
+                                    x:Name="TextContent"
+                                    Grid.Column="1"
+                                    Margin="5,0,0,0"
+                                    VerticalAlignment="Bottom"
+                                    Text="{TemplateBinding Text}"
+                                    Visibility="Collapsed" />
+                            </Grid>
+                            <ComboBox
+                                x:Name="Handle"
                                 Grid.Column="1"
-                                Margin="5,0,0,0"
                                 VerticalAlignment="Bottom"
-                                Text="{TemplateBinding PlaceHolder}">
-                                <TextBlock.Foreground>
-                                    <SolidColorBrush Opacity="0.3" Color="Black" />
-                                </TextBlock.Foreground>
-                            </TextBlock>
-                            <TextBlock
-                                x:Name="TextContent"
-                                Grid.Column="1"
-                                Margin="5,0,0,0"
-                                VerticalAlignment="Bottom"
-                                Text="{TemplateBinding Text}"
-                                Visibility="Collapsed" />
+                                VerticalContentAlignment="Bottom"
+                                md:ComboBoxAssist.ShowSelectedItem="False"
+                                md:TextFieldAssist.UnderlineBrush="Transparent"
+                                BorderThickness="0"
+                                ItemsSource="{TemplateBinding Source}"
+                                SelectedItem="{Binding SelectType, RelativeSource={RelativeSource AncestorType=lib:CandyTextBox}}"
+                                Visibility="Collapsed">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding .}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFocused" Value="True">
                             <Setter TargetName="TextContent" Property="Visibility" Value="Visible" />
                             <Setter TargetName="PlaceHolder" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="ShowDropList" Value="True">
+                            <Setter TargetName="Handle" Property="Visibility" Value="Visible" />
                         </Trigger>
                         <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource Self}, Converter={StaticResource ToBool}}" Value="False">
                             <Setter TargetName="PlaceHolder" Property="Visibility" Value="Collapsed" />
@@ -402,6 +429,18 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style
+        x:Key="CandySearchText"
+        BasedOn="{StaticResource CandyTextBoxStyle}"
+        TargetType="lib:CandyTextBox">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Height" Value="26" />
+        <Setter Property="Background" Value="{DynamicResource SugarThemeDefault}" />
+        <Setter Property="Foreground" Value="{DynamicResource SugarThemeWhite}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
     <Style x:Key="SilderMenu" TargetType="lib:CandyButton">
