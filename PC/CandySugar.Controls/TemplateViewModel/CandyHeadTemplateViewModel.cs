@@ -37,9 +37,5 @@ namespace CandySugar.Controls.TemplateViewModel
                     this.MenuVlaue.Add(item.Query);
             });
         }
-        public void SearchAction(Dictionary<object, object> param) {
-
-            var x = param;
-        }
     }
 }

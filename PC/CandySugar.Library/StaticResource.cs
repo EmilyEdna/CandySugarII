@@ -25,7 +25,7 @@ namespace CandySugar.Library
                 IconName = "BookOpenVariant",
                 Name = "小说",
                 Show = true,
-                Query="XS",
+                Query = "XS",
                 BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img6.jpg"
             });
             model.Add(new SilderModel
@@ -161,15 +161,33 @@ namespace CandySugar.Library
         /// <summary>
         /// 创建内容对象
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="method"></param>
-        /// <param name="parent"></param>
-        /// <param name="current"></param>
-        public static void CreateControl<T>(MethodInfo method, object parent, object current) where T : UserControl
+        /// <typeparam name="T">当前控件</typeparam>
+        /// <param name="parentMethod">父控件的某个方法</param>
+        /// <param name="parentDataContext">父控件的DataContext</param>
+        /// <param name="currentDataContext">当前控件的DataContext</param>
+        public static void CreateControl<T>(MethodInfo parentMethod, object parentDataContext, object currentDataContext) where T : UserControl
         {
             var instance = (CandyControl)Activator.CreateInstance(typeof(T));
-            instance.DataContext = current;
-            method.Invoke(parent, new[] { instance });
+            instance.DataContext = currentDataContext;
+            parentMethod.Invoke(parentDataContext, new[] { instance });
+        }
+        /// <summary>
+        /// 创建内容对象
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="currentDataContext">当前控件的DataContext</param>
+        /// <param name="input">查询字段</param>
+        public static CandyControl CreateControl<T>(object currentDataContext, string input)
+        {
+            var instance = (CandyControl)Activator.CreateInstance(typeof(T));
+            instance.DataContext = currentDataContext;
+
+            var MethodInfo = instance.DataContext.GetType().GetMethod("SearchAction");
+            if (MethodInfo != null)
+            {
+                MethodInfo.Invoke(instance.DataContext, new[] { input });
+            }
+            return instance;
         }
         /// <summary>
         /// 返回实现方式

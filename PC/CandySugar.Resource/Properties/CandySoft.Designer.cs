@@ -226,5 +226,17 @@ namespace CandySugar.Resource.Properties {
                 this["QueryModule"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1500")]
+        public int WaitSpan {
+            get {
+                return ((int)(this["WaitSpan"]));
+            }
+            set {
+                this["WaitSpan"] = value;
+            }
+        }
     }
 }

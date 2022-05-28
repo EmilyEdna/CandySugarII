@@ -5,7 +5,12 @@ using CandySugar.Library.Template;
 using CandySugar.Resource.Properties;
 using Stylet;
 using StyletIoC;
+using System.Collections.Generic;
 using System.Windows;
+using System.Linq;
+using CandySugar.Library;
+using CandySugar.Controls.ContentView;
+using CandySugar.Controls.ContentViewModel;
 
 namespace CandySugar.Entry.ViewModels
 {
@@ -28,7 +33,8 @@ namespace CandySugar.Entry.ViewModels
         public CandyHeadTemplateViewModel HeadViewModel { get; set; }
 
         private CandyControl _Ctrl;
-        public CandyControl Ctrl {
+        public CandyControl Ctrl
+        {
             get => _Ctrl;
             set => SetAndNotify(ref _Ctrl, value);
         }
@@ -36,6 +42,22 @@ namespace CandySugar.Entry.ViewModels
         public void SettingAction()
         {
             WindowManager.ShowWindow(Container.Get<OptionViewModel>());
+        }
+
+        public void SearchAction(Dictionary<object, object> param)
+        {
+
+            if (param.Keys.FirstOrDefault() is string type)
+            {
+                switch (type)
+                {
+                    case "XS":
+                        Ctrl = StaticResource.CreateControl<NovelView>(Container.Get<NovelViewModel>(),param.Values.FirstOrDefault().ToString());
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         public void ScreenActivity(CandyControl input)

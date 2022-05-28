@@ -225,6 +225,30 @@
                     Width="100"
                     Height="29.333"
                     VerticalContentAlignment="Center"
+                    Content="等待时间："
+                    FontFamily="{StaticResource FontStyle}"
+                    FontSize="14" />
+            </Canvas>
+            <Grid
+                Width="340"
+                Height="40"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                <TextBox
+                    Grid.Row="1"
+                    Margin="5,0"
+                    lib:TextBoxDependencyProperty.Placeholder="等待时间(毫秒)"
+                    Text="{Binding WaitSpan, Source={x:Static res:CandySoft.Default}}" />
+            </Grid>
+            <Canvas
+                Width="340"
+                Height="30"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                <Label
+                    Width="100"
+                    Height="29.333"
+                    VerticalContentAlignment="Center"
                     Content="文库设置："
                     FontFamily="{StaticResource FontStyle}"
                     FontSize="14" />
