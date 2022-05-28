@@ -13,6 +13,7 @@ using Sdk.Component.Novel.sdk.ViewModel.Enums;
 using System.Collections.ObjectModel;
 using Sdk.Component.Novel.sdk.ViewModel.Response;
 using Sdk.Component.Novel.sdk.ViewModel.Request;
+using HandyControl.Data;
 
 namespace CandySugar.Controls.ContentViewModel
 {
@@ -95,6 +96,10 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
+        #region Field
+        private string CategoryRoute;
+        #endregion
+
         #region Action
         public void SearchAction(string input) 
         {
@@ -102,7 +107,14 @@ namespace CandySugar.Controls.ContentViewModel
         }
         public void CategoryAction(string input)
         {
+            CategoryRoute = input;
             InitCategory(input);
+        }
+
+        public void PageCateAction(FunctionEventArgs<int> input)
+        {
+            Page = input.Info;
+            CategoryAction(CategoryRoute);
         }
         #endregion
 

@@ -15,34 +15,119 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-
     <Grid>
-        <StackPanel>
-            <ListBox
-                Background="Transparent"
-                BorderThickness="0"
-                ItemsSource="{Binding CateResult}"
-                Style="{StaticResource WrapPanelHorizontalListBox}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Button
-                            Margin="20,5"
-                            s:View.ActionTarget="{Binding DataContext, ElementName=NovelViewName}"
-                            Command="{s:Action CategoryAction}"
-                            CommandParameter="{Binding CollectRoute}"
-                            Content="{Binding CategoryName}">
-                            <Button.Effect>
-                                <DropShadowEffect
-                                    BlurRadius="3"
-                                    ShadowDepth="0"
-                                    Color="{DynamicResource SugarThemePinkColor}" />
-                            </Button.Effect>
-                        </Button>
-
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </StackPanel>
         <hc:LoadingCircle Visibility="{Binding Loading, Converter={StaticResource ToShow}}" />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="43" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <StackPanel>
+                <ListBox
+                    Background="Transparent"
+                    BorderThickness="0"
+                    ItemsSource="{Binding CateResult}"
+                    Style="{StaticResource WrapPanelHorizontalListBox}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <lib:CandyButton
+                                Margin="20,5"
+                                s:View.ActionTarget="{Binding DataContext, ElementName=NovelViewName}"
+                                Command="{s:Action CategoryAction}"
+                                CommandParameter="{Binding CollectRoute}"
+                                Content="{Binding CategoryName}"
+                                Opacity=".7"
+                                Style="{StaticResource CategoryBtn}">
+                                <lib:CandyButton.Effect>
+                                    <DropShadowEffect
+                                        BlurRadius="3"
+                                        Opacity=".3"
+                                        ShadowDepth="0"
+                                        Color="{DynamicResource SugarThemeWhiteColor}" />
+                                </lib:CandyButton.Effect>
+                            </lib:CandyButton>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="50" />
+                </Grid.RowDefinitions>
+                <ListView ItemsSource="{Binding CateElementResult}" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn>
+                                <GridViewColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <TextBlock Foreground="{DynamicResource SugarThemeRed}" Text="书名" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </GridViewColumn.HeaderTemplate>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <TextBlock Foreground="{DynamicResource SugarThemeRed}" Text="{Binding BookName}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn>
+                                <GridViewColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <TextBlock Foreground="{DynamicResource SugarThemeRed}" Text="作者" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </GridViewColumn.HeaderTemplate>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <TextBlock Foreground="{DynamicResource SugarThemeRed}" Text="{Binding Author}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn>
+                                <GridViewColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <TextBlock Foreground="{DynamicResource SugarThemeRed}" Text="更新时间" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </GridViewColumn.HeaderTemplate>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <TextBlock Foreground="{DynamicResource SugarThemeRed}" Text="{Binding UpdateDate}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <hc:Pagination
+                    Grid.Row="1"
+                    Margin="0,5,0,0"
+                    HorizontalAlignment="Center"
+                    IsJumpEnabled="False"
+                    MaxPageCount="{Binding Total}"
+                    Style="{StaticResource test}"
+                    PageIndex="{Binding Page}">
+                    <hc:Interaction.Triggers>
+                        <hc:EventTrigger EventName="PageUpdated">
+                            <hc:EventToCommand
+                                s:View.ActionTarget="{Binding DataContext, ElementName=NovelViewName}"
+                                Command="{s:Action PageCateAction}"
+                                PassEventArgsToCommand="True" />
+                        </hc:EventTrigger>
+                    </hc:Interaction.Triggers>
+                </hc:Pagination>
+            </Grid>
+
+        </Grid>
     </Grid>
 </lib:CandyControl>
