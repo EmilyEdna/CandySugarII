@@ -25,7 +25,9 @@ namespace CandySugar.Controls.ContentViewModel
         {
             this.WindowManager = WindowManager;
             this.Container = Container;
-            this.Page = 1;
+            this.CategoryPage = 1;
+            this.SearchVisible = false;
+            this.DetailVisible = false;
             OnViewLoaded();
         }
 
@@ -36,17 +38,35 @@ namespace CandySugar.Controls.ContentViewModel
             get => _Loading;
             set => SetAndNotify(ref _Loading, value);
         }
-        private int _Page;
-        public int Page
+        private bool _DetailVisible;
+        public bool DetailVisible
         {
-            get => _Page;
-            set => SetAndNotify(ref _Page, value);
+            get => _DetailVisible;
+            set => SetAndNotify(ref _DetailVisible, value);
         }
-        private int _Total;
-        public int Total
+        private bool _SearchVisible;
+        public bool SearchVisible
         {
-            get => _Total;
-            set => SetAndNotify(ref _Total, value);
+            get => _SearchVisible;
+            set => SetAndNotify(ref _SearchVisible, value);
+        }
+        private int _CategoryPage;
+        public int CategoryPage
+        {
+            get => _CategoryPage;
+            set => SetAndNotify(ref _CategoryPage, value);
+        }
+        private int _CategoryTotal;
+        public int CategoryTotal
+        {
+            get => _CategoryTotal;
+            set => SetAndNotify(ref _CategoryTotal, value);
+        }
+        private int _DetailPage;
+        public int DetailPage
+        {
+            get => _DetailPage;
+            set => SetAndNotify(ref _DetailPage, value);
         }
         #endregion
 
@@ -87,6 +107,15 @@ namespace CandySugar.Controls.ContentViewModel
             get => _CateElementResult;
             set => SetAndNotify(ref _CateElementResult, value);
         }
+        private NovelDetailRootResult _DetailResult;
+        /// <summary>
+        /// 详情结果
+        /// </summary>
+        public NovelDetailRootResult DetailResult
+        {
+            get => _DetailResult;
+            set => SetAndNotify(ref _DetailResult, value);
+        }
         #endregion
 
         #region Override
@@ -98,22 +127,37 @@ namespace CandySugar.Controls.ContentViewModel
 
         #region Field
         private string CategoryRoute;
+        private string DetailRoute;
         #endregion
 
         #region Action
-        public void SearchAction(string input) 
+        public void SearchAction(string input)
         {
             InitSearch(input);
         }
         public void CategoryAction(string input)
         {
-            CategoryRoute = input;
+            this.CategoryRoute = input;
+            this.SearchVisible = true;
+            this.DetailVisible = false;
             InitCategory(input);
         }
-
+        public void DetailAction(NovelCategoryElementResult input)
+        {
+            this.SearchVisible = false;
+            this.DetailVisible = true;
+            this.DetailPage = 1;
+            DetailRoute = input.DetailRoute;
+            InitDetail(DetailRoute);
+        }
+        public void PageDetailAction(FunctionEventArgs<int> input)
+        {
+            this.DetailPage = input.Info;
+            InitDetail(DetailRoute);
+        }
         public void PageCateAction(FunctionEventArgs<int> input)
         {
-            Page = input.Info;
+            this.CategoryPage = input.Info;
             CategoryAction(CategoryRoute);
         }
         #endregion
@@ -172,14 +216,36 @@ namespace CandySugar.Controls.ContentViewModel
                     NovelType = NovelEnum.Category,
                     Category = new NovelCategory
                     {
-                        Page = Page,
+                        Page = this.CategoryPage,
                         CategoryRoute = input,
                     }
                 };
             }).RunsAsync();
             Loading = false;
-            Total = NovelCateData.CategoryResult.Total;
+            CategoryTotal = NovelCateData.CategoryResult.Total;
             CateElementResult = new ObservableCollection<NovelCategoryElementResult>(NovelCateData.CategoryResult.ElementResults);
+        }
+        private async void InitDetail(string input)
+        {
+            Loading = true;
+            await Task.Delay(CandySoft.Default.WaitSpan);
+            var NovelDetailData = await NovelFactory.Novel(opt =>
+            {
+                opt.RequestParam = new Input
+                {
+                    CacheSpan = CandySoft.Default.Cache,
+                    Proxy = StaticResource.Proxy(),
+                    ImplType = StaticResource.ImplType(),
+                    NovelType = NovelEnum.Detail,
+                    Detail = new NovelDetail
+                    {
+                        Page = this.DetailPage,
+                        DetailRoute = input,
+                    }
+                };
+            }).RunsAsync();
+            Loading = false;
+            DetailResult = NovelDetailData.DetailResult;
         }
         #endregion
     }

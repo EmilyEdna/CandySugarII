@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:lib="http://lib.sugar.com"
     xmlns:local="clr-namespace:CandySugar.Controls.ContentView"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -15,8 +16,16 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <lib:CandyControl.Resources>
+        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Width" Value="400" />
+            <Setter Property="Foreground" Value="{DynamicResource SugarThemeAlis}" />
+        </Style>
+    </lib:CandyControl.Resources>
     <Grid>
-        <hc:LoadingCircle Visibility="{Binding Loading, Converter={StaticResource ToShow}}" />
+        <hc:LoadingCircle Foreground="{DynamicResource SugarThemeDefault}" Visibility="{Binding Loading, Converter={StaticResource ToShow}}" />
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="43" />
@@ -50,12 +59,18 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
             </StackPanel>
-            <Grid Grid.Row="1">
+            <Grid
+                x:Name="SearchList"
+                Grid.Row="1"
+                Visibility="{Binding SearchVisible, Converter={StaticResource ToShow}}">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition Height="50" />
                 </Grid.RowDefinitions>
-                <ListView ItemsSource="{Binding CateElementResult}" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                <ListView
+                    x:Name="CategoryResultList"
+                    ItemsSource="{Binding CateElementResult}"
+                    ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn>
@@ -108,15 +123,23 @@
                             </GridViewColumn>
                         </GridView>
                     </ListView.View>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction
+                                s:View.ActionTarget="{Binding DataContext, ElementName=NovelViewName}"
+                                Command="{s:Action DetailAction}"
+                                CommandParameter="{Binding SelectedItem, ElementName=CategoryResultList}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                 </ListView>
                 <hc:Pagination
                     Grid.Row="1"
                     Margin="0,5,0,0"
                     HorizontalAlignment="Center"
                     IsJumpEnabled="False"
-                    MaxPageCount="{Binding Total}"
-                    Style="{StaticResource test}"
-                    PageIndex="{Binding Page}">
+                    MaxPageCount="{Binding CategoryTotal}"
+                    Style="{StaticResource PageinationStyle}"
+                    PageIndex="{Binding CategoryPage}">
                     <hc:Interaction.Triggers>
                         <hc:EventTrigger EventName="PageUpdated">
                             <hc:EventToCommand
@@ -127,7 +150,46 @@
                     </hc:Interaction.Triggers>
                 </hc:Pagination>
             </Grid>
-
+            <Grid
+                x:Name="SearchDetail"
+                Grid.Row="1"
+                Visibility="{Binding DetailVisible, Converter={StaticResource ToShow}}">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".28*" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Border Margin="15,15,0,0" HorizontalAlignment="Left">
+                            <Image
+                                SnapsToDevicePixels="True"
+                                Source="{Binding DetailResult.Cover}"
+                                Stretch="Uniform" />
+                            <Border.Effect>
+                                <DropShadowEffect
+                                    BlurRadius="3"
+                                    Opacity=".6"
+                                    ShadowDepth="0"
+                                    Color="{DynamicResource SugarThemePinkColor}" />
+                            </Border.Effect>
+                        </Border>
+                        <StackPanel
+                            Grid.Column="1"
+                            Margin="0,15,0,0"
+                            HorizontalAlignment="Left">
+                            <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding DetailResult.BookName, StringFormat=书名:{0}}" />
+                            <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding DetailResult.Author, StringFormat=作者:{0}}" />
+                            <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding DetailResult.BookType, StringFormat=类型:{0}}" />
+                            <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding DetailResult.Status, StringFormat=状态:{0}}" />
+                            <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding DetailResult.LastUpdateTime, StringFormat=更新时间:{0:yyyy-MM-dd HH:mm:ss}}" />
+                            <TextBlock
+                                Style="{StaticResource TextBlockStyle}"
+                                Text="{Binding DetailResult.Description, StringFormat=简介:{0}}"
+                                TextWrapping="WrapWithOverflow" />
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Grid>
         </Grid>
     </Grid>
 </lib:CandyControl>

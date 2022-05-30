@@ -514,8 +514,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource SugarThemeAlis}" />
     </Style>
 
-
-    <Style x:Key="test" TargetType="hc:Pagination">
+    <Style x:Key="PageinationStyle" TargetType="hc:Pagination">
         <Setter Property="hc:VisualElement.HighlightBorderBrush" Value="{DynamicResource SugarThemeDefault}" />
         <Setter Property="hc:VisualElement.HighlightBackground" Value="{DynamicResource SugarThemeDefault}" />
         <Setter Property="hc:VisualElement.HighlightForeground" Value="{DynamicResource TextIconBrush}" />
@@ -619,7 +618,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
 
     <Style
         x:Key="PaginatioBtnStyle"
