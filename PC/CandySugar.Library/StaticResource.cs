@@ -11,6 +11,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Sdk.Component.Plugins;
+using System.Drawing;
+using System.IO;
+using System.Windows.Interop;
+using System.Windows.Media.Imaging;
 
 namespace CandySugar.Library
 {
@@ -214,5 +218,24 @@ namespace CandySugar.Library
                 PassWord = CandySoft.Default.PP
             };
         }
+        /// <summary>
+        /// bytes转图片
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <returns></returns>
+        public static BitmapSource ToImage(byte[] bytes,int width=180,int height=240)
+        {
+            Bitmap bmp = System.Drawing.Image.FromStream(new MemoryStream(bytes)) as Bitmap;
+            var ptr = bmp.GetHbitmap();
+            var source = Imaging.CreateBitmapSourceFromHBitmap(
+                  ptr, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            source.Freeze();
+            bmp.Dispose();
+            Import.DeleteObject(ptr);
+            return source;
+        }
+
     }
 }

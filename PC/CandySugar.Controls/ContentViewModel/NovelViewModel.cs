@@ -14,6 +14,7 @@ using System.Collections.ObjectModel;
 using Sdk.Component.Novel.sdk.ViewModel.Response;
 using Sdk.Component.Novel.sdk.ViewModel.Request;
 using HandyControl.Data;
+using XExten.Advance.LinqFramework;
 
 namespace CandySugar.Controls.ContentViewModel
 {
@@ -28,10 +29,12 @@ namespace CandySugar.Controls.ContentViewModel
             this.CategoryPage = 1;
             this.SearchVisible = false;
             this.DetailVisible = false;
+            this.StepOne = true;
+            this.StepTwo = false;
             OnViewLoaded();
         }
 
-        #region CommomProperty
+        #region CommomProperty_Bool
         private bool _Loading;
         public bool Loading
         {
@@ -50,6 +53,21 @@ namespace CandySugar.Controls.ContentViewModel
             get => _SearchVisible;
             set => SetAndNotify(ref _SearchVisible, value);
         }
+        private bool _StepOne;
+        public bool StepOne
+        {
+            get => _StepOne;
+            set => SetAndNotify(ref _StepOne, value);
+        }
+        private bool _StepTwo;
+        public bool StepTwo
+        {
+            get => _StepTwo;
+            set => SetAndNotify(ref _StepTwo, value);
+        }
+        #endregion
+
+        #region CommomProperty_Int
         private int _CategoryPage;
         public int CategoryPage
         {
@@ -89,15 +107,6 @@ namespace CandySugar.Controls.ContentViewModel
             get => _CateResult;
             set => SetAndNotify(ref _CateResult, value);
         }
-        private ObservableCollection<NovelSearchResult> _QuqeryResult;
-        /// <summary>
-        /// 检索结果
-        /// </summary>
-        public ObservableCollection<NovelSearchResult> QuqeryResult
-        {
-            get => _QuqeryResult;
-            set => SetAndNotify(ref _QuqeryResult, value);
-        }
         private ObservableCollection<NovelCategoryElementResult> _CateElementResult;
         /// <summary>
         /// 分类结果
@@ -116,6 +125,15 @@ namespace CandySugar.Controls.ContentViewModel
             get => _DetailResult;
             set => SetAndNotify(ref _DetailResult, value);
         }
+        private NovelContentResult _ViewResult;
+        /// <summary>
+        /// 内容结果
+        /// </summary>
+        public NovelContentResult ViewResult
+        {
+            get => _ViewResult;
+            set => SetAndNotify(ref _ViewResult, value);
+        }
         #endregion
 
         #region Override
@@ -133,6 +151,7 @@ namespace CandySugar.Controls.ContentViewModel
         #region Action
         public void SearchAction(string input)
         {
+            this.SearchVisible = true;
             InitSearch(input);
         }
         public void CategoryAction(string input)
@@ -142,8 +161,16 @@ namespace CandySugar.Controls.ContentViewModel
             this.DetailVisible = false;
             InitCategory(input);
         }
+        public void ViewAction(string input)
+        {
+            if (input.IsNullOrEmpty()) return;
+            this.StepOne = false;
+            this.StepTwo = true;
+            InitView(input);
+        }
         public void DetailAction(NovelCategoryElementResult input)
         {
+            if (input == null) return;
             this.SearchVisible = false;
             this.DetailVisible = true;
             this.DetailPage = 1;
@@ -200,7 +227,14 @@ namespace CandySugar.Controls.ContentViewModel
                 };
             }).RunsAsync();
             Loading = false;
-            QuqeryResult = new ObservableCollection<NovelSearchResult>(NovelSearchData.SearchResults);
+
+            CateElementResult = new ObservableCollection<NovelCategoryElementResult>(NovelSearchData.SearchResults.Select(t => new NovelCategoryElementResult
+            {
+                Author = t.Author,
+                BookName = t.BookName,
+                DetailRoute = t.DetailRoute,
+                UpdateDate = t.UpdateDate,
+            }));
         }
         private async void InitCategory(string input)
         {
@@ -246,6 +280,28 @@ namespace CandySugar.Controls.ContentViewModel
             }).RunsAsync();
             Loading = false;
             DetailResult = NovelDetailData.DetailResult;
+        }
+        private async void InitView(string input)
+        {
+            Loading = true;
+            await Task.Delay(CandySoft.Default.WaitSpan);
+            var NovelViewData = await NovelFactory.Novel(opt =>
+            {
+                opt.RequestParam = new Input
+                {
+                    CacheSpan = CandySoft.Default.Cache,
+                    Proxy = StaticResource.Proxy(),
+                    ImplType = StaticResource.ImplType(),
+                    NovelType = NovelEnum.View,
+                    View = new NovelView
+                    {
+                        Route = input
+                    }
+                };
+            }).RunsAsync();
+            Loading = false;
+            NovelViewData.ContentResult.Content = $"\t{NovelViewData.ContentResult.Content.Replace("　", "\n\t")}";
+            ViewResult = NovelViewData.ContentResult;
         }
         #endregion
     }
