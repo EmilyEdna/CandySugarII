@@ -17,6 +17,7 @@ namespace CandySugar.Controls
             Bind<CandyHeadTemplateViewModel>().ToSelf();
             Bind<CandySilderTemplateViewModel>().ToSelf();
             Bind<NovelViewModel>().ToSelf();
+            Bind<LovelViewModel>().ToSelf();
         }
     }
 }

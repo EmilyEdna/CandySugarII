@@ -45,7 +45,7 @@ namespace CandySugar.Controls.TemplateViewModel
                      StaticResource.CreateControl<NovelView>(parentMethodInfo, parentDataContext,Container.Get<NovelViewModel>());
                     break;
                 case 2:
-                    StaticResource.CreateControl<NovelView>(parentMethodInfo, parentDataContext, Container.Get<NovelViewModel>());
+                    StaticResource.CreateControl<LovelView>(parentMethodInfo, parentDataContext, Container.Get<LovelViewModel>());
                     break;
                 case 3:
                     StaticResource.CreateControl<NovelView>(parentMethodInfo, parentDataContext, Container.Get<NovelViewModel>());
