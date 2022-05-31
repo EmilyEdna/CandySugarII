@@ -51,11 +51,19 @@ namespace CandySugar.Controls.Template
             if (parentWindow.WindowState == WindowState.Normal)
             {
                 parentWindow.WindowState = WindowState.Maximized;
+                parentWindow.Width= SystemParameters.PrimaryScreenWidth;
+                parentWindow.Height = SystemParameters.PrimaryScreenHeight;
+                CandySoft.Default.ScreenWidth = SystemParameters.PrimaryScreenWidth;
+                CandySoft.Default.ScreenHeight = SystemParameters.PrimaryScreenHeight;
                 StaticResource.GridClipContent(parentWindow, SystemParameters.PrimaryScreenWidth, SystemParameters.PrimaryScreenHeight);
             }
             else
             {
                 parentWindow.WindowState = WindowState.Normal;
+                CandySoft.Default.ScreenWidth = (SystemParameters.PrimaryScreenWidth / 10) * 6;
+                CandySoft.Default.ScreenHeight = (SystemParameters.PrimaryScreenHeight / 10) * 7;
+                parentWindow.Width = (SystemParameters.PrimaryScreenWidth / 10) * 6;
+                parentWindow.Height = (SystemParameters.PrimaryScreenHeight / 10) * 7;
                 StaticResource.GridClipContent(parentWindow, CandySoft.Default.ScreenWidth, CandySoft.Default.ScreenHeight);
             }
         }

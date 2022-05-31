@@ -92,9 +92,12 @@
             MouseMove="CandyHeadTemplate_MouseMove" />
         <ContentControl
             x:Name="RightContent"
+            Width="{c:Binding (Width-200),
+                              ElementName=window}"
             Height="{c:Binding (Height-30),
                                ElementName=window}"
-            Margin="200,30,0,0"
+            Margin="0,30,0,0"
+            HorizontalAlignment="Right"
             Content="{Binding Ctrl}" />
         <ContentControl
             x:Name="SilderMenu"
