@@ -119,6 +119,18 @@
                 <md:PackIcon x:Name="SilderIcon" Kind="MenuLeft" />
             </TextBlock>
         </StackPanel>
+        <hc:ScrollViewer
+            Height="400"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            IsInertiaEnabled="True"
+            IsPenetrating="True"
+            VerticalScrollBarVisibility="Hidden">
+            <StackPanel
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                hc:Growl.GrowlParent="True" />
+        </hc:ScrollViewer>
         <tb:TaskbarIcon IconSource="{StaticResource fav}" TrayMouseDoubleClick="TaskbarIcon_TrayMouseDoubleClick">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu FontFamily="{StaticResource FontStyle}" Style="{StaticResource ContextMenuBaseStyle}">

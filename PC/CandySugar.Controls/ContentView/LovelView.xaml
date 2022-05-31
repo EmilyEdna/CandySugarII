@@ -35,6 +35,47 @@
                 To="0"
                 Duration="0:0:0.5" />
         </Storyboard>
+        <Style x:Key="BtnPageStyle" TargetType="lib:CandyButton">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Margin" Value="2,0,2,0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Foreground" Value="{DynamicResource SugarThemeAlis}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="lib:CandyButton">
+                        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <WrapPanel.Effect>
+                                <DropShadowEffect
+                                    BlurRadius="3"
+                                    Opacity=".3"
+                                    ShadowDepth="0"
+                                    Color="{DynamicResource SugarThemeWhiteColor}" />
+                            </WrapPanel.Effect>
+                            <ContentPresenter
+                                x:Name="Icon"
+                                Width="16"
+                                Height="16"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Content="{TemplateBinding Icon}"
+                                ContentSource="Icon"
+                                SnapsToDevicePixels="True" />
+                            <TextBlock
+                                FontSize="17"
+                                Foreground="{TemplateBinding Foreground}"
+                                Text="{TemplateBinding Content}" />
+                        </WrapPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="Foreground" Value="{DynamicResource SugarThemePink}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </lib:CandyControl.Resources>
     <Grid>
         <hc:LoadingCircle Foreground="{DynamicResource SugarThemeDefault}" Visibility="{Binding Loading, Converter={StaticResource ToShow}}" />
@@ -231,5 +272,37 @@
                 </ListView>
             </WrapPanel>
         </Grid>
+        <Grid x:Name="StepTwo" Visibility="{Binding StepTwo, Converter={StaticResource ToShow}}">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+            <WrapPanel HorizontalAlignment="Center">
+                <hc:ScrollViewer VerticalScrollBarVisibility="Hidden">
+                    <TextBlock
+                        x:Name="Word"
+                        Width="{c:Binding (ScreenWidth-200),
+                                          Source={x:Static res:CandySoft.Default}}"
+                        FontSize="14"
+                        Foreground="{DynamicResource SugarThemeAlis}"
+                        ScrollViewer.CanContentScroll="True"
+                        Style="{StaticResource TextBlockDefaultWarning}"
+                        Text="{Binding ContentResult.Content}"
+                        TextWrapping="Wrap" />
+                </hc:ScrollViewer>
+            </WrapPanel>
+            <lib:CandyButton
+                Grid.Row="1"
+                HorizontalAlignment="Right"
+                s:View.ActionTarget="{Binding DataContext, ElementName=LovelViewName}"
+                Command="{s:Action HistoryAction}"
+                Content="返回上级"
+                Style="{StaticResource BtnPageStyle}">
+                <lib:CandyButton.Icon>
+                    <md:PackIcon Kind="Restore" />
+                </lib:CandyButton.Icon>
+            </lib:CandyButton>
+        </Grid>
+        <Grid x:Name="StepThree" Visibility="{Binding StepThree, Converter={StaticResource ToShow}}" />
     </Grid>
 </lib:CandyControl>

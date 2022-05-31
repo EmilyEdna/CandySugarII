@@ -1,5 +1,6 @@
 ﻿using CandySugar.Library;
 using CandySugar.Resource.Properties;
+using HandyControl.Controls;
 using HandyControl.Data;
 using Sdk.Component.Lovel.sdk;
 using Sdk.Component.Lovel.sdk.ViewModel;
@@ -14,6 +15,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XExten.Advance.LinqFramework;
 
 namespace CandySugar.Controls.ContentViewModel
 {
@@ -49,6 +51,12 @@ namespace CandySugar.Controls.ContentViewModel
         {
             get => _StepTwo;
             set => SetAndNotify(ref _StepTwo, value);
+        }
+        private bool _StepThree;
+        public bool StepThree
+        {
+            get => _StepThree;
+            set => SetAndNotify(ref _StepThree, value);
         }
         #endregion
 
@@ -95,6 +103,15 @@ namespace CandySugar.Controls.ContentViewModel
             get => _ViewResult;
             set => SetAndNotify(ref _ViewResult, value);
         }
+        private LovelContentResult _ContentResult;
+        /// <summary>
+        /// 内容结果
+        /// </summary>
+        public LovelContentResult ContentResult
+        {
+            get => _ContentResult;
+            set => SetAndNotify(ref _ContentResult, value);
+        }
         #endregion
 
         #region Override
@@ -110,9 +127,10 @@ namespace CandySugar.Controls.ContentViewModel
         #endregion
 
         #region Action
-        public void CategoryAction(string input) 
+        public void CategoryAction(string input)
         {
             this.CategoryRoute = input;
+
             InitCategory(input);
         }
 
@@ -122,22 +140,29 @@ namespace CandySugar.Controls.ContentViewModel
             InitDetail(this.DetailRoute);
         }
         public void ContentAction(LovelViewResult input)
-        { 
-                    
+        {
+            if (input.IsDown) InitDown(input);
+            else InitContent(input.ChapterRoute);
         }
         public void PageCateAction(FunctionEventArgs<int> input)
         {
             this.CategoryPage = input.Info;
             CategoryAction(CategoryRoute);
         }
+        public void HistoryAction()
+        {
+            StepOne = true;
+            StepTwo = false;
+            StepThree = false;
+        }
         #endregion
 
         #region Method
-        private async void InitLovel() 
+        private async void InitLovel()
         {
             Loading = true;
             await Task.Delay(CandySoft.Default.WaitSpan);
-            var LovelInitData =  LovelFactory.Lovel(opt =>
+            var LovelInitData = LovelFactory.Lovel(opt =>
             {
                 opt.RequestParam = new Input
                 {
@@ -213,6 +238,64 @@ namespace CandySugar.Controls.ContentViewModel
             }).RunsAsync();
             Loading = false;
             ViewResult = new ObservableCollection<LovelViewResult>(LovelViewData.ViewResult);
+        }
+        private async void InitDown(LovelViewResult input)
+        {
+            var LovelDownData = await LovelFactory.Lovel(opt =>
+            {
+                opt.RequestParam = new Input
+                {
+                    CacheSpan = CandySoft.Default.Cache,
+                    Proxy = StaticResource.Proxy(),
+                    ImplType = StaticResource.ImplType(),
+                    LovelType = LovelEnum.Download,
+                    Down = new LovelDown
+                    {
+                        BookName = input.BookName,
+                        UId = input.ChapterRoute.AsInt()
+                    }
+                };
+            }).RunsAsync();
+            StaticResource.Download(LovelDownData.DownResult.Bytes, "Lovel", input.BookName, "txt");
+        }
+        private async void InitContent(string input)
+        {
+            Loading = true;
+            await Task.Delay(CandySoft.Default.WaitSpan);
+            var LovelContentData = await LovelFactory.Lovel(opt =>
+            {
+                opt.RequestParam = new Input
+                {
+                    CacheSpan = CandySoft.Default.Cache,
+                    Proxy = StaticResource.Proxy(),
+                    ImplType = StaticResource.ImplType(),
+                    LovelType = LovelEnum.Content,
+                    Content = new LovelContent
+                    {
+                        ChapterRoute = input
+                    }
+                };
+            }).RunsAsync();
+
+            if (LovelContentData.ContentResult.Content.Equals("因版权问题，文库不再提供该小说的阅读！"))
+            {
+                Growl.Info("因版权问题，不再提供该小说的阅读");
+                return;
+            }
+            if (LovelContentData.ContentResult.Image.IsNullOrEmpty())
+            {
+                StepOne = false;
+                StepTwo = false;
+                StepThree = true;
+            }
+            else
+            {
+                StepOne = false;
+                StepTwo = true;
+                StepThree = false;
+            }
+            Loading = false;
+            ContentResult = LovelContentData.ContentResult;
         }
         #endregion
     }

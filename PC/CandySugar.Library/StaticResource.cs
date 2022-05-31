@@ -15,6 +15,9 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using XExten.Advance.StaticFramework;
+using XExten.Advance.LinqFramework;
+using System.Diagnostics;
 
 namespace CandySugar.Library
 {
@@ -236,6 +239,36 @@ namespace CandySugar.Library
             Import.DeleteObject(ptr);
             return source;
         }
-
+        /// <summary>
+        /// 过滤特殊字段
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static string FileNameFilter(string input)
+        {
+            string[] Filter = { ":", "\\", "/", "*", "?", "<", ">", "|", "\"" };
+            Filter.ForArrayEach<string>(item =>
+            {
+                if (input.Contains(item))
+                {
+                    input = input.Replace(item, "_");
+                }
+            });
+            return input;
+        }
+        /// <summary>
+        /// 下载
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="dir"></param>
+        /// <param name="fileName"></param>
+        /// <param name="extens"></param>
+        public static void Download(byte[] bytes,string dir ,string fileName,string extens) 
+        {
+            var dirs = SyncStatic.CreateDir(Path.Combine(Environment.CurrentDirectory, "CandyDown", dir, $"{FileNameFilter(fileName)}"));
+            var fn = SyncStatic.CreateFile(Path.Combine(dirs, $"{FileNameFilter(fileName)}.{extens}"));
+            SyncStatic.WriteFile(bytes, fn);
+            Process.Start("explorer.exe", dirs);
+        }
     }
 }

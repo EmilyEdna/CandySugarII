@@ -359,7 +359,6 @@
                     </lib:CandyButton.InputBindings>
                 </lib:CandyButton>
             </UniformGrid>
-
         </Grid>
     </Grid>
 </lib:CandyControl>
