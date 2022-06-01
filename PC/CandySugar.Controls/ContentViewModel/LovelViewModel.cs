@@ -30,6 +30,7 @@ namespace CandySugar.Controls.ContentViewModel
             this.CategoryPage = 1;
             this.StepOne = true;
             this.StepTwo = false;
+            this.StepThree = false;
             OnViewLoaded();
         }
 
@@ -124,13 +125,20 @@ namespace CandySugar.Controls.ContentViewModel
         #region Field
         private string CategoryRoute;
         private string DetailRoute;
+        private string KeyWord;
         #endregion
 
         #region Action
+        public void SearchAction(string input)
+        {
+            this.KeyWord = input;
+            this.CategoryRoute = string.Empty;
+            InitSearch(input);
+        }
         public void CategoryAction(string input)
         {
             this.CategoryRoute = input;
-
+            this.KeyWord = string.Empty;
             InitCategory(input);
         }
 
@@ -147,7 +155,8 @@ namespace CandySugar.Controls.ContentViewModel
         public void PageCateAction(FunctionEventArgs<int> input)
         {
             this.CategoryPage = input.Info;
-            CategoryAction(CategoryRoute);
+            if (!this.CategoryRoute.IsNullOrEmpty()) CategoryAction(this.CategoryRoute);
+            else SearchAction(this.KeyWord);
         }
         public void HistoryAction()
         {
@@ -296,6 +305,35 @@ namespace CandySugar.Controls.ContentViewModel
             }
             Loading = false;
             ContentResult = LovelContentData.ContentResult;
+        }
+        private async void InitSearch(string input)
+        {
+            Loading = true;
+            await Task.Delay(CandySoft.Default.WaitSpan);
+            var LovelQueryData = LovelFactory.Lovel(opt =>
+            {
+                opt.RequestParam = new Input
+                {
+                    CacheSpan = CandySoft.Default.Cache,
+                    Proxy = StaticResource.Proxy(),
+                    ImplType = StaticResource.ImplType(),
+                    LovelType = LovelEnum.Search,
+                    Login = new LovelLogin
+                    {
+                        Account = CandySoft.Default.WA,
+                        Password = CandySoft.Default.WP
+                    },
+                    Search = new LovelSearch
+                    {
+                        KeyWord = input,
+                        SearchType = LovelSearchEnum.ArticleName,
+                        Page= CategoryPage
+                    }
+                };
+            }).RunsAsync().Result;
+            Loading = false;
+            CategoryTotal =  LovelQueryData.SearchResult.Total;
+            CateElementResult = new ObservableCollection<LovelCategoryElementResult>(LovelQueryData.SearchResult.ElementResults.ToMapest<List<LovelCategoryElementResult>>());
         }
         #endregion
     }
