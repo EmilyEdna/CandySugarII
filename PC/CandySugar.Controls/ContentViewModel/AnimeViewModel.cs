@@ -1,0 +1,162 @@
+﻿using CandySugar.Library;
+using CandySugar.Resource.Properties;
+using Sdk.Component.Anime.sdk;
+using Sdk.Component.Anime.sdk.ViewModel;
+using Sdk.Component.Anime.sdk.ViewModel.Enums;
+using Sdk.Component.Anime.sdk.ViewModel.Request;
+using Sdk.Component.Anime.sdk.ViewModel.Response;
+using Stylet;
+using StyletIoC;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CandySugar.Controls.ContentViewModel
+{
+    public class AnimeViewModel : Screen
+    {
+        public IContainer Container;
+        public IWindowManager WindowManager;
+        public AnimeViewModel(IContainer Container, IWindowManager WindowManager)
+        {
+            this.WindowManager = WindowManager;
+            this.Container = Container;
+            this.Chars = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z".Split(",").ToList();
+            this.CategoryPage = 1;
+            this.StepOne = true;
+            this.StepTwo = false;
+            this.StepThree = false;
+            OnViewLoaded();
+        }
+
+        #region CommomProperty_Bool
+        private bool _Loading;
+        public bool Loading
+        {
+            get => _Loading;
+            set => SetAndNotify(ref _Loading, value);
+        }
+        private bool _StepOne;
+        public bool StepOne
+        {
+            get => _StepOne;
+            set => SetAndNotify(ref _StepOne, value);
+        }
+        private bool _StepTwo;
+        public bool StepTwo
+        {
+            get => _StepTwo;
+            set => SetAndNotify(ref _StepTwo, value);
+        }
+        private bool _StepThree;
+        public bool StepThree
+        {
+            get => _StepThree;
+            set => SetAndNotify(ref _StepThree, value);
+        }
+        #endregion
+
+        #region ComomProperty_Int
+        private int _CategoryTotal;
+        public int CategoryTotal
+        {
+            get => _CategoryTotal;
+            set => SetAndNotify(ref _CategoryTotal, value);
+        }
+        private int _CategoryPage;
+        public int CategoryPage
+        {
+            get => _CategoryPage;
+            set => SetAndNotify(ref _CategoryPage, value);
+        }
+        #endregion
+
+        #region Field
+        #endregion
+
+        #region Property
+        public List<string> Chars { get; set; }
+        private ObservableCollection<AnimeWeekDayIndexResult> _DayResult;
+        /// <summary>
+        /// 初始化结果
+        /// </summary>
+        public ObservableCollection<AnimeWeekDayIndexResult> DayResult
+        {
+            get => _DayResult;
+            set => SetAndNotify(ref _DayResult, value);
+        }
+        private ObservableCollection<AnimeSearchElementResult> _SearchResult;
+        /// <summary>
+        /// 检索分类结果
+        /// </summary>
+        public ObservableCollection<AnimeSearchElementResult> SearchResult
+        {
+            get => _SearchResult;
+            set => SetAndNotify(ref _SearchResult, value);
+         }
+        #endregion
+
+        #region Override
+        protected override void OnViewLoaded()
+        {
+            InitAnime();
+        }
+        #endregion
+
+        #region Action
+        public void CategoryAction(Dictionary<object, object> input)
+        {
+            InitCategory(input);
+        }
+        #endregion
+
+        #region Method
+        private async void InitAnime()
+        {
+            Loading = true;
+            await Task.Delay(CandySoft.Default.WaitSpan);
+            var AnimeInitData = AnimeFactory.Anime(opt =>
+            {
+                opt.RequestParam = new Input
+                {
+                    CacheSpan = CandySoft.Default.Cache,
+                    Proxy = StaticResource.Proxy(),
+                    ImplType = StaticResource.ImplType(),
+                    AnimeType = AnimeEnum.Init
+                };
+            }).RunsAsync().Result;
+            Loading = false;
+            DayResult = new ObservableCollection<AnimeWeekDayIndexResult>(AnimeInitData.RecResults);
+        }
+        private async void InitCategory(Dictionary<object, object> input)
+        {
+            var key = input.Keys.FirstOrDefault().ToString();
+            var val = input.Values.FirstOrDefault().ToString();
+            Loading = true;
+            await Task.Delay(CandySoft.Default.WaitSpan);
+            var AnimeCateData = AnimeFactory.Anime(opt =>
+            {
+                opt.RequestParam = new Input
+                {
+                    CacheSpan = CandySoft.Default.Cache,
+                    Proxy = StaticResource.Proxy(),
+                    ImplType = StaticResource.ImplType(),
+                    AnimeType = key.Equals("Char") ? AnimeEnum.Category : AnimeEnum.CategoryType,
+                    Category = new AnimeCategory
+                    {
+                        Route = val,
+                        LetterType = Enum.Parse<AnimeLetterEnum>(val),
+                        Page=CategoryPage
+                    }
+                };
+            }).RunsAsync().Result;
+            Loading = false;
+            CategoryTotal = AnimeCateData.SeachResult.Total;
+            SearchResult = new ObservableCollection<AnimeSearchElementResult>(AnimeCateData.SeachResult.ElementResult);
+        }
+        #endregion
+    }
+}

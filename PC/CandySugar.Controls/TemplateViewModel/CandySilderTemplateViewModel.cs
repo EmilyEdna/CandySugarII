@@ -48,6 +48,7 @@ namespace CandySugar.Controls.TemplateViewModel
                     StaticResource.CreateControl<LovelView>(parentMethodInfo, parentDataContext, Container.Get<LovelViewModel>());
                     break;
                 case 3:
+                    StaticResource.CreateControl<AnimeView>(parentMethodInfo, parentDataContext, Container.Get<AnimeViewModel>());
                     break;
                 case 4:
                     break;

@@ -18,5 +18,16 @@ namespace CandySugar.Library.Template
         }
         public static readonly DependencyProperty IconProperty =
             DependencyProperty.Register("Icon", typeof(object), typeof(CandyButton), new PropertyMetadata(null));
+
+
+        public string  Title
+        {
+            get { return (string )GetValue(TitleProperty); }
+            set { SetValue(TitleProperty, value); }
+        }
+        public static readonly DependencyProperty TitleProperty =
+            DependencyProperty.Register("Title", typeof(string ), typeof(CandyButton), new PropertyMetadata(""));
+
+
     }
 }

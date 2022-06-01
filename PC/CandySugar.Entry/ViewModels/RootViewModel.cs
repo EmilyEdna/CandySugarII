@@ -57,6 +57,9 @@ namespace CandySugar.Entry.ViewModels
                     case "LXS":
                         Ctrl = StaticResource.CreateControl<LovelView>(Container.Get<LovelViewModel>(), param.Values.FirstOrDefault().ToString());
                         break;
+                    case "DM":
+                        Ctrl = StaticResource.CreateControl<AnimeView>(Container.Get<AnimeViewModel>(), param.Values.FirstOrDefault().ToString());
+                        break;
                     default:
                         break;
                 }

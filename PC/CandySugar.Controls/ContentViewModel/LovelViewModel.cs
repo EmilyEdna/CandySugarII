@@ -318,11 +318,6 @@ namespace CandySugar.Controls.ContentViewModel
                     Proxy = StaticResource.Proxy(),
                     ImplType = StaticResource.ImplType(),
                     LovelType = LovelEnum.Search,
-                    Login = new LovelLogin
-                    {
-                        Account = CandySoft.Default.WA,
-                        Password = CandySoft.Default.WP
-                    },
                     Search = new LovelSearch
                     {
                         KeyWord = input,
