@@ -76,6 +76,11 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="LovelTextStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource SugarThemeDefault}" />
+            <Setter Property="Margin" Value="0,6" />
+            <Setter Property="FontSize" Value="14" />
+        </Style>
     </lib:CandyControl.Resources>
     <Grid>
         <hc:LoadingCircle Foreground="{DynamicResource SugarThemeDefault}" Visibility="{Binding Loading, Converter={StaticResource ToShow}}" />
@@ -149,41 +154,13 @@
                                         </Border.Effect>
                                     </Border>
                                     <StackPanel Grid.Column="1" HorizontalAlignment="Left">
-                                        <TextBlock
-                                            Margin="0,6"
-                                            FontSize="14"
-                                            Foreground="{DynamicResource SugarThemeOrange}"
-                                            Text="{Binding BookName, StringFormat=书名:{0}}" />
-                                        <TextBlock
-                                            Margin="0,6"
-                                            FontSize="14"
-                                            Foreground="{DynamicResource SugarThemeOrange}"
-                                            Text="{Binding Author, StringFormat=作者:{0}}" />
-                                        <TextBlock
-                                            Margin="0,6"
-                                            FontSize="14"
-                                            Foreground="{DynamicResource SugarThemeOrange}"
-                                            Text="{Binding Category, StringFormat=类别:{0}}" />
-                                        <TextBlock
-                                            Margin="0,6"
-                                            FontSize="14"
-                                            Foreground="{DynamicResource SugarThemeOrange}"
-                                            Text="{Binding Status, StringFormat=状态:{0}}" />
-                                        <TextBlock
-                                            Margin="0,6"
-                                            FontSize="14"
-                                            Foreground="{DynamicResource SugarThemeOrange}"
-                                            Text="{Binding Press, StringFormat=出版:{0}}" />
-                                        <TextBlock
-                                            Margin="0,6"
-                                            FontSize="14"
-                                            Foreground="{DynamicResource SugarThemeOrange}"
-                                            Text="{Binding Date, StringFormat=最近更新:{0:yyyy-MM-dd HH:mm:ss}}" />
-                                        <TextBlock
-                                            Margin="0,6"
-                                            FontSize="14"
-                                            Foreground="{DynamicResource SugarThemeOrange}"
-                                            Text="{Binding Description, StringFormat=简介:{0}}" />
+                                        <TextBlock Style="{DynamicResource LovelTextStyle}" Text="{Binding BookName, StringFormat=书名:{0}}" />
+                                        <TextBlock Style="{DynamicResource LovelTextStyle}" Text="{Binding Author, StringFormat=作者:{0}}" />
+                                        <TextBlock Style="{DynamicResource LovelTextStyle}" Text="{Binding Category, StringFormat=类别:{0}}" />
+                                        <TextBlock Style="{DynamicResource LovelTextStyle}" Text="{Binding Status, StringFormat=状态:{0}}" />
+                                        <TextBlock Style="{DynamicResource LovelTextStyle}" Text="{Binding Press, StringFormat=出版:{0}}" />
+                                        <TextBlock Style="{DynamicResource LovelTextStyle}" Text="{Binding Date, StringFormat=最近更新:{0:yyyy-MM-dd HH:mm:ss}}" />
+                                        <TextBlock Style="{DynamicResource LovelTextStyle}" Text="{Binding Description, StringFormat=简介:{0}}" />
                                     </StackPanel>
                                 </Grid>
                             </DataTemplate>
@@ -238,7 +215,7 @@
                                             <TextBlock
                                                 Margin="-20,0,0,-15"
                                                 HorizontalAlignment="Left"
-                                                Foreground="{DynamicResource SugarThemeRed}"
+                                                Foreground="{DynamicResource SugarThemeDefault}"
                                                 MouseLeftButtonDown="TextClicked">
                                                 <md:PackIcon
                                                     Width="18"
@@ -252,7 +229,7 @@
                                     <DataTemplate>
                                         <Grid>
                                             <TextBlock
-                                                Foreground="{DynamicResource SugarThemeOrange}"
+                                                Foreground="{DynamicResource SugarThemeDefault}"
                                                 Text="{Binding ChapterName}"
                                                 TextWrapping="WrapWithOverflow" />
                                         </Grid>
@@ -303,6 +280,37 @@
                 </lib:CandyButton.Icon>
             </lib:CandyButton>
         </Grid>
-        <Grid x:Name="StepThree" Visibility="{Binding StepThree, Converter={StaticResource ToShow}}" />
+        <Grid x:Name="StepThree" Visibility="{Binding StepThree, Converter={StaticResource ToShow}}">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+            <ListBox
+                Background="Transparent"
+                BorderThickness="0"
+                ItemsSource="{Binding ContentResult.Image}"
+                ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                Style="{StaticResource StackPanelVerticalListBox}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border HorizontalAlignment="Center" VerticalAlignment="Top">
+                            <Image Source="{Binding .}" Stretch="UniformToFill" />
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <lib:CandyButton
+                Grid.Row="1"
+                HorizontalAlignment="Right"
+                s:View.ActionTarget="{Binding DataContext, ElementName=LovelViewName}"
+                Command="{s:Action HistoryAction}"
+                Content="返回上级"
+                Style="{StaticResource BtnPageStyle}">
+                <lib:CandyButton.Icon>
+                    <md:PackIcon Kind="Restore" />
+                </lib:CandyButton.Icon>
+            </lib:CandyButton>
+        </Grid>
     </Grid>
 </lib:CandyControl>

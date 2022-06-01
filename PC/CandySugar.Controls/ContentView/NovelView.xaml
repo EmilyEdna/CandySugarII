@@ -108,14 +108,14 @@
                                 <GridViewColumn.HeaderTemplate>
                                     <DataTemplate>
                                         <Grid>
-                                            <TextBlock Foreground="{DynamicResource SugarThemeOrange}" Text="书名" />
+                                            <TextBlock Foreground="{DynamicResource SugarThemeDefault}" Text="书名" />
                                         </Grid>
                                     </DataTemplate>
                                 </GridViewColumn.HeaderTemplate>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <Grid>
-                                            <TextBlock Foreground="{DynamicResource SugarThemeOrange}" Text="{Binding BookName}" />
+                                            <TextBlock Foreground="{DynamicResource SugarThemeDefault}" Text="{Binding BookName}" />
                                         </Grid>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -124,14 +124,14 @@
                                 <GridViewColumn.HeaderTemplate>
                                     <DataTemplate>
                                         <Grid>
-                                            <TextBlock Foreground="{DynamicResource SugarThemeOrange}" Text="作者" />
+                                            <TextBlock Foreground="{DynamicResource SugarThemeDefault}" Text="作者" />
                                         </Grid>
                                     </DataTemplate>
                                 </GridViewColumn.HeaderTemplate>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <Grid>
-                                            <TextBlock Foreground="{DynamicResource SugarThemeOrange}" Text="{Binding Author}" />
+                                            <TextBlock Foreground="{DynamicResource SugarThemeDefault}" Text="{Binding Author}" />
                                         </Grid>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -140,14 +140,14 @@
                                 <GridViewColumn.HeaderTemplate>
                                     <DataTemplate>
                                         <Grid>
-                                            <TextBlock Foreground="{DynamicResource SugarThemeOrange}" Text="更新时间" />
+                                            <TextBlock Foreground="{DynamicResource SugarThemeDefault}" Text="更新时间" />
                                         </Grid>
                                     </DataTemplate>
                                 </GridViewColumn.HeaderTemplate>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <Grid>
-                                            <TextBlock Foreground="{DynamicResource SugarThemeOrange}" Text="{Binding UpdateDate}" />
+                                            <TextBlock Foreground="{DynamicResource SugarThemeDefault}" Text="{Binding UpdateDate}" />
                                         </Grid>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
