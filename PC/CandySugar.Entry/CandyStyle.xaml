@@ -6,6 +6,7 @@
     xmlns:lib="http://lib.sugar.com"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes">
 
+    <!--  菜单项样式  -->
     <Style
         x:Key="DesignMenuItem"
         BasedOn="{x:Null}"
@@ -255,7 +256,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-
+    <!--  菜单项样式  -->
     <Style
         x:Key="CandyMenuItem"
         BasedOn="{StaticResource DesignMenuItem}"
@@ -263,7 +264,7 @@
         <Setter Property="FontFamily" Value="{DynamicResource FontStyle}" />
         <Setter Property="FontSize" Value="12" />
     </Style>
-
+    <!--  主窗体样式  -->
     <Style x:Key="CandyWindow" TargetType="lib:CandyWindow">
         <Setter Property="AllowsTransparency" Value="True" />
         <Setter Property="BorderBrush" Value="Transparent" />
@@ -298,7 +299,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-
+    <!--  登录窗体样式  -->
     <Style x:Key="CandyLoginWindow" TargetType="lib:CandyWindow">
         <Setter Property="AllowsTransparency" Value="True" />
         <Setter Property="BorderBrush" Value="Transparent" />
@@ -328,7 +329,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-
+    <!--  设置窗体样式  -->
     <Style x:Key="CandyOptionWindow" TargetType="lib:CandyWindow">
         <Setter Property="WindowStyle" Value="None" />
         <Setter Property="AllowsTransparency" Value="True" />
@@ -343,7 +344,7 @@
         <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
         <Setter Property="FontFamily" Value="{DynamicResource FontStyle}" />
     </Style>
-
+    <!--  输入框样式  -->
     <Style
         x:Key="CandyTextBoxStyle"
         BasedOn="{x:Null}"
@@ -432,7 +433,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-
+    <!--  检索输入框样式  -->
     <Style
         x:Key="CandySearchText"
         BasedOn="{StaticResource CandyTextBoxStyle}"
@@ -444,7 +445,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
-
+    <!--  侧边栏样式  -->
     <Style x:Key="SilderMenu" TargetType="lib:CandyButton">
         <Setter Property="Width" Value="200" />
         <Setter Property="Height" Value="30" />
@@ -503,7 +504,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-
+    <!--  分类按钮样式  -->
     <Style
         x:Key="CategoryBtn"
         BasedOn="{StaticResource MaterialDesignOutlinedButton}"
@@ -518,7 +519,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-
+    <!--  分页按钮样式  -->
     <Style x:Key="PageinationStyle" TargetType="hc:Pagination">
         <Setter Property="hc:VisualElement.HighlightBorderBrush" Value="{DynamicResource SugarThemeDefault}" />
         <Setter Property="hc:VisualElement.HighlightBackground" Value="{DynamicResource SugarThemeDefault}" />
@@ -623,7 +624,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-
+    <!--  分页按钮内部样式  -->
     <Style
         x:Key="PaginatioBtnStyle"
         BasedOn="{StaticResource BaseStyle}"

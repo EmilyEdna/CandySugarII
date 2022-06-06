@@ -18,6 +18,7 @@ using System.Windows.Media.Imaging;
 using XExten.Advance.StaticFramework;
 using XExten.Advance.LinqFramework;
 using System.Diagnostics;
+using Microsoft.Web.WebView2.Wpf;
 
 namespace CandySugar.Library
 {
@@ -228,7 +229,7 @@ namespace CandySugar.Library
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <returns></returns>
-        public static BitmapSource ToImage(byte[] bytes,int width=180,int height=240)
+        public static BitmapSource ToImage(byte[] bytes, int width = 180, int height = 240)
         {
             Bitmap bmp = System.Drawing.Image.FromStream(new MemoryStream(bytes)) as Bitmap;
             var ptr = bmp.GetHbitmap();
@@ -263,12 +264,26 @@ namespace CandySugar.Library
         /// <param name="dir"></param>
         /// <param name="fileName"></param>
         /// <param name="extens"></param>
-        public static void Download(byte[] bytes,string dir ,string fileName,string extens) 
+        public static void Download(byte[] bytes, string dir, string fileName, string extens)
         {
             var dirs = SyncStatic.CreateDir(Path.Combine(Environment.CurrentDirectory, "CandyDown", dir, $"{FileNameFilter(fileName)}"));
             var fn = SyncStatic.CreateFile(Path.Combine(dirs, $"{FileNameFilter(fileName)}.{extens}"));
             SyncStatic.WriteFile(bytes, fn);
             Process.Start("explorer.exe", dirs);
+        }
+        /// <summary>
+        /// 初始化WebView
+        /// </summary>
+        /// <param name="WebView"></param>
+        /// <param name="Name"></param>
+        public static async void CreateWebView(WebView2 WebView,string Name)
+        {
+            await WebView.EnsureCoreWebView2Async(null);
+
+            WebView.CoreWebView2.Navigate(new Uri($"{Environment.CurrentDirectory}\\Webs\\{Name}.html").AbsoluteUri);
+
+            WebView.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
+            WebView.CoreWebView2.Settings.AreDevToolsEnabled = false;
         }
     }
 }

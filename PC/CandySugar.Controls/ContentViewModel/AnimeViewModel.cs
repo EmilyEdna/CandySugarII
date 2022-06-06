@@ -1,5 +1,8 @@
 ﻿using CandySugar.Library;
+using CandySugar.Library.Template;
 using CandySugar.Resource.Properties;
+using HandyControl.Data;
+using Microsoft.Web.WebView2.Wpf;
 using Sdk.Component.Anime.sdk;
 using Sdk.Component.Anime.sdk.ViewModel;
 using Sdk.Component.Anime.sdk.ViewModel.Enums;
@@ -20,6 +23,7 @@ namespace CandySugar.Controls.ContentViewModel
     {
         public IContainer Container;
         public IWindowManager WindowManager;
+        public WebView2 WebView { get; set; }
         public AnimeViewModel(IContainer Container, IWindowManager WindowManager)
         {
             this.WindowManager = WindowManager;
@@ -28,7 +32,6 @@ namespace CandySugar.Controls.ContentViewModel
             this.CategoryPage = 1;
             this.StepOne = true;
             this.StepTwo = false;
-            this.StepThree = false;
             OnViewLoaded();
         }
 
@@ -51,12 +54,6 @@ namespace CandySugar.Controls.ContentViewModel
             get => _StepTwo;
             set => SetAndNotify(ref _StepTwo, value);
         }
-        private bool _StepThree;
-        public bool StepThree
-        {
-            get => _StepThree;
-            set => SetAndNotify(ref _StepThree, value);
-        }
         #endregion
 
         #region ComomProperty_Int
@@ -75,6 +72,7 @@ namespace CandySugar.Controls.ContentViewModel
         #endregion
 
         #region Field
+        private Dictionary<object, object> CateKeyWord;
         #endregion
 
         #region Property
@@ -96,7 +94,26 @@ namespace CandySugar.Controls.ContentViewModel
         {
             get => _SearchResult;
             set => SetAndNotify(ref _SearchResult, value);
-         }
+        }
+        private ObservableCollection<AnimeDetailResult> _DetailResult;
+        /// <summary>
+        /// 详情结果
+        /// </summary>
+        public ObservableCollection<AnimeDetailResult> DetailResult
+        {
+            get => _DetailResult;
+            set => SetAndNotify(ref _DetailResult, value);
+        }
+        private AnimePlayResult _PlayResult;
+        /// <summary>
+        /// 播放结果
+        /// </summary>
+        public AnimePlayResult PlayResult
+        {
+            get => _PlayResult;
+            set => SetAndNotify(ref _PlayResult, value);
+        }
+
         #endregion
 
         #region Override
@@ -109,7 +126,21 @@ namespace CandySugar.Controls.ContentViewModel
         #region Action
         public void CategoryAction(Dictionary<object, object> input)
         {
+            this.CateKeyWord = input;
             InitCategory(input);
+        }
+        public void PageCateAction(FunctionEventArgs<int> input)
+        {
+            this.CategoryPage = input.Info;
+            InitCategory(this.CateKeyWord);
+        }
+        public void DetailAction(AnimeSearchElementResult input)
+        {
+            InitDetail(input.Route);
+        }
+        public void WatchAction(AnimeDetailResult input)
+        {
+            InitWatch(input);
         }
         #endregion
 
@@ -145,17 +176,68 @@ namespace CandySugar.Controls.ContentViewModel
                     Proxy = StaticResource.Proxy(),
                     ImplType = StaticResource.ImplType(),
                     AnimeType = key.Equals("Char") ? AnimeEnum.Category : AnimeEnum.CategoryType,
-                    Category = new AnimeCategory
+                    Category = key.Equals("Char") ? new AnimeCategory
                     {
                         Route = val,
                         LetterType = Enum.Parse<AnimeLetterEnum>(val),
-                        Page=CategoryPage
+                        Page = CategoryPage
+                    } : new AnimeCategory
+                    {
+                        Route = val,
+                        Page = CategoryPage
                     }
                 };
             }).RunsAsync().Result;
             Loading = false;
             CategoryTotal = AnimeCateData.SeachResult.Total;
             SearchResult = new ObservableCollection<AnimeSearchElementResult>(AnimeCateData.SeachResult.ElementResult);
+        }
+        private async void InitDetail(string input)
+        {
+            Loading = true;
+            await Task.Delay(CandySoft.Default.WaitSpan);
+            var AnimeDetailData = AnimeFactory.Anime(opt =>
+            {
+                opt.RequestParam = new Input
+                {
+                    CacheSpan = CandySoft.Default.Cache,
+                    Proxy = StaticResource.Proxy(),
+                    ImplType = StaticResource.ImplType(),
+                    AnimeType = AnimeEnum.Detail,
+                    Detail = new AnimeDetail
+                    {
+                        Route = input
+                    }
+                };
+            }).RunsAsync().Result;
+            Loading = false;
+            DetailResult = new ObservableCollection<AnimeDetailResult>(AnimeDetailData.DetailResults.Where(t => t.IsDownURL == false));
+        }
+        private async void InitWatch(AnimeDetailResult input)
+        {
+            this.StepTwo = true;
+            this.StepOne = false;
+            Loading = true;
+            await Task.Delay(CandySoft.Default.WaitSpan);
+            var AnimeWatchData = AnimeFactory.Anime(opt =>
+            {
+                opt.RequestParam = new Input
+                {
+                    CacheSpan = CandySoft.Default.Cache,
+                    Proxy = StaticResource.Proxy(),
+                    ImplType = StaticResource.ImplType(),
+                    AnimeType = AnimeEnum.Watch,
+                    WatchPlay = new AnimeWatch
+                    {
+                        CollectName = input.CollectName,
+                        Route = input.WatchRoute
+                    }
+                };
+            }).RunsAsync().Result;
+            Loading = false;
+            PlayResult = AnimeWatchData.PlayResult;
+
+            await WebView.CoreWebView2.ExecuteScriptAsync($"Play('{PlayResult.PlayURL}','{CandySoft.Default.ScreenHeight - 30}')");
         }
         #endregion
     }

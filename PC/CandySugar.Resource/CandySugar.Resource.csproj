@@ -58,6 +58,9 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>CandySoft.Designer.cs</LastGenOutput>
     </None>
+    <None Update="Webs\Dplayer.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -56,7 +56,9 @@
         </Style>
     </lib:CandyControl.Resources>
     <Grid>
+        <!--  加载动画  -->
         <hc:LoadingCircle Foreground="{DynamicResource SugarThemeDefault}" Visibility="{Binding Loading, Converter={StaticResource ToShow}}" />
+        <!--  主体内容  -->
         <Grid x:Name="StepOne" Visibility="{Binding StepOne, Converter={StaticResource ToShow}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="43" />
@@ -270,6 +272,7 @@
                 </hc:Pagination>
             </Grid>
         </Grid>
+        <!--  文本内容  -->
         <Grid x:Name="StepTwo" Visibility="{Binding StepTwo, Converter={StaticResource ToShow}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
