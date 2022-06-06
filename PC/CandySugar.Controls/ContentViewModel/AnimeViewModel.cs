@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XExten.Advance.LinqFramework;
 
 namespace CandySugar.Controls.ContentViewModel
 {
@@ -73,6 +74,7 @@ namespace CandySugar.Controls.ContentViewModel
 
         #region Field
         private Dictionary<object, object> CateKeyWord;
+        private string KeyWord;
         #endregion
 
         #region Property
@@ -124,15 +126,24 @@ namespace CandySugar.Controls.ContentViewModel
         #endregion
 
         #region Action
+        public void SearchAction(string input)
+        {
+            this.KeyWord = input;
+            this.CateKeyWord = null;
+            InitSearch(input);
+        }
         public void CategoryAction(Dictionary<object, object> input)
         {
+            this.CategoryPage = 1;
             this.CateKeyWord = input;
+            this.KeyWord = string.Empty;
             InitCategory(input);
         }
         public void PageCateAction(FunctionEventArgs<int> input)
         {
             this.CategoryPage = input.Info;
-            InitCategory(this.CateKeyWord);
+            if (this.CateKeyWord != null && this.KeyWord.IsNullOrEmpty()) InitCategory(this.CateKeyWord);
+            if (this.CateKeyWord == null && !this.KeyWord.IsNullOrEmpty()) InitSearch(KeyWord);
         }
         public void DetailAction(AnimeSearchElementResult input)
         {
@@ -161,6 +172,29 @@ namespace CandySugar.Controls.ContentViewModel
             }).RunsAsync().Result;
             Loading = false;
             DayResult = new ObservableCollection<AnimeWeekDayIndexResult>(AnimeInitData.RecResults);
+        }
+        private async void InitSearch(string input)
+        {
+            Loading = true;
+            await Task.Delay(CandySoft.Default.WaitSpan);
+            var AnimeQueryData = AnimeFactory.Anime(opt =>
+            {
+                opt.RequestParam = new Input
+                {
+                    CacheSpan = CandySoft.Default.Cache,
+                    Proxy = StaticResource.Proxy(),
+                    ImplType = StaticResource.ImplType(),
+                    AnimeType = AnimeEnum.Search,
+                    Search = new AnimeSearch
+                    {
+                        KeyWord = input,
+                        Page = CategoryPage
+                    }
+                };
+            }).RunsAsync().Result;
+            Loading = false;
+            CategoryTotal = AnimeQueryData.SeachResult.Total;
+            SearchResult = new ObservableCollection<AnimeSearchElementResult>(AnimeQueryData.SeachResult.ElementResult);
         }
         private async void InitCategory(Dictionary<object, object> input)
         {
