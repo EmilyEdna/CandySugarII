@@ -142,7 +142,6 @@ namespace CandySugar.Controls.ContentViewModel
             this.KeyWord = string.Empty;
             InitCategory(input);
         }
-
         public void DetailAction(LovelCategoryElementResult input)
         {
             if (input == null) return;
@@ -173,7 +172,7 @@ namespace CandySugar.Controls.ContentViewModel
         {
             Loading = true;
             await Task.Delay(CandySoft.Default.WaitSpan);
-            var LovelInitData = LovelFactory.Lovel(opt =>
+            var LovelInitData = await LovelFactory.Lovel(opt =>
             {
                 opt.RequestParam = new Input
                 {
@@ -187,7 +186,7 @@ namespace CandySugar.Controls.ContentViewModel
                         Password = CandySoft.Default.WP
                     }
                 };
-            }).RunsAsync().Result;
+            }).RunsAsync();
             Loading = false;
             CateResult = new ObservableCollection<LovelInitResult>(LovelInitData.InitResults);
         }
@@ -312,7 +311,7 @@ namespace CandySugar.Controls.ContentViewModel
         {
             Loading = true;
             await Task.Delay(CandySoft.Default.WaitSpan);
-            var LovelQueryData = LovelFactory.Lovel(opt =>
+            var LovelQueryData = await LovelFactory.Lovel(opt =>
             {
                 opt.RequestParam = new Input
                 {
@@ -327,7 +326,7 @@ namespace CandySugar.Controls.ContentViewModel
                         Page= CategoryPage
                     }
                 };
-            }).RunsAsync().Result;
+            }).RunsAsync();
             Loading = false;
             CategoryTotal =  LovelQueryData.SearchResult.Total;
             CateElementResult = new ObservableCollection<LovelCategoryElementResult>(LovelQueryData.SearchResult.ElementResults.ToMapest<List<LovelCategoryElementResult>>());

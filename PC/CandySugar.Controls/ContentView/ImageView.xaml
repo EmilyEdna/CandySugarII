@@ -1,0 +1,83 @@
+﻿<lib:CandyControl
+    x:Class="CandySugar.Controls.ContentView.ImageView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:lib="http://lib.sugar.com"
+    xmlns:local="clr-namespace:CandySugar.Controls.ContentView"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:res="http://res.sugar.com"
+    xmlns:s="https://github.com/canton7/Stylet"
+    xmlns:viewmodels="clr-namespace:CandySugar.Controls.ContentViewModel"
+    x:Name="ImageViewName"
+    d:DataContext="{d:DesignInstance Type=viewmodels:ImageViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid>
+        <!--  加载动画  -->
+        <hc:LoadingCircle Foreground="{DynamicResource SugarThemeDefault}" Visibility="{Binding Loading, Converter={StaticResource ToShow}}" />
+        <!--  主体内容  -->
+        <Grid x:Name="StepOne" Visibility="{Binding StepOne, Converter={StaticResource ToShow}}">
+            <hc:CoverView
+                ItemContentHeight="100"
+                ItemContentHeightFixed="True"
+                ItemsSource="{Binding ElementResult}"
+                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                Style="{StaticResource CoverViewBaseStyle}">
+                <hc:CoverView.ItemHeaderTemplate>
+                    <DataTemplate>
+                        <UniformGrid>
+                            <Border>
+                                <Image
+                                    lib:ImageDependencyProperty.Route="{Binding Preview}"
+                                    SnapsToDevicePixels="True"
+                                    Stretch="Fill" />
+                                <Border.Effect>
+                                    <DropShadowEffect
+                                        BlurRadius="6"
+                                        Opacity="1"
+                                        ShadowDepth="0"
+                                        Color="{DynamicResource SugarThemePinkColor}" />
+                                </Border.Effect>
+                            </Border>
+                        </UniformGrid>
+                    </DataTemplate>
+                </hc:CoverView.ItemHeaderTemplate>
+                <hc:CoverView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Background="Transparent">
+                            <WrapPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                                <TextBlock Foreground="{DynamicResource SugarThemePink}" Text="标签：" />
+                                <ListBox
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    ItemsSource="{Binding Labels}"
+                                    Style="{StaticResource WrapPanelHorizontalListBox}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border
+                                                Margin="2"
+                                                Background="{DynamicResource SugarThemeAlis}"
+                                                BorderThickness="0"
+                                                Opacity=".8">
+                                                <TextBlock Foreground="{DynamicResource SugarThemePink}" Text="{Binding .}" />
+                                            </Border>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </WrapPanel>
+                            <TextBlock Foreground="{DynamicResource SugarThemePink}" Text="{Binding Pixel, StringFormat=分辨率：{0}}" />
+                            <TextBlock Foreground="{DynamicResource SugarThemePink}" Text="{Binding Rating, StringFormat=分级：{0}}" />
+                            <TextBlock Foreground="{DynamicResource SugarThemePink}" Text="{Binding Author, StringFormat=上传者：{0}}" />
+                            <TextBlock Foreground="{DynamicResource SugarThemePink}" Text="{Binding Created, StringFormat=上传时间：{0:yyyy-MM-dd}}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </hc:CoverView.ItemTemplate>
+            </hc:CoverView>
+        </Grid>
+    </Grid>
+</lib:CandyControl>

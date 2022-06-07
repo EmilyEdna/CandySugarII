@@ -234,7 +234,7 @@ namespace CandySugar.Library
             Bitmap bmp = System.Drawing.Image.FromStream(new MemoryStream(bytes)) as Bitmap;
             var ptr = bmp.GetHbitmap();
             var source = Imaging.CreateBitmapSourceFromHBitmap(
-                  ptr, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromWidthAndHeight(width,height));
+                  ptr, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromWidthAndHeight(width, height));
             source.Freeze();
             bmp.Dispose();
             Import.DeleteObject(ptr);
@@ -276,7 +276,7 @@ namespace CandySugar.Library
         /// </summary>
         /// <param name="WebView"></param>
         /// <param name="Name"></param>
-        public static async void CreateWebView(WebView2 WebView,string Name)
+        public static async void CreateWebView(WebView2 WebView, string Name)
         {
             await WebView.EnsureCoreWebView2Async(null);
 
@@ -284,6 +284,17 @@ namespace CandySugar.Library
 
             WebView.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
             WebView.CoreWebView2.Settings.AreDevToolsEnabled = false;
+        }
+        /// <summary>
+        /// 获取壁纸模式
+        /// </summary>
+        /// <returns></returns>
+        public static string ImageModule()
+        {
+            if (CandySoft.Default.Module == 1) return string.Empty;
+            else if (CandySoft.Default.Module == 2) return $"{CandySoft.Default.K12} ";
+            else if (CandySoft.Default.Module == 3) return $"{CandySoft.Default.K15} ";
+            else return $"{CandySoft.Default.K18} ";
         }
     }
 }

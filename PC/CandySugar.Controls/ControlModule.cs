@@ -20,6 +20,7 @@ namespace CandySugar.Controls
             Bind<LovelViewModel>().ToSelf();
             Bind<AnimeViewModel>().ToSelf();
             Bind<MangaViewModel>().ToSelf();
+            Bind<ImageViewModel>().ToSelf();
         }
     }
 }

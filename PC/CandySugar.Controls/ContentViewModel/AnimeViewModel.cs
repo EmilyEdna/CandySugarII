@@ -162,7 +162,7 @@ namespace CandySugar.Controls.ContentViewModel
         {
             Loading = true;
             await Task.Delay(CandySoft.Default.WaitSpan);
-            var AnimeInitData = AnimeFactory.Anime(opt =>
+            var AnimeInitData = await AnimeFactory.Anime(opt =>
             {
                 opt.RequestParam = new Input
                 {
@@ -171,7 +171,7 @@ namespace CandySugar.Controls.ContentViewModel
                     ImplType = StaticResource.ImplType(),
                     AnimeType = AnimeEnum.Init
                 };
-            }).RunsAsync().Result;
+            }).RunsAsync();
             Loading = false;
             DayResult = new ObservableCollection<AnimeWeekDayIndexResult>(AnimeInitData.RecResults);
         }
@@ -179,7 +179,7 @@ namespace CandySugar.Controls.ContentViewModel
         {
             Loading = true;
             await Task.Delay(CandySoft.Default.WaitSpan);
-            var AnimeQueryData = AnimeFactory.Anime(opt =>
+            var AnimeQueryData = await AnimeFactory.Anime(opt =>
             {
                 opt.RequestParam = new Input
                 {
@@ -193,7 +193,7 @@ namespace CandySugar.Controls.ContentViewModel
                         Page = CategoryPage
                     }
                 };
-            }).RunsAsync().Result;
+            }).RunsAsync();
             Loading = false;
             CategoryTotal = AnimeQueryData.SeachResult.Total;
             SearchResult = new ObservableCollection<AnimeSearchElementResult>(AnimeQueryData.SeachResult.ElementResult);
@@ -204,7 +204,7 @@ namespace CandySugar.Controls.ContentViewModel
             var val = input.Values.FirstOrDefault().ToString();
             Loading = true;
             await Task.Delay(CandySoft.Default.WaitSpan);
-            var AnimeCateData = AnimeFactory.Anime(opt =>
+            var AnimeCateData = await AnimeFactory.Anime(opt =>
             {
                 opt.RequestParam = new Input
                 {
@@ -223,7 +223,7 @@ namespace CandySugar.Controls.ContentViewModel
                         Page = CategoryPage
                     }
                 };
-            }).RunsAsync().Result;
+            }).RunsAsync();
             Loading = false;
             CategoryTotal = AnimeCateData.SeachResult.Total;
             SearchResult = new ObservableCollection<AnimeSearchElementResult>(AnimeCateData.SeachResult.ElementResult);
@@ -232,7 +232,7 @@ namespace CandySugar.Controls.ContentViewModel
         {
             Loading = true;
             await Task.Delay(CandySoft.Default.WaitSpan);
-            var AnimeDetailData = AnimeFactory.Anime(opt =>
+            var AnimeDetailData = await AnimeFactory.Anime(opt =>
             {
                 opt.RequestParam = new Input
                 {
@@ -245,7 +245,7 @@ namespace CandySugar.Controls.ContentViewModel
                         Route = input
                     }
                 };
-            }).RunsAsync().Result;
+            }).RunsAsync();
             Loading = false;
             DetailResult = new ObservableCollection<AnimeDetailResult>(AnimeDetailData.DetailResults.Where(t => t.IsDownURL == false));
         }
@@ -255,7 +255,7 @@ namespace CandySugar.Controls.ContentViewModel
             this.StepOne = false;
             Loading = true;
             await Task.Delay(CandySoft.Default.WaitSpan);
-            var AnimeWatchData = AnimeFactory.Anime(opt =>
+            var AnimeWatchData = await AnimeFactory.Anime(opt =>
             {
                 opt.RequestParam = new Input
                 {
@@ -269,7 +269,7 @@ namespace CandySugar.Controls.ContentViewModel
                         Route = input.WatchRoute
                     }
                 };
-            }).RunsAsync().Result;
+            }).RunsAsync();
             Loading = false;
             PlayResult = AnimeWatchData.PlayResult;
 

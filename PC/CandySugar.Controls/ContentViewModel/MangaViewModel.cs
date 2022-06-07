@@ -34,6 +34,7 @@ namespace CandySugar.Controls.ContentViewModel
             this.Page = 1;
             OnViewLoaded();
         }
+
         #region CommomProperty_Bool
         private bool _Loading;
         public bool Loading
