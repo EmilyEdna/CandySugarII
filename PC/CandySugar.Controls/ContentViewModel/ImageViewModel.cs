@@ -20,7 +20,7 @@ namespace CandySugar.Controls.ContentViewModel
     {
         public IContainer Container;
         public IWindowManager WindowManager;
-        public int Limit = 5;
+        public int Limit = 12;
         public ImageViewModel(IContainer Container, IWindowManager WindowManager)
         {
             this.WindowManager = WindowManager;

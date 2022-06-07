@@ -25,6 +25,7 @@
             <hc:CoverView
                 ItemContentHeight="100"
                 ItemContentHeightFixed="True"
+                ItemWidth="220"
                 ItemsSource="{Binding ElementResult}"
                 ScrollViewer.VerticalScrollBarVisibility="Hidden"
                 Style="{StaticResource CoverViewBaseStyle}">
