@@ -147,12 +147,14 @@ namespace CandySugar.Controls.ContentViewModel
         }
         public void DetailAction(AnimeSearchElementResult input)
         {
+            if (input == null) return;
             InitDetail(input.Route);
         }
         public void WatchAction(AnimeDetailResult input)
         {
             InitWatch(input);
         }
+
         #endregion
 
         #region Method

@@ -1,5 +1,5 @@
 ﻿<lib:CandyControl
-    x:Class="CandySugar.Controls.ContentView.AnimeView"
+    x:Class="CandySugar.Controls.ContentView.MangaView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
@@ -13,12 +13,10 @@
     xmlns:res="http://res.sugar.com"
     xmlns:s="https://github.com/canton7/Stylet"
     xmlns:viewmodels="clr-namespace:CandySugar.Controls.ContentViewModel"
-    xmlns:web="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
-    x:Name="AnimeViewName"
-    d:DataContext="{d:DesignInstance Type=viewmodels:AnimeViewModel}"
+    x:Name="MangaViewName"
+    d:DataContext="{d:DesignInstance Type=viewmodels:MangaViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Loaded="LoadEvent"
     mc:Ignorable="d">
     <lib:CandyControl.Resources>
         <Storyboard x:Key="OpenDetail">
@@ -37,6 +35,47 @@
                 To="0"
                 Duration="0:0:0.5" />
         </Storyboard>
+        <Style x:Key="BtnPageStyle" TargetType="lib:CandyButton">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Margin" Value="2,0,2,0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Foreground" Value="{DynamicResource SugarThemePink}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="lib:CandyButton">
+                        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <WrapPanel.Effect>
+                                <DropShadowEffect
+                                    BlurRadius="3"
+                                    Opacity=".3"
+                                    ShadowDepth="0"
+                                    Color="{DynamicResource SugarThemeWhiteColor}" />
+                            </WrapPanel.Effect>
+                            <ContentPresenter
+                                x:Name="Icon"
+                                Width="16"
+                                Height="16"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Content="{TemplateBinding Icon}"
+                                ContentSource="Icon"
+                                SnapsToDevicePixels="True" />
+                            <TextBlock
+                                FontSize="17"
+                                Foreground="{TemplateBinding Foreground}"
+                                Text="{TemplateBinding Content}" />
+                        </WrapPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="Foreground" Value="{DynamicResource SugarThemePink}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </lib:CandyControl.Resources>
     <Grid>
         <!--  加载动画  -->
@@ -45,76 +84,33 @@
         <Grid x:Name="StepOne" Visibility="{Binding StepOne, Converter={StaticResource ToShow}}">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="63" />
+                    <RowDefinition Height="43" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <StackPanel HorizontalAlignment="Center">
+                <StackPanel>
                     <ListBox
                         Background="Transparent"
                         BorderThickness="0"
-                        ItemsSource="{Binding Chars}"
+                        ItemsSource="{Binding CateResult}"
                         Style="{StaticResource WrapPanelHorizontalListBox}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <UniformGrid>
-                                    <lib:CandyButton
-                                        Title="Char"
-                                        HorizontalContentAlignment="Left"
-                                        s:View.ActionTarget="{Binding DataContext, ElementName=AnimeViewName}"
-                                        Command="{s:Action CategoryAction}"
-                                        Content="{Binding .}"
-                                        FontSize="6.5"
-                                        Opacity="1"
-                                        Style="{StaticResource CategoryBtn}">
-                                        <lib:CandyButton.CommandParameter>
-                                            <MultiBinding Converter="{StaticResource ToMulti}">
-                                                <Binding Path="Title" RelativeSource="{RelativeSource Self}" />
-                                                <Binding Path="Content" RelativeSource="{RelativeSource Self}" />
-                                            </MultiBinding>
-                                        </lib:CandyButton.CommandParameter>
-                                        <lib:CandyButton.Effect>
-                                            <DropShadowEffect
-                                                BlurRadius="3"
-                                                Opacity="1"
-                                                ShadowDepth="0"
-                                                Color="{DynamicResource SugarThemeWhiteColor}" />
-                                        </lib:CandyButton.Effect>
-                                    </lib:CandyButton>
-                                </UniformGrid>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                    <ListBox
-                        Background="Transparent"
-                        BorderThickness="0"
-                        ItemsSource="{Binding DayResult}"
-                        Style="{StaticResource WrapPanelHorizontalListBox}">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <UniformGrid>
-                                    <lib:CandyButton
-                                        Title="Route"
-                                        HorizontalContentAlignment="Left"
-                                        s:View.ActionTarget="{Binding DataContext, ElementName=AnimeViewName}"
-                                        Command="{s:Action CategoryAction}"
-                                        Content="{Binding Name}"
-                                        Opacity="1"
-                                        Style="{StaticResource CategoryBtn}">
-                                        <lib:CandyButton.CommandParameter>
-                                            <MultiBinding Converter="{StaticResource ToMulti}">
-                                                <Binding Path="Title" RelativeSource="{RelativeSource Self}" />
-                                                <Binding Path="Route" />
-                                            </MultiBinding>
-                                        </lib:CandyButton.CommandParameter>
-                                        <lib:CandyButton.Effect>
-                                            <DropShadowEffect
-                                                BlurRadius="3"
-                                                Opacity="1"
-                                                ShadowDepth="0"
-                                                Color="{DynamicResource SugarThemeWhiteColor}" />
-                                        </lib:CandyButton.Effect>
-                                    </lib:CandyButton>
-                                </UniformGrid>
+                                <lib:CandyButton
+                                    Margin="20,5"
+                                    s:View.ActionTarget="{Binding DataContext, ElementName=MangaViewName}"
+                                    Command="{s:Action CategoryAction}"
+                                    CommandParameter="{Binding Route}"
+                                    Content="{Binding Type}"
+                                    Opacity="1"
+                                    Style="{StaticResource CategoryBtn}">
+                                    <lib:CandyButton.Effect>
+                                        <DropShadowEffect
+                                            BlurRadius="3"
+                                            Opacity="1"
+                                            ShadowDepth="0"
+                                            Color="{DynamicResource SugarThemeWhiteColor}" />
+                                    </lib:CandyButton.Effect>
+                                </lib:CandyButton>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
@@ -128,7 +124,7 @@
                         x:Name="CategoryResultList"
                         Background="Transparent"
                         BorderThickness="0"
-                        ItemsSource="{Binding SearchResult}"
+                        ItemsSource="{Binding CateElementResult}"
                         SelectionChanged="ItemSelected"
                         Style="{StaticResource WrapPanelHorizontalListBox}">
                         <ListBox.ItemsPanel>
@@ -164,7 +160,7 @@
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
                                 <i:InvokeCommandAction
-                                    s:View.ActionTarget="{Binding DataContext, ElementName=AnimeViewName}"
+                                    s:View.ActionTarget="{Binding DataContext, ElementName=MangaViewName}"
                                     Command="{s:Action DetailAction}"
                                     CommandParameter="{Binding SelectedItem, ElementName=CategoryResultList}" />
                             </i:EventTrigger>
@@ -175,13 +171,13 @@
                         Margin="0,5,0,0"
                         HorizontalAlignment="Center"
                         IsJumpEnabled="False"
-                        MaxPageCount="{Binding CategoryTotal}"
+                        MaxPageCount="{Binding Total}"
                         Style="{StaticResource PageinationStyle}"
-                        PageIndex="{Binding CategoryPage}">
+                        PageIndex="{Binding Page}">
                         <hc:Interaction.Triggers>
                             <hc:EventTrigger EventName="PageUpdated">
                                 <hc:EventToCommand
-                                    s:View.ActionTarget="{Binding DataContext, ElementName=AnimeViewName}"
+                                    s:View.ActionTarget="{Binding DataContext, ElementName=MangaViewName}"
                                     Command="{s:Action PageCateAction}"
                                     PassEventArgsToCommand="True" />
                             </hc:EventTrigger>
@@ -193,7 +189,7 @@
             <WrapPanel
                 x:Name="Detail"
                 Width="0"
-                Height="{c:Binding (ScreenHeight-98),
+                Height="{c:Binding (ScreenHeight-73),
                                    Source={x:Static res:CandySoft.Default}}"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
@@ -228,7 +224,7 @@
                                         <Grid>
                                             <TextBlock
                                                 Foreground="{DynamicResource SugarThemeDefault}"
-                                                Text="{Binding CollectName}"
+                                                Text="{Binding Title}"
                                                 TextWrapping="WrapWithOverflow" />
                                         </Grid>
                                     </DataTemplate>
@@ -239,7 +235,7 @@
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
                             <i:InvokeCommandAction
-                                s:View.ActionTarget="{Binding DataContext, ElementName=AnimeViewName}"
+                                s:View.ActionTarget="{Binding DataContext, ElementName=MangaViewName}"
                                 Command="{s:Action WatchAction}"
                                 CommandParameter="{Binding SelectedItem, ElementName=ViewContent}" />
                         </i:EventTrigger>
@@ -248,12 +244,47 @@
             </WrapPanel>
         </Grid>
         <Grid x:Name="StepTwo" Visibility="{Binding StepTwo, Converter={StaticResource ToShow}}">
-            <UniformGrid>
-                <web:WebView2
-                    x:Name="WebViewCtrl"
-                    Height="{Binding ScreenHeight, Source={x:Static res:CandySoft.Default}}"
-                    DefaultBackgroundColor="Transparent" />
-            </UniformGrid>
+            <ListBox
+                Background="Transparent"
+                BorderThickness="0"
+                ItemsSource="{Binding ByteResult}"
+                Style="{StaticResource WrapPanelVerticalListBox}">
+                <ListBox.ContextMenu>
+                    <ContextMenu BorderThickness="0" Style="{StaticResource MaterialDesignMenu}">
+                        <lib:CandyButton
+                            HorizontalAlignment="Right"
+                            Command="{Binding HistoryAction}"
+                            Content="返回上级"
+                            Style="{StaticResource BtnPageStyle}">
+                            <lib:CandyButton.Icon>
+                                <md:PackIcon Kind="Restore" />
+                            </lib:CandyButton.Icon>
+                        </lib:CandyButton>
+                    </ContextMenu>
+                </ListBox.ContextMenu>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="1" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border>
+                            <Image
+                                SnapsToDevicePixels="True"
+                                Source="{Binding .}"
+                                Stretch="UniformToFill" />
+                            <Border.Effect>
+                                <DropShadowEffect
+                                    BlurRadius="6"
+                                    Opacity="1"
+                                    ShadowDepth="0"
+                                    Color="{DynamicResource SugarThemePinkColor}" />
+                            </Border.Effect>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Grid>
     </Grid>
 </lib:CandyControl>

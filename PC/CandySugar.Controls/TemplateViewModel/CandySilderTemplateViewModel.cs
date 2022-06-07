@@ -53,6 +53,7 @@ namespace CandySugar.Controls.TemplateViewModel
                 case 4:
                     break;
                 case 5:
+                    StaticResource.CreateControl<MangaView>(parentMethodInfo, parentDataContext, Container.Get<MangaViewModel>());
                     break;
                 case 6:
                     break;

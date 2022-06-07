@@ -137,6 +137,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         public void CategoryAction(string input)
         {
+            this.CategoryPage = 1;
             this.CategoryRoute = input;
             this.KeyWord = string.Empty;
             InitCategory(input);
@@ -144,6 +145,7 @@ namespace CandySugar.Controls.ContentViewModel
 
         public void DetailAction(LovelCategoryElementResult input)
         {
+            if (input == null) return;
             this.DetailRoute = input.DetailAddress;
             InitDetail(this.DetailRoute);
         }

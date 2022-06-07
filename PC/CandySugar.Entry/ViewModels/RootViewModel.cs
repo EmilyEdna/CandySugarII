@@ -60,6 +60,9 @@ namespace CandySugar.Entry.ViewModels
                     case "DM":
                         Ctrl = StaticResource.CreateControl<AnimeView>(Container.Get<AnimeViewModel>(), param.Values.FirstOrDefault().ToString());
                         break;
+                    case "MH":
+                        Ctrl = StaticResource.CreateControl<MangaView>(Container.Get<MangaViewModel>(), param.Values.FirstOrDefault().ToString());
+                        break;
                     default:
                         break;
                 }

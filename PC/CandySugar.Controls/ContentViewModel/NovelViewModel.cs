@@ -157,6 +157,7 @@ namespace CandySugar.Controls.ContentViewModel
         public void CategoryAction(string input)
         {
             this.CategoryRoute = input;
+            this.CategoryPage = 1;
             this.SearchVisible = true;
             this.DetailVisible = false;
             InitCategory(input);

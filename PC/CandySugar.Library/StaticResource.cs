@@ -234,7 +234,7 @@ namespace CandySugar.Library
             Bitmap bmp = System.Drawing.Image.FromStream(new MemoryStream(bytes)) as Bitmap;
             var ptr = bmp.GetHbitmap();
             var source = Imaging.CreateBitmapSourceFromHBitmap(
-                  ptr, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                  ptr, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromWidthAndHeight(width,height));
             source.Freeze();
             bmp.Dispose();
             Import.DeleteObject(ptr);
