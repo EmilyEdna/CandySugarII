@@ -1,6 +1,7 @@
 ﻿using CandySugar.Library;
 using CandySugar.Resource.Properties;
 using HandyControl.Data;
+using HandyControl.Tools.Command;
 using Sdk.Component.Image.sdk;
 using Sdk.Component.Image.sdk.ViewModel;
 using Sdk.Component.Image.sdk.ViewModel.Enums;
@@ -14,6 +15,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using XExten.Advance.LinqFramework;
 
@@ -97,6 +99,12 @@ namespace CandySugar.Controls.ContentViewModel
         #endregion
 
         #region Action
+        public ICommand HistoryAction => new RelayCommand((obj) =>
+        {
+            this.StepOne = true;
+            this.StepTwo = false;
+        });
+
         public void SearchAction(string input)
         {
             this.KeyWord = input;

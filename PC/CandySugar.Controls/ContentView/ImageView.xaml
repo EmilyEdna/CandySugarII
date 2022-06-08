@@ -29,6 +29,47 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="BtnPageStyle" TargetType="lib:CandyButton">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Margin" Value="2,0,2,0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Foreground" Value="{DynamicResource SugarThemePink}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="lib:CandyButton">
+                        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <WrapPanel.Effect>
+                                <DropShadowEffect
+                                    BlurRadius="3"
+                                    Opacity=".3"
+                                    ShadowDepth="0"
+                                    Color="{DynamicResource SugarThemeWhiteColor}" />
+                            </WrapPanel.Effect>
+                            <ContentPresenter
+                                x:Name="Icon"
+                                Width="16"
+                                Height="16"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Content="{TemplateBinding Icon}"
+                                ContentSource="Icon"
+                                SnapsToDevicePixels="True" />
+                            <TextBlock
+                                FontSize="17"
+                                Foreground="{TemplateBinding Foreground}"
+                                Text="{TemplateBinding Content}" />
+                        </WrapPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="Foreground" Value="{DynamicResource SugarThemePink}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </lib:CandyControl.Resources>
     <Grid>
         <!--  加载动画  -->
@@ -144,7 +185,21 @@
                     <Image
                         SnapsToDevicePixels="True"
                         Source="{Binding Bitmap}"
-                        Stretch="Fill" />
+                        Stretch="Fill">
+                        <Image.ContextMenu>
+                            <ContextMenu BorderThickness="0" Style="{StaticResource MaterialDesignMenu}">
+                                <lib:CandyButton
+                                    HorizontalAlignment="Right"
+                                    Command="{Binding HistoryAction}"
+                                    Content="返回上级"
+                                    Style="{StaticResource BtnPageStyle}">
+                                    <lib:CandyButton.Icon>
+                                        <md:PackIcon Kind="Restore" />
+                                    </lib:CandyButton.Icon>
+                                </lib:CandyButton>
+                            </ContextMenu>
+                        </Image.ContextMenu>
+                    </Image>
                     <Border.Effect>
                         <DropShadowEffect
                             BlurRadius="6"
