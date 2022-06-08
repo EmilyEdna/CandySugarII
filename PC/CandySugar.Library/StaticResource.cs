@@ -292,9 +292,9 @@ namespace CandySugar.Library
         public static string ImageModule()
         {
             if (CandySoft.Default.Module == 1) return string.Empty;
-            else if (CandySoft.Default.Module == 2) return $"{CandySoft.Default.K12} ";
-            else if (CandySoft.Default.Module == 3) return $"{CandySoft.Default.K15} ";
-            else return $"{CandySoft.Default.K18} ";
+            else if (CandySoft.Default.Module == 2) return $"{CandySoft.Default.K12}";
+            else if (CandySoft.Default.Module == 3) return $"{CandySoft.Default.K15}";
+            else return $"{CandySoft.Default.K18}";
         }
     }
 }

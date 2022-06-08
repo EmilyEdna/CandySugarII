@@ -144,8 +144,13 @@ namespace CandySugar.Controls.ContentViewModel
                     }
                 };
             }).RunsAsync();
-            this.Loading = false;
+
             Total = ImageInitData.GlobalResult.Total;
+            ImageInitData.GlobalResult.Result.ForEach(async item =>
+            {
+                item.Bytes = await DownBytes(item.Preview);
+            });
+            this.Loading = false;
             ElementResult = new ObservableCollection<ImageElementResult>(ImageInitData.GlobalResult.Result);
         }
         private async void InitSearch(string input)
@@ -164,12 +169,17 @@ namespace CandySugar.Controls.ContentViewModel
                     {
                         Page = Page,
                         Limit = Limit,
-                        KeyWord = $"{StaticResource.ImageModule()}{input}"
+                        KeyWord = $"{input} {StaticResource.ImageModule()}"
                     }
                 };
             }).RunsAsync();
-            Loading = false;
+
             Total = ImageQueryData.GlobalResult.Total;
+            ImageQueryData.GlobalResult.Result.ForEach(async item =>
+            {
+                item.Bytes = await DownBytes(item.Preview);
+            });
+            Loading = false;
             ElementResult = new ObservableCollection<ImageElementResult>(ImageQueryData.GlobalResult.Result);
         }
         private async void InitBytes(string input)
@@ -178,6 +188,17 @@ namespace CandySugar.Controls.ContentViewModel
             this.StepTwo = true;
             this.Loading = true;
             await Task.Delay(CandySoft.Default.WaitSpan);
+            var bytes = await DownBytes(input);
+            this.Loading = false;
+            var width = (int)(CandySoft.Default.ScreenWidth - 200);
+            var height = (int)(CandySoft.Default.ScreenHeight - 30);
+            Bitmap = StaticResource.ToImage(bytes, width, height);
+        }
+        #endregion
+
+        #region Util
+        private async Task<byte[]> DownBytes(string input)
+        {
             var ImageInitData = await ImageFactory.Image(opt =>
             {
                 opt.RequestParam = new Input
@@ -192,10 +213,7 @@ namespace CandySugar.Controls.ContentViewModel
                     }
                 };
             }).RunsAsync();
-            this.Loading = false;
-            var width = (int)(CandySoft.Default.ScreenWidth - 200);
-            var height = (int)(CandySoft.Default.ScreenHeight - 30);
-            Bitmap = StaticResource.ToImage(ImageInitData.DownResult.Bytes, width, height);
+            return ImageInitData.DownResult.Bytes;
         }
         #endregion
     }

@@ -94,8 +94,8 @@
                         <UniformGrid>
                             <Border>
                                 <Image
-                                    lib:ImageDependencyProperty.Route="{Binding Preview}"
                                     SnapsToDevicePixels="True"
+                                    Source="{Binding Bytes, Converter={StaticResource ToImg}}"
                                     Stretch="Fill" />
                                 <Border.Effect>
                                     <DropShadowEffect
