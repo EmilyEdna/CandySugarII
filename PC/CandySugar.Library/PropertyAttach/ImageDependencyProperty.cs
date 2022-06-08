@@ -32,16 +32,19 @@ namespace CandySugar.Library.PropertyAttach
             {
                 if (obj is Image img)
                 {
-                    img.SetBinding(Image.SourceProperty, new Binding
-                    {
-                        Source = await ImageBind(e.NewValue.ToString())
-                    });
+                     await img.Dispatcher.BeginInvoke(async () =>
+                     {
+                         img.SetBinding(Image.SourceProperty, new Binding
+                         {
+                             Source = await ImageBind(e.NewValue.ToString())
+                         });
+                     });
+
                 }
             }));
 
         private async static Task<BitmapSource> ImageBind(string input)
         {
-            
             var ImageInitData = await ImageFactory.Image(opt =>
             {
                 opt.RequestParam = new Input

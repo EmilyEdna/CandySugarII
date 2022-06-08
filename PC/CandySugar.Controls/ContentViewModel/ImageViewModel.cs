@@ -1,5 +1,6 @@
 ﻿using CandySugar.Library;
 using CandySugar.Resource.Properties;
+using HandyControl.Data;
 using Sdk.Component.Image.sdk;
 using Sdk.Component.Image.sdk.ViewModel;
 using Sdk.Component.Image.sdk.ViewModel.Enums;
@@ -13,6 +14,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
+using XExten.Advance.LinqFramework;
 
 namespace CandySugar.Controls.ContentViewModel
 {
@@ -74,6 +77,12 @@ namespace CandySugar.Controls.ContentViewModel
             get => _ElementResult;
             set => SetAndNotify(ref _ElementResult, value);
         }
+        private BitmapSource _Bitmap;
+        public BitmapSource Bitmap
+        {
+            get => _Bitmap;
+            set => SetAndNotify(ref _Bitmap, value);
+        }
         #endregion
 
         #region Override
@@ -83,18 +92,33 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
+        #region Field
+        private string KeyWord;
+        #endregion
+
         #region Action
         public void SearchAction(string input)
         {
+            this.KeyWord = input;
+            this.Page = 1;
+            InitSearch(input);
+        }
+        public void PageAction(FunctionEventArgs<int> input)
+        {
+            this.Page = input.Info;
+            InitSearch(this.KeyWord);
+        }
 
+        public void ViewAction(ImageElementResult input)
+        {
+            InitBytes(input.OriginalPng.IsNullOrEmpty() ? input.OriginalJepg : input.OriginalPng);
         }
         #endregion
 
         #region Method
-
         private async void InitImage()
         {
-            Loading = true;
+            this.Loading = true;
             await Task.Delay(CandySoft.Default.WaitSpan);
             var ImageInitData = await ImageFactory.Image(opt =>
             {
@@ -106,15 +130,64 @@ namespace CandySugar.Controls.ContentViewModel
                     ImageType = ImageEnum.Init,
                     Init = new ImageInit
                     {
-                        Page=Page,
-                        Limit= Limit,
-                        Tag= StaticResource.ImageModule()
+                        Page = Page,
+                        Limit = Limit,
+                        Tag = StaticResource.ImageModule()
+                    }
+                };
+            }).RunsAsync();
+            this.Loading = false;
+            Total = ImageInitData.GlobalResult.Total;
+            ElementResult = new ObservableCollection<ImageElementResult>(ImageInitData.GlobalResult.Result);
+        }
+        private async void InitSearch(string input)
+        {
+            Loading = true;
+            await Task.Delay(CandySoft.Default.WaitSpan);
+            var ImageQueryData = await ImageFactory.Image(opt =>
+            {
+                opt.RequestParam = new Input
+                {
+                    CacheSpan = CandySoft.Default.Cache,
+                    Proxy = StaticResource.Proxy(),
+                    ImplType = StaticResource.ImplType(),
+                    ImageType = ImageEnum.Search,
+                    Search = new ImageSearch
+                    {
+                        Page = Page,
+                        Limit = Limit,
+                        KeyWord = $"{StaticResource.ImageModule()}{input}"
                     }
                 };
             }).RunsAsync();
             Loading = false;
-            Total = ImageInitData.GlobalResult.Total;
-            ElementResult = new ObservableCollection<ImageElementResult>(ImageInitData.GlobalResult.Result);
+            Total = ImageQueryData.GlobalResult.Total;
+            ElementResult = new ObservableCollection<ImageElementResult>(ImageQueryData.GlobalResult.Result);
+        }
+        private async void InitBytes(string input)
+        {
+            this.StepOne = false;
+            this.StepTwo = true;
+            this.Loading = true;
+            await Task.Delay(CandySoft.Default.WaitSpan);
+            var ImageInitData = await ImageFactory.Image(opt =>
+            {
+                opt.RequestParam = new Input
+                {
+                    CacheSpan = CandySoft.Default.Cache,
+                    Proxy = StaticResource.Proxy(),
+                    ImplType = StaticResource.ImplType(),
+                    ImageType = ImageEnum.Download,
+                    Download = new ImageDownload
+                    {
+                        Route = input
+                    }
+                };
+            }).RunsAsync();
+            this.Loading = false;
+            var width = (int)(CandySoft.Default.ScreenWidth - 200);
+            var height = (int)(CandySoft.Default.ScreenHeight - 30);
+            Bitmap = StaticResource.ToImage(ImageInitData.DownResult.Bytes, width, height);
         }
         #endregion
     }
