@@ -158,8 +158,6 @@ namespace CandySugar.Controls.ContentViewModel
         {
             this.CategoryRoute = input;
             this.CategoryPage = 1;
-            this.SearchVisible = true;
-            this.DetailVisible = false;
             InitCategory(input);
         }
         public void ViewAction(string input)
@@ -172,8 +170,6 @@ namespace CandySugar.Controls.ContentViewModel
         public void DetailAction(NovelCategoryElementResult input)
         {
             if (input == null) return;
-            this.SearchVisible = false;
-            this.DetailVisible = true;
             this.DetailPage = 1;
             DetailRoute = input.DetailRoute;
             InitDetail(DetailRoute);
@@ -186,7 +182,7 @@ namespace CandySugar.Controls.ContentViewModel
         public void PageCateAction(FunctionEventArgs<int> input)
         {
             this.CategoryPage = input.Info;
-            CategoryAction(CategoryRoute);
+            InitCategory(CategoryRoute);
         }
         #endregion
 
@@ -239,6 +235,8 @@ namespace CandySugar.Controls.ContentViewModel
         }
         private async void InitCategory(string input)
         {
+            this.SearchVisible = true;
+            this.DetailVisible = false;
             Loading = true;
             await Task.Delay(CandySoft.Default.WaitSpan);
             var NovelCateData = await NovelFactory.Novel(opt =>
@@ -262,6 +260,8 @@ namespace CandySugar.Controls.ContentViewModel
         }
         private async void InitDetail(string input)
         {
+            this.SearchVisible = false;
+            this.DetailVisible = true;
             Loading = true;
             await Task.Delay(CandySoft.Default.WaitSpan);
             var NovelDetailData = await NovelFactory.Novel(opt =>
