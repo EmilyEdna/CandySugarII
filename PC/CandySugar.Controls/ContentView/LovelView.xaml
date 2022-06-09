@@ -107,15 +107,7 @@
                                     CommandParameter="{Binding Route}"
                                     Content="{Binding Name}"
                                     Opacity="1"
-                                    Style="{StaticResource CategoryBtn}">
-                                    <lib:CandyButton.Effect>
-                                        <DropShadowEffect
-                                            BlurRadius="3"
-                                            Opacity="1"
-                                            ShadowDepth="0"
-                                            Color="{DynamicResource SugarThemeWhiteColor}" />
-                                    </lib:CandyButton.Effect>
-                                </lib:CandyButton>
+                                    Style="{StaticResource CategoryBtn}" />
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>

@@ -72,13 +72,6 @@
                                                 <Binding Path="Content" RelativeSource="{RelativeSource Self}" />
                                             </MultiBinding>
                                         </lib:CandyButton.CommandParameter>
-                                        <lib:CandyButton.Effect>
-                                            <DropShadowEffect
-                                                BlurRadius="3"
-                                                Opacity="1"
-                                                ShadowDepth="0"
-                                                Color="{DynamicResource SugarThemeWhiteColor}" />
-                                        </lib:CandyButton.Effect>
                                     </lib:CandyButton>
                                 </UniformGrid>
                             </DataTemplate>
@@ -106,13 +99,6 @@
                                                 <Binding Path="Route" />
                                             </MultiBinding>
                                         </lib:CandyButton.CommandParameter>
-                                        <lib:CandyButton.Effect>
-                                            <DropShadowEffect
-                                                BlurRadius="3"
-                                                Opacity="1"
-                                                ShadowDepth="0"
-                                                Color="{DynamicResource SugarThemeWhiteColor}" />
-                                        </lib:CandyButton.Effect>
                                     </lib:CandyButton>
                                 </UniformGrid>
                             </DataTemplate>

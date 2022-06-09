@@ -59,6 +59,7 @@ namespace CandySugar.Controls.TemplateViewModel
                     StaticResource.CreateControl<ImageView>(parentMethodInfo, parentDataContext, Container.Get<ImageViewModel>());
                     break;
                 case 7:
+                    StaticResource.CreateControl<MusicView>(parentMethodInfo, parentDataContext, Container.Get<MusicViewModel>());
                     break;
                 default:
                     break;

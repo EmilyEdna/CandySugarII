@@ -5,4 +5,5 @@
     <lib:NullToBoolConvert x:Key="ToBool" />
     <lib:BoolToVisibleConvert x:Key="ToShow" />
     <lib:ParamToMultiConvert x:Key="ToMulti" />
+    <lib:CollectionToCharConvert x:Key="ToChar" />
 </ResourceDictionary>
