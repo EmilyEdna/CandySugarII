@@ -241,6 +241,40 @@ namespace CandySugar.Library
             return source;
         }
         /// <summary>
+        /// 把图片按照块状切分
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <returns></returns>
+        public static ImageSource[] SplitImage(BitmapSource input, int width = 50, int height = 50)
+        {
+            var colCount = input.PixelWidth / width;
+            var rowCount = input.PixelHeight / height;
+            var results = new ImageSource[rowCount * colCount];
+            var stride = width * ((input.Format.BitsPerPixel + 7) / 8);
+            var pixelsCount = width * height;
+            var tileRect = new Int32Rect(0, 0, width, height);
+
+            for (int row = 0; row < rowCount; row++)
+            {
+                for (int col = 0; col < colCount; col++)
+                {
+                    var pixels = new int[pixelsCount];
+                    var copyRect = new Int32Rect(col * width, row * height, height, height);
+                    input.CopyPixels(copyRect, pixels, stride, 0);
+                    var wb = new WriteableBitmap(width, height, input.DpiX, input.DpiY, input.Format, input.Palette);
+                    wb.Lock();
+                    wb.WritePixels(tileRect, pixels, stride, 0);
+                    wb.Unlock();
+
+                    results[row * colCount + col] = wb;
+                }
+            }
+
+            return results;
+        }
+        /// <summary>
         /// 过滤特殊字段
         /// </summary>
         /// <param name="input"></param>

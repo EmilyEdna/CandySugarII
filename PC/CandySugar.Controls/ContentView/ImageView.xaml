@@ -95,7 +95,7 @@
                             <Border>
                                 <Image
                                     SnapsToDevicePixels="True"
-                                    Source="{Binding Bytes, Converter={StaticResource ToImg}}"
+                                    Source="{Binding Runtime}"
                                     Stretch="Fill" />
                                 <Border.Effect>
                                     <DropShadowEffect

@@ -5,5 +5,4 @@
     <lib:NullToBoolConvert x:Key="ToBool" />
     <lib:BoolToVisibleConvert x:Key="ToShow" />
     <lib:ParamToMultiConvert x:Key="ToMulti" />
-    <lib:ByteToImgConvert x:Key="ToImg" />
 </ResourceDictionary>
