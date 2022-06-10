@@ -29,10 +29,21 @@ namespace CandySugar.Controls.ContentView
 
         private void MouseUpChanged(object sender, MouseButtonEventArgs e)
         {
-            var Content = ((ListBoxItem)sender).Content.ToString();
-            if (Content == "单曲") BeginStoryboard((Storyboard)this.FindResource("OpenSong"));
-            else if (Content == "歌单") BeginStoryboard((Storyboard)this.FindResource("OpenSheet"));
-            else BeginStoryboard((Storyboard)this.FindResource("OpenPlayList"));
+
+            if (sender is ListBoxItem boxItem)
+            {
+                var Content = boxItem.Content.ToString();
+                if (Content == "单曲") BeginStoryboard((Storyboard)this.FindResource("OpenSong"));
+                else if (Content == "歌单") BeginStoryboard((Storyboard)this.FindResource("OpenSheet"));
+                else BeginStoryboard((Storyboard)this.FindResource("OpenPlayList"));
+            }
+            if (sender is TextBlock block)
+            {
+                if (block.Text.Equals("查看详情"))
+                    BeginStoryboard((Storyboard)this.FindResource("OpenDetail"));
+                else
+                    BeginStoryboard((Storyboard)this.FindResource("OpenAlbum"));
+            }
         }
     }
 }

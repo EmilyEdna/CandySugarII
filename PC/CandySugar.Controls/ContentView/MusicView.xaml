@@ -5,9 +5,11 @@
     xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:lib="http://lib.sugar.com"
     xmlns:local="clr-namespace:CandySugar.Controls.ContentView"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:res="http://res.sugar.com"
     xmlns:s="https://github.com/canton7/Stylet"
     xmlns:viewmodels="clr-namespace:CandySugar.Controls.ContentViewModel"
@@ -33,6 +35,16 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-400" />
             </DoubleAnimationUsingKeyFrames>
 
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="专辑" Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-400" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="详情" Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-400" />
+            </DoubleAnimationUsingKeyFrames>
+
             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="单曲" Storyboard.TargetProperty="Visibility">
                 <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
                 <DiscreteObjectKeyFrame KeyTime="0:0:0.5" Value="{x:Static Visibility.Visible}" />
@@ -52,6 +64,16 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
             </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="专辑" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="详情" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Key="OpenSheet">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="单曲" Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(TranslateTransform.X)">
@@ -65,6 +87,16 @@
             </DoubleAnimationUsingKeyFrames>
 
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="列表" Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-400" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="专辑" Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-400" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="详情" Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(TranslateTransform.X)">
                 <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-400" />
             </DoubleAnimationUsingKeyFrames>
@@ -88,6 +120,16 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
             </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="专辑" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="详情" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Key="OpenPlayList">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="单曲" Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(TranslateTransform.X)">
@@ -103,6 +145,16 @@
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="列表" Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(TranslateTransform.X)">
                 <EasingDoubleKeyFrame KeyTime="0:0:0" Value="-400" />
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="专辑" Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-400" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="详情" Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-400" />
             </DoubleAnimationUsingKeyFrames>
 
             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="列表" Storyboard.TargetProperty="Visibility">
@@ -124,7 +176,138 @@
                 <EasingDoubleKeyFrame KeyTime="0" Value="0" />
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1" />
             </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="专辑" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="详情" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
         </Storyboard>
+        <Storyboard x:Key="OpenAlbum">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="单曲" Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-400" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="歌单" Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-400" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="列表" Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-400" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="专辑" Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="-400" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="详情" Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-400" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="专辑" Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.5" Value="{x:Static Visibility.Visible}" />
+            </ObjectAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="专辑" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="单曲" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="歌单" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="列表" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="详情" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OpenDetail">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="单曲" Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-400" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="歌单" Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-400" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="列表" Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-400" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="专辑" Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-400" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="详情" Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="-400" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="详情" Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.5" Value="{x:Static Visibility.Visible}" />
+            </ObjectAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="专辑" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="单曲" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="歌单" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="列表" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="详情" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Style x:Key="Common" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource SugarThemeRed}" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="{DynamicResource SugarThemeAlis}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </lib:CandyControl.Resources>
     <Grid>
         <!--  加载动画  -->
@@ -177,9 +360,36 @@
                         <ListBoxItem
                             Content="单曲"
                             IsSelected="True"
-                            MouseUp="MouseUpChanged" />
-                        <ListBoxItem Content="歌单" MouseUp="MouseUpChanged" />
-                        <ListBoxItem Content="播放列表" MouseUp="MouseUpChanged" />
+                            MouseUp="MouseUpChanged">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Selected">
+                                    <i:InvokeCommandAction
+                                        s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
+                                        Command="{s:Action ChangeAction}"
+                                        CommandParameter="{Binding Content, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ListBoxItem>
+                        <ListBoxItem Content="歌单" MouseUp="MouseUpChanged">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Selected">
+                                    <i:InvokeCommandAction
+                                        s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
+                                        Command="{s:Action ChangeAction}"
+                                        CommandParameter="{Binding Content, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ListBoxItem>
+                        <ListBoxItem Content="播放列表" MouseUp="MouseUpChanged">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Selected">
+                                    <i:InvokeCommandAction
+                                        s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
+                                        Command="{s:Action ChangeAction}"
+                                        CommandParameter="{Binding Content, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ListBoxItem>
                     </ListBox>
                     <!--  单曲  -->
                     <Grid x:Name="单曲" RenderTransformOrigin="1,0.5">
@@ -189,7 +399,371 @@
                             </TransformGroup>
                         </Grid.RenderTransform>
                         <Rectangle
-                            Height="{c:Binding (ScreenHeight*0.7),
+                            Height="{c:Binding (ScreenHeight*0.75),
+                                               Source={x:Static res:CandySoft.Default}}"
+                            Margin="10,90,0,0"
+                            StrokeThickness="0">
+                            <Rectangle.Fill>
+                                <SolidColorBrush Opacity="0.4" Color="White" />
+                            </Rectangle.Fill>
+                            <Rectangle.Effect>
+                                <DropShadowEffect
+                                    BlurRadius="15"
+                                    Direction="300"
+                                    Opacity="0.3" />
+                            </Rectangle.Effect>
+                        </Rectangle>
+                        <Grid Margin="10,90,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="30" />
+                            </Grid.RowDefinitions>
+                            <ListBox
+                                Background="Transparent"
+                                BorderThickness="0"
+                                ItemsSource="{Binding ItemResult}"
+                                Style="{StaticResource WrapPanelVerticalListBox}">
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <UniformGrid Columns="1" />
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="2,0,0,10">
+                                            <UniformGrid Columns="2">
+                                                <TextBlock
+                                                    FontSize="12"
+                                                    Foreground="{DynamicResource SugarThemeSmoke}"
+                                                    Text="{Binding SongName}" />
+                                                <TextBlock HorizontalAlignment="Right" Style="{StaticResource Common}">
+                                                    <md:PackIcon Margin="0,0,5,0" Kind="PlayCircleOutline" />
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="MouseDown">
+                                                            <i:InvokeCommandAction
+                                                                s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
+                                                                Command="{s:Action PlayListAction}"
+                                                                CommandParameter="{Binding SongId}" />
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </TextBlock>
+                                            </UniformGrid>
+                                            <TextBlock
+                                                Margin="0,10,0,0"
+                                                FontSize="10"
+                                                Foreground="{DynamicResource SugarThemeRed}"
+                                                Text="{Binding SongArtistName, Converter={StaticResource ToChar}, StringFormat=歌手:({0})}" />
+                                            <TextBlock
+                                                Margin="0,10,0,0"
+                                                Cursor="Hand"
+                                                FontSize="10"
+                                                Foreground="{DynamicResource SugarThemeRed}"
+                                                MouseUp="MouseUpChanged"
+                                                Text="{Binding SongAlbumName, StringFormat=专辑:({0})}"
+                                                TextWrapping="WrapWithOverflow">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseDown">
+                                                        <i:InvokeCommandAction
+                                                            s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
+                                                            Command="{s:Action LinkAlbumAction}"
+                                                            CommandParameter="{Binding SongAlbumId}" />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <hc:Pagination
+                                Grid.Row="1"
+                                HorizontalAlignment="Center"
+                                IsJumpEnabled="False"
+                                MaxPageCount="{Binding Total}"
+                                Style="{StaticResource PageinationStyle}"
+                                PageIndex="{Binding Page}">
+                                <hc:Interaction.Triggers>
+                                    <hc:EventTrigger EventName="PageUpdated">
+                                        <hc:EventToCommand
+                                            s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
+                                            Command="{s:Action PageAction}"
+                                            PassEventArgsToCommand="True" />
+                                    </hc:EventTrigger>
+                                </hc:Interaction.Triggers>
+                            </hc:Pagination>
+                        </Grid>
+                    </Grid>
+                    <!--  歌单  -->
+                    <Grid
+                        x:Name="歌单"
+                        RenderTransformOrigin="1,0.5"
+                        Visibility="Collapsed">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <TranslateTransform />
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Rectangle
+                            Height="{c:Binding (ScreenHeight*0.75),
+                                               Source={x:Static res:CandySoft.Default}}"
+                            Margin="10,90,0,0"
+                            StrokeThickness="0">
+                            <Rectangle.Fill>
+                                <SolidColorBrush Opacity="0.4" Color="White" />
+                            </Rectangle.Fill>
+                            <Rectangle.Effect>
+                                <DropShadowEffect
+                                    BlurRadius="15"
+                                    Direction="300"
+                                    Opacity="0.3" />
+                            </Rectangle.Effect>
+                        </Rectangle>
+                        <Grid Margin="10,90,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="30" />
+                            </Grid.RowDefinitions>
+                            <ListBox
+                                Background="Transparent"
+                                BorderThickness="0"
+                                ItemsSource="{Binding ItemsResult}"
+                                Style="{StaticResource WrapPanelVerticalListBox}">
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <UniformGrid Columns="1" />
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid
+                                            Margin="0,0,0,5"
+                                            HorizontalAlignment="Left"
+                                            Cursor="Hand">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width=".3*" />
+                                                <ColumnDefinition Width=".7*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Border>
+                                                <Image
+                                                    Width="80"
+                                                    Height="80"
+                                                    SnapsToDevicePixels="True"
+                                                    Source="{Binding Cover}"
+                                                    Stretch="Uniform" />
+                                                <Border.Effect>
+                                                    <DropShadowEffect
+                                                        BlurRadius="6"
+                                                        Opacity="1"
+                                                        ShadowDepth="0"
+                                                        Color="{DynamicResource SugarThemePinkColor}" />
+                                                </Border.Effect>
+                                            </Border>
+                                            <StackPanel Grid.Column="1" Margin="2,0,0,0">
+                                                <TextBlock
+                                                    FontSize="12"
+                                                    Foreground="{DynamicResource SugarThemeSmoke}"
+                                                    Text="{Binding SongSheetName, StringFormat=歌单名称:{0}}"
+                                                    TextWrapping="WrapWithOverflow" />
+                                                <TextBlock
+                                                    Margin="0,10,0,0"
+                                                    FontSize="10"
+                                                    Foreground="{DynamicResource SugarThemeRed}"
+                                                    Text="{Binding ListenNumber, StringFormat=播放次数:{0}}" />
+                                                <TextBlock
+                                                    Margin="0,10,0,0"
+                                                    FontSize="10"
+                                                    Foreground="{DynamicResource SugarThemeRed}"
+                                                    Text="{Binding CreateTime, StringFormat=创建时间:{0:yyyy-MM-dd}}" />
+                                                <TextBlock
+                                                    Margin="0,10,0,0"
+                                                    FontSize="10"
+                                                    Foreground="{DynamicResource SugarThemeBlue}"
+                                                    MouseUp="MouseUpChanged"
+                                                    Text="查看详情">
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="MouseDown">
+                                                            <i:InvokeCommandAction
+                                                                s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
+                                                                Command="{s:Action ShowSheetAction}"
+                                                                CommandParameter="{Binding SongSheetId}" />
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <hc:Pagination
+                                Grid.Row="1"
+                                HorizontalAlignment="Center"
+                                IsJumpEnabled="False"
+                                MaxPageCount="{Binding Total}"
+                                Style="{StaticResource PageinationStyle}"
+                                PageIndex="{Binding Page}">
+                                <hc:Interaction.Triggers>
+                                    <hc:EventTrigger EventName="PageUpdated">
+                                        <hc:EventToCommand
+                                            s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
+                                            Command="{s:Action PageAction}"
+                                            PassEventArgsToCommand="True" />
+                                    </hc:EventTrigger>
+                                </hc:Interaction.Triggers>
+                            </hc:Pagination>
+                        </Grid>
+                    </Grid>
+                    <!--  歌单详情  -->
+                    <Grid
+                        x:Name="详情"
+                        RenderTransformOrigin="1,0.5"
+                        Visibility="Collapsed">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <TranslateTransform />
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Rectangle
+                            Height="{c:Binding (ScreenHeight*0.75),
+                                               Source={x:Static res:CandySoft.Default}}"
+                            Margin="10,90,0,0"
+                            StrokeThickness="0">
+                            <Rectangle.Fill>
+                                <SolidColorBrush Opacity="0.4" Color="White" />
+                            </Rectangle.Fill>
+                            <Rectangle.Effect>
+                                <DropShadowEffect
+                                    BlurRadius="15"
+                                    Direction="300"
+                                    Opacity="0.3" />
+                            </Rectangle.Effect>
+                        </Rectangle>
+                        <Grid Margin="10,90,0,0">
+                            <WrapPanel Orientation="Vertical">
+                                <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Border Margin="1,1,0,0">
+                                        <Image
+                                            Width="80"
+                                            Height="80"
+                                            SnapsToDevicePixels="True"
+                                            Source="{Binding DetailResult.Logo}"
+                                            Stretch="Uniform" />
+                                        <Border.Effect>
+                                            <DropShadowEffect
+                                                BlurRadius="6"
+                                                Opacity="1"
+                                                ShadowDepth="0"
+                                                Color="{DynamicResource SugarThemePinkColor}" />
+                                        </Border.Effect>
+                                    </Border>
+                                    <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                                        <TextBlock
+                                            FontSize="12"
+                                            Foreground="{DynamicResource SugarThemeSmoke}"
+                                            Text="{Binding DetailResult.DissName, StringFormat=歌单名称:{0}}"
+                                            TextWrapping="WrapWithOverflow" />
+                                        <TextBlock
+                                            Margin="0,10,0,0"
+                                            FontSize="12"
+                                            Foreground="{DynamicResource SugarThemeRed}"
+                                            Text="{Binding DetailResult.MusicNum, StringFormat=歌曲数量:{0}}"
+                                            TextWrapping="WrapWithOverflow" />
+                                        <TextBlock
+                                            Margin="0,10,0,0"
+                                            FontSize="10"
+                                            Foreground="{DynamicResource SugarThemeRed}"
+                                            Text="{Binding DetailResult.ListenNum, StringFormat=播放次数:{0}}" />
+                                        <TextBlock
+                                            Margin="0,10,0,0"
+                                            FontSize="10"
+                                            Foreground="{DynamicResource SugarThemeRed}"
+                                            Text="{Binding DetailResult.CreateTime, StringFormat=创建时间:{0:yyyy-MM-dd}}" />
+                                    </StackPanel>
+                                </Grid>
+                                <UniformGrid HorizontalAlignment="Center">
+                                    <hc:Divider
+                                        Width="{Binding ScreenWidth, Source={x:Static res:CandySoft.Default}}"
+                                        Margin="0,3,0,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Content="详情列表"
+                                        Foreground="{DynamicResource SugarThemeWhite}"
+                                        LineStroke="{DynamicResource SugarThemeWhite}" />
+                                </UniformGrid>
+                            </WrapPanel>
+                            <ListBox
+                                Margin="0,95,0,0"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                ItemsSource="{Binding DetailResult.ElementResults}"
+                                Style="{StaticResource WrapPanelVerticalListBox}">
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <UniformGrid Columns="1" />
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="2,0,0,10">
+                                            <UniformGrid Columns="2">
+                                                <TextBlock
+                                                    FontSize="12"
+                                                    Foreground="{DynamicResource SugarThemeSmoke}"
+                                                    Text="{Binding SongName}" />
+                                                <TextBlock HorizontalAlignment="Right" Style="{StaticResource Common}">
+                                                    <md:PackIcon Margin="0,0,5,0" Kind="PlayCircleOutline" />
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="MouseDown">
+                                                            <i:InvokeCommandAction
+                                                                s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
+                                                                Command="{s:Action PlayListAction}"
+                                                                CommandParameter="{Binding SongId}" />
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </TextBlock>
+                                            </UniformGrid>
+                                            <TextBlock
+                                                Margin="0,10,0,0"
+                                                FontSize="10"
+                                                Foreground="{DynamicResource SugarThemeRed}"
+                                                Text="{Binding SongArtistName, Converter={StaticResource ToChar}, StringFormat=歌手:({0})}" />
+                                            <TextBlock
+                                                Margin="0,10,0,0"
+                                                Cursor="Hand"
+                                                FontSize="10"
+                                                Foreground="{DynamicResource SugarThemeRed}"
+                                                MouseUp="MouseUpChanged"
+                                                Text="{Binding SongAlbumName, StringFormat=专辑:({0})}"
+                                                TextWrapping="WrapWithOverflow">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseDown">
+                                                        <i:InvokeCommandAction
+                                                            s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
+                                                            Command="{s:Action LinkAlbumAction}"
+                                                            CommandParameter="{Binding SongAlbumId}" />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Grid>
+                    </Grid>
+                    <!--  专辑  -->
+                    <Grid
+                        x:Name="专辑"
+                        RenderTransformOrigin="1,0.5"
+                        Visibility="Collapsed">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <TranslateTransform />
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Rectangle
+                            Height="{c:Binding (ScreenHeight*0.75),
                                                Source={x:Static res:CandySoft.Default}}"
                             Margin="10,90,0,0"
                             StrokeThickness="0">
@@ -206,9 +780,8 @@
                         <ListBox
                             Margin="10,90,0,0"
                             Background="Transparent"
-                            BorderBrush="{DynamicResource SugarThemeDefault}"
-                            BorderThickness="1"
-                            ItemsSource="{Binding ItemResult}"
+                            BorderThickness="0"
+                            ItemsSource="{Binding AlbumResult}"
                             Style="{StaticResource WrapPanelVerticalListBox}">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -217,18 +790,31 @@
                             </ListBox.ItemsPanel>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Margin="2,0,0,0">
+                                    <StackPanel Margin="2,0,0,10">
+                                        <UniformGrid Columns="2">
+                                            <TextBlock
+                                                FontSize="12"
+                                                Foreground="{DynamicResource SugarThemeSmoke}"
+                                                Text="{Binding SongName}" />
+                                            <TextBlock HorizontalAlignment="Right" Style="{StaticResource Common}">
+                                                <md:PackIcon Margin="0,0,5,0" Kind="PlayCircleOutline" />
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseDown">
+                                                        <i:InvokeCommandAction
+                                                            s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
+                                                            Command="{s:Action PlayListAction}"
+                                                            CommandParameter="{Binding SongId}" />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </TextBlock>
+                                        </UniformGrid>
                                         <TextBlock
-                                            Cursor="Hand"
-                                            FontSize="12"
-                                            Foreground="{DynamicResource SugarThemeSmoke}"
-                                            Text="{Binding SongName}" />
-                                        <TextBlock
-                                            Cursor="Hand"
+                                            Margin="0,10,0,0"
                                             FontSize="10"
                                             Foreground="{DynamicResource SugarThemeRed}"
                                             Text="{Binding SongArtistName, Converter={StaticResource ToChar}, StringFormat=歌手:({0})}" />
                                         <TextBlock
+                                            Margin="0,10,0,0"
                                             Cursor="Hand"
                                             FontSize="10"
                                             Foreground="{DynamicResource SugarThemeRed}"
@@ -238,33 +824,6 @@
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
-                    </Grid>
-                    <!--  歌单  -->
-                    <Grid
-                        x:Name="歌单"
-                        RenderTransformOrigin="1,0.5"
-                        Visibility="Collapsed">
-                        <Grid.RenderTransform>
-                            <TransformGroup>
-                                <TranslateTransform />
-                            </TransformGroup>
-                        </Grid.RenderTransform>
-                        <Rectangle
-                            Height="{c:Binding (ScreenHeight*0.7),
-                                               Source={x:Static res:CandySoft.Default}}"
-                            Margin="10,90,0,0"
-                            StrokeThickness="0">
-                            <Rectangle.Fill>
-                                <SolidColorBrush Opacity="0.4" Color="White" />
-                            </Rectangle.Fill>
-                            <Rectangle.Effect>
-                                <DropShadowEffect
-                                    BlurRadius="15"
-                                    Direction="300"
-                                    Opacity="0.3" />
-                            </Rectangle.Effect>
-                        </Rectangle>
-                        <TextBlock Margin="0,500,0,0" Text="歌单" />
                     </Grid>
                     <!--  列表  -->
                     <Grid
@@ -277,7 +836,7 @@
                             </TransformGroup>
                         </Grid.RenderTransform>
                         <Rectangle
-                            Height="{c:Binding (ScreenHeight*0.7),
+                            Height="{c:Binding (ScreenHeight*0.75),
                                                Source={x:Static res:CandySoft.Default}}"
                             Margin="10,90,0,0"
                             StrokeThickness="0">
