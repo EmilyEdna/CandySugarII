@@ -111,7 +111,7 @@ namespace CandySugar.Controls.ContentViewModel
         #region Override
         protected override void OnViewLoaded()
         {
-            SearchAction("我是真的爱上你");
+            
         }
         #endregion
 

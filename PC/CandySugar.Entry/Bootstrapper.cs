@@ -1,8 +1,11 @@
 ﻿using CandySugar.Controls;
 using CandySugar.Entry.ViewModels;
+using Sdk.Core;
+using Serilog;
 using Stylet;
 using StyletIoC;
 using System;
+using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
@@ -17,6 +20,17 @@ namespace CandySugar.Entry
         /// </summary>
         protected override void OnStart()
         {
+            //启用日志
+            SkdOption.EnableLog = true;
+
+            //删除过往日志
+            SyncStatic.DeleteFolder(Path.Combine(Environment.CurrentDirectory, "Logs"));
+
+            //日志
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .WriteTo.File("Logs/Candy.log", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
         }
 
         protected override void ConfigureIoC(IStyletIoCBuilder builder)
@@ -63,6 +77,7 @@ namespace CandySugar.Entry
         /// <param name="e"></param>
         protected override void OnExit(ExitEventArgs e)
         {
+            SyncStatic.DeleteFolder(Path.Combine(Environment.CurrentDirectory, "CandySugar.Entry.exe.WebView2"));
             base.OnExit(e);
         }
 
@@ -72,6 +87,7 @@ namespace CandySugar.Entry
         /// <param name="e"></param>
         protected override void OnUnhandledException(DispatcherUnhandledExceptionEventArgs e)
         {
+            Log.Logger.Error(e.Exception.InnerException ?? e.Exception, "");
             GC.Collect();
             Application.Current.Shutdown();
         }
