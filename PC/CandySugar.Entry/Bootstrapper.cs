@@ -1,5 +1,6 @@
 ﻿using CandySugar.Controls;
 using CandySugar.Entry.ViewModels;
+using CandySugar.Logic;
 using Sdk.Core;
 using Serilog;
 using Stylet;
@@ -35,6 +36,7 @@ namespace CandySugar.Entry
 
         protected override void ConfigureIoC(IStyletIoCBuilder builder)
         {
+            builder.AddModule(new LogicModule());
             builder.AddModule(new ControlModule());
         }
 
@@ -43,6 +45,7 @@ namespace CandySugar.Entry
         /// </summary>
         protected override void Configure()
         {
+            DbContext.Candy.InitCandy();
             base.Configure();
         }
 

@@ -14,6 +14,8 @@ using Sdk.Component.Music.sdk.ViewModel.Response;
 using System.Collections.ObjectModel;
 using HandyControl.Data;
 using CandySugar.Resource.Properties;
+using CandySugar.Logic.Entity.CandyEntity;
+using CandySugar.Logic.IService;
 
 namespace CandySugar.Controls.ContentViewModel
 {
@@ -21,10 +23,12 @@ namespace CandySugar.Controls.ContentViewModel
     {
         public IContainer Container;
         public IWindowManager WindowManager;
+        public ICandyMusic CandyMusic;
         public MusicViewModel(IContainer Container, IWindowManager WindowManager)
         {
             this.WindowManager = WindowManager;
             this.Container = Container;
+            this.CandyMusic = Container.Get<ICandyMusic>();
             this.PlatformType = PlatformEnum.NeteaseMusic;
             this.Handle = new Dictionary<PlatformEnum, string>
             {
@@ -35,6 +39,7 @@ namespace CandySugar.Controls.ContentViewModel
                 { PlatformEnum.BiliBiliMusic,"B站"},
                 { PlatformEnum.MiGuMusic,"咪咕"}
             };
+            this.Page = 1;
             this.ChangeType = 0;
             OnViewLoaded();
         }
@@ -106,12 +111,21 @@ namespace CandySugar.Controls.ContentViewModel
             get => _DetailResult;
             set => SetAndNotify(ref _DetailResult, value);
         }
+        private ObservableCollection<CandyMusicList> _CandyList;
+        /// <summary>
+        /// 播放列表
+        /// </summary>
+        public ObservableCollection<CandyMusicList> CandyList
+        {
+            get => _CandyList;
+            set => SetAndNotify(ref _CandyList, value);
+        }
         #endregion
 
         #region Override
         protected override void OnViewLoaded()
         {
-            
+
         }
         #endregion
 
@@ -147,6 +161,7 @@ namespace CandySugar.Controls.ContentViewModel
             else
             {
                 this.ChangeType = 2;
+                InitPlayList();
             }
         }
         public void PageAction(FunctionEventArgs<int> input)
@@ -157,12 +172,18 @@ namespace CandySugar.Controls.ContentViewModel
             else if (this.ChangeType == 1)
                 InitQuery(this.QueryWord);
         }
-        public void PlayListAction(string input)
+        public void PlayListAction(Dictionary<object, object> input)
         {
-            var x = input;
+            InitList(input);
         }
         public void LinkAlbumAction(string input)
         {
+            InitAlbum(input);
+        }
+
+        public void AlbumAction(string input)
+        {
+            this.PlatformType = (PlatformEnum)CandyList.FirstOrDefault(t => t.AlbumId == input).Platform;
             InitAlbum(input);
         }
         public void ShowSheetAction(dynamic input)
@@ -186,6 +207,7 @@ namespace CandySugar.Controls.ContentViewModel
                     ImplType = StaticResource.ImplType(),
                     Search = new MusicSearch
                     {
+                        Page=this.Page,
                         KeyWord = input
                     }
                 };
@@ -208,6 +230,7 @@ namespace CandySugar.Controls.ContentViewModel
                     ImplType = StaticResource.ImplType(),
                     Search = new MusicSearch
                     {
+                        Page=this.Page,
                         KeyWord = input
                     }
                 };
@@ -248,7 +271,7 @@ namespace CandySugar.Controls.ContentViewModel
                     PlatformType = this.PlatformType,
                     MusicType = MusicEnum.SheetDetail,
                     ImplType = StaticResource.ImplType(),
-                    CacheSpan=CandySoft.Default.Cache,
+                    CacheSpan = CandySoft.Default.Cache,
                     SheetDetail = new MusicSheetDetail
                     {
                         Id = input
@@ -257,6 +280,45 @@ namespace CandySugar.Controls.ContentViewModel
             }).RunsAsync();
             this.Loading = false;
             DetailResult = MusicDetailData.SheetDetailResult;
+        }
+        private async void InitPlayList()
+        {
+            CandyList = new ObservableCollection<CandyMusicList>(await this.CandyMusic.Get());
+        }
+        private async void InitList(Dictionary<object, object> input)
+        {
+            CandyMusicList CandyList = null;
+            if (input.Keys.FirstOrDefault().ToString().Equals("Single"))
+                CandyList = ItemResult.Where(t => t.SongId == input.Values.FirstOrDefault().ToString()).Select(t => new CandyMusicList
+                {
+                    SongId = t.SongId,
+                    AlbumId = t.SongAlbumId,
+                    SongName = t.SongName,
+                    AlbumName = t.SongAlbumName,
+                    SongArtist = String.Join(",", t.SongArtistName),
+                    Platform = (int)this.PlatformType
+                }).FirstOrDefault();
+            else if (input.Keys.FirstOrDefault().ToString().Equals("Detail"))
+                CandyList = DetailResult.ElementResults.Where(t => t.SongId == input.Values.FirstOrDefault().ToString()).Select(t => new CandyMusicList
+                {
+                    SongId = t.SongId,
+                    AlbumId = t.SongAlbumId,
+                    SongName = t.SongName,
+                    AlbumName = t.SongAlbumName,
+                    SongArtist = String.Join(",", t.SongArtistName),
+                    Platform = (int)this.PlatformType
+                }).FirstOrDefault();
+            else
+                CandyList = AlbumResult.Where(t => t.SongId == input.Values.FirstOrDefault().ToString()).Select(t => new CandyMusicList
+                {
+                    SongId = t.SongId,
+                    AlbumId = t.SongAlbumId,
+                    SongName = t.SongName,
+                    AlbumName = t.SongAlbumName,
+                    SongArtist = String.Join(",", t.SongArtistName),
+                    Platform = (int)this.PlatformType
+                }).FirstOrDefault();
+            await this.CandyMusic.Add(CandyList);
         }
         #endregion
     }

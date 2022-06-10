@@ -436,14 +436,21 @@
                                                     FontSize="12"
                                                     Foreground="{DynamicResource SugarThemeSmoke}"
                                                     Text="{Binding SongName}" />
-                                                <TextBlock HorizontalAlignment="Right" Style="{StaticResource Common}">
+                                                <TextBlock
+                                                    HorizontalAlignment="Right"
+                                                    Style="{StaticResource Common}"
+                                                    Tag="Single">
                                                     <md:PackIcon Margin="0,0,5,0" Kind="PlayCircleOutline" />
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseDown">
-                                                            <i:InvokeCommandAction
-                                                                s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
-                                                                Command="{s:Action PlayListAction}"
-                                                                CommandParameter="{Binding SongId}" />
+                                                            <i:InvokeCommandAction s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}" Command="{s:Action PlayListAction}">
+                                                                <i:InvokeCommandAction.CommandParameter>
+                                                                    <MultiBinding Converter="{StaticResource ToMulti}">
+                                                                        <Binding Path="Tag" RelativeSource="{RelativeSource AncestorType=TextBlock, Mode=FindAncestor}" />
+                                                                        <Binding Path="SongId" />
+                                                                    </MultiBinding>
+                                                                </i:InvokeCommandAction.CommandParameter>
+                                                            </i:InvokeCommandAction>
                                                         </i:EventTrigger>
                                                     </i:Interaction.Triggers>
                                                 </TextBlock>
@@ -712,14 +719,21 @@
                                                     FontSize="12"
                                                     Foreground="{DynamicResource SugarThemeSmoke}"
                                                     Text="{Binding SongName}" />
-                                                <TextBlock HorizontalAlignment="Right" Style="{StaticResource Common}">
+                                                <TextBlock
+                                                    HorizontalAlignment="Right"
+                                                    Style="{StaticResource Common}"
+                                                    Tag="Detail">
                                                     <md:PackIcon Margin="0,0,5,0" Kind="PlayCircleOutline" />
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseDown">
-                                                            <i:InvokeCommandAction
-                                                                s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
-                                                                Command="{s:Action PlayListAction}"
-                                                                CommandParameter="{Binding SongId}" />
+                                                            <i:InvokeCommandAction s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}" Command="{s:Action PlayListAction}">
+                                                                <i:InvokeCommandAction.CommandParameter>
+                                                                    <MultiBinding Converter="{StaticResource ToMulti}">
+                                                                        <Binding Path="Tag" RelativeSource="{RelativeSource AncestorType=TextBlock, Mode=FindAncestor}" />
+                                                                        <Binding Path="SongId" />
+                                                                    </MultiBinding>
+                                                                </i:InvokeCommandAction.CommandParameter>
+                                                            </i:InvokeCommandAction>
                                                         </i:EventTrigger>
                                                     </i:Interaction.Triggers>
                                                 </TextBlock>
@@ -796,14 +810,21 @@
                                                 FontSize="12"
                                                 Foreground="{DynamicResource SugarThemeSmoke}"
                                                 Text="{Binding SongName}" />
-                                            <TextBlock HorizontalAlignment="Right" Style="{StaticResource Common}">
+                                            <TextBlock
+                                                HorizontalAlignment="Right"
+                                                Style="{StaticResource Common}"
+                                                Tag="Album">
                                                 <md:PackIcon Margin="0,0,5,0" Kind="PlayCircleOutline" />
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="MouseDown">
-                                                        <i:InvokeCommandAction
-                                                            s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
-                                                            Command="{s:Action PlayListAction}"
-                                                            CommandParameter="{Binding SongId}" />
+                                                        <i:InvokeCommandAction s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}" Command="{s:Action PlayListAction}">
+                                                            <i:InvokeCommandAction.CommandParameter>
+                                                                <MultiBinding Converter="{StaticResource ToMulti}">
+                                                                    <Binding Path="Tag" RelativeSource="{RelativeSource AncestorType=TextBlock, Mode=FindAncestor}" />
+                                                                    <Binding Path="SongId" />
+                                                                </MultiBinding>
+                                                            </i:InvokeCommandAction.CommandParameter>
+                                                        </i:InvokeCommandAction>
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
                                             </TextBlock>
@@ -850,7 +871,66 @@
                                     Opacity="0.3" />
                             </Rectangle.Effect>
                         </Rectangle>
-                        <TextBlock Margin="0,500,0,0" Text="列表" />
+                        <ListBox
+                            Margin="10,90,0,0"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            ItemsSource="{Binding CandyList}"
+                            Style="{StaticResource WrapPanelVerticalListBox}">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="1" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="2,0,0,10">
+                                        <UniformGrid Columns="2">
+                                            <TextBlock
+                                                FontSize="12"
+                                                Foreground="{DynamicResource SugarThemeSmoke}"
+                                                Text="{Binding SongName}" />
+                                            <TextBlock
+                                                HorizontalAlignment="Right"
+                                                Cursor="Hand"
+                                                Style="{StaticResource Common}">
+                                                <md:PackIcon Margin="0,0,5,0" Kind="PlayCircleOutline" />
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseDown">
+                                                        <i:InvokeCommandAction
+                                                            s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
+                                                            Command="{s:Action PlayListAction}"
+                                                            CommandParameter="{Binding SongId}" />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </TextBlock>
+                                        </UniformGrid>
+                                        <TextBlock
+                                            Margin="0,10,0,0"
+                                            FontSize="10"
+                                            Foreground="{DynamicResource SugarThemeRed}"
+                                            Text="{Binding SongArtist, Converter={StaticResource ToChar}, StringFormat=歌手:({0})}" />
+                                        <TextBlock
+                                            Margin="0,10,0,0"
+                                            Cursor="Hand"
+                                            FontSize="10"
+                                            Foreground="{DynamicResource SugarThemeRed}"
+                                            MouseUp="MouseUpChanged"
+                                            Text="{Binding AlbumName, StringFormat=专辑:({0})}"
+                                            TextWrapping="WrapWithOverflow">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseDown">
+                                                    <i:InvokeCommandAction
+                                                        s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
+                                                        Command="{s:Action AlbumAction}"
+                                                        CommandParameter="{Binding AlbumId}" />
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </Grid>
                 </Grid>
                 <!--  歌词栏  -->
