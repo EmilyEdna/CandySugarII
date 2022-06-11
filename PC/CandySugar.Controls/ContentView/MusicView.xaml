@@ -308,6 +308,18 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="Channel" TargetType="ProgressBar">
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Setter Property="Foreground" Value="DeepPink" />
+            <Setter Property="Opacity" Value=".4" />
+            <Setter Property="Height" Value="{c:Binding ((ScreenHeight-30)*0.2), Source={x:Static res:CandySoft.Default}}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Width" Value="10" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Minimum" Value="0" />
+            <Setter Property="Maximum" Value="80" />
+            <Setter Property="Orientation" Value="Vertical" />
+        </Style>
     </lib:CandyControl.Resources>
     <Grid>
         <!--  加载动画  -->
@@ -334,7 +346,7 @@
         </StackPanel>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition />
+                <RowDefinition Height=".8*" />
                 <RowDefinition Height=".2*" />
             </Grid.RowDefinitions>
             <!--  主体内容  -->
@@ -879,7 +891,7 @@
                             Style="{StaticResource WrapPanelVerticalListBox}">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <UniformGrid Columns="1" />
+                                    <UniformGrid VerticalAlignment="Top" Columns="1" />
                                 </ItemsPanelTemplate>
                             </ListBox.ItemsPanel>
                             <ListBox.ItemTemplate>
@@ -938,7 +950,7 @@
             </Grid>
             <!--  播放器  -->
             <Grid Grid.Row="1" Margin="10,10,0,0">
-                <Rectangle Height="200" StrokeThickness="0">
+                <Rectangle Height="{c:Binding ((ScreenHeight-30)*0.2), Source={x:Static res:CandySoft.Default}}" StrokeThickness="0">
                     <Rectangle.Fill>
                         <SolidColorBrush Opacity="0.4" Color="{DynamicResource SugarThemeWhiteColor}" />
                     </Rectangle.Fill>
@@ -949,20 +961,90 @@
                             Opacity="0.3" />
                     </Rectangle.Effect>
                 </Rectangle>
-                <ProgressBar
-                    Height="200"
-                    Background="Transparent"
-                    Maximum="100"
-                    Minimum="0"
-                    Orientation="Vertical"
-                    Value="{Binding Channel[0]}" />
-                <ProgressBar
-                    Height="200"
-                    Background="Transparent"
-                    Maximum="100"
-                    Minimum="0"
-                    Orientation="Vertical"
-                    Value="{Binding Channel[1]}" />
+                <Grid
+                    Width="200"
+                    Margin="0,0,10,0"
+                    HorizontalAlignment="Right">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <ProgressBar Style="{StaticResource Channel}" Value="{Binding Channel[0]}" />
+                    <ProgressBar
+                        Grid.Column="1"
+                        Style="{StaticResource Channel}"
+                        Value="{Binding Channel[1]}" />
+                    <ProgressBar
+                        Grid.Column="2"
+                        Style="{StaticResource Channel}"
+                        Value="{Binding Channel[2]}" />
+                    <ProgressBar
+                        Grid.Column="3"
+                        Style="{StaticResource Channel}"
+                        Value="{Binding Channel[3]}" />
+                    <ProgressBar
+                        Grid.Column="4"
+                        Style="{StaticResource Channel}"
+                        Value="{Binding Channel[4]}" />
+                    <ProgressBar
+                        Grid.Column="5"
+                        Style="{StaticResource Channel}"
+                        Value="{Binding Channel[5]}" />
+                    <ProgressBar
+                        Grid.Column="6"
+                        Style="{StaticResource Channel}"
+                        Value="{Binding Channel[6]}" />
+                    <ProgressBar
+                        Grid.Column="7"
+                        Style="{StaticResource Channel}"
+                        Value="{Binding Channel[7]}" />
+                    <ProgressBar
+                        Grid.Column="8"
+                        Style="{StaticResource Channel}"
+                        Value="{Binding Channel[8]}" />
+                    <ProgressBar
+                        Grid.Column="9"
+                        Style="{StaticResource Channel}"
+                        Value="{Binding Channel[9]}" />
+                    <ProgressBar
+                        Grid.Column="10"
+                        Style="{StaticResource Channel}"
+                        Value="{Binding Channel[10]}" />
+                    <ProgressBar
+                        Grid.Column="11"
+                        Style="{StaticResource Channel}"
+                        Value="{Binding Channel[11]}" />
+                    <ProgressBar
+                        Grid.Column="12"
+                        Style="{StaticResource Channel}"
+                        Value="{Binding Channel[12]}" />
+                    <ProgressBar
+                        Grid.Column="13"
+                        Style="{StaticResource Channel}"
+                        Value="{Binding Channel[13]}" />
+                    <ProgressBar
+                        Grid.Column="14"
+                        Style="{StaticResource Channel}"
+                        Value="{Binding Channel[14]}" />
+                    <ProgressBar
+                        Grid.Column="15"
+                        Style="{StaticResource Channel}"
+                        Value="{Binding Channel[15]}" />
+                </Grid>
             </Grid>
         </Grid>
     </Grid>
