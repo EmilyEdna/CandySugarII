@@ -899,7 +899,7 @@
                                                     <i:EventTrigger EventName="MouseDown">
                                                         <i:InvokeCommandAction
                                                             s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
-                                                            Command="{s:Action PlayListAction}"
+                                                            Command="{s:Action DownPlayAction}"
                                                             CommandParameter="{Binding SongId}" />
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
@@ -937,7 +937,33 @@
                 <Canvas Grid.Column="1" />
             </Grid>
             <!--  播放器  -->
-            <Grid Grid.Row="1" />
+            <Grid Grid.Row="1" Margin="10,10,0,0">
+                <Rectangle Height="200" StrokeThickness="0">
+                    <Rectangle.Fill>
+                        <SolidColorBrush Opacity="0.4" Color="{DynamicResource SugarThemeWhiteColor}" />
+                    </Rectangle.Fill>
+                    <Rectangle.Effect>
+                        <DropShadowEffect
+                            BlurRadius="15"
+                            Direction="300"
+                            Opacity="0.3" />
+                    </Rectangle.Effect>
+                </Rectangle>
+                <ProgressBar
+                    Height="200"
+                    Background="Transparent"
+                    Maximum="100"
+                    Minimum="0"
+                    Orientation="Vertical"
+                    Value="{Binding Channel[0]}" />
+                <ProgressBar
+                    Height="200"
+                    Background="Transparent"
+                    Maximum="100"
+                    Minimum="0"
+                    Orientation="Vertical"
+                    Value="{Binding Channel[1]}" />
+            </Grid>
         </Grid>
     </Grid>
 </lib:CandyControl>

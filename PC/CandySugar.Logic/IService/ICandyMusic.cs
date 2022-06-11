@@ -11,6 +11,7 @@ namespace CandySugar.Logic.IService
     {
         Task Add(CandyMusicList input);
         Task Remove(CandyMusicList input);
+        Task Update(CandyMusicList input);
         Task<List<CandyMusicList>> Get();
     }
 }

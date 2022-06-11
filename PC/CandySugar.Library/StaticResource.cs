@@ -298,12 +298,13 @@ namespace CandySugar.Library
         /// <param name="dir"></param>
         /// <param name="fileName"></param>
         /// <param name="extens"></param>
-        public static void Download(byte[] bytes, string dir, string fileName, string extens)
+        public static string Download(byte[] bytes, string dir, string fileName, string extens)
         {
             var dirs = SyncStatic.CreateDir(Path.Combine(Environment.CurrentDirectory, "CandyDown", dir, $"{FileNameFilter(fileName)}"));
             var fn = SyncStatic.CreateFile(Path.Combine(dirs, $"{FileNameFilter(fileName)}.{extens}"));
-            SyncStatic.WriteFile(bytes, fn);
+            var route = SyncStatic.WriteFile(bytes, fn);
             Process.Start("explorer.exe", dirs);
+            return route;
         }
         /// <summary>
         /// 初始化WebView

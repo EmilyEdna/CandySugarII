@@ -16,6 +16,11 @@ using HandyControl.Data;
 using CandySugar.Resource.Properties;
 using CandySugar.Logic.Entity.CandyEntity;
 using CandySugar.Logic.IService;
+using System.IO;
+using XExten.Advance.HttpFramework.MultiFactory;
+using HandyControl.Controls;
+using CandySugar.Library.AudioTemplate;
+using System.Timers;
 
 namespace CandySugar.Controls.ContentViewModel
 {
@@ -120,6 +125,12 @@ namespace CandySugar.Controls.ContentViewModel
             get => _CandyList;
             set => SetAndNotify(ref _CandyList, value);
         }
+        private ObservableCollection<double> _Channel;
+        public ObservableCollection<double> Channel
+        {
+            get => _Channel;
+            set => SetAndNotify(ref _Channel, value);
+        }
         #endregion
 
         #region Override
@@ -130,11 +141,19 @@ namespace CandySugar.Controls.ContentViewModel
         #endregion
 
         #region Action
+        /// <summary>
+        /// 搜索
+        /// </summary>
+        /// <param name="input"></param>
         public void SearchAction(string input)
         {
             this.QueryWord = input;
             InitSearch(input);
         }
+        /// <summary>
+        /// 切换平台
+        /// </summary>
+        /// <param name="input"></param>
         public void CategoryAction(PlatformEnum input)
         {
             this.Page = 1;
@@ -144,6 +163,10 @@ namespace CandySugar.Controls.ContentViewModel
             else if (this.ChangeType == 1)
                 InitQuery(this.QueryWord);
         }
+        /// <summary>
+        /// 切换条件
+        /// </summary>
+        /// <param name="input"></param>
         public void ChangeAction(string input)
         {
             this.Page = 1;
@@ -164,6 +187,10 @@ namespace CandySugar.Controls.ContentViewModel
                 InitPlayList();
             }
         }
+        /// <summary>
+        /// 分页
+        /// </summary>
+        /// <param name="input"></param>
         public void PageAction(FunctionEventArgs<int> input)
         {
             this.Page = input.Info;
@@ -172,23 +199,46 @@ namespace CandySugar.Controls.ContentViewModel
             else if (this.ChangeType == 1)
                 InitQuery(this.QueryWord);
         }
+        /// <summary>
+        /// 添加到播放列表
+        /// </summary>
+        /// <param name="input"></param>
         public void PlayListAction(Dictionary<object, object> input)
         {
             InitList(input);
+            Growl.Info("Add Success!");
         }
+        /// <summary>
+        /// 关联专辑
+        /// </summary>
+        /// <param name="input"></param>
         public void LinkAlbumAction(string input)
         {
             InitAlbum(input);
         }
-
+        /// <summary>
+        /// 从播放列表中关联专辑
+        /// </summary>
+        /// <param name="input"></param>
         public void AlbumAction(string input)
         {
             this.PlatformType = (PlatformEnum)CandyList.FirstOrDefault(t => t.AlbumId == input).Platform;
             InitAlbum(input);
         }
+        /// <summary>
+        /// 歌单详情
+        /// </summary>
+        /// <param name="input"></param>
         public void ShowSheetAction(dynamic input)
         {
             InitDetail(input.ToString());
+        }
+        /// <summary>
+        /// 加载网络音乐到本地并播放
+        /// </summary>
+        public void DownPlayAction(string input)
+        {
+            InitDownloadPlay(input);
         }
         #endregion
 
@@ -207,7 +257,7 @@ namespace CandySugar.Controls.ContentViewModel
                     ImplType = StaticResource.ImplType(),
                     Search = new MusicSearch
                     {
-                        Page=this.Page,
+                        Page = this.Page,
                         KeyWord = input
                     }
                 };
@@ -230,7 +280,7 @@ namespace CandySugar.Controls.ContentViewModel
                     ImplType = StaticResource.ImplType(),
                     Search = new MusicSearch
                     {
-                        Page=this.Page,
+                        Page = this.Page,
                         KeyWord = input
                     }
                 };
@@ -319,6 +369,76 @@ namespace CandySugar.Controls.ContentViewModel
                     Platform = (int)this.PlatformType
                 }).FirstOrDefault();
             await this.CandyMusic.Add(CandyList);
+        }
+        private async void InitDownloadPlay(string input)
+        {
+            CandyMusicList candy = CandyList.FirstOrDefault(t => t.SongId == input);
+            var Platform = (PlatformEnum)candy.Platform;
+            if (!candy.IsComplete)
+            {
+                var MusicPlayData = await MusicFactory.Music(opt =>
+                {
+                    opt.RequestParam = new Input
+                    {
+                        PlatformType = Platform,
+                        MusicType = MusicEnum.Route,
+                        ImplType = StaticResource.ImplType(),
+                        CacheSpan = CandySoft.Default.Cache,
+                        Play = Platform == PlatformEnum.KuGouMusic ? new MusicPlaySearch
+                        {
+                            Dynamic = input,
+                            KuGouAlbumId = candy.AlbumId,
+                        } : new MusicPlaySearch
+                        {
+                            Dynamic = input,
+                        }
+                    };
+                }).RunsAsync();
+                if (MusicPlayData.PlayResult.CanPlay)
+                {
+                    var SongFile = $"{candy.SongName}({candy.AlbumName})-{candy.SongArtist}_{Platform}";
+                    if (Platform == PlatformEnum.BiliBiliMusic)
+                    {
+                        candy.LocalRoute = StaticResource.Download(MusicPlayData.PlayResult.BilibiliFileBytes, Path.Combine("Music", candy.SongArtist), SongFile, "mp3");
+                    }
+                    else
+                    {
+                        var filebytes = IHttpMultiClient.HttpMulti.AddNode(opt => opt.NodePath = MusicPlayData.PlayResult.SongURL).Build().RunBytes().FirstOrDefault();
+                        candy.LocalRoute = StaticResource.Download(filebytes, Path.Combine("Music", candy.SongArtist), SongFile, "mp3");
+                        candy.NetRoute = MusicPlayData.PlayResult.SongURL;
+                    }
+                    await this.CandyMusic.Update(candy);
+                    InitPlayList();
+                }
+                else
+                    Growl.Info("当前歌曲已下架，请切换到其他其他平台搜索");
+            }
+            AudioFactory.Instance.InitConfig(candy.LocalRoute, (data) =>
+            {
+                Channel = new ObservableCollection<double>(data);
+            }).Run();
+            //InitLyric(candy);
+        }
+        private async void InitLyric(CandyMusicList candy)
+        {
+            this.Loading = true;
+            await Task.Delay(CandySoft.Default.WaitSpan);
+            var MusicLyricData = await MusicFactory.Music(opt =>
+            {
+                opt.RequestParam = new Input
+                {
+                    PlatformType = (PlatformEnum)candy.Platform,
+                    MusicType = MusicEnum.Lyric,
+                    ImplType = StaticResource.ImplType(),
+                    CacheSpan = CandySoft.Default.Cache,
+                    Lyric = new MusicLyricSearch
+                    {
+                        Dynamic = candy.SongId
+                    }
+                };
+            }).RunsAsync();
+            this.Loading = false;
+            var Lyrics = MusicLyricData.LyricResult;
         }
         #endregion
     }

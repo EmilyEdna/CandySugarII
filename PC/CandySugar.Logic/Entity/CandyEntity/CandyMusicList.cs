@@ -14,5 +14,8 @@ namespace CandySugar.Logic.Entity.CandyEntity
         public string SongArtist { get; set; }
         public string AlbumId { get; set; }
         public string AlbumName { get; set; }
+        public bool IsComplete { get; set; }
+        public string LocalRoute { get; set; }
+        public string NetRoute { get; set; }
     }
 }
