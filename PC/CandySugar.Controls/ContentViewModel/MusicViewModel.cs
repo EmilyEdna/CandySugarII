@@ -21,6 +21,8 @@ using XExten.Advance.HttpFramework.MultiFactory;
 using HandyControl.Controls;
 using CandySugar.Library.AudioTemplate;
 using System.Timers;
+using XExten.Advance.LinqFramework;
+using NAudio.Wave;
 
 namespace CandySugar.Controls.ContentViewModel
 {
@@ -45,13 +47,22 @@ namespace CandySugar.Controls.ContentViewModel
                 { PlatformEnum.MiGuMusic,"咪咕"}
             };
             this.Page = 1;
+            this.PlayMoudle = 1;
             this.ChangeType = 0;
+            this.Index = 0;
+            this.IsPlay = true;
+            this.NonPlay = false;
             OnViewLoaded();
         }
         #region Field
         private PlatformEnum PlatformType;
         private string QueryWord;
         private int ChangeType;
+        //1-列表循环；0-单曲循环
+        private int PlayMoudle;
+        private AudioFactory AudioFactory;
+        private Timer timer;
+        private int Index;
         #endregion
 
         #region CommomProperty_Bool
@@ -60,6 +71,18 @@ namespace CandySugar.Controls.ContentViewModel
         {
             get => _Loading;
             set => SetAndNotify(ref _Loading, value);
+        }
+        private bool _IsPlay;
+        public bool IsPlay
+        {
+            get => _IsPlay;
+            set => SetAndNotify(ref _IsPlay, value);
+        }
+        private bool _NonPlay;
+        public bool NonPlay
+        {
+            get => _NonPlay;
+            set => SetAndNotify(ref _NonPlay, value);
         }
         #endregion
 
@@ -75,6 +98,33 @@ namespace CandySugar.Controls.ContentViewModel
         {
             get => _Page;
             set => SetAndNotify(ref _Page, value);
+        }
+        private double _CurrentSecond;
+        public double CurrentSecond
+        {
+            get => _CurrentSecond;
+            set => SetAndNotify(ref _CurrentSecond, value);
+        }
+        #endregion
+
+        #region ComomProperty_str
+        private string _Songer;
+        public string Songer
+        {
+            get => _Songer;
+            set => SetAndNotify(ref _Songer, value);
+        }
+        private string _SongName;
+        public string SongName
+        {
+            get => _SongName;
+            set => SetAndNotify(ref _SongName, value);
+        }
+        private string _CurrentSpan;
+        public string CurrentSpan
+        {
+            get => _CurrentSpan;
+            set => SetAndNotify(ref _CurrentSpan, value);
         }
         #endregion
 
@@ -126,17 +176,30 @@ namespace CandySugar.Controls.ContentViewModel
             set => SetAndNotify(ref _CandyList, value);
         }
         private ObservableCollection<double> _Channel;
+        /// <summary>
+        /// 音频数据
+        /// </summary>
         public ObservableCollection<double> Channel
         {
             get => _Channel;
             set => SetAndNotify(ref _Channel, value);
+        }
+        private AudioModel _Audio;
+        public AudioModel Audio
+        {
+            get => _Audio;
+            set => SetAndNotify(ref _Audio, value);
         }
         #endregion
 
         #region Override
         protected override void OnViewLoaded()
         {
-
+            timer = new Timer
+            {
+                Interval = 100
+            };
+            InitPlayList();
         }
         #endregion
 
@@ -170,12 +233,12 @@ namespace CandySugar.Controls.ContentViewModel
         public void ChangeAction(string input)
         {
             this.Page = 1;
-            if (input.Equals("单曲"))
+            if (input.Equals("单曲") && !this.QueryWord.IsNullOrEmpty())
             {
                 this.ChangeType = 0;
                 InitSearch(this.QueryWord);
             }
-            else if (input.Equals("歌单"))
+            else if (input.Equals("歌单") && !this.QueryWord.IsNullOrEmpty())
             {
                 this.ChangeType = 1;
                 InitQuery(this.QueryWord);
@@ -236,9 +299,65 @@ namespace CandySugar.Controls.ContentViewModel
         /// <summary>
         /// 加载网络音乐到本地并播放
         /// </summary>
-        public void DownPlayAction(string input)
+        public void DownPlayAction()
         {
-            InitDownloadPlay(input);
+            InitPlayList();
+
+            this.IsPlay = false;
+            this.NonPlay = true;
+            if (AudioFactory == null)
+                PlayConditon();
+            else
+                AudioFactory.PlayOut().Play();
+        }
+        /// <summary>
+        /// 暂停
+        /// </summary>
+        public void PauseAciton()
+        {
+            this.IsPlay = true;
+            this.NonPlay = false;
+            AudioFactory.PlayOut().Pause();
+        }
+
+        /// <summary>
+        /// 上一首
+        /// </summary>
+        public void SkipPreviousAciton()
+        {
+            Index -= 1;
+            if (Index - 1 < 0) Index = CandyList.Count - 1;
+            if (AudioFactory != null)
+            {
+                PlayConditon();
+            }
+        }
+        /// <summary>
+        /// 下一首
+        /// </summary>
+        public void SkipNextAciton()
+        {
+            Index += 1;
+            if (Index > CandyList.Count - 1) Index = 0;
+            if (AudioFactory != null)
+            {
+                PlayConditon();
+            }
+        }
+
+        /// <summary>
+        /// 切换播放模式
+        /// </summary>
+        /// <param name="input"></param>
+        public void ChangeModuleAction(string input)
+        {
+            if (this.PlayMoudle != input.AsInt())
+                this.PlayMoudle = input.AsInt();
+            if (AudioFactory != null) //此时正在播放
+            {
+                if (this.PlayMoudle == 1) ListRuch();
+                else Single();
+            }
         }
         #endregion
 
@@ -413,10 +532,16 @@ namespace CandySugar.Controls.ContentViewModel
                 else
                     Growl.Info("当前歌曲已下架，请切换到其他其他平台搜索");
             }
-            AudioFactory.Instance.InitConfig(candy.LocalRoute, (data) =>
+            AudioFactory = AudioFactory.Instance;
+            AudioFactory.Dispose();
+            AudioFactory.InitConfig(candy.LocalRoute, (data) =>
             {
                 Channel = new ObservableCollection<double>(data);
-            }).Run();
+            }, (span, sec) =>
+            {
+                CurrentSpan = span;
+                CurrentSecond = sec;
+            }).Run(data => Audio = data);
             //InitLyric(candy);
         }
         private async void InitLyric(CandyMusicList candy)
@@ -439,6 +564,92 @@ namespace CandySugar.Controls.ContentViewModel
             }).RunsAsync();
             this.Loading = false;
             var Lyrics = MusicLyricData.LyricResult;
+        }
+        #endregion
+
+        #region  Commom
+        private void PlayConditon()
+        {
+            var PlayNum = CandyList.Count;
+            if (PlayNum <= 0)
+            {
+                Growl.Info("播放列表为添加任何歌曲！");
+                return;
+            }
+            //列表循环
+            if (PlayMoudle == 1)
+            {
+                InitDownloadPlay(CandyList[Index].SongId);
+                SongName = CandyList[Index].SongName;
+                Songer = CandyList[Index].SongArtist;
+                ListRuch();
+            }
+            else
+            {
+                InitDownloadPlay(CandyList[Index].SongId);
+                SongName = CandyList[Index].SongName;
+                Songer = CandyList[Index].SongArtist;
+                Single();
+            }
+        }
+        /// <summary>
+        /// 单曲循环
+        /// </summary>
+        private void Single()
+        {
+            timer.Elapsed -= ListRuchEvent;
+            timer.Elapsed += SingleEvent;
+            timer.Start();
+        }
+        /// <summary>
+        /// 列表循环
+        /// </summary>
+        private void ListRuch()
+        {
+            timer.Elapsed -= SingleEvent;
+            timer.Elapsed += ListRuchEvent;
+            timer.Start();
+        }
+
+        private void ListRuchEvent(object sender, ElapsedEventArgs e)
+        {
+
+            if (AudioFactory.PlayOut() != null && AudioFactory.PlayOut().PlaybackState == PlaybackState.Playing)
+            {
+                var PlayNum = CandyList.Count;
+                //播放完成
+                if (CurrentSecond >= Audio.Seconds)
+                {
+                    Index += 1;
+                    if (Index < PlayNum)
+                    {
+                        //播放下一首
+                        InitDownloadPlay(CandyList[Index].SongId);
+                        SongName = CandyList[Index].SongName;
+                        Songer = CandyList[Index].SongArtist;
+                    }
+                    else
+                    {
+                        Index = 0;
+                        InitDownloadPlay(CandyList[Index].SongId);
+                        SongName = CandyList[Index].SongName;
+                        Songer = CandyList[Index].SongArtist;
+                    }
+                }
+            }
+        }
+        private void SingleEvent(object sender, ElapsedEventArgs e)
+        {
+            if (AudioFactory.PlayOut() != null && AudioFactory.PlayOut().PlaybackState == PlaybackState.Playing)
+            {
+                //播放完成
+                if (CurrentSecond >= Audio.Seconds)
+                {
+                    InitDownloadPlay(CandyList[Index].SongId);
+                    SongName = CandyList[Index].SongName;
+                    Songer = CandyList[Index].SongArtist;
+                }
+            }
         }
         #endregion
     }

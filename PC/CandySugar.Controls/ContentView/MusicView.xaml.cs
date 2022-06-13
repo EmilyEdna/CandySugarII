@@ -45,5 +45,22 @@ namespace CandySugar.Controls.ContentView
                     BeginStoryboard((Storyboard)this.FindResource("OpenAlbum"));
             }
         }
+
+        private void EachEvent(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is ListBoxItem boxItem)
+            {
+                if (boxItem.Name == "单曲循环")
+                {
+                    列表循环.IsSelected = false;
+                    单曲循环.IsSelected = true;
+                }
+                else
+                {
+                    列表循环.IsSelected = true;
+                    单曲循环.IsSelected = false;
+                }
+            }
+        }
     }
 }
