@@ -40,18 +40,23 @@ namespace CandySugar.Library.AudioTemplate
         /// <summary>
         /// 定时器
         /// </summary>
-        private Timer _Timer;
-        /// <summary>
-        /// 定时器
-        /// </summary>
-        private Timer _Timer2;
+        private static Timer _Timer = new() { Interval = 100 };
         /// <summary>
         /// 实体类数据
         /// </summary>
         private AudioModel _Audio;
-        public static AudioFactory Instance => new();
-        private Action<List<double>> _Action;
-        private Action<string,double> _Action2;
+        private static AudioFactory _Instance;
+        public static AudioFactory Instance 
+        {
+            get
+            {
+                if (_Instance == null)
+                    _Instance = new AudioFactory();
+
+                return _Instance;
+            }
+        }
+        private Action<Tuple<List<double>, string, double>> _Action;
         /// <summary>
         /// 空检查
         /// </summary>
@@ -67,32 +72,20 @@ namespace CandySugar.Library.AudioTemplate
         /// <param name="action"></param>
         private void RegistEvent()
         {
-            _WaveOut.PlaybackStopped += (sender, args) => DisposeBase();
+            _WaveOut.PlaybackStopped += (sender, args)=> { };
             _Timer.Elapsed -= PlayEvent;
             _Timer.Elapsed += PlayEvent;
-            _Timer2.Elapsed -= LineEvent;
-            _Timer2.Elapsed += LineEvent;
-        }
-        private void LineEvent(object sender, ElapsedEventArgs e)
-        {
-            NullCheck();
-            if (_WaveOut.PlaybackState == PlaybackState.Playing)
-            {
-                #region 获取实时播放时间和长度
-                var CurrentSpan = _AudioReader.CurrentTime.ToString().Split(".").FirstOrDefault();
-                var CurrentSeconds = _AudioReader.CurrentTime.TotalSeconds;
-                _Action2.Invoke(CurrentSpan, CurrentSeconds);
-                #endregion
-            }
         }
 
         private async void PlayEvent(object sender, ElapsedEventArgs e)
         {
-            NullCheck();
-            if (_WaveOut.PlaybackState == PlaybackState.Playing)
+            if (_WaveOut != null)
             {
-                GetSampleArray();
-                _Action.Invoke(await FourierTransform());
+                if (_WaveOut.PlaybackState == PlaybackState.Playing)
+                {
+                    GetSampleArray();
+                    _Action.Invoke(await FourierTransform());
+                }
             }
         }
 
@@ -102,10 +95,11 @@ namespace CandySugar.Library.AudioTemplate
         /// <param name="route"></param>
         /// <param name="action"></param>
         /// <returns></returns>
-        public AudioFactory InitConfig(string route, Action<List<double>> action,Action<string,double> action2)
+        public AudioFactory InitConfig(string route, Action<Tuple<List<double>, string, double>> action)
         {
+            Dispose();
+
             _Action = action;
-            _Action2 = action2;
             SampleArray = new float[1024];
             _WaveOut = new WaveOutEvent();
             _AudioReader = new AudioFileReader(route);
@@ -115,14 +109,7 @@ namespace CandySugar.Library.AudioTemplate
             _ChannelCount = _AudioReader.WaveFormat.Channels;
 
             _Audio = new AudioModel();
-            _Timer = new Timer
-            {
-                Interval = 100,
-            };
-            _Timer2 = new Timer
-            {
-                Interval = 100,
-            };
+
             RegistEvent();
             return this;
         }
@@ -165,7 +152,6 @@ namespace CandySugar.Library.AudioTemplate
                 {
                     _WaveOut.Play();
                     _Timer.Start();
-                    _Timer2.Start();
                 }
                 if (Module == 2) _WaveOut.Pause();
 
@@ -178,19 +164,16 @@ namespace CandySugar.Library.AudioTemplate
 
             return this;
         }
-        private void DisposeBase()
+        public void Dispose()
         {
             _Audio = null;
             if (_Timer != null)
             {
-                _Timer.Dispose();
+                _Timer.Elapsed -= PlayEvent;
+                _Timer.Enabled = false;
                 _Timer.Stop();
             }
-            if (_Timer2 != null)
-            {
-                _Timer2.Dispose();
-                _Timer2.Stop();
-            }
+
             if (_WaveOut != null)
             {
                 _WaveOut.Dispose();
@@ -202,11 +185,6 @@ namespace CandySugar.Library.AudioTemplate
                 _AudioReader.Close();
                 _AudioReader = null;
             }
-        }
-        public void Dispose()
-        {
-            if (_WaveOut != null)
-                _WaveOut.Stop();
         }
         #region 获取音频的其他信息
         /// <summary>
@@ -224,7 +202,7 @@ namespace CandySugar.Library.AudioTemplate
         /// <summary>
         /// 傅里叶变换
         /// </summary>
-        private async Task<List<double>> FourierTransform()
+        private async Task<Tuple<List<double>,string,double>> FourierTransform()
         {
            return await Task.Run(() =>
              {
@@ -292,11 +270,18 @@ namespace CandySugar.Library.AudioTemplate
                  int count = 20000 / (this._SampleRate / length);
                  double[] finalData = resultArray.Take(count).ToArray();
 
-                #endregion
+                 #endregion
 
-                #region 设置绑定数据
-                return finalData.Take(16).ToList();
-                #endregion
+                 #region 获取实时播放时间和长度
+                 var CurrentSpan = _AudioReader.CurrentTime.ToString().Split(".").FirstOrDefault();
+                 var CurrentSeconds = _AudioReader.CurrentTime.TotalSeconds;
+                 #endregion
+
+                 #region 设置绑定数据
+                 var LineData = finalData.Take(16).ToList();
+                 #endregion
+
+                 return new Tuple<List<double>, string, double>(LineData, CurrentSpan, CurrentSeconds);
              });
         }
         #endregion

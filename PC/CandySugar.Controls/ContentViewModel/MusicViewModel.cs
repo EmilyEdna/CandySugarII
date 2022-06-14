@@ -197,7 +197,7 @@ namespace CandySugar.Controls.ContentViewModel
         {
             timer = new Timer
             {
-                Interval = 100
+                Interval = 3000
             };
             InitPlayList();
         }
@@ -326,7 +326,7 @@ namespace CandySugar.Controls.ContentViewModel
         public void SkipPreviousAciton()
         {
             Index -= 1;
-            if (Index - 1 < 0) Index = CandyList.Count - 1;
+            if (Index < 0) Index = CandyList.Count - 1;
             if (AudioFactory != null)
             {
                 PlayConditon();
@@ -532,15 +532,12 @@ namespace CandySugar.Controls.ContentViewModel
                 else
                     Growl.Info("当前歌曲已下架，请切换到其他其他平台搜索");
             }
-            AudioFactory = AudioFactory.Instance;
-            AudioFactory.Dispose();
-            AudioFactory.InitConfig(candy.LocalRoute, (data) =>
+
+            AudioFactory = AudioFactory.Instance.InitConfig(candy.LocalRoute, (data) =>
             {
-                Channel = new ObservableCollection<double>(data);
-            }, (span, sec) =>
-            {
-                CurrentSpan = span;
-                CurrentSecond = sec;
+                Channel = new ObservableCollection<double>(data.Item1);
+                CurrentSpan = data.Item2;
+                CurrentSecond = data.Item3;
             }).Run(data => Audio = data);
             //InitLyric(candy);
         }
@@ -610,11 +607,11 @@ namespace CandySugar.Controls.ContentViewModel
             timer.Elapsed += ListRuchEvent;
             timer.Start();
         }
-
+        private object SimpleLocker  = new object();
         private void ListRuchEvent(object sender, ElapsedEventArgs e)
         {
 
-            if (AudioFactory.PlayOut() != null && AudioFactory.PlayOut().PlaybackState == PlaybackState.Playing)
+            if (AudioFactory.PlayOut() != null && AudioFactory.PlayOut().PlaybackState == PlaybackState.Stopped)
             {
                 var PlayNum = CandyList.Count;
                 //播放完成
@@ -624,14 +621,20 @@ namespace CandySugar.Controls.ContentViewModel
                     if (Index < PlayNum)
                     {
                         //播放下一首
-                        InitDownloadPlay(CandyList[Index].SongId);
+                        lock (SimpleLocker)
+                        {
+                            InitDownloadPlay(CandyList[Index].SongId);
+                        }
                         SongName = CandyList[Index].SongName;
                         Songer = CandyList[Index].SongArtist;
                     }
                     else
                     {
                         Index = 0;
-                        InitDownloadPlay(CandyList[Index].SongId);
+                        lock (SimpleLocker)
+                        {
+                            InitDownloadPlay(CandyList[Index].SongId);
+                        }
                         SongName = CandyList[Index].SongName;
                         Songer = CandyList[Index].SongArtist;
                     }
@@ -640,12 +643,15 @@ namespace CandySugar.Controls.ContentViewModel
         }
         private void SingleEvent(object sender, ElapsedEventArgs e)
         {
-            if (AudioFactory.PlayOut() != null && AudioFactory.PlayOut().PlaybackState == PlaybackState.Playing)
+            if (AudioFactory.PlayOut() != null && AudioFactory.PlayOut().PlaybackState == PlaybackState.Stopped)
             {
                 //播放完成
                 if (CurrentSecond >= Audio.Seconds)
                 {
-                    InitDownloadPlay(CandyList[Index].SongId);
+                    lock (SimpleLocker)
+                    {
+                        InitDownloadPlay(CandyList[Index].SongId);
+                    }
                     SongName = CandyList[Index].SongName;
                     Songer = CandyList[Index].SongArtist;
                 }
