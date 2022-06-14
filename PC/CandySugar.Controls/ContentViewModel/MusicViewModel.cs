@@ -190,6 +190,15 @@ namespace CandySugar.Controls.ContentViewModel
             get => _Audio;
             set => SetAndNotify(ref _Audio, value);
         }
+        private ObservableCollection<MusicLyricElemetResult> _LyricResult;
+        /// <summary>
+        /// 歌词
+        /// </summary>
+        public ObservableCollection<MusicLyricElemetResult> LyricResult
+        {
+            get => _LyricResult;
+            set => SetAndNotify(ref _LyricResult, value);
+        }
         #endregion
 
         #region Override
@@ -539,12 +548,10 @@ namespace CandySugar.Controls.ContentViewModel
                 CurrentSpan = data.Item2;
                 CurrentSecond = data.Item3;
             }).Run(data => Audio = data);
-            //InitLyric(candy);
+            InitLyric(candy);
         }
         private async void InitLyric(CandyMusicList candy)
         {
-            this.Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
             var MusicLyricData = await MusicFactory.Music(opt =>
             {
                 opt.RequestParam = new Input
@@ -559,8 +566,7 @@ namespace CandySugar.Controls.ContentViewModel
                     }
                 };
             }).RunsAsync();
-            this.Loading = false;
-            var Lyrics = MusicLyricData.LyricResult;
+            LyricResult = new ObservableCollection<MusicLyricElemetResult>(MusicLyricData.LyricResult.Lyrics);
         }
         #endregion
 
@@ -607,7 +613,7 @@ namespace CandySugar.Controls.ContentViewModel
             timer.Elapsed += ListRuchEvent;
             timer.Start();
         }
-        private object SimpleLocker  = new object();
+        private object SimpleLocker = new object();
         private void ListRuchEvent(object sender, ElapsedEventArgs e)
         {
 

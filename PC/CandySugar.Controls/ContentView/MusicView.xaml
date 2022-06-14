@@ -1428,7 +1428,26 @@
                     </Grid>
                 </Grid>
                 <!--  歌词栏  -->
-                <Canvas Grid.Column="1" />
+                <Grid Grid.Column="1">
+                    <ListBox
+                        Height="{c:Binding ((ScreenHeight*0.65)-30),
+                                           Source={x:Static res:CandySoft.Default}}"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        ItemsSource="{Binding LyricResult}"
+                        Style="{StaticResource WrapPanelVerticalListBox}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Margin="5,5,5,10"
+                                    FontSize="16"
+                                    Foreground="{DynamicResource SugarThemeWhite}"
+                                    Text="{Binding Lyric}"
+                                    TextWrapping="WrapWithOverflow" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
             </Grid>
             <!--  播放器  -->
             <Grid Grid.Row="1" Margin="10,10,0,0">
