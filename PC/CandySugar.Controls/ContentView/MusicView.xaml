@@ -299,6 +299,66 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1" />
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
+        <Storyboard x:Key="VolOpen">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="音量设置" Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0.002" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0.99">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="音量设置" Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[1].(TranslateTransform.Y)">
+                <EasingDoubleKeyFrame KeyTime="0" Value="107.26" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.104">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="音量设置" Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.3" Value="{x:Static Visibility.Visible}" />
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="音量设置" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="VolClose">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="音量设置" Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseIn" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseIn" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="音量设置" Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[1].(TranslateTransform.Y)">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseIn" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="107.5">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseIn" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="音量设置" Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.3" Value="{x:Static Visibility.Collapsed}" />
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="音量设置" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
         <Style x:Key="Common" TargetType="TextBlock">
             <Setter Property="Foreground" Value="{DynamicResource SugarThemeRed}" />
             <Setter Property="Cursor" Value="Hand" />
@@ -1399,11 +1459,27 @@
                                             FontSize="12"
                                             Foreground="{DynamicResource SugarThemeSmoke}"
                                             Text="{Binding SongName}" />
-                                        <TextBlock
-                                            Margin="0,10,0,0"
-                                            FontSize="10"
-                                            Foreground="{DynamicResource SugarThemeRed}"
-                                            Text="{Binding SongArtist, Converter={StaticResource ToChar}, StringFormat=歌手:({0})}" />
+                                        <UniformGrid Columns="2">
+                                            <TextBlock
+                                                Margin="0,10,0,0"
+                                                FontSize="10"
+                                                Foreground="{DynamicResource SugarThemeRed}"
+                                                Text="{Binding SongArtist, Converter={StaticResource ToChar}, StringFormat=歌手:({0})}" />
+                                            <TextBlock
+                                                HorizontalAlignment="Right"
+                                                Style="{StaticResource Common}"
+                                                Tag="Album">
+                                                <md:PackIcon Margin="0,0,5,0" Kind="DeleteOutline" />
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseDown">
+                                                        <i:InvokeCommandAction
+                                                            s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
+                                                            Command="{s:Action RemoveAction}"
+                                                            CommandParameter="{Binding CandyId}" />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </TextBlock>
+                                        </UniformGrid>
                                         <TextBlock
                                             Margin="0,10,0,0"
                                             Cursor="Hand"
@@ -1449,6 +1525,55 @@
                     </ListBox>
                 </Grid>
             </Grid>
+            <SelectiveScrollingGrid
+                x:Name="音量设置"
+                Width="75"
+                Height="220"
+                Margin="0,0,40,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                RenderTransformOrigin="0.5,0.5"
+                Visibility="Collapsed">
+                <SelectiveScrollingGrid.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </SelectiveScrollingGrid.RenderTransform>
+                <Rectangle
+                    Width="75"
+                    Height="215"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Fill="White"
+                    RadiusX="14.5"
+                    RadiusY="14.5"
+                    Stroke="{DynamicResource SugarThemePink}" />
+                <Label
+                    x:Name="VolumeShow"
+                    Width="75"
+                    Height="30"
+                    Margin="0,185,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Content="100%"
+                    FontSize="18" />
+                <Slider
+                    Margin="27,20,21,35"
+                    BorderBrush="Transparent"
+                    Focusable="False"
+                    Foreground="{DynamicResource SugarThemePink}"
+                    Maximum="100"
+                    Minimum="1"
+                    Orientation="Vertical"
+                    SmallChange="1"
+                    TickFrequency="5"
+                    TickPlacement="BottomRight"
+                    ValueChanged="VolChangeEvent"
+                    Value="100" />
+            </SelectiveScrollingGrid>
             <!--  播放器  -->
             <Grid Grid.Row="1" Margin="10,10,0,0">
                 <Rectangle Height="{c:Binding ((ScreenHeight-30)*0.2), Source={x:Static res:CandySoft.Default}}" StrokeThickness="0">
@@ -1462,6 +1587,7 @@
                             Opacity="0.3" />
                     </Rectangle.Effect>
                 </Rectangle>
+                <!--  信息栏  -->
                 <StackPanel Margin="20,10,0,0">
                     <WrapPanel VerticalAlignment="Center" Orientation="Horizontal">
                         <Label
@@ -1503,6 +1629,7 @@
                         TickFrequency="0.001"
                         Value="{Binding CurrentSecond}" />
                 </StackPanel>
+                <!--  控制栏  -->
                 <Canvas>
                     <Button
                         x:Name="上一首"
@@ -1575,45 +1702,63 @@
                             Kind="play" />
                     </Button>
                 </Canvas>
-                <ListBox
-                    x:Name="PlayBoxType"
-                    Width="{c:Binding (ScreenWidth*0.8),
-                                      Source={x:Static res:CandySoft.Default}}"
-                    Height="30"
-                    Margin="20,0,0,10"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Bottom"
-                    Foreground="{DynamicResource SugarThemeWhite}"
-                    Style="{StaticResource MaterialDesignToolToggleListBox}">
-                    <ListBox.Background>
-                        <SolidColorBrush Opacity=".5" Color="WhiteSmoke" />
-                    </ListBox.Background>
-                    <ListBoxItem x:Name="单曲循环" MouseUp="EachEvent">
-                        <md:PackIcon Kind="RepeatOnce" />
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Selected">
-                                <i:InvokeCommandAction
-                                    s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
-                                    Command="{s:Action ChangeModuleAction}"
-                                    CommandParameter="0" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </ListBoxItem>
-                    <ListBoxItem
-                        x:Name="列表循环"
-                        IsSelected="True"
-                        MouseUp="EachEvent">
-                        <md:PackIcon Kind="Repeat" />
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Selected">
-                                <i:InvokeCommandAction
-                                    s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
-                                    Command="{s:Action ChangeModuleAction}"
-                                    CommandParameter="1" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </ListBoxItem>
-                </ListBox>
+                <!--  模式  -->
+                <Canvas>
+                    <ListBox
+                        x:Name="PlayBoxType"
+                        Canvas.Left="80"
+                        Canvas.Top="90"
+                        Width="{c:Binding (ScreenWidth*0.8),
+                                          Source={x:Static res:CandySoft.Default}}"
+                        Height="30"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        Foreground="{DynamicResource SugarThemeWhite}"
+                        Style="{StaticResource MaterialDesignToolToggleListBox}">
+                        <ListBox.Background>
+                            <SolidColorBrush Opacity=".5" Color="{DynamicResource SugarThemeBlueColor}" />
+                        </ListBox.Background>
+                        <ListBoxItem x:Name="单曲循环" MouseUp="EachEvent">
+                            <md:PackIcon Kind="RepeatOnce" />
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Selected">
+                                    <i:InvokeCommandAction
+                                        s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
+                                        Command="{s:Action ChangeModuleAction}"
+                                        CommandParameter="0" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ListBoxItem>
+                        <ListBoxItem
+                            x:Name="列表循环"
+                            IsSelected="True"
+                            MouseUp="EachEvent">
+                            <md:PackIcon Kind="Repeat" />
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Selected">
+                                    <i:InvokeCommandAction
+                                        s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
+                                        Command="{s:Action ChangeModuleAction}"
+                                        CommandParameter="1" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ListBoxItem>
+                    </ListBox>
+                    <Button
+                        x:Name="音量控制"
+                        Canvas.Top="90"
+                        Width="50"
+                        Height="30"
+                        Margin="20,0,0,10"
+                        BorderThickness="0"
+                        Click="VolumeEvent">
+                        <Button.Background>
+                            <SolidColorBrush Opacity=".5" Color="{DynamicResource SugarThemeBlueColor}" />
+                        </Button.Background>
+                        <md:PackIcon Kind="VolumeHigh" />
+                    </Button>
+                </Canvas>
+                <!--  音阶  -->
                 <Grid
                     Width="200"
                     Margin="0,0,10,0"

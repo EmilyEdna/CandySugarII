@@ -80,24 +80,9 @@ namespace CandySugar.Controls.ContentViewModel
             get => _CategoryTotal;
             set => SetAndNotify(ref _CategoryTotal, value);
         }
-        private int _DetailPage;
-        public int DetailPage
-        {
-            get => _DetailPage;
-            set => SetAndNotify(ref _DetailPage, value);
-        }
         #endregion
 
         #region Property
-        private ObservableCollection<NovelInitRecommendResult> _RecResult;
-        /// <summary>
-        /// 首页推荐
-        /// </summary>
-        public ObservableCollection<NovelInitRecommendResult> RecResult
-        {
-            get => _RecResult;
-            set => SetAndNotify(ref _RecResult, value);
-        }
         private ObservableCollection<NovelInitCategoryResult> _CateResult;
         /// <summary>
         /// 首页分类
@@ -170,13 +155,7 @@ namespace CandySugar.Controls.ContentViewModel
         public void DetailAction(NovelCategoryElementResult input)
         {
             if (input == null) return;
-            this.DetailPage = 1;
             DetailRoute = input.DetailRoute;
-            InitDetail(DetailRoute);
-        }
-        public void PageDetailAction(FunctionEventArgs<int> input)
-        {
-            this.DetailPage = input.Info;
             InitDetail(DetailRoute);
         }
         public void PageCateAction(FunctionEventArgs<int> input)
@@ -202,7 +181,6 @@ namespace CandySugar.Controls.ContentViewModel
                    };
                }).RunsAsync();
             Loading = false;
-            RecResult = new ObservableCollection<NovelInitRecommendResult>(NovelInitData.RecResults);
             CateResult = new ObservableCollection<NovelInitCategoryResult>(NovelInitData.CateInitResults);
         }
         private async void InitSearch(string input)
@@ -225,7 +203,7 @@ namespace CandySugar.Controls.ContentViewModel
             }).RunsAsync();
             Loading = false;
 
-            CateElementResult = new ObservableCollection<NovelCategoryElementResult>(NovelSearchData.SearchResults.Select(t => new NovelCategoryElementResult
+            CateElementResult = new ObservableCollection<NovelCategoryElementResult>(NovelSearchData.SearchResult.ElementResults.Select(t => new NovelCategoryElementResult
             {
                 Author = t.Author,
                 BookName = t.BookName,
@@ -274,7 +252,6 @@ namespace CandySugar.Controls.ContentViewModel
                     NovelType = NovelEnum.Detail,
                     Detail = new NovelDetail
                     {
-                        Page = this.DetailPage,
                         DetailRoute = input,
                     }
                 };
@@ -301,7 +278,7 @@ namespace CandySugar.Controls.ContentViewModel
                 };
             }).RunsAsync();
             Loading = false;
-            NovelViewData.ContentResult.Content = $"\t{NovelViewData.ContentResult.Content.Replace("　", "\n\t")}";
+            NovelViewData.ContentResult.Content = NovelViewData.ContentResult.Content;
             ViewResult = NovelViewData.ContentResult;
         }
         #endregion

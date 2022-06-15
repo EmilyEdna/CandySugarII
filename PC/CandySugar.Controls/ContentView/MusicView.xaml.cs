@@ -1,4 +1,5 @@
-﻿using CandySugar.Library.Template;
+﻿using CandySugar.Controls.ContentViewModel;
+using CandySugar.Library.Template;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,6 +60,36 @@ namespace CandySugar.Controls.ContentView
                 {
                     列表循环.IsSelected = true;
                     单曲循环.IsSelected = false;
+                }
+            }
+        }
+
+        private int Vol = 0;
+        private void VolumeEvent(object sender, RoutedEventArgs e)
+        {
+            if (Vol == 0)
+            {
+                BeginStoryboard((Storyboard)this.FindResource("VolOpen"));
+                Vol = 1;
+            }
+            else
+            {
+                BeginStoryboard((Storyboard)this.FindResource("VolClose"));
+                Vol = 0;
+            }
+        }
+
+        private void VolChangeEvent(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            var slider = (sender as Slider);
+            VolumeShow.Content = (int)slider.Value + "%";
+            var vm = ((MusicViewModel)this.DataContext);
+            if (vm != null)
+            {
+                var Audio = ((MusicViewModel)this.DataContext).AudioFactory;
+                if (Audio != null && Audio.PlayOut() != null)
+                {
+                    Audio.Change((float)(slider.Value / 100f));
                 }
             }
         }

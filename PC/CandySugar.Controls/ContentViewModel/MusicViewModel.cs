@@ -55,12 +55,12 @@ namespace CandySugar.Controls.ContentViewModel
             OnViewLoaded();
         }
         #region Field
+        public AudioFactory AudioFactory;
         private PlatformEnum PlatformType;
         private string QueryWord;
         private int ChangeType;
         //1-列表循环；0-单曲循环
         private int PlayMoudle;
-        private AudioFactory AudioFactory;
         private Timer timer;
         private int Index;
         #endregion
@@ -328,7 +328,6 @@ namespace CandySugar.Controls.ContentViewModel
             this.NonPlay = false;
             AudioFactory.PlayOut().Pause();
         }
-
         /// <summary>
         /// 上一首
         /// </summary>
@@ -353,7 +352,6 @@ namespace CandySugar.Controls.ContentViewModel
                 PlayConditon();
             }
         }
-
         /// <summary>
         /// 切换播放模式
         /// </summary>
@@ -367,6 +365,15 @@ namespace CandySugar.Controls.ContentViewModel
                 if (this.PlayMoudle == 1) ListRuch();
                 else Single();
             }
+        }
+        /// <summary>
+        /// 删除列表
+        /// </summary>
+        /// <param name="input"></param>
+        public void Remove(Guid input)
+        {
+            this.CandyMusic.Remove(CandyList.FirstOrDefault(t => t.CandyId == input));
+            this.InitPlayList();
         }
         #endregion
 

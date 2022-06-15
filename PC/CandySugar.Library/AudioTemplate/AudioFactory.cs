@@ -76,7 +76,6 @@ namespace CandySugar.Library.AudioTemplate
             _Timer.Elapsed -= PlayEvent;
             _Timer.Elapsed += PlayEvent;
         }
-
         private async void PlayEvent(object sender, ElapsedEventArgs e)
         {
             if (_WaveOut != null)
@@ -88,7 +87,6 @@ namespace CandySugar.Library.AudioTemplate
                 }
             }
         }
-
         /// <summary>
         /// 初始化
         /// </summary>
