@@ -31,6 +31,7 @@ namespace CandySugar.Controls.ContentViewModel
         public IContainer Container;
         public IWindowManager WindowManager;
         public ICandyMusic CandyMusic;
+        public AudioFactory AudioFactory;
         public MusicViewModel(IContainer Container, IWindowManager WindowManager)
         {
             this.WindowManager = WindowManager;
@@ -55,7 +56,6 @@ namespace CandySugar.Controls.ContentViewModel
             OnViewLoaded();
         }
         #region Field
-        public AudioFactory AudioFactory;
         private PlatformEnum PlatformType;
         private string QueryWord;
         private int ChangeType;
@@ -166,11 +166,11 @@ namespace CandySugar.Controls.ContentViewModel
             get => _DetailResult;
             set => SetAndNotify(ref _DetailResult, value);
         }
-        private ObservableCollection<CandyMusicList> _CandyList;
+        private ObservableCollection<CandyMusic> _CandyList;
         /// <summary>
         /// 播放列表
         /// </summary>
-        public ObservableCollection<CandyMusicList> CandyList
+        public ObservableCollection<CandyMusic> CandyList
         {
             get => _CandyList;
             set => SetAndNotify(ref _CandyList, value);
@@ -468,13 +468,13 @@ namespace CandySugar.Controls.ContentViewModel
         }
         private async void InitPlayList()
         {
-            CandyList = new ObservableCollection<CandyMusicList>(await this.CandyMusic.Get());
+            CandyList = new ObservableCollection<CandyMusic>(await this.CandyMusic.Get());
         }
         private async void InitList(Dictionary<object, object> input)
         {
-            CandyMusicList CandyList = null;
+            CandyMusic CandyList = null;
             if (input.Keys.FirstOrDefault().ToString().Equals("Single"))
-                CandyList = ItemResult.Where(t => t.SongId == input.Values.FirstOrDefault().ToString()).Select(t => new CandyMusicList
+                CandyList = ItemResult.Where(t => t.SongId == input.Values.FirstOrDefault().ToString()).Select(t => new CandyMusic
                 {
                     SongId = t.SongId,
                     AlbumId = t.SongAlbumId,
@@ -484,7 +484,7 @@ namespace CandySugar.Controls.ContentViewModel
                     Platform = (int)this.PlatformType
                 }).FirstOrDefault();
             else if (input.Keys.FirstOrDefault().ToString().Equals("Detail"))
-                CandyList = DetailResult.ElementResults.Where(t => t.SongId == input.Values.FirstOrDefault().ToString()).Select(t => new CandyMusicList
+                CandyList = DetailResult.ElementResults.Where(t => t.SongId == input.Values.FirstOrDefault().ToString()).Select(t => new CandyMusic
                 {
                     SongId = t.SongId,
                     AlbumId = t.SongAlbumId,
@@ -494,7 +494,7 @@ namespace CandySugar.Controls.ContentViewModel
                     Platform = (int)this.PlatformType
                 }).FirstOrDefault();
             else
-                CandyList = AlbumResult.Where(t => t.SongId == input.Values.FirstOrDefault().ToString()).Select(t => new CandyMusicList
+                CandyList = AlbumResult.Where(t => t.SongId == input.Values.FirstOrDefault().ToString()).Select(t => new CandyMusic
                 {
                     SongId = t.SongId,
                     AlbumId = t.SongAlbumId,
@@ -507,7 +507,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         private async void InitDownloadPlay(string input)
         {
-            CandyMusicList candy = CandyList.FirstOrDefault(t => t.SongId == input);
+            CandyMusic candy = CandyList.FirstOrDefault(t => t.SongId == input);
             var Platform = (PlatformEnum)candy.Platform;
             if (!candy.IsComplete)
             {
@@ -557,7 +557,7 @@ namespace CandySugar.Controls.ContentViewModel
             }).Run(data => Audio = data);
             InitLyric(candy);
         }
-        private async void InitLyric(CandyMusicList candy)
+        private async void InitLyric(CandyMusic candy)
         {
             var MusicLyricData = await MusicFactory.Music(opt =>
             {

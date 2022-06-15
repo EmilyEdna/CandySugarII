@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace CandySugar.Logic.Serivce
 {
-    public class CandyMusic : ICandyMusic
+    public class CandyMusicImpl : ICandyMusic
     {
-        public async Task Add(CandyMusicList input)
+        public async Task Add(CandyMusic input)
         {
             var db = DbContext.Candy.Context;
-            var check = await db.Queryable<CandyMusicList>().Where(t => t.Platform == input.Platform).Where(t => t.SongId == input.SongId).FirstAsync();
+            var check = await db.Queryable<CandyMusic>().Where(t => t.Platform == input.Platform).Where(t => t.SongId == input.SongId).FirstAsync();
             if (check == null)
             {
                 input.IsComplete = false;
@@ -23,16 +23,16 @@ namespace CandySugar.Logic.Serivce
             await Task.CompletedTask;
         }
 
-        public async Task Remove(CandyMusicList input)
+        public async Task Remove(CandyMusic input)
         {
             var db = DbContext.Candy.Context;
-            await db.Deleteable<CandyMusicList>().Where(t => t.Platform == input.Platform).Where(t => t.SongId == input.SongId).ExecuteCommandAsync();
+            await db.Deleteable<CandyMusic>().Where(t => t.Platform == input.Platform).Where(t => t.SongId == input.SongId).ExecuteCommandAsync();
         }
 
-        public async Task Update(CandyMusicList input)
+        public async Task Update(CandyMusic input)
         {
             var db = DbContext.Candy.Context;
-            await db.Updateable<CandyMusicList>().SetColumns(t => t.IsComplete == true)
+            await db.Updateable<CandyMusic>().SetColumns(t => t.IsComplete == true)
                 .SetColumns(t => t.NetRoute == input.NetRoute)
                 .SetColumns(t => t.LocalRoute == input.LocalRoute)
                 .Where(t => t.SongId == input.SongId)
@@ -40,10 +40,10 @@ namespace CandySugar.Logic.Serivce
                 .ExecuteCommandAsync();
         }
 
-        public async Task<List<CandyMusicList>> Get()
+        public async Task<List<CandyMusic>> Get()
         {
             var db = DbContext.Candy.Context;
-            return await db.Queryable<CandyMusicList>().OrderBy(t => t.Span, OrderByType.Desc).ToListAsync();
+            return await db.Queryable<CandyMusic>().OrderBy(t => t.Span, OrderByType.Desc).ToListAsync();
         }
     }
 }

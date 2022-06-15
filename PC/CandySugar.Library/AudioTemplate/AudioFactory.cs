@@ -11,7 +11,7 @@ using System.Timers;
 
 namespace CandySugar.Library.AudioTemplate
 {
-    public class AudioFactory : PropertyChangedBase, IDisposable
+    public class AudioFactory : IDisposable
     {
         /// <summary>
         /// 输出设备

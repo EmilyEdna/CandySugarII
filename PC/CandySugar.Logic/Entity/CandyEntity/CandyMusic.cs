@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CandySugar.Logic.Entity.CandyEntity
 {
-    public class CandyMusicList : BaseEntity
+    public class CandyMusic : BaseEntity
     {
         public int Platform { get; set; }
         public string SongId { get; set; }

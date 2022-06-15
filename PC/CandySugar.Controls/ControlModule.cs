@@ -14,7 +14,8 @@ namespace CandySugar.Controls
     {
         protected override void Load()
         {
-            Bind<CandyHeadTemplateViewModel>().ToSelf();
+            Bind<CandyHeadTemplateViewModel>().ToSelf(); 
+            Bind<CandyHistoryTemplateViewModel>().ToSelf();
             Bind<CandySilderTemplateViewModel>().ToSelf();
             Bind<NovelViewModel>().ToSelf();
             Bind<LovelViewModel>().ToSelf();

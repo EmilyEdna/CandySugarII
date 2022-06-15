@@ -185,12 +185,13 @@ namespace CandySugar.Library
         /// <typeparam name="T"></typeparam>
         /// <param name="currentDataContext">当前控件的DataContext</param>
         /// <param name="input">查询字段</param>
-        public static CandyControl CreateControl<T>(object currentDataContext, string input)
+        /// <param name="action">反射的方法</param>
+        public static CandyControl CreateControl<T>(object currentDataContext, string input,string action= "SearchAction")
         {
             var instance = (CandyControl)Activator.CreateInstance(typeof(T));
             instance.DataContext = currentDataContext;
 
-            var MethodInfo = instance.DataContext.GetType().GetMethod("SearchAction");
+            var MethodInfo = instance.DataContext.GetType().GetMethod(action);
             if (MethodInfo != null)
             {
                 MethodInfo.Invoke(instance.DataContext, new[] { input });

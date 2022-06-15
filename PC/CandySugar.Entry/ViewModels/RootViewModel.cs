@@ -11,6 +11,7 @@ using System.Linq;
 using CandySugar.Library;
 using CandySugar.Controls.ContentView;
 using CandySugar.Controls.ContentViewModel;
+using CandySugar.Logic.Entity.CandyEntity;
 
 namespace CandySugar.Entry.ViewModels
 {
@@ -39,6 +40,7 @@ namespace CandySugar.Entry.ViewModels
             set => SetAndNotify(ref _Ctrl, value);
         }
 
+        #region Action
         public void SettingAction()
         {
             WindowManager.ShowWindow(Container.Get<OptionViewModel>());
@@ -75,9 +77,27 @@ namespace CandySugar.Entry.ViewModels
             }
         }
 
+        public void HistoryAction()
+        {
+            Ctrl = StaticResource.CreateControl<CandyHistoryTemplateView>(Container.Get<CandyHistoryTemplateViewModel>(),null);
+        }
+
+        public void ContinueAction(dynamic input)
+        {
+            if (input is CandyNovel Novel)
+            {
+                Ctrl = StaticResource.CreateControl<NovelView>(Container.Get<NovelViewModel>(), Novel.Route, "ViewAction");
+            }
+        }
+        #endregion
         public void ScreenActivity(CandyControl input)
         {
             Ctrl = input;
+        }
+
+        protected override void OnViewLoaded()
+        {
+            HistoryAction();
         }
     }
 }

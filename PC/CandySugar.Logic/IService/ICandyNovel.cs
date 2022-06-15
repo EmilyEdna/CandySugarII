@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace CandySugar.Logic.IService
 {
-    public interface ICandyMusic
+    public interface ICandyNovel
     {
-        Task Add(CandyMusic input);
-        Task Remove(CandyMusic input);
-        Task Update(CandyMusic input);
-        Task<List<CandyMusic>> Get();
+        Task AddOrUpdate(CandyNovel input);
+        Task Remove(CandyNovel input);
+        Task<List<CandyNovel>> Get();
     }
 }

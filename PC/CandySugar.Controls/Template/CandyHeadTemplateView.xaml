@@ -63,23 +63,9 @@
                         Height="30"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Header="首页"
+                        Command="{s:Action HistoryAction}"
+                        Header="历史"
                         Style="{StaticResource CandyMenuItem}" />
-                    <MenuItem
-                        Height="30"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Header="下载"
-                        Style="{StaticResource CandyMenuItem}">
-                        <MenuItem Header="退出" Style="{StaticResource CandyMenuItem}">
-                            <MenuItem.Icon>
-                                <md:PackIcon
-                                    Width="15"
-                                    Height="15"
-                                    Kind="ExitToApp" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                    </MenuItem>
                 </Menu>
                 <WrapPanel
                     Grid.Column="3"

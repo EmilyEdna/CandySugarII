@@ -15,6 +15,8 @@ using Sdk.Component.Novel.sdk.ViewModel.Response;
 using Sdk.Component.Novel.sdk.ViewModel.Request;
 using HandyControl.Data;
 using XExten.Advance.LinqFramework;
+using CandySugar.Logic.IService;
+using CandySugar.Logic.Entity.CandyEntity;
 
 namespace CandySugar.Controls.ContentViewModel
 {
@@ -22,10 +24,12 @@ namespace CandySugar.Controls.ContentViewModel
     {
         public IContainer Container;
         public IWindowManager WindowManager;
+        public ICandyNovel CandyNovel;
         public NovelViewModel(IContainer Container, IWindowManager WindowManager)
         {
             this.WindowManager = WindowManager;
             this.Container = Container;
+            this.CandyNovel = Container.Get<ICandyNovel>();
             this.CategoryPage = 1;
             this.SearchVisible = false;
             this.DetailVisible = false;
@@ -119,6 +123,12 @@ namespace CandySugar.Controls.ContentViewModel
             get => _ViewResult;
             set => SetAndNotify(ref _ViewResult, value);
         }
+        private ObservableCollection<CandyNovel> _CandyNovelResult;
+        public ObservableCollection<CandyNovel> CandyNovelResult
+        {
+            get => _CandyNovelResult;
+            set => SetAndNotify(ref _CandyNovelResult, value);
+        }
         #endregion
 
         #region Override
@@ -131,6 +141,7 @@ namespace CandySugar.Controls.ContentViewModel
         #region Field
         private string CategoryRoute;
         private string DetailRoute;
+        private Guid PrimaryId = Guid.Empty;
         #endregion
 
         #region Action
@@ -278,8 +289,45 @@ namespace CandySugar.Controls.ContentViewModel
                 };
             }).RunsAsync();
             Loading = false;
-            NovelViewData.ContentResult.Content = NovelViewData.ContentResult.Content;
             ViewResult = NovelViewData.ContentResult;
+            Logic(input);
+        }
+        private async void AddNovel(CandyNovel input)
+        {
+            await this.CandyNovel.AddOrUpdate(input);
+        }
+        private async void InitCandyNovel()
+        {
+            CandyNovelResult = new ObservableCollection<CandyNovel>(await this.CandyNovel.Get());
+        }
+        protected void Logic(string input)
+        {
+            if (DetailResult == null)
+            {
+                InitCandyNovel();
+                if (PrimaryId != Guid.Empty)
+                {
+                    var Entity = CandyNovelResult.FirstOrDefault(t => t.CandyId == PrimaryId);
+                    Entity.Route = input;
+                    Entity.Chapter = ViewResult.ChapterName;
+                    AddNovel(Entity);
+                }
+                else
+                {
+                    var Entity = CandyNovelResult.FirstOrDefault(t => t.Route == input && t.Chapter == ViewResult.ChapterName);
+                    PrimaryId = Entity.CandyId;
+                    Entity.Route = input;
+                    Entity.Chapter = ViewResult.ChapterName;
+                    AddNovel(Entity);
+                }
+            }
+            else
+            {
+                var Entity = DetailResult.ToMapest<CandyNovel>();
+                Entity.Route = input;
+                Entity.Chapter = ViewResult.ChapterName;
+                AddNovel(Entity);
+            }
         }
         #endregion
     }
