@@ -18,8 +18,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using XExten.Advance.LinqFramework;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace CandySugar.Controls.ContentViewModel
 {

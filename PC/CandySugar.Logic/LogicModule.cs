@@ -20,6 +20,7 @@ namespace CandySugar.Logic
             Bind<ICandyMusic>().To<CandyMusicImpl>();
             Bind<ICandyNovel>().To<CandyNovelImpl>();
             Bind<ICandyLovel>().To<CandyLovelImpl>();
+            Bind<ICandyAnime>().To<CandyAnimeImpl>();
         }
     }
 }

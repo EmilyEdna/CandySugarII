@@ -12,6 +12,8 @@ using CandySugar.Library;
 using CandySugar.Controls.ContentView;
 using CandySugar.Controls.ContentViewModel;
 using CandySugar.Logic.Entity.CandyEntity;
+using Sdk.Component.Anime.sdk.ViewModel.Response;
+using CandySugar.Logic.IService;
 
 namespace CandySugar.Entry.ViewModels
 {
@@ -22,6 +24,7 @@ namespace CandySugar.Entry.ViewModels
         public RootViewModel(IContainer Container, IWindowManager WindowManager)
         {
             this.Container = Container;
+
             this.WindowManager = WindowManager;
             SilderView = new CandySilderTemplateView
             {
@@ -54,7 +57,7 @@ namespace CandySugar.Entry.ViewModels
                 switch (type)
                 {
                     case "XS":
-                        Ctrl = StaticResource.CreateControl<NovelView>(Container.Get<NovelViewModel>(),param.Values.FirstOrDefault().ToString());
+                        Ctrl = StaticResource.CreateControl<NovelView>(Container.Get<NovelViewModel>(), param.Values.FirstOrDefault().ToString());
                         break;
                     case "LXS":
                         Ctrl = StaticResource.CreateControl<LovelView>(Container.Get<LovelViewModel>(), param.Values.FirstOrDefault().ToString());
@@ -79,15 +82,36 @@ namespace CandySugar.Entry.ViewModels
 
         public void HistoryAction()
         {
-            Ctrl = StaticResource.CreateControl<CandyHistoryTemplateView>(Container.Get<CandyHistoryTemplateViewModel>(),null);
+            Ctrl = StaticResource.CreateControl<CandyHistoryTemplateView>(Container.Get<CandyHistoryTemplateViewModel>(), null);
         }
 
-        public void ContinueAction(dynamic input)
+        public async void ContinueAction(dynamic input)
         {
             if (input is CandyNovel Novel)
                 Ctrl = StaticResource.CreateControl<NovelView>(Container.Get<NovelViewModel>(), Novel.Route, "ViewAction");
             if (input is CandyLovel Lovel)
                 Ctrl = StaticResource.CreateControl<LovelView>(Container.Get<LovelViewModel>(), Lovel.Route, "ContentAction");
+            if (input is CandyAnimeRoot Anime)
+                Ctrl = StaticResource.CreateControl<AnimeView>(Container.Get<AnimeViewModel>(), new AnimeDetailResult
+                {
+                    CollectName = Anime.CollectName,
+                    Cover = Anime.Cover,
+                    Name = Anime.AnimeName,
+                    IsDownURL = false,
+                    WatchRoute = Anime.Route
+                }, "WatchAction");
+            if (input is CandyAnimeElement AnimeEle)
+            {
+               var Root =(await Container.Get<ICandyAnime>().Get()).FirstOrDefault(t => t.CandyId == AnimeEle.RootId);
+                Ctrl = StaticResource.CreateControl<AnimeView>(Container.Get<AnimeViewModel>(), new AnimeDetailResult
+                {
+                    CollectName = AnimeEle.Name,
+                    Cover = Root.Cover,
+                    Name = Root.AnimeName,
+                    IsDownURL = false,
+                    WatchRoute = AnimeEle.Route
+                }, "WatchAction");
+            }
         }
         #endregion
         public void ScreenActivity(CandyControl input)

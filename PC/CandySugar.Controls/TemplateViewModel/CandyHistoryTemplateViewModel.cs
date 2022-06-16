@@ -20,14 +20,16 @@ namespace CandySugar.Controls.TemplateViewModel
         {
             this.WindowManager = WindowManager;
             this.Container = Container;
-            this.XS= this.LXS = this.DM = this.HDM = this.MH = this.JY = false;
+            this.XS = this.LXS = this.DM = this.HDM = this.MH = this.JY = false;
             this.CandyNovel = Container.Get<ICandyNovel>();
-            this.CandyLovel= Container.Get<ICandyLovel>();
+            this.CandyLovel = Container.Get<ICandyLovel>();
+            this.CandyAnime = Container.Get<ICandyAnime>();
         }
 
         #region Field
         private ICandyNovel CandyNovel;
         private ICandyLovel CandyLovel;
+        private ICandyAnime CandyAnime;
         #endregion
 
         #region CommomProperty_Int
@@ -87,7 +89,14 @@ namespace CandySugar.Controls.TemplateViewModel
             get => _CandyLovelResult;
             set => SetAndNotify(ref _CandyLovelResult, value);
         }
+        private ObservableCollection<CandyAnimeRoot> _CandyAnimeRootResult;
+        public ObservableCollection<CandyAnimeRoot> CandyAnimeRootResult
+        {
+            get => _CandyAnimeRootResult;
+            set => SetAndNotify(ref _CandyAnimeRootResult, value);
+        }
         #endregion
+
         #region Action
         public void ChangeAction(string input)
         {
@@ -106,6 +115,7 @@ namespace CandySugar.Controls.TemplateViewModel
                 case "DM":
                     this.DM = true;
                     this.XS = this.LXS = this.HDM = this.MH = this.JY = false;
+                    InitAnime();
                     break;
                 case "HDM":
                     this.HDM = true;
@@ -121,7 +131,17 @@ namespace CandySugar.Controls.TemplateViewModel
                     break;
             }
         }
+        public void RemoveAction(dynamic input)
+        {
+            if (input is CandyNovel Novel)
+                DelNovel(Novel);
+            if (input is CandyLovel Lovel)
+                DelLovel(Lovel);
+            if (input is CandyAnimeRoot Anime)
+                DelAnime(Anime);
+        }
         #endregion
+
         #region Method
         private async void InitNovel()
         {
@@ -130,6 +150,28 @@ namespace CandySugar.Controls.TemplateViewModel
         private async void InitLovel()
         {
             CandyLovelResult = new ObservableCollection<CandyLovel>(await this.CandyLovel.Get());
+        }
+        private async void InitAnime()
+        {
+            CandyAnimeRootResult = new ObservableCollection<CandyAnimeRoot>(await this.CandyAnime.Get());
+        }
+        #endregion
+
+        #region Remove
+        private async void DelNovel(CandyNovel input)
+        {
+            await CandyNovel.Remove(input);
+            InitNovel();
+        }
+        private async void DelLovel(CandyLovel input)
+        {
+            await CandyLovel.Remove(input);
+            InitLovel();
+        }
+        private async void DelAnime(CandyAnimeRoot input)
+        {
+            await CandyAnime.Remove(input);
+            InitAnime();
         }
         #endregion
     }

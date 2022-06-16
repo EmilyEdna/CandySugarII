@@ -26,6 +26,7 @@
             await db.Updateable<CandyMusic>().SetColumns(t => t.IsComplete == true)
                 .SetColumns(t => t.NetRoute == input.NetRoute)
                 .SetColumns(t => t.LocalRoute == input.LocalRoute)
+                .SetColumns(t => t.Span == DateTime.Now.Ticks)
                 .Where(t => t.SongId == input.SongId)
                 .Where(t => t.Platform == input.Platform)
                 .ExecuteCommandAsync();

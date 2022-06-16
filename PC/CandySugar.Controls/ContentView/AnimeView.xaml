@@ -128,7 +128,7 @@
                                     <Border>
                                         <Image
                                             Width="200"
-                                            Height="260"
+                                            Height="280"
                                             Source="{Binding Cover}"
                                             Stretch="UniformToFill" />
                                         <Border.Effect>

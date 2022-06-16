@@ -13,6 +13,7 @@
             else
                 await db.Updateable<CandyLovel>().SetColumns(t => t.Route == input.Route)
                     .SetColumns(t => t.Chapter == input.Chapter)
+                    .SetColumns(t => t.Span == DateTime.Now.Ticks)
                     .Where(t => t.BookName.Equals(input.BookName))
                     .Where(t => t.Author.Equals(input.Author)).ExecuteCommandAsync();
         }

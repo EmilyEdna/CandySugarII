@@ -1,5 +1,7 @@
 ﻿using CandySugar.Library;
 using CandySugar.Library.Template;
+using CandySugar.Logic.Entity.CandyEntity;
+using CandySugar.Logic.IService;
 using CandySugar.Resource.Properties;
 using HandyControl.Data;
 using Microsoft.Web.WebView2.Wpf;
@@ -24,12 +26,14 @@ namespace CandySugar.Controls.ContentViewModel
     {
         public IContainer Container;
         public IWindowManager WindowManager;
+        public ICandyAnime CandyAnime;
         public WebView2 WebView { get; set; }
         public AnimeViewModel(IContainer Container, IWindowManager WindowManager)
         {
             this.WindowManager = WindowManager;
             this.Container = Container;
             this.Chars = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z".Split(",").ToList();
+            this.CandyAnime = Container.Get<ICandyAnime>();
             this.CategoryPage = 1;
             this.StepOne = true;
             this.StepTwo = false;
@@ -154,7 +158,6 @@ namespace CandySugar.Controls.ContentViewModel
         {
             InitWatch(input);
         }
-
         #endregion
 
         #region Method
@@ -272,8 +275,28 @@ namespace CandySugar.Controls.ContentViewModel
             }).RunsAsync();
             this.Loading = false;
             PlayResult = AnimeWatchData.PlayResult;
-
+            Logic(input);
             await WebView.CoreWebView2.ExecuteScriptAsync($"Play('{PlayResult.PlayURL}','{CandySoft.Default.ScreenHeight - 30}')");
+        }
+        private async void Logic(AnimeDetailResult input)
+        {
+            CandyAnimeRoot Root = await this.CandyAnime.AddOrUpdateRoot(new CandyAnimeRoot
+            {
+                AnimeName = input.Name,
+                CollectName = input.CollectName,
+                Cover = input.Cover,
+                Route = input.WatchRoute
+            });
+            if (DetailResult != null)
+            {
+                List<CandyAnimeElement> Elements = DetailResult.Where(t => t.Name == input.Name).Select(t => new CandyAnimeElement
+                {
+                    Name = t.CollectName,
+                    RootId = Root.CandyId,
+                    Route = t.WatchRoute,
+                }).ToList();
+                await this.CandyAnime.AddElement(Elements);
+            }
         }
         #endregion
     }

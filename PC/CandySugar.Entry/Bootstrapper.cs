@@ -21,6 +21,7 @@ namespace CandySugar.Entry
         /// </summary>
         protected override void OnStart()
         {
+            SyncStatic.DeleteFolder(Path.Combine(Environment.CurrentDirectory, "CandySugar.Entry.exe.WebView2"));
             //启用日志
             SkdOption.EnableLog = true;
 
@@ -80,7 +81,6 @@ namespace CandySugar.Entry
         /// <param name="e"></param>
         protected override void OnExit(ExitEventArgs e)
         {
-            SyncStatic.DeleteFolder(Path.Combine(Environment.CurrentDirectory, "CandySugar.Entry.exe.WebView2"));
             base.OnExit(e);
         }
 
