@@ -1,6 +1,6 @@
 ﻿namespace CandySugar.Logic.Entity.CandyEntity
 {
-    public class CandyNovel:BaseEntity
+    public class CandyLovel : BaseEntity
     {
         public string Status { get; set; }
         public string BookType { get; set; }

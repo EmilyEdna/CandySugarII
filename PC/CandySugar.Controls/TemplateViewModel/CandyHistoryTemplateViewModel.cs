@@ -22,10 +22,12 @@ namespace CandySugar.Controls.TemplateViewModel
             this.Container = Container;
             this.XS= this.LXS = this.DM = this.HDM = this.MH = this.JY = false;
             this.CandyNovel = Container.Get<ICandyNovel>();
+            this.CandyLovel= Container.Get<ICandyLovel>();
         }
 
         #region Field
         private ICandyNovel CandyNovel;
+        private ICandyLovel CandyLovel;
         #endregion
 
         #region CommomProperty_Int
@@ -79,6 +81,12 @@ namespace CandySugar.Controls.TemplateViewModel
             get => _CandyNovelResult;
             set => SetAndNotify(ref _CandyNovelResult, value);
         }
+        private ObservableCollection<CandyLovel> _CandyLovelResult;
+        public ObservableCollection<CandyLovel> CandyLovelResult
+        {
+            get => _CandyLovelResult;
+            set => SetAndNotify(ref _CandyLovelResult, value);
+        }
         #endregion
         #region Action
         public void ChangeAction(string input)
@@ -93,6 +101,7 @@ namespace CandySugar.Controls.TemplateViewModel
                 case "LXS":
                     this.LXS = true;
                     this.XS = this.DM = this.HDM = this.MH = this.JY = false;
+                    InitLovel();
                     break;
                 case "DM":
                     this.DM = true;
@@ -117,6 +126,10 @@ namespace CandySugar.Controls.TemplateViewModel
         private async void InitNovel()
         {
             CandyNovelResult = new ObservableCollection<CandyNovel>(await this.CandyNovel.Get());
+        }
+        private async void InitLovel()
+        {
+            CandyLovelResult = new ObservableCollection<CandyLovel>(await this.CandyLovel.Get());
         }
         #endregion
     }

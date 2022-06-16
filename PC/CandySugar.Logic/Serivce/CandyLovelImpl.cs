@@ -1,32 +1,32 @@
 ﻿namespace CandySugar.Logic.Serivce
 {
-    public class CandyNovelImpl : ICandyNovel
+    public class CandyLovelImpl : ICandyLovel
     {
-        public async Task AddOrUpdate(CandyNovel input)
+        public async Task AddOrUpdate(CandyLovel input)
         {
             var db = DbContext.Candy.Context;
-            var Novel = await db.Queryable<CandyNovel>()
+            var Novel = await db.Queryable<CandyLovel>()
                 .Where(t => t.BookName.Equals(input.BookName))
                 .Where(t => t.Author.Equals(input.Author)).FirstAsync();
             if (Novel == null)
                 await db.Insertable(input).CallEntityMethod(t => t.Create()).ExecuteCommandAsync();
             else
-                await db.Updateable<CandyNovel>().SetColumns(t=>t.Route==input.Route)
-                    .SetColumns(t=>t.Chapter==input.Chapter)
+                await db.Updateable<CandyLovel>().SetColumns(t => t.Route == input.Route)
+                    .SetColumns(t => t.Chapter == input.Chapter)
                     .Where(t => t.BookName.Equals(input.BookName))
                     .Where(t => t.Author.Equals(input.Author)).ExecuteCommandAsync();
         }
 
-        public async Task<List<CandyNovel>> Get()
+        public async Task<List<CandyLovel>> Get()
         {
             var db = DbContext.Candy.Context;
-            return await db.Queryable<CandyNovel>().OrderBy(t => t.Span, OrderByType.Desc).ToListAsync();
+            return await db.Queryable<CandyLovel>().OrderBy(t => t.Span, OrderByType.Desc).ToListAsync();
         }
 
-        public async Task Remove(CandyNovel input)
+        public async Task Remove(CandyLovel input)
         {
             var db = DbContext.Candy.Context;
-            await db.Deleteable<CandyNovel>(t => t.CandyId == input.CandyId).ExecuteCommandAsync();
+            await db.Deleteable<CandyLovel>(t => t.CandyId == input.CandyId).ExecuteCommandAsync();
         }
     }
 }

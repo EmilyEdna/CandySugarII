@@ -1,4 +1,6 @@
 ﻿using CandySugar.Library;
+using CandySugar.Logic.Entity.CandyEntity;
+using CandySugar.Logic.IService;
 using CandySugar.Resource.Properties;
 using HandyControl.Controls;
 using HandyControl.Data;
@@ -16,6 +18,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using XExten.Advance.LinqFramework;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace CandySugar.Controls.ContentViewModel
 {
@@ -23,10 +27,12 @@ namespace CandySugar.Controls.ContentViewModel
     {
         public IContainer Container;
         public IWindowManager WindowManager;
+        public ICandyLovel CandyLovel;
         public LovelViewModel(IContainer Container, IWindowManager WindowManager)
         {
             this.WindowManager = WindowManager;
             this.Container = Container;
+            this.CandyLovel = Container.Get<ICandyLovel>();
             this.CategoryPage = 1;
             this.StepOne = true;
             this.StepTwo = false;
@@ -126,6 +132,7 @@ namespace CandySugar.Controls.ContentViewModel
         private string CategoryRoute;
         private string DetailRoute;
         private string KeyWord;
+        private Guid PrimaryId = Guid.Empty;
         #endregion
 
         #region Action
@@ -148,10 +155,18 @@ namespace CandySugar.Controls.ContentViewModel
             this.DetailRoute = input.DetailAddress;
             InitDetail(this.DetailRoute);
         }
-        public void ContentAction(LovelViewResult input)
+        public void ContentAction(dynamic input)
         {
-            if (input.IsDown) InitDown(input);
-            else InitContent(input.ChapterRoute);
+            if (input == null) return;
+            if (input is LovelViewResult Lovel)
+            {
+                if (Lovel.IsDown) InitDown(Lovel);
+                else InitContent(Lovel.ChapterRoute);
+            }
+            else
+            {
+                InitContent(input);
+            }
         }
         public void PageCateAction(FunctionEventArgs<int> input)
         {
@@ -304,6 +319,7 @@ namespace CandySugar.Controls.ContentViewModel
                 StepTwo = true;
                 StepThree = false;
             }
+            Logic(input);
             Loading = false;
             ContentResult = LovelContentData.ContentResult;
         }
@@ -323,13 +339,30 @@ namespace CandySugar.Controls.ContentViewModel
                     {
                         KeyWord = input,
                         SearchType = LovelSearchEnum.ArticleName,
-                        Page= CategoryPage
+                        Page = CategoryPage
                     }
                 };
             }).RunsAsync();
             Loading = false;
-            CategoryTotal =  LovelQueryData.SearchResult.Total;
+            CategoryTotal = LovelQueryData.SearchResult.Total;
             CateElementResult = new ObservableCollection<LovelCategoryElementResult>(LovelQueryData.SearchResult.ElementResults.ToMapest<List<LovelCategoryElementResult>>());
+        }
+        private async void AddLovel(CandyLovel input)
+        {
+            await this.CandyLovel.AddOrUpdate(input);
+        }
+        protected void Logic(string input)
+        {
+            var Views = ViewResult?.FirstOrDefault(t => t.ChapterRoute == input);
+            var Infos = CateElementResult?.FirstOrDefault(t => t.BookName == Views.BookName);
+            if (Views != null && Infos != null)
+            {
+                var Entity = Infos.ToMapest<CandyLovel>();
+                Entity.BookType = Infos.Category;
+                Entity.Route = input;
+                Entity.Chapter = Views.ChapterName;
+                AddLovel(Entity);
+            }
         }
         #endregion
     }

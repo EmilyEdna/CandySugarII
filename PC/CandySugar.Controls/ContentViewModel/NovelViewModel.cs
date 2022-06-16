@@ -174,6 +174,10 @@ namespace CandySugar.Controls.ContentViewModel
             this.CategoryPage = input.Info;
             InitCategory(CategoryRoute);
         }
+        public void HistoryAction() {
+            this.StepOne = true;
+            this.StepTwo = false;
+        }
         #endregion
 
         #region Method
@@ -292,13 +296,13 @@ namespace CandySugar.Controls.ContentViewModel
             ViewResult = NovelViewData.ContentResult;
             Logic(input);
         }
-        private async void AddNovel(CandyNovel input)
-        {
-            await this.CandyNovel.AddOrUpdate(input);
-        }
         private async void InitCandyNovel()
         {
             CandyNovelResult = new ObservableCollection<CandyNovel>(await this.CandyNovel.Get());
+        }
+        private async void AddNovel(CandyNovel input)
+        {
+            await this.CandyNovel.AddOrUpdate(input);
         }
         protected void Logic(string input)
         {

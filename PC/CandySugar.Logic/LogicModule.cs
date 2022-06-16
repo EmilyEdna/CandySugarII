@@ -1,11 +1,15 @@
-﻿using CandySugar.Logic.IService;
-using CandySugar.Logic.Serivce;
-using StyletIoC;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿global using CandySugar.Logic.Entity;
+global using CandySugar.Logic.Entity.CandyEntity;
+global using CandySugar.Logic.IService;
+global using CandySugar.Logic.Serivce;
+global using SqlSugar;
+global using StyletIoC;
+global using System;
+global using System.Collections.Generic;
+global using System.IO;
+global using System.Linq;
+global using System.Threading.Tasks;
+global using XExten.Advance.StaticFramework;
 
 namespace CandySugar.Logic
 {
@@ -15,6 +19,7 @@ namespace CandySugar.Logic
         {
             Bind<ICandyMusic>().To<CandyMusicImpl>();
             Bind<ICandyNovel>().To<CandyNovelImpl>();
+            Bind<ICandyLovel>().To<CandyLovelImpl>();
         }
     }
 }

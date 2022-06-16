@@ -1,13 +1,4 @@
-﻿using CandySugar.Logic.Entity.CandyEntity;
-using CandySugar.Logic.IService;
-using SqlSugar;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CandySugar.Logic.Serivce
+﻿namespace CandySugar.Logic.Serivce
 {
     public class CandyMusicImpl : ICandyMusic
     {

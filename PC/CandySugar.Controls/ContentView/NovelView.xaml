@@ -34,16 +34,25 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="lib:CandyButton">
-                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <StackPanel.Effect>
+                        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <WrapPanel.Effect>
                                 <DropShadowEffect
                                     BlurRadius="3"
                                     Opacity=".3"
                                     ShadowDepth="0"
                                     Color="{DynamicResource SugarThemeWhiteColor}" />
-                            </StackPanel.Effect>
+                            </WrapPanel.Effect>
+                            <ContentPresenter
+                                x:Name="Icon"
+                                Width="16"
+                                Height="16"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Content="{TemplateBinding Icon}"
+                                ContentSource="Icon"
+                                SnapsToDevicePixels="True" />
                             <TextBlock Foreground="{TemplateBinding Foreground}" Text="{TemplateBinding Content}" />
-                        </StackPanel>
+                        </WrapPanel>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Background" Value="Transparent" />
@@ -278,7 +287,7 @@
                 Grid.Row="2"
                 Width="300"
                 HorizontalAlignment="Right"
-                Columns="2">
+                Columns="3">
                 <lib:CandyButton
                     s:View.ActionTarget="{Binding DataContext, ElementName=NovelViewName}"
                     Command="{s:Action ViewAction}"
@@ -306,6 +315,15 @@
                             Command="{s:Action ViewAction}"
                             CommandParameter="{Binding ViewResult.NextChapter}" />
                     </lib:CandyButton.InputBindings>
+                </lib:CandyButton>
+                <lib:CandyButton
+                    s:View.ActionTarget="{Binding DataContext, ElementName=NovelViewName}"
+                    Command="{s:Action HistoryAction}"
+                    Content="返回上级"
+                    Style="{StaticResource BtnPageStyle}">
+                    <lib:CandyButton.Icon>
+                        <md:PackIcon Kind="Restore" />
+                    </lib:CandyButton.Icon>
                 </lib:CandyButton>
             </UniformGrid>
         </Grid>

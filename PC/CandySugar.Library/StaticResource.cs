@@ -186,7 +186,7 @@ namespace CandySugar.Library
         /// <param name="currentDataContext">当前控件的DataContext</param>
         /// <param name="input">查询字段</param>
         /// <param name="action">反射的方法</param>
-        public static CandyControl CreateControl<T>(object currentDataContext, string input,string action= "SearchAction")
+        public static CandyControl CreateControl<T>(object currentDataContext, dynamic input,string action= "SearchAction")
         {
             var instance = (CandyControl)Activator.CreateInstance(typeof(T));
             instance.DataContext = currentDataContext;

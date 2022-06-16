@@ -1,14 +1,4 @@
-﻿using CandySugar.Logic.Entity;
-using SqlSugar;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using XExten.Advance.StaticFramework;
-
-namespace CandySugar.Logic
+﻿namespace CandySugar.Logic
 {
     public class DbContext
     {

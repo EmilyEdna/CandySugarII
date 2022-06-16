@@ -85,9 +85,9 @@ namespace CandySugar.Entry.ViewModels
         public void ContinueAction(dynamic input)
         {
             if (input is CandyNovel Novel)
-            {
                 Ctrl = StaticResource.CreateControl<NovelView>(Container.Get<NovelViewModel>(), Novel.Route, "ViewAction");
-            }
+            if (input is CandyLovel Lovel)
+                Ctrl = StaticResource.CreateControl<LovelView>(Container.Get<LovelViewModel>(), Lovel.Route, "ContentAction");
         }
         #endregion
         public void ScreenActivity(CandyControl input)

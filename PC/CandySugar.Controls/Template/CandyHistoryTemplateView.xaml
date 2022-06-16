@@ -164,6 +164,66 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
             </Grid>
+            <Grid x:Name="LXS" Visibility="{Binding LXS, Converter={StaticResource ToShow}}">
+                <ListBox
+                    Background="Transparent"
+                    BorderThickness="0"
+                    ItemsSource="{Binding CandyLovelResult}"
+                    Style="{StaticResource WrapPanelHorizontalListBox}">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="3" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <Border Margin="15,15,0,0" HorizontalAlignment="Left">
+                                    <Image
+                                        Width="150"
+                                        Height="195"
+                                        SnapsToDevicePixels="True"
+                                        Source="{Binding Cover}" />
+                                    <Border.Effect>
+                                        <DropShadowEffect
+                                            BlurRadius="6"
+                                            Opacity="1"
+                                            ShadowDepth="0"
+                                            Color="{DynamicResource SugarThemePinkColor}" />
+                                    </Border.Effect>
+                                </Border>
+                                <StackPanel Margin="15,15,0,0" HorizontalAlignment="Left">
+                                    <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding BookName, StringFormat=书名:{0}}" />
+                                    <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding Author, StringFormat=作者:{0}}" />
+                                    <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding BookType, StringFormat=类型:{0}}" />
+                                    <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding Status, StringFormat=状态:{0}}" />
+                                    <TextBlock Text="{Binding Chapter, StringFormat=上次看到:[{0}]，继续看}">
+                                        <TextBlock.Style>
+                                            <Style BasedOn="{StaticResource TextBlockStyle}" TargetType="TextBlock">
+                                                <Setter Property="Cursor" Value="Hand" />
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Foreground" Value="{DynamicResource SugarThemeBlue}" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseUp">
+                                                <i:InvokeCommandAction Command="{s:Action ContinueAction}" CommandParameter="{Binding .}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBlock>
+                                    <TextBlock
+                                        Style="{StaticResource TextBlockStyle}"
+                                        Text="{Binding Description, StringFormat=简介:{0}}"
+                                        TextWrapping="WrapWithOverflow" />
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
         </Grid>
     </Grid>
 </lib:CandyControl>
