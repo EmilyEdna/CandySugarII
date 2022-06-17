@@ -9,7 +9,9 @@ global using System.Collections.Generic;
 global using System.IO;
 global using System.Linq;
 global using System.Threading.Tasks;
+global using System.Text;
 global using XExten.Advance.StaticFramework;
+global using XExten.Advance.LinqFramework;
 
 namespace CandySugar.Logic
 {
@@ -22,6 +24,7 @@ namespace CandySugar.Logic
             Bind<ICandyLovel>().To<CandyLovelImpl>();
             Bind<ICandyAnime>().To<CandyAnimeImpl>();
             Bind<ICandyManga>().To<CandyMangaImpl>();
+            Bind<ICandyLabel>().To<CandyLabelImpl>();
         }
     }
 }

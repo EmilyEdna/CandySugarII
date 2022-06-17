@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XExten.Advance.LinqFramework;
 
 namespace CandySugar.Controls.TemplateViewModel
 {
@@ -30,11 +31,11 @@ namespace CandySugar.Controls.TemplateViewModel
 
         private void Handle()
         {
-            this.MenuVlaue = new ObservableCollection<string>();
+            MenuVlaue = new ObservableCollection<string>();
             StaticResource.InitMenu().ForEach(item =>
             {
                 if (item.Show)
-                    this.MenuVlaue.Add(item.Query);
+                    MenuVlaue.Add(item.Query);
             });
         }
     }

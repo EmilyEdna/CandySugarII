@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CandySugar.Controls.TemplateViewModel
+namespace CandySugar.Controls.MenuTemplateViewModel
 {
     public class CandyHistoryTemplateViewModel : PropertyChangedBase
     {
@@ -20,11 +20,11 @@ namespace CandySugar.Controls.TemplateViewModel
         {
             this.WindowManager = WindowManager;
             this.Container = Container;
-            this.XS = this.LXS = this.DM = this.HDM = this.MH = this.JY = false;
-            this.CandyNovel = Container.Get<ICandyNovel>();
-            this.CandyLovel = Container.Get<ICandyLovel>();
-            this.CandyAnime = Container.Get<ICandyAnime>();
-            this.CandyManga = Container.Get<ICandyManga>();
+            XS = LXS = DM = HDM = MH = JY = false;
+            CandyNovel = Container.Get<ICandyNovel>();
+            CandyLovel = Container.Get<ICandyLovel>();
+            CandyAnime = Container.Get<ICandyAnime>();
+            CandyManga = Container.Get<ICandyManga>();
         }
 
         #region Field
@@ -111,32 +111,32 @@ namespace CandySugar.Controls.TemplateViewModel
             switch (input)
             {
                 case "XS":
-                    this.XS = true;
-                    this.LXS = this.DM = this.HDM = this.MH = this.JY = false;
+                    XS = true;
+                    LXS = DM = HDM = MH = JY = false;
                     InitNovel();
                     break;
                 case "LXS":
-                    this.LXS = true;
-                    this.XS = this.DM = this.HDM = this.MH = this.JY = false;
+                    LXS = true;
+                    XS = DM = HDM = MH = JY = false;
                     InitLovel();
                     break;
                 case "DM":
-                    this.DM = true;
-                    this.XS = this.LXS = this.HDM = this.MH = this.JY = false;
+                    DM = true;
+                    XS = LXS = HDM = MH = JY = false;
                     InitAnime();
                     break;
                 case "HDM":
-                    this.HDM = true;
-                    this.XS = this.LXS = this.DM = this.MH = this.JY = false;
+                    HDM = true;
+                    XS = LXS = DM = MH = JY = false;
                     break;
                 case "MH":
-                    this.MH = true;
-                    this.XS = this.LXS = this.DM = this.HDM = this.JY = false;
+                    MH = true;
+                    XS = LXS = DM = HDM = JY = false;
                     InitManga();
                     break;
                 default:
-                    this.JY = true;
-                    this.XS = this.LXS = this.DM = this.HDM = this.MH = false;
+                    JY = true;
+                    XS = LXS = DM = HDM = MH = false;
                     break;
             }
         }
@@ -156,19 +156,19 @@ namespace CandySugar.Controls.TemplateViewModel
         #region Method
         private async void InitNovel()
         {
-            CandyNovelResult = new ObservableCollection<CandyNovel>(await this.CandyNovel.Get());
+            CandyNovelResult = new ObservableCollection<CandyNovel>(await CandyNovel.Get());
         }
         private async void InitLovel()
         {
-            CandyLovelResult = new ObservableCollection<CandyLovel>(await this.CandyLovel.Get());
+            CandyLovelResult = new ObservableCollection<CandyLovel>(await CandyLovel.Get());
         }
         private async void InitAnime()
         {
-            CandyAnimeRootResult = new ObservableCollection<CandyAnimeRoot>(await this.CandyAnime.Get());
+            CandyAnimeRootResult = new ObservableCollection<CandyAnimeRoot>(await CandyAnime.Get());
         }
         private async void InitManga()
         {
-            CandyMangaResult = new ObservableCollection<CandyManga>(await this.CandyManga.Get());
+            CandyMangaResult = new ObservableCollection<CandyManga>(await CandyManga.Get());
         }
         #endregion
 

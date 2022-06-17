@@ -1,4 +1,5 @@
 ﻿using CandySugar.Controls.ContentViewModel;
+using CandySugar.Controls.MenuTemplateViewModel;
 using CandySugar.Controls.TemplateViewModel;
 using Stylet;
 using StyletIoC;
@@ -15,8 +16,11 @@ namespace CandySugar.Controls
         protected override void Load()
         {
             Bind<CandyHeadTemplateViewModel>().ToSelf(); 
-            Bind<CandyHistoryTemplateViewModel>().ToSelf();
             Bind<CandySilderTemplateViewModel>().ToSelf();
+
+            Bind<CandyHistoryTemplateViewModel>().ToSelf();
+            Bind<CandyImageTemplateViewModel>().ToSelf();
+
             Bind<NovelViewModel>().ToSelf();
             Bind<LovelViewModel>().ToSelf();
             Bind<AnimeViewModel>().ToSelf();

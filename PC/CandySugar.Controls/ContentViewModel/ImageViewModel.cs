@@ -1,4 +1,5 @@
 ﻿using CandySugar.Library;
+using CandySugar.Logic.IService;
 using CandySugar.Resource.Properties;
 using HandyControl.Data;
 using HandyControl.Tools.Command;
@@ -25,11 +26,13 @@ namespace CandySugar.Controls.ContentViewModel
     {
         public IContainer Container;
         public IWindowManager WindowManager;
+        public ICandyLabel CandyLabel;
         public int Limit = 12;
         public ImageViewModel(IContainer Container, IWindowManager WindowManager)
         {
             this.WindowManager = WindowManager;
             this.Container = Container;
+            this.CandyLabel = Container.Get<ICandyLabel>();
             this.StepOne = true;
             this.StepTwo = false;
             this.Page = 1;
@@ -105,9 +108,9 @@ namespace CandySugar.Controls.ContentViewModel
             this.StepTwo = false;
         });
 
-        public void SearchAction(string input)
+        public async void SearchAction(string input)
         {
-            this.KeyWord = input;
+            this.KeyWord = await this.CandyLabel.GetKey(input);
             this.Page = 1;
             InitSearch(input);
         }

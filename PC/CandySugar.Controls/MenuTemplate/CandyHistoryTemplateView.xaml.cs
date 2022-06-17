@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CandySugar.Controls.Template
+namespace CandySugar.Controls.MenuTemplate
 {
     /// <summary>
     /// CandyHistoryTemplateView.xaml 的交互逻辑
@@ -25,6 +25,5 @@ namespace CandySugar.Controls.Template
         {
             InitializeComponent();
         }
-
     }
 }

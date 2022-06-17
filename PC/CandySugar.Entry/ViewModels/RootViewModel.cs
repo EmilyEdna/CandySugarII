@@ -15,6 +15,9 @@ using CandySugar.Logic.Entity.CandyEntity;
 using Sdk.Component.Anime.sdk.ViewModel.Response;
 using CandySugar.Logic.IService;
 using Sdk.Component.Manga.sdk.ViewModel.Response;
+using XExten.Advance.LinqFramework;
+using CandySugar.Controls.MenuTemplateViewModel;
+using CandySugar.Controls.MenuTemplate;
 
 namespace CandySugar.Entry.ViewModels
 {
@@ -45,11 +48,6 @@ namespace CandySugar.Entry.ViewModels
         }
 
         #region Action
-        public void SettingAction()
-        {
-            WindowManager.ShowWindow(Container.Get<OptionViewModel>());
-        }
-
         public void SearchAction(Dictionary<object, object> param)
         {
 
@@ -79,11 +77,6 @@ namespace CandySugar.Entry.ViewModels
                         break;
                 }
             }
-        }
-
-        public void HistoryAction()
-        {
-            Ctrl = StaticResource.CreateControl<CandyHistoryTemplateView>(Container.Get<CandyHistoryTemplateViewModel>(), null);
         }
 
         public async void ContinueAction(dynamic input)
@@ -122,6 +115,26 @@ namespace CandySugar.Entry.ViewModels
                     Title=Manga.CollectName
                 }, "WatchAction");
         }
+
+        public void HandleAction(string input)
+        {
+            switch (input.AsInt())
+            {
+                case 0: //标签
+                    Ctrl = StaticResource.CreateControl<CandyImageTemplateView>(Container.Get<CandyImageTemplateViewModel>(), null);
+                    break;
+                case 1://历史
+                    Ctrl = StaticResource.CreateControl<CandyHistoryTemplateView>(Container.Get<CandyHistoryTemplateViewModel>(), null);
+                    break;
+                case 2://日志
+                    break;
+                case 3://设置
+                    WindowManager.ShowWindow(Container.Get<OptionViewModel>());
+                    break;
+                default:
+                    break;
+            }
+        }
         #endregion
         public void ScreenActivity(CandyControl input)
         {
@@ -130,7 +143,7 @@ namespace CandySugar.Entry.ViewModels
 
         protected override void OnViewLoaded()
         {
-            HistoryAction();
+            HandleAction("1");
         }
     }
 }
