@@ -29,12 +29,12 @@ namespace CandySugar.Controls.ContentView
 
         private void ItemSelected(object sender, SelectionChangedEventArgs e)
         {
-            BeginStoryboard((Storyboard)this.FindResource("OpenDetail"));
+            BeginAnime("OpenDetail");
         }
 
         private void TextClicked(object sender, MouseButtonEventArgs e)
         {
-            BeginStoryboard((Storyboard)this.FindResource("CloseDetail"));
+            BeginAnime("CloseDetail");
         }
     }
 }

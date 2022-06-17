@@ -34,16 +34,16 @@ namespace CandySugar.Controls.ContentView
             if (sender is ListBoxItem boxItem)
             {
                 var Content = boxItem.Content.ToString();
-                if (Content == "单曲") BeginStoryboard((Storyboard)this.FindResource("OpenSong"));
-                else if (Content == "歌单") BeginStoryboard((Storyboard)this.FindResource("OpenSheet"));
-                else BeginStoryboard((Storyboard)this.FindResource("OpenPlayList"));
+                if (Content == "单曲") BeginAnime("OpenSong");
+                else if (Content == "歌单") BeginAnime("OpenSheet");
+                else BeginAnime("OpenPlayList");
             }
             if (sender is TextBlock block)
             {
                 if (block.Text.Equals("查看详情"))
-                    BeginStoryboard((Storyboard)this.FindResource("OpenDetail"));
+                    BeginAnime("OpenDetail");
                 else
-                    BeginStoryboard((Storyboard)this.FindResource("OpenAlbum"));
+                    BeginAnime("OpenAlbum");
             }
         }
 
@@ -69,12 +69,12 @@ namespace CandySugar.Controls.ContentView
         {
             if (Vol == 0)
             {
-                BeginStoryboard((Storyboard)this.FindResource("VolOpen"));
+                BeginAnime("VolOpen");
                 Vol = 1;
             }
             else
             {
-                BeginStoryboard((Storyboard)this.FindResource("VolClose"));
+                BeginAnime("VolClose");
                 Vol = 0;
             }
         }
