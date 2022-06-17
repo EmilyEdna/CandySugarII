@@ -13,7 +13,7 @@ global using XExten.Advance.StaticFramework;
 
 namespace CandySugar.Logic
 {
-    public class LogicModule: StyletIoCModule
+    public class LogicModule : StyletIoCModule
     {
         protected override void Load()
         {
@@ -21,6 +21,7 @@ namespace CandySugar.Logic
             Bind<ICandyNovel>().To<CandyNovelImpl>();
             Bind<ICandyLovel>().To<CandyLovelImpl>();
             Bind<ICandyAnime>().To<CandyAnimeImpl>();
+            Bind<ICandyManga>().To<CandyMangaImpl>();
         }
     }
 }

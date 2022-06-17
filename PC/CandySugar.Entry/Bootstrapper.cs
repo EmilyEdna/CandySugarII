@@ -21,13 +21,12 @@ namespace CandySugar.Entry
         /// </summary>
         protected override void OnStart()
         {
+            //启动删除WebView2的临时文件
             SyncStatic.DeleteFolder(Path.Combine(Environment.CurrentDirectory, "CandySugar.Entry.exe.WebView2"));
             //启用日志
             SkdOption.EnableLog = true;
-
             //删除过往日志
             SyncStatic.DeleteFolder(Path.Combine(Environment.CurrentDirectory, "Logs"));
-
             //日志
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()

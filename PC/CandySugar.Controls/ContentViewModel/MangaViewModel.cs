@@ -18,6 +18,8 @@ using XExten.Advance.LinqFramework;
 using System.Windows.Media.Imaging;
 using System.Windows.Input;
 using HandyControl.Tools.Command;
+using CandySugar.Logic.IService;
+using CandySugar.Logic.Entity.CandyEntity;
 
 namespace CandySugar.Controls.ContentViewModel
 {
@@ -25,10 +27,12 @@ namespace CandySugar.Controls.ContentViewModel
     {
         public IContainer Container;
         public IWindowManager WindowManager;
+        public ICandyManga CandyManga;
         public MangaViewModel(IContainer Container, IWindowManager WindowManager)
         {
             this.WindowManager = WindowManager;
             this.Container = Container;
+            this.CandyManga = Container.Get<ICandyManga>();
             this.StepOne = true;
             this.StepTwo = false;
             this.Page = 1;
@@ -285,9 +289,26 @@ namespace CandySugar.Controls.ContentViewModel
                 };
             }).RunsAsync();
             Loading = false;
+            Logic(input);
             var width = (int)(CandySoft.Default.ScreenWidth - 200);
             var height = (int)(CandySoft.Default.ScreenHeight - 30);
             ByteResult = new ObservableCollection<BitmapSource>(MangaByteData.DwonResult.Bytes.Select(t => StaticResource.ToImage(t, width, height)));
+        }
+        protected async void Logic(string input)
+        {
+            if (DetailResult != null && CateElementResult != null)
+            {
+                var Detail = DetailResult.FirstOrDefault(t => t.Route == input);
+                var Cate = CateElementResult.FirstOrDefault(t => t.Name == Detail.Name);
+                await this.CandyManga.AddOrUpdate(new CandyManga
+                {
+                    Name = Cate.Name,
+                    Cover = Cate.Cover,
+                    CollectName = Detail.Title,
+                    Route = Detail.Route,
+                    Key = Detail.TagKey
+                });
+            }
         }
         #endregion
     }

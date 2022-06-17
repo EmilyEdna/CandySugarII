@@ -24,12 +24,14 @@ namespace CandySugar.Controls.TemplateViewModel
             this.CandyNovel = Container.Get<ICandyNovel>();
             this.CandyLovel = Container.Get<ICandyLovel>();
             this.CandyAnime = Container.Get<ICandyAnime>();
+            this.CandyManga = Container.Get<ICandyManga>();
         }
 
         #region Field
         private ICandyNovel CandyNovel;
         private ICandyLovel CandyLovel;
         private ICandyAnime CandyAnime;
+        private ICandyManga CandyManga;
         #endregion
 
         #region CommomProperty_Int
@@ -95,6 +97,12 @@ namespace CandySugar.Controls.TemplateViewModel
             get => _CandyAnimeRootResult;
             set => SetAndNotify(ref _CandyAnimeRootResult, value);
         }
+        private ObservableCollection<CandyManga> _CandyMangaResult;
+        public ObservableCollection<CandyManga> CandyMangaResult
+        {
+            get => _CandyMangaResult;
+            set => SetAndNotify(ref _CandyMangaResult, value);
+        }
         #endregion
 
         #region Action
@@ -124,6 +132,7 @@ namespace CandySugar.Controls.TemplateViewModel
                 case "MH":
                     this.MH = true;
                     this.XS = this.LXS = this.DM = this.HDM = this.JY = false;
+                    InitManga();
                     break;
                 default:
                     this.JY = true;
@@ -139,6 +148,8 @@ namespace CandySugar.Controls.TemplateViewModel
                 DelLovel(Lovel);
             if (input is CandyAnimeRoot Anime)
                 DelAnime(Anime);
+            if (input is CandyManga Manga)
+                DelManga(Manga);
         }
         #endregion
 
@@ -154,6 +165,10 @@ namespace CandySugar.Controls.TemplateViewModel
         private async void InitAnime()
         {
             CandyAnimeRootResult = new ObservableCollection<CandyAnimeRoot>(await this.CandyAnime.Get());
+        }
+        private async void InitManga()
+        {
+            CandyMangaResult = new ObservableCollection<CandyManga>(await this.CandyManga.Get());
         }
         #endregion
 
@@ -172,6 +187,11 @@ namespace CandySugar.Controls.TemplateViewModel
         {
             await CandyAnime.Remove(input);
             InitAnime();
+        }
+        private async void DelManga(CandyManga input)
+        {
+            await CandyManga.Remove(input);
+            InitManga();
         }
         #endregion
     }

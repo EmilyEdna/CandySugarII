@@ -3,6 +3,7 @@ using CandySugar.Library.Template;
 using CandySugar.Resource.Properties;
 using MaterialDesignThemes.Wpf;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -15,6 +16,7 @@ namespace CandySugar.Entry.Views
         public RootView() : base()
         {
             InitializeComponent();
+            this.Version.Text = $"甜糖V_{Assembly.GetExecutingAssembly().GetName().Version}";
         }
 
         private void CandyHeadTemplate_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)

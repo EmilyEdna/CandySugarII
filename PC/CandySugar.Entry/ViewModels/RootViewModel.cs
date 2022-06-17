@@ -14,6 +14,7 @@ using CandySugar.Controls.ContentViewModel;
 using CandySugar.Logic.Entity.CandyEntity;
 using Sdk.Component.Anime.sdk.ViewModel.Response;
 using CandySugar.Logic.IService;
+using Sdk.Component.Manga.sdk.ViewModel.Response;
 
 namespace CandySugar.Entry.ViewModels
 {
@@ -112,6 +113,14 @@ namespace CandySugar.Entry.ViewModels
                     WatchRoute = AnimeEle.Route
                 }, "WatchAction");
             }
+            if(input is CandyManga Manga)
+                Ctrl = StaticResource.CreateControl<MangaView>(Container.Get<MangaViewModel>(), new MangaChapterDetailResult
+                {
+                    Name = Manga.Name,
+                    Route= Manga.Route,
+                    TagKey= Manga.Key,
+                    Title=Manga.CollectName
+                }, "WatchAction");
         }
         #endregion
         public void ScreenActivity(CandyControl input)

@@ -261,8 +261,12 @@
                 </ListBox.ItemsPanel>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Border>
+                        <Border Width="{c:Binding (ScreenWidth-200), Source={x:Static res:CandySoft.Default}}" Height="{c:Binding (ScreenHeight-30), Source={x:Static res:CandySoft.Default}}">
                             <Image
+                                Width="{c:Binding (ScreenWidth-200),
+                                                  Source={x:Static res:CandySoft.Default}}"
+                                Height="{c:Binding (ScreenHeight-30),
+                                                   Source={x:Static res:CandySoft.Default}}"
                                 SnapsToDevicePixels="True"
                                 Source="{Binding .}"
                                 Stretch="UniformToFill" />

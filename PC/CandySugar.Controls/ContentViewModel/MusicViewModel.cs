@@ -503,7 +503,7 @@ namespace CandySugar.Controls.ContentViewModel
                     SongArtist = String.Join(",", t.SongArtistName),
                     Platform = (int)this.PlatformType
                 }).FirstOrDefault();
-            await this.CandyMusic.Add(CandyList);
+            await this.CandyMusic.AddOrUpdate(CandyList);
         }
         private async void InitDownloadPlay(string input)
         {
@@ -542,7 +542,7 @@ namespace CandySugar.Controls.ContentViewModel
                         candy.LocalRoute = StaticResource.Download(filebytes, Path.Combine("Music", candy.SongArtist), SongFile, "mp3");
                         candy.NetRoute = MusicPlayData.PlayResult.SongURL;
                     }
-                    await this.CandyMusic.Update(candy);
+                    await this.CandyMusic.AddOrUpdate(candy);
                     InitPlayList();
                 }
                 else
