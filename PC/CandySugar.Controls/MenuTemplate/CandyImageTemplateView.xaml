@@ -79,6 +79,13 @@
             <RowDefinition Height="0.45*" />
             <RowDefinition Height="0.45*" />
         </Grid.RowDefinitions>
+        <TextBlock
+            Margin="0,10,10,0"
+            HorizontalAlignment="Right"
+            ToolTip="Konachan汉化标签,多标签查询例如：标签1,标签2"
+            ToolTipService.Placement="Left">
+            <md:PackIcon Kind="InfoOutline" />
+        </TextBlock>
         <Grid>
             <hc:SimplePanel>
                 <hc:Divider Content="标签录入" />
