@@ -3,5 +3,6 @@
     <ImageSource x:Key="i2">/CandySugar.Resource;component/Assets/img2.png</ImageSource>
     <ImageSource x:Key="i4">/CandySugar.Resource;component/Assets/img4.png</ImageSource>
     <ImageSource x:Key="i5">/CandySugar.Resource;component/Assets/img5.png</ImageSource>
+    <ImageSource x:Key="i14">/CandySugar.Resource;component/Assets/img14.png</ImageSource>
     <FontFamily x:Key="FontStyle">/CandySugar.Resource;component/Assets/#HappyZcool-2016</FontFamily>
 </ResourceDictionary>

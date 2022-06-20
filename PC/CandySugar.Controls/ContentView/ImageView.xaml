@@ -70,6 +70,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
     </lib:CandyControl.Resources>
     <Grid>
         <!--  加载动画  -->
@@ -92,10 +93,38 @@
                 <hc:CoverView.ItemHeaderTemplate>
                     <DataTemplate>
                         <UniformGrid>
+                            <Image
+                                x:Name="Loading"
+                                Width="25"
+                                Height="25"
+                                RenderTransformOrigin="0.5,0.5"
+                                Source="{StaticResource i14}"
+                                Stretch="UniformToFill">
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <RotateTransform Angle="0" />
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                                <Image.Triggers>
+                                    <EventTrigger RoutedEvent="Loaded">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                    RepeatBehavior="Forever"
+                                                    Storyboard.TargetName="Loading"
+                                                    Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].Angle"
+                                                    From="0"
+                                                    To="359"
+                                                    Duration="0:0:02" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Image.Triggers>
+                            </Image>
                             <Border>
                                 <Image
+                                    lib:ImageDependencyProperty.Source="{Binding Preview}"
                                     SnapsToDevicePixels="True"
-                                    Source="{Binding Runtime}"
                                     Stretch="Fill" />
                                 <Border.Effect>
                                     <DropShadowEffect

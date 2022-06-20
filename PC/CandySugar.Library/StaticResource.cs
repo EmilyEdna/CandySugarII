@@ -167,6 +167,29 @@ namespace CandySugar.Library
             }
         }
         /// <summary>
+        /// 获得指定元素的父元素
+        /// </summary>
+        /// <typeparam name="T">指定页面元素</typeparam>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static T GetParentObject<T>(DependencyObject obj) where T : FrameworkElement
+        {
+            DependencyObject parent = VisualTreeHelper.GetParent(obj);
+
+            while (parent != null)
+            {
+                if (parent is T t)
+                {
+                    return t;
+                }
+
+                parent = VisualTreeHelper.GetParent(parent);
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// 创建内容对象
         /// </summary>
         /// <typeparam name="T">当前控件</typeparam>

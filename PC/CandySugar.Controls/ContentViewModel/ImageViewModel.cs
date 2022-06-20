@@ -149,10 +149,10 @@ namespace CandySugar.Controls.ContentViewModel
             }).RunsAsync();
 
             Total = ImageInitData.GlobalResult.Total;
-            ImageInitData.GlobalResult.Result.ForEach(async item =>
-            {
-                item.Runtime = StaticResource.ToImage(await DownBytes(item.Preview)); ;
-            });
+            //ImageInitData.GlobalResult.Result.ForEach(async item =>
+            //{
+            //    item.Runtime = StaticResource.ToImage(await DownBytes(item.Preview)); ;
+            //});
             this.Loading = false;
             ElementResult = new ObservableCollection<ImageElementResult>(ImageInitData.GlobalResult.Result);
         }

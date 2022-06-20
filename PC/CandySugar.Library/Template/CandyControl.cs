@@ -10,9 +10,10 @@ namespace CandySugar.Library.Template
 {
     public class CandyControl: UserControl
     {
-        protected void BeginAnime(string Xkey) 
+        public void BeginAnime(string Xkey) 
         {
             BeginStoryboard((Storyboard)this.FindResource(Xkey));
         }
+        
     }
 }

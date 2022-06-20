@@ -13,6 +13,7 @@
     <None Remove="Assets\img11.jpg" />
     <None Remove="Assets\img12.jpg" />
     <None Remove="Assets\img13.jpg" />
+    <None Remove="Assets\img14.png" />
     <None Remove="Assets\img2.png" />
     <None Remove="Assets\img3.png" />
     <None Remove="Assets\img4.png" />
@@ -34,6 +35,7 @@
     <Resource Include="Assets\img11.jpg" />
     <Resource Include="Assets\img12.jpg" />
     <Resource Include="Assets\img13.jpg" />
+    <Resource Include="Assets\img14.png" />
     <Resource Include="Assets\img2.png" />
     <Resource Include="Assets\img3.png" />
     <Resource Include="Assets\img4.png" />
