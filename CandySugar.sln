@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CandySugar.Resource", "PC\C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CandySugar.Entry", "PC\CandySugar.Entry\CandySugar.Entry.csproj", "{A7DB5E0B-EDD6-418D-8098-A8A9BE27B60A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CandySugar.Logic", "PC\CandySugar.Logic\CandySugar.Logic.csproj", "{3364B081-802D-4C49-81EA-A22C116C2B18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CandySugar.Logic", "PC\CandySugar.Logic\CandySugar.Logic.csproj", "{3364B081-802D-4C49-81EA-A22C116C2B18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

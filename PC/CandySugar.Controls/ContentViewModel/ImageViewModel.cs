@@ -1,6 +1,8 @@
 ﻿using CandySugar.Library;
+using CandySugar.Logic.Entity.CandyEntity;
 using CandySugar.Logic.IService;
 using CandySugar.Resource.Properties;
+using HandyControl.Controls;
 using HandyControl.Data;
 using HandyControl.Tools.Command;
 using Sdk.Component.Image.sdk;
@@ -27,12 +29,14 @@ namespace CandySugar.Controls.ContentViewModel
         public IContainer Container;
         public IWindowManager WindowManager;
         public ICandyLabel CandyLabel;
+        public ICandyImage CandyImage;
         public int Limit = 12;
         public ImageViewModel(IContainer Container, IWindowManager WindowManager)
         {
             this.WindowManager = WindowManager;
             this.Container = Container;
             this.CandyLabel = Container.Get<ICandyLabel>();
+            this.CandyImage = Container.Get<ICandyImage>();
             this.StepOne = true;
             this.StepTwo = false;
             this.Page = 1;
@@ -88,6 +92,12 @@ namespace CandySugar.Controls.ContentViewModel
             get => _Bitmap;
             set => SetAndNotify(ref _Bitmap, value);
         }
+        private string _Key;
+        public string Key
+        {
+            get => _Key;
+            set => SetAndNotify(ref _Key, value);
+        }
         #endregion
 
         #region Override
@@ -122,7 +132,13 @@ namespace CandySugar.Controls.ContentViewModel
 
         public void ViewAction(ImageElementResult input)
         {
+            this.Key = input.Id.ToString();
             InitBytes(input.OriginalPng.IsNullOrEmpty() ? input.OriginalJepg : input.OriginalPng);
+        }
+
+        public void SaveAction(ImageElementResult input)
+        {
+            Logic(input);
         }
         #endregion
 
@@ -149,10 +165,6 @@ namespace CandySugar.Controls.ContentViewModel
             }).RunsAsync();
 
             Total = ImageInitData.GlobalResult.Total;
-            //ImageInitData.GlobalResult.Result.ForEach(async item =>
-            //{
-            //    item.Runtime = StaticResource.ToImage(await DownBytes(item.Preview)); ;
-            //});
             this.Loading = false;
             ElementResult = new ObservableCollection<ImageElementResult>(ImageInitData.GlobalResult.Result);
         }
@@ -176,12 +188,7 @@ namespace CandySugar.Controls.ContentViewModel
                     }
                 };
             }).RunsAsync();
-
             Total = ImageQueryData.GlobalResult.Total;
-            ImageQueryData.GlobalResult.Result.ForEach(async item =>
-            {
-                item.Runtime = StaticResource.ToImage(await DownBytes(item.Preview)); ;
-            });
             Loading = false;
             ElementResult = new ObservableCollection<ImageElementResult>(ImageQueryData.GlobalResult.Result);
         }
@@ -196,6 +203,16 @@ namespace CandySugar.Controls.ContentViewModel
             var width = (int)(CandySoft.Default.ScreenWidth - 200);
             var height = (int)(CandySoft.Default.ScreenHeight - 30);
             Bitmap = StaticResource.ToImage(bytes, width, height);
+        }
+        private async void Logic(ImageElementResult input)
+        {
+            var tmep = await this.CandyImage.Add(new CandyImage
+            {
+                Original = input.OriginalPng.IsNullOrEmpty() ? input.OriginalJepg : input.OriginalPng,
+                Preview = input.Preview
+            });
+            if (tmep) Growl.Info("Success");
+            else Growl.Warning("已经添加过了！");
         }
         #endregion
 

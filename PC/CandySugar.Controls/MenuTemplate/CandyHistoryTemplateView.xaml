@@ -24,6 +24,47 @@
             <Setter Property="Margin" Value="5" />
             <Setter Property="Foreground" Value="{DynamicResource SugarThemeAlis}" />
         </Style>
+        <Style x:Key="BtnPageStyle" TargetType="lib:CandyButton">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Margin" Value="2,0,2,0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Foreground" Value="{DynamicResource SugarThemeRed}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="lib:CandyButton">
+                        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <WrapPanel.Effect>
+                                <DropShadowEffect
+                                    BlurRadius="3"
+                                    Opacity=".3"
+                                    ShadowDepth="0"
+                                    Color="{DynamicResource SugarThemeWhiteColor}" />
+                            </WrapPanel.Effect>
+                            <ContentPresenter
+                                x:Name="Icon"
+                                Width="16"
+                                Height="16"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Content="{TemplateBinding Icon}"
+                                ContentSource="Icon"
+                                SnapsToDevicePixels="True" />
+                            <TextBlock
+                                FontSize="17"
+                                Foreground="{TemplateBinding Foreground}"
+                                Text="{TemplateBinding Content}" />
+                        </WrapPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="Foreground" Value="{DynamicResource SugarThemePink}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </lib:CandyControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -82,6 +123,16 @@
                 </i:Interaction.Triggers>
             </ListBoxItem>
             <ListBoxItem Content="MH">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Selected">
+                        <i:InvokeCommandAction
+                            s:View.ActionTarget="{Binding DataContext, ElementName=History}"
+                            Command="{s:Action ChangeAction}"
+                            CommandParameter="{Binding Content, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ListBoxItem>
+            <ListBoxItem Content="BZ">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Selected">
                         <i:InvokeCommandAction
@@ -435,6 +486,80 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
+            </Grid>
+            <Grid x:Name="BZ" Visibility="{Binding BZ, Converter={StaticResource ToShow}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="50" />
+                </Grid.RowDefinitions>
+                <ListBox
+                    Background="Transparent"
+                    BorderThickness="0"
+                    ItemsSource="{Binding CandyImageResult}"
+                    Style="{StaticResource WrapPanelHorizontalListBox}">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <WrapPanel VerticalAlignment="Top" Orientation="Vertical">
+                                <Border
+                                    Margin="15,15,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top">
+                                    <Image
+                                        Width="235"
+                                        Height="235"
+                                        lib:ImageDependencyProperty.Source="{Binding Preview}"
+                                        SnapsToDevicePixels="True"
+                                        Stretch="Fill">
+                                        <Image.ContextMenu>
+                                            <ContextMenu BorderThickness="0" Style="{StaticResource MaterialDesignMenu}">
+                                                <lib:CandyButton
+                                                    HorizontalAlignment="Right"
+                                                    s:View.ActionTarget="{Binding DataContext, ElementName=History}"
+                                                    Command="{Binding DownloadAction}"
+                                                    CommandParameter="{Binding Original}"
+                                                    Content="下载"
+                                                    Style="{StaticResource BtnPageStyle}">
+                                                    <lib:CandyButton.Icon>
+                                                        <md:PackIcon Kind="CloudDownloadOutline" />
+                                                    </lib:CandyButton.Icon>
+                                                </lib:CandyButton>
+                                            </ContextMenu>
+                                        </Image.ContextMenu>
+                                    </Image>
+                                    <Border.Effect>
+                                        <DropShadowEffect
+                                            BlurRadius="6"
+                                            Opacity="1"
+                                            ShadowDepth="0"
+                                            Color="{DynamicResource SugarThemePinkColor}" />
+                                    </Border.Effect>
+                                </Border>
+                            </WrapPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <hc:Pagination
+                    Grid.Row="1"
+                    Margin="0,5,0,0"
+                    HorizontalAlignment="Center"
+                    IsJumpEnabled="False"
+                    MaxPageCount="{Binding Total}"
+                    Style="{StaticResource PageinationStyle}"
+                    PageIndex="{Binding Page}">
+                    <hc:Interaction.Triggers>
+                        <hc:EventTrigger EventName="PageUpdated">
+                            <hc:EventToCommand
+                                s:View.ActionTarget="{Binding DataContext, ElementName=History}"
+                                Command="{s:Action ImagePageAction}"
+                                PassEventArgsToCommand="True" />
+                        </hc:EventTrigger>
+                    </hc:Interaction.Triggers>
+                </hc:Pagination>
             </Grid>
         </Grid>
     </Grid>

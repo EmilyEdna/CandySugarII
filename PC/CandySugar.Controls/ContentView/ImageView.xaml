@@ -70,7 +70,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
     </lib:CandyControl.Resources>
     <Grid>
         <!--  加载动画  -->
@@ -175,7 +174,11 @@
                                 Width="36"
                                 HorizontalAlignment="Left"
                                 Columns="2">
-                                <lib:CandyButton Style="{StaticResource BtnIcon}">
+                                <lib:CandyButton
+                                    s:View.ActionTarget="{Binding DataContext, ElementName=ImageViewName}"
+                                    Command="{s:Action SaveAction}"
+                                    CommandParameter="{Binding .}"
+                                    Style="{StaticResource BtnIcon}">
                                     <md:PackIcon Kind="StarOutline" />
                                 </lib:CandyButton>
                                 <lib:CandyButton
@@ -214,7 +217,8 @@
                     <Image
                         SnapsToDevicePixels="True"
                         Source="{Binding Bitmap}"
-                        Stretch="Fill">
+                        Stretch="Fill"
+                        Tag="{Binding Key}">
                         <Image.ContextMenu>
                             <ContextMenu BorderThickness="0" Style="{StaticResource MaterialDesignMenu}">
                                 <lib:CandyButton

@@ -57,11 +57,11 @@ namespace CandySugar.Library.PropertyAttach
                 var uniform =  StaticResource.GetParentObject<UniformGrid>(Image);
                 foreach (var ctrl in uniform.Children)
                 {
-                    if (ctrl is Image && ctrl != null)
+                    if (ctrl is Image image && ctrl != null)
                     {
-                        if (((Image)ctrl).Name.Equals("Loading"))
+                        if (image.Name.Equals("Loading"))
                         {
-                            ((Image)ctrl).Visibility = Visibility.Collapsed;
+                            image.Visibility = Visibility.Collapsed;
                         }
                         break;
                     }
