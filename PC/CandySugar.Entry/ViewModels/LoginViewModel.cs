@@ -19,7 +19,7 @@ namespace CandySugar.Entry.ViewModels
         public LoginViewModel(IContainer Container, IWindowManager WindowManager)
         {
             this.WindowManager = WindowManager;
-            this.Container = Container;     
+            this.Container = Container;
         }
         #region Property
         private string _Account;
@@ -68,7 +68,7 @@ namespace CandySugar.Entry.ViewModels
         public async void LoginAction()
         {
             this.Account = "EmilyEdna";
-            this.PassWord = DateTime.Now.ToString("yyyyMMdd");
+            this.PassWord = "Admin";
 
             if (Check())
             {
@@ -93,7 +93,7 @@ namespace CandySugar.Entry.ViewModels
         private bool Check()
         {
             if (this.Account == null || this.PassWord == null) return false;
-            if (this.Account.ToLower().Equals("emilyedna") && this.PassWord.Equals("admin"))
+            if (this.Account.ToLower().Equals("emilyedna") && this.PassWord.ToLower().Equals("admin"))
             {
                 CandySoft.Default.IsAdmin = true;
                 return SdkLicense.Register(new SkdLicenseModel

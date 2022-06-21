@@ -50,7 +50,6 @@ namespace CandySugar.Entry.ViewModels
         #region Action
         public void SearchAction(Dictionary<object, object> param)
         {
-
             if (param.Keys.FirstOrDefault() is string type)
             {
                 switch (type)
@@ -63,6 +62,10 @@ namespace CandySugar.Entry.ViewModels
                         break;
                     case "DM":
                         Ctrl = StaticResource.CreateControl<AnimeView>(Container.Get<AnimeViewModel>(), param.Values.FirstOrDefault().ToString());
+                        break;
+                     case "HDM":
+                        WindowManager.ShowDialog(Container.Get<LabelViewModel>());
+                        Ctrl = StaticResource.CreateControl<HnimeView>(Container.Get<HnimeViewModel>(), param.Values.FirstOrDefault().ToString());
                         break;
                     case "MH":
                         Ctrl = StaticResource.CreateControl<MangaView>(Container.Get<MangaViewModel>(), param.Values.FirstOrDefault().ToString());

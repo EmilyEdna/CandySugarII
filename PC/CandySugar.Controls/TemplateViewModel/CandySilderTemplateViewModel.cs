@@ -51,6 +51,7 @@ namespace CandySugar.Controls.TemplateViewModel
                     StaticResource.CreateControl<AnimeView>(parentMethodInfo, parentDataContext, Container.Get<AnimeViewModel>());
                     break;
                 case 4:
+                    StaticResource.CreateControl<HnimeView>(parentMethodInfo, parentDataContext, Container.Get<HnimeViewModel>());
                     break;
                 case 5:
                     StaticResource.CreateControl<MangaView>(parentMethodInfo, parentDataContext, Container.Get<MangaViewModel>());

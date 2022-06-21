@@ -1,4 +1,5 @@
 ﻿using CandySugar.Controls;
+using CandySugar.Entry.CandyViewModels;
 using CandySugar.Entry.ViewModels;
 using CandySugar.Logic;
 using CandySugar.Logic.IService;
