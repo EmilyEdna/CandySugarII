@@ -55,6 +55,7 @@ namespace CandySugar.Library.PropertyAttach
                 storyboard.Children.Add(doubleAnimation);
                 storyboard.Begin();
                 var uniform =  StaticResource.GetParentObject<UniformGrid>(Image);
+                if (uniform == null) return;
                 foreach (var ctrl in uniform.Children)
                 {
                     if (ctrl is Image image && ctrl != null)

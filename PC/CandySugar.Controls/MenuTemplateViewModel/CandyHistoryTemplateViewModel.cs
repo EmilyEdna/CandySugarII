@@ -1,7 +1,14 @@
-﻿using CandySugar.Logic.Entity.CandyEntity;
+﻿using CandySugar.Library;
+using CandySugar.Logic.Entity.CandyEntity;
 using CandySugar.Logic.IService;
+using CandySugar.Resource.Properties;
+using HandyControl.Controls;
 using HandyControl.Data;
 using Polly.Caching;
+using Sdk.Component.Image.sdk;
+using Sdk.Component.Image.sdk.ViewModel;
+using Sdk.Component.Image.sdk.ViewModel.Enums;
+using Sdk.Component.Image.sdk.ViewModel.Request;
 using Stylet;
 using StyletIoC;
 using System;
@@ -9,6 +16,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CandySugar.Controls.MenuTemplateViewModel
@@ -189,9 +197,28 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         {
             InitImage(input.Info);
         }
-        public void DownloadAction(string input) 
-        { 
-        
+        public void DownloadAction(string input)
+        {
+            Growl.Info("已添加到下载线程请稍后！");
+            Task.Run(() =>
+            {
+                var File = Regex.Split(input.Split("/").LastOrDefault(),"\\d+").LastOrDefault();
+                var ImageInitData = ImageFactory.Image(opt =>
+                {
+                    opt.RequestParam = new Input
+                    {
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        ImageType = ImageEnum.Download,
+                        Download = new ImageDownload
+                        {
+                            Route = input
+                        }
+                    };
+                }).RunsAsync().GetAwaiter().GetResult();
+                StaticResource.Download(ImageInitData.DownResult.Bytes, "Image", File.Split(".").FirstOrDefault(), File.Split(".").LastOrDefault());
+            });
         }
         #endregion
 
@@ -212,7 +239,7 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         {
             CandyMangaResult = new ObservableCollection<CandyManga>(await CandyManga.Get());
         }
-        private async void InitImage(int page=1)
+        private async void InitImage(int page = 1)
         {
             var data = await CandyImage.Get(page);
             Total = data.Item2;

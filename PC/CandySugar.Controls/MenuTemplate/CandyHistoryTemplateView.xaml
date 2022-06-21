@@ -24,47 +24,6 @@
             <Setter Property="Margin" Value="5" />
             <Setter Property="Foreground" Value="{DynamicResource SugarThemeAlis}" />
         </Style>
-        <Style x:Key="BtnPageStyle" TargetType="lib:CandyButton">
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Margin" Value="2,0,2,0" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="Foreground" Value="{DynamicResource SugarThemeRed}" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="lib:CandyButton">
-                        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <WrapPanel.Effect>
-                                <DropShadowEffect
-                                    BlurRadius="3"
-                                    Opacity=".3"
-                                    ShadowDepth="0"
-                                    Color="{DynamicResource SugarThemeWhiteColor}" />
-                            </WrapPanel.Effect>
-                            <ContentPresenter
-                                x:Name="Icon"
-                                Width="16"
-                                Height="16"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Content="{TemplateBinding Icon}"
-                                ContentSource="Icon"
-                                SnapsToDevicePixels="True" />
-                            <TextBlock
-                                FontSize="17"
-                                Foreground="{TemplateBinding Foreground}"
-                                Text="{TemplateBinding Content}" />
-                        </WrapPanel>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="Transparent" />
-                                <Setter Property="Foreground" Value="{DynamicResource SugarThemePink}" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
     </lib:CandyControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -514,34 +473,7 @@
                                         Height="235"
                                         lib:ImageDependencyProperty.Source="{Binding Preview}"
                                         SnapsToDevicePixels="True"
-                                        Stretch="Fill">
-                                        <Image.ContextMenu>
-                                            <ContextMenu BorderThickness="0" Style="{StaticResource MaterialDesignMenu}">
-                                                <lib:CandyButton
-                                                    HorizontalAlignment="Right"
-                                                    s:View.ActionTarget="{Binding DataContext, ElementName=History}"
-                                                    Command="{Binding DownloadAction}"
-                                                    CommandParameter="{Binding Original}"
-                                                    Content="下载"
-                                                    Style="{StaticResource BtnPageStyle}">
-                                                    <lib:CandyButton.Icon>
-                                                        <md:PackIcon Kind="CloudDownloadOutline" />
-                                                    </lib:CandyButton.Icon>
-                                                </lib:CandyButton>
-                                                <lib:CandyButton
-                                                    HorizontalAlignment="Right"
-                                                    s:View.ActionTarget="{Binding DataContext, ElementName=History}"
-                                                    Command="{Binding RemoveAction}"
-                                                    CommandParameter="{Binding .}"
-                                                    Content="删除"
-                                                    Style="{StaticResource BtnPageStyle}">
-                                                    <lib:CandyButton.Icon>
-                                                        <md:PackIcon Kind="DeleteOutline" />
-                                                    </lib:CandyButton.Icon>
-                                                </lib:CandyButton>
-                                            </ContextMenu>
-                                        </Image.ContextMenu>
-                                    </Image>
+                                        Stretch="Fill" />
                                     <Border.Effect>
                                         <DropShadowEffect
                                             BlurRadius="6"
@@ -550,6 +482,50 @@
                                             Color="{DynamicResource SugarThemePinkColor}" />
                                     </Border.Effect>
                                 </Border>
+                                <Canvas>
+                                    <TextBlock Canvas.Left="10">
+                                        <md:PackIcon Kind="CloudDownloadOutline" />
+                                        <TextBlock.Style>
+                                            <Style BasedOn="{StaticResource TextBlockStyle}" TargetType="TextBlock">
+                                                <Setter Property="Cursor" Value="Hand" />
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Foreground" Value="{DynamicResource SugarThemeBlue}" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseUp">
+                                                <i:InvokeCommandAction
+                                                    s:View.ActionTarget="{Binding DataContext, ElementName=History}"
+                                                    Command="{s:Action DownloadAction}"
+                                                    CommandParameter="{Binding Original}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBlock>
+                                    <TextBlock Canvas.Left="30">
+                                        <md:PackIcon Kind="DeleteOutline" />
+                                        <TextBlock.Style>
+                                            <Style BasedOn="{StaticResource TextBlockStyle}" TargetType="TextBlock">
+                                                <Setter Property="Cursor" Value="Hand" />
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Foreground" Value="{DynamicResource SugarThemeBlue}" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseUp">
+                                                <i:InvokeCommandAction
+                                                    s:View.ActionTarget="{Binding DataContext, ElementName=History}"
+                                                    Command="{s:Action RemoveAction}"
+                                                    CommandParameter="{Binding .}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBlock>
+                                </Canvas>
                             </WrapPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

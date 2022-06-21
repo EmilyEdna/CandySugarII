@@ -209,7 +209,7 @@ namespace CandySugar.Library
         /// <param name="currentDataContext">当前控件的DataContext</param>
         /// <param name="input">查询字段</param>
         /// <param name="action">反射的方法</param>
-        public static CandyControl CreateControl<T>(object currentDataContext, dynamic input,string action= "SearchAction")
+        public static CandyControl CreateControl<T>(object currentDataContext, dynamic input, string action = "SearchAction")
         {
             var instance = (CandyControl)Activator.CreateInstance(typeof(T));
             instance.DataContext = currentDataContext;
@@ -324,7 +324,11 @@ namespace CandySugar.Library
         /// <param name="extens"></param>
         public static string Download(byte[] bytes, string dir, string fileName, string extens)
         {
-            var dirs = SyncStatic.CreateDir(Path.Combine(Environment.CurrentDirectory, "CandyDown", dir, $"{FileNameFilter(fileName)}"));
+            string dirs = string.Empty;
+            if (extens.Contains("png") || extens.Contains("jepg") || extens.Contains("jpg"))
+                dirs = SyncStatic.CreateDir(Path.Combine(Environment.CurrentDirectory, "CandyDown", dir, "konachan"));
+            else
+                dirs = SyncStatic.CreateDir(Path.Combine(Environment.CurrentDirectory, "CandyDown", dir, $"{FileNameFilter(fileName)}"));
             var fn = SyncStatic.CreateFile(Path.Combine(dirs, $"{FileNameFilter(fileName)}.{extens}"));
             var route = SyncStatic.WriteFile(bytes, fn);
             Process.Start("explorer.exe", dirs);
