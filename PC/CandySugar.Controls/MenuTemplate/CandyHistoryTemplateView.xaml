@@ -528,6 +528,17 @@
                                                         <md:PackIcon Kind="CloudDownloadOutline" />
                                                     </lib:CandyButton.Icon>
                                                 </lib:CandyButton>
+                                                <lib:CandyButton
+                                                    HorizontalAlignment="Right"
+                                                    s:View.ActionTarget="{Binding DataContext, ElementName=History}"
+                                                    Command="{Binding RemoveAction}"
+                                                    CommandParameter="{Binding .}"
+                                                    Content="删除"
+                                                    Style="{StaticResource BtnPageStyle}">
+                                                    <lib:CandyButton.Icon>
+                                                        <md:PackIcon Kind="DeleteOutline" />
+                                                    </lib:CandyButton.Icon>
+                                                </lib:CandyButton>
                                             </ContextMenu>
                                         </Image.ContextMenu>
                                     </Image>

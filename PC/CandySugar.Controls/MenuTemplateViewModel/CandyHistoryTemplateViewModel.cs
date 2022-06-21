@@ -181,6 +181,8 @@ namespace CandySugar.Controls.MenuTemplateViewModel
                 DelAnime(Anime);
             if (input is CandyManga Manga)
                 DelManga(Manga);
+            if (input is CandyImage Image)
+                DelImage(Image);
         }
 
         public void ImagePageAction(FunctionEventArgs<int> input)
@@ -238,6 +240,11 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         {
             await CandyManga.Remove(input);
             InitManga();
+        }
+        private async void DelImage(CandyImage input)
+        {
+            await CandyImage.Remove(input);
+            InitImage();
         }
         #endregion
     }
