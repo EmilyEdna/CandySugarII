@@ -1,0 +1,37 @@
+﻿<lib:CandyControl
+    x:Class="CandySugar.Controls.MenuTemplate.CandyLogTemplateView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:lib="http://lib.sugar.com"
+    xmlns:local="clr-namespace:CandySugar.Controls.MenuTemplate"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:CandySugar.Controls.MenuTemplateViewModel"
+    d:DataContext="{d:DesignInstance Type=viewmodels:CandyLogTemplateViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid>
+        <ListBox
+            Background="Transparent"
+            BorderThickness="0"
+            ItemsSource="{Binding LogResult}"
+            Style="{StaticResource StackPanelVerticalListBox}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="20,20,0,0">
+                        <TextBlock
+                            FontSize="18"
+                            Foreground="{DynamicResource SugarThemeRed}"
+                            Text="{Binding Span, StringFormat=时间戳：{0}}" />
+                        <TextBlock
+                            FontSize="18"
+                            Foreground="{DynamicResource SugarThemeWhite}"
+                            Text="{Binding Stack}"
+                            TextWrapping="WrapWithOverflow" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</lib:CandyControl>

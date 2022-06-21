@@ -1,6 +1,8 @@
 ﻿using CandySugar.Controls;
 using CandySugar.Entry.ViewModels;
 using CandySugar.Logic;
+using CandySugar.Logic.IService;
+using HandyControl.Controls;
 using Sdk.Core;
 using Serilog;
 using Stylet;
@@ -54,6 +56,7 @@ namespace CandySugar.Entry
         /// </summary>
         protected override void Launch()
         {
+            Container.Get<ICandyLog>().Remove();
             base.Launch();
         }
 
@@ -90,8 +93,9 @@ namespace CandySugar.Entry
         protected override void OnUnhandledException(DispatcherUnhandledExceptionEventArgs e)
         {
             Log.Logger.Error(e.Exception.InnerException ?? e.Exception, "");
+            Container.Get<ICandyLog>().Add((e.Exception.InnerException ?? e.Exception).StackTrace);
+            Growl.Error("服务异常，请查看日志");
             GC.Collect();
-            Application.Current.Shutdown();
         }
     }
 }

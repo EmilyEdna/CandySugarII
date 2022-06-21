@@ -20,6 +20,7 @@ namespace CandySugar.Controls
 
             Bind<CandyHistoryTemplateViewModel>().ToSelf();
             Bind<CandyImageTemplateViewModel>().ToSelf();
+            Bind<CandyLogTemplateViewModel>().ToSelf();
 
             Bind<NovelViewModel>().ToSelf();
             Bind<LovelViewModel>().ToSelf();

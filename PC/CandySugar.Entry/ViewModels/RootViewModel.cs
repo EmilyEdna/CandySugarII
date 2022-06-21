@@ -127,6 +127,7 @@ namespace CandySugar.Entry.ViewModels
                     Ctrl = StaticResource.CreateControl<CandyHistoryTemplateView>(Container.Get<CandyHistoryTemplateViewModel>(), null);
                     break;
                 case 2://日志
+                    Ctrl = StaticResource.CreateControl<CandyLogTemplateView>(Container.Get<CandyLogTemplateViewModel>(), null);
                     break;
                 case 3://设置
                     WindowManager.ShowWindow(Container.Get<OptionViewModel>());
