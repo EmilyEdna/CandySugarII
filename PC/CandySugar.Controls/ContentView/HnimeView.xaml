@@ -18,6 +18,211 @@
     d:DataContext="{d:DesignInstance Type=viewmodels:HnimeViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    Loaded="LoadEvent"
     mc:Ignorable="d">
-    <Grid />
+    <lib:CandyControl.Resources>
+        <Storyboard x:Key="OpenDetail">
+            <DoubleAnimation
+                Storyboard.TargetName="Detail"
+                Storyboard.TargetProperty="Width"
+                From="0"
+                To="200"
+                Duration="0:0:0.5" />
+        </Storyboard>
+        <Storyboard x:Key="CloseDetail">
+            <DoubleAnimation
+                Storyboard.TargetName="Detail"
+                Storyboard.TargetProperty="Width"
+                From="200"
+                To="0"
+                Duration="0:0:0.5" />
+        </Storyboard>
+        <Style x:Key="HnimeTextStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource SugarThemePink}" />
+            <Setter Property="Margin" Value="0,6" />
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+    </lib:CandyControl.Resources>
+    <Grid>
+        <!--  加载动画  -->
+        <hc:LoadingCircle Foreground="{DynamicResource SugarThemeDefault}" Visibility="{Binding Loading, Converter={StaticResource ToShow}}" />
+        <!--  主体内容  -->
+        <Grid x:Name="StepOne" Visibility="{Binding StepOne, Converter={StaticResource ToShow}}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="43" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <StackPanel>
+                    <ListBox
+                        Background="Transparent"
+                        BorderThickness="0"
+                        ItemsSource="{Binding InitResult}"
+                        Style="{StaticResource WrapPanelHorizontalListBox}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <lib:CandyButton
+                                    Margin="20,5"
+                                    s:View.ActionTarget="{Binding DataContext, ElementName=HnimeViewName}"
+                                    Command="{s:Action CategoryAction}"
+                                    CommandParameter="{Binding Route}"
+                                    Content="{Binding Title}"
+                                    Opacity="1"
+                                    Style="{StaticResource CategoryBtn}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+                    <ListBox
+                        x:Name="CategoryResultList"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        ItemsSource="{Binding QueryResult}"
+                        ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                        SelectionChanged="ItemSelected"
+                        Style="{StaticResource StackPanelVerticalListBox}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="2,5,2,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0.4*" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Border>
+                                        <Image
+                                            Width="350"
+                                            Height="150"
+                                            SnapsToDevicePixels="True"
+                                            Source="{Binding Cover}"
+                                            Stretch="UniformToFill" />
+                                        <Border.Effect>
+                                            <DropShadowEffect
+                                                BlurRadius="6"
+                                                Opacity="1"
+                                                ShadowDepth="0"
+                                                Color="{DynamicResource SugarThemePinkColor}" />
+                                        </Border.Effect>
+                                    </Border>
+                                    <StackPanel
+                                        Grid.Column="1"
+                                        Margin="5,0,0,0"
+                                        HorizontalAlignment="Left">
+                                        <TextBlock Style="{DynamicResource HnimeTextStyle}" Text="{Binding Title, StringFormat=标题:{0}}" />
+                                        <TextBlock Style="{DynamicResource HnimeTextStyle}" Text="{Binding Property, StringFormat=属性:{0}}" />
+                                        <TextBlock Style="{DynamicResource HnimeTextStyle}" Text="{Binding PlayCount, StringFormat=播放次数:{0}}" />
+                                        <TextBlock Style="{DynamicResource HnimeTextStyle}" Text="{Binding UpdateTime, StringFormat=最近时间:{0}}" />
+                                        <TextBlock Style="{DynamicResource HnimeTextStyle}" Text="{Binding Duration, StringFormat=时常:{0}}" />
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction
+                                    s:View.ActionTarget="{Binding DataContext, ElementName=HnimeViewName}"
+                                    Command="{s:Action LinkAction}"
+                                    CommandParameter="{Binding SelectedItem, ElementName=CategoryResultList}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ListBox>
+                    <hc:Pagination
+                        Grid.Row="1"
+                        Margin="0,5,0,0"
+                        HorizontalAlignment="Center"
+                        IsJumpEnabled="False"
+                        MaxPageCount="{Binding Total}"
+                        Style="{StaticResource PageinationStyle}"
+                        PageIndex="{Binding Page}">
+                        <hc:Interaction.Triggers>
+                            <hc:EventTrigger EventName="PageUpdated">
+                                <hc:EventToCommand
+                                    s:View.ActionTarget="{Binding DataContext, ElementName=HnimeViewName}"
+                                    Command="{s:Action PageAction}"
+                                    PassEventArgsToCommand="True" />
+                            </hc:EventTrigger>
+                        </hc:Interaction.Triggers>
+                    </hc:Pagination>
+                </Grid>
+            </Grid>
+            <!--  右滑块  -->
+            <WrapPanel
+                x:Name="Detail"
+                Width="0"
+                Height="{c:Binding (ScreenHeight-43),
+                                   Source={x:Static res:CandySoft.Default}}"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Background="Transparent"
+                Orientation="Vertical">
+                <ListView
+                    x:Name="ViewContent"
+                    ItemsSource="{Binding PlayResult}"
+                    ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="180">
+                                <GridViewColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <TextBlock
+                                                Margin="-20,0,0,-15"
+                                                HorizontalAlignment="Left"
+                                                Foreground="{DynamicResource SugarThemePink}"
+                                                MouseLeftButtonDown="TextClicked">
+                                                <md:PackIcon
+                                                    Width="18"
+                                                    Height="18"
+                                                    Kind="ArrowRight" />
+                                            </TextBlock>
+                                        </Grid>
+                                    </DataTemplate>
+                                </GridViewColumn.HeaderTemplate>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="20" />
+                                                <ColumnDefinition Width="auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <md:PackIcon
+                                                Foreground="{DynamicResource SugarThemeSmoke}"
+                                                Kind="LabelOutline"
+                                                Visibility="{Binding IsPlaying, Converter={StaticResource ToShow}}" />
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                VerticalAlignment="Center"
+                                                Foreground="{DynamicResource SugarThemePink}"
+                                                Text="{Binding Title}"
+                                                TextWrapping="WrapWithOverflow" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction
+                                s:View.ActionTarget="{Binding DataContext, ElementName=HnimeViewName}"
+                                Command="{s:Action PlayAction}"
+                                CommandParameter="{Binding SelectedItem, ElementName=ViewContent}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ListView>
+            </WrapPanel>
+        </Grid>
+        <Grid x:Name="StepTwo" Visibility="{Binding StepTwo, Converter={StaticResource ToShow}}">
+            <UniformGrid>
+                <web:WebView2
+                    x:Name="WebViewCtrl"
+                    Height="{Binding ScreenHeight, Source={x:Static res:CandySoft.Default}}"
+                    DefaultBackgroundColor="Transparent" />
+            </UniformGrid>
+        </Grid>
+    </Grid>
 </lib:CandyControl>

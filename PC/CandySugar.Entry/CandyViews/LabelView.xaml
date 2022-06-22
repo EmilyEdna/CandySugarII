@@ -69,7 +69,7 @@
                         <CheckBox Content="{Binding .}" Style="{StaticResource BoxButton}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Checked">
-                                    <i:InvokeCommandAction Command="{s:Action BrandAction}" CommandParameter="{Binding Content, RelativeSource={RelativeSource AncestorType=RadioButton, Mode=FindAncestor}}" />
+                                    <i:InvokeCommandAction Command="{s:Action BrandAction}" CommandParameter="{Binding Content, RelativeSource={RelativeSource AncestorType=CheckBox, Mode=FindAncestor}}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
@@ -113,7 +113,7 @@
                                                 <CheckBox Content="{Binding .}" Style="{StaticResource BoxButton}">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="Checked">
-                                                            <i:InvokeCommandAction Command="{s:Action PropertyAction}" CommandParameter="{Binding Content, RelativeSource={RelativeSource AncestorType=RadioButton, Mode=FindAncestor}}" />
+                                                            <i:InvokeCommandAction Command="{s:Action PropertyAction}" CommandParameter="{Binding Content, RelativeSource={RelativeSource AncestorType=CheckBox, Mode=FindAncestor}}" />
                                                         </i:EventTrigger>
                                                     </i:Interaction.Triggers>
                                                 </CheckBox>

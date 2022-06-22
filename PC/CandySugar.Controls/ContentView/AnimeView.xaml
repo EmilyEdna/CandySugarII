@@ -199,7 +199,7 @@
                                             <TextBlock
                                                 Margin="-20,0,0,-15"
                                                 HorizontalAlignment="Left"
-                                                Foreground="{DynamicResource SugarThemeDefault}"
+                                                Foreground="{DynamicResource SugarThemePink}"
                                                 MouseLeftButtonDown="TextClicked">
                                                 <md:PackIcon
                                                     Width="18"
@@ -213,7 +213,7 @@
                                     <DataTemplate>
                                         <Grid>
                                             <TextBlock
-                                                Foreground="{DynamicResource SugarThemeDefault}"
+                                                Foreground="{DynamicResource SugarThemePink}"
                                                 Text="{Binding CollectName}"
                                                 TextWrapping="WrapWithOverflow" />
                                         </Grid>

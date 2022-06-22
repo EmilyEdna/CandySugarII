@@ -1,4 +1,6 @@
-﻿using CandySugar.Library.Template;
+﻿using CandySugar.Controls.ContentViewModel;
+using CandySugar.Library;
+using CandySugar.Library.Template;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +26,25 @@ namespace CandySugar.Controls.ContentView
         public HnimeView()
         {
             InitializeComponent();
+        }
+        private void LoadEvent(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext != null)
+            {
+                var Model = (this.DataContext as HnimeViewModel);
+                Model.WebView = this.WebViewCtrl;
+                StaticResource.CreateWebView(Model.WebView, "Dplayer");
+            }
+        }
+
+        private void ItemSelected(object sender, SelectionChangedEventArgs e)
+        {
+            BeginAnime("OpenDetail");
+        }
+
+        private void TextClicked(object sender, MouseButtonEventArgs e)
+        {
+            BeginAnime("CloseDetail");
         }
     }
 }

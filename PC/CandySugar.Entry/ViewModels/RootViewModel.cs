@@ -18,6 +18,8 @@ using Sdk.Component.Manga.sdk.ViewModel.Response;
 using XExten.Advance.LinqFramework;
 using CandySugar.Controls.MenuTemplateViewModel;
 using CandySugar.Controls.MenuTemplate;
+using Sdk.Component.Hnime.sdk.ViewModel.Request;
+using Sdk.Component.Hnime.sdk.ViewModel.Response;
 
 namespace CandySugar.Entry.ViewModels
 {
@@ -48,6 +50,10 @@ namespace CandySugar.Entry.ViewModels
         }
 
         #region Action
+        /// <summary>
+        /// 全局查询
+        /// </summary>
+        /// <param name="param"></param>
         public void SearchAction(Dictionary<object, object> param)
         {
             if (param.Keys.FirstOrDefault() is string type)
@@ -63,9 +69,16 @@ namespace CandySugar.Entry.ViewModels
                     case "DM":
                         Ctrl = StaticResource.CreateControl<AnimeView>(Container.Get<AnimeViewModel>(), param.Values.FirstOrDefault().ToString());
                         break;
-                     case "HDM":
-                        WindowManager.ShowDialog(Container.Get<LabelViewModel>());
-                        Ctrl = StaticResource.CreateControl<HnimeView>(Container.Get<HnimeViewModel>(), param.Values.FirstOrDefault().ToString());
+                    case "HDM":
+                        var ViewModel = Container.Get<LabelViewModel>();
+                        var Res = WindowManager.ShowDialog(ViewModel);
+                        Ctrl = StaticResource.CreateControl<HnimeView>(Container.Get<HnimeViewModel>(), new HnimeSearch
+                        {
+                            Brands = Res.Value ? ViewModel.Brands : null,
+                            HnimeType = Res.Value ? ViewModel.Category : string.Empty,
+                            KeyWord = param.Values.FirstOrDefault().ToString(),
+                            Tags = Res.Value ? ViewModel.Properties : null
+                        });
                         break;
                     case "MH":
                         Ctrl = StaticResource.CreateControl<MangaView>(Container.Get<MangaViewModel>(), param.Values.FirstOrDefault().ToString());
@@ -81,7 +94,10 @@ namespace CandySugar.Entry.ViewModels
                 }
             }
         }
-
+        /// <summary>
+        /// 继续操作
+        /// </summary>
+        /// <param name="input"></param>
         public async void ContinueAction(dynamic input)
         {
             if (input is CandyNovel Novel)
@@ -99,7 +115,7 @@ namespace CandySugar.Entry.ViewModels
                 }, "WatchAction");
             if (input is CandyAnimeElement AnimeEle)
             {
-               var Root =(await Container.Get<ICandyAnime>().Get()).FirstOrDefault(t => t.CandyId == AnimeEle.RootId);
+                var Root = (await Container.Get<ICandyAnime>().Get()).FirstOrDefault(t => t.CandyId == AnimeEle.RootId);
                 Ctrl = StaticResource.CreateControl<AnimeView>(Container.Get<AnimeViewModel>(), new AnimeDetailResult
                 {
                     CollectName = AnimeEle.Name,
@@ -109,16 +125,26 @@ namespace CandySugar.Entry.ViewModels
                     WatchRoute = AnimeEle.Route
                 }, "WatchAction");
             }
-            if(input is CandyManga Manga)
+            if (input is CandyManga Manga)
                 Ctrl = StaticResource.CreateControl<MangaView>(Container.Get<MangaViewModel>(), new MangaChapterDetailResult
                 {
                     Name = Manga.Name,
-                    Route= Manga.Route,
-                    TagKey= Manga.Key,
-                    Title=Manga.CollectName
+                    Route = Manga.Route,
+                    TagKey = Manga.Key,
+                    Title = Manga.CollectName
                 }, "WatchAction");
+            if (input is CandyHnime Hnime)
+                Ctrl = StaticResource.CreateControl<HnimeView>(Container.Get<HnimeViewModel>(), new HnimePlayResult
+                {
+                    Title= Hnime.Name,
+                    PlayRoute = Hnime.Route,
+                    IsPlaying = true
+                }, "PlayAction");
         }
-
+        /// <summary>
+        /// 菜单
+        /// </summary>
+        /// <param name="input"></param>
         public void HandleAction(string input)
         {
             switch (input.AsInt())

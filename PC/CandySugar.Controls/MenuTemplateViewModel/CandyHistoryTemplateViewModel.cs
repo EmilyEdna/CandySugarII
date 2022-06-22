@@ -36,6 +36,7 @@ namespace CandySugar.Controls.MenuTemplateViewModel
             CandyAnime = Container.Get<ICandyAnime>();
             CandyManga = Container.Get<ICandyManga>();
             CandyImage = Container.Get<ICandyImage>();
+            CandyHnime= Container.Get<ICandyHnime>();
         }
 
         #region Field
@@ -44,6 +45,7 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         private ICandyAnime CandyAnime;
         private ICandyManga CandyManga;
         private ICandyImage CandyImage;
+        private ICandyHnime CandyHnime;
         #endregion
 
         #region CommomProperty_Int
@@ -113,29 +115,40 @@ namespace CandySugar.Controls.MenuTemplateViewModel
             get => _CandyNovelResult;
             set => SetAndNotify(ref _CandyNovelResult, value);
         }
+
         private ObservableCollection<CandyLovel> _CandyLovelResult;
         public ObservableCollection<CandyLovel> CandyLovelResult
         {
             get => _CandyLovelResult;
             set => SetAndNotify(ref _CandyLovelResult, value);
         }
+
         private ObservableCollection<CandyAnimeRoot> _CandyAnimeRootResult;
         public ObservableCollection<CandyAnimeRoot> CandyAnimeRootResult
         {
             get => _CandyAnimeRootResult;
             set => SetAndNotify(ref _CandyAnimeRootResult, value);
         }
+
         private ObservableCollection<CandyManga> _CandyMangaResult;
         public ObservableCollection<CandyManga> CandyMangaResult
         {
             get => _CandyMangaResult;
             set => SetAndNotify(ref _CandyMangaResult, value);
         }
+
         private ObservableCollection<CandyImage> _CandyImageResult;
         public ObservableCollection<CandyImage> CandyImageResult
         {
             get => _CandyImageResult;
             set => SetAndNotify(ref _CandyImageResult, value);
+        }
+
+        private ObservableCollection<CandyHnime> _CandyHnimeResult;
+        public ObservableCollection<CandyHnime> CandyHnimeResult
+        {
+            get => _CandyHnimeResult;
+            set => SetAndNotify(ref _CandyHnimeResult, value);
         }
         #endregion
 
@@ -162,6 +175,7 @@ namespace CandySugar.Controls.MenuTemplateViewModel
                 case "HDM":
                     HDM = true;
                     XS = LXS = DM = MH = BZ = JY = false;
+                    InitHnime();
                     break;
                 case "MH":
                     MH = true;
@@ -191,6 +205,8 @@ namespace CandySugar.Controls.MenuTemplateViewModel
                 DelManga(Manga);
             if (input is CandyImage Image)
                 DelImage(Image);
+            if(input is CandyHnime Hnime)
+                DelHnime(Hnime);
         }
 
         public void ImagePageAction(FunctionEventArgs<int> input)
@@ -235,6 +251,10 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         {
             CandyAnimeRootResult = new ObservableCollection<CandyAnimeRoot>(await CandyAnime.Get());
         }
+        private async void InitHnime()
+        {
+            CandyHnimeResult = new ObservableCollection<CandyHnime>(await CandyHnime.Get());
+        }
         private async void InitManga()
         {
             CandyMangaResult = new ObservableCollection<CandyManga>(await CandyManga.Get());
@@ -272,6 +292,11 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         {
             await CandyImage.Remove(input);
             InitImage();
+        }
+        private async void DelHnime(CandyHnime input)
+        {
+           await CandyHnime.Remove(input);
+            InitHnime();
         }
         #endregion
     }
