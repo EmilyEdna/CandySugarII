@@ -238,5 +238,17 @@ namespace CandySugar.Resource.Properties {
                 this["WaitSpan"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int AxModule {
+            get {
+                return ((int)(this["AxModule"]));
+            }
+            set {
+                this["AxModule"] = value;
+            }
+        }
     }
 }

@@ -1,25 +1,23 @@
-﻿using CandySugar.Controls.Template;
+﻿using CandySugar.Controls.ContentView;
+using CandySugar.Controls.ContentViewModel;
+using CandySugar.Controls.MenuTemplate;
+using CandySugar.Controls.MenuTemplateViewModel;
+using CandySugar.Controls.Template;
 using CandySugar.Controls.TemplateViewModel;
 using CandySugar.Entry.CandyViewModels;
+using CandySugar.Library;
 using CandySugar.Library.Template;
-using CandySugar.Resource.Properties;
+using CandySugar.Logic.Entity.CandyEntity;
+using CandySugar.Logic.IService;
+using Sdk.Component.Anime.sdk.ViewModel.Response;
+using Sdk.Component.Hnime.sdk.ViewModel.Request;
+using Sdk.Component.Hnime.sdk.ViewModel.Response;
+using Sdk.Component.Manga.sdk.ViewModel.Response;
 using Stylet;
 using StyletIoC;
 using System.Collections.Generic;
-using System.Windows;
 using System.Linq;
-using CandySugar.Library;
-using CandySugar.Controls.ContentView;
-using CandySugar.Controls.ContentViewModel;
-using CandySugar.Logic.Entity.CandyEntity;
-using Sdk.Component.Anime.sdk.ViewModel.Response;
-using CandySugar.Logic.IService;
-using Sdk.Component.Manga.sdk.ViewModel.Response;
 using XExten.Advance.LinqFramework;
-using CandySugar.Controls.MenuTemplateViewModel;
-using CandySugar.Controls.MenuTemplate;
-using Sdk.Component.Hnime.sdk.ViewModel.Request;
-using Sdk.Component.Hnime.sdk.ViewModel.Response;
 
 namespace CandySugar.Entry.ViewModels
 {
@@ -90,6 +88,7 @@ namespace CandySugar.Entry.ViewModels
                         Ctrl = StaticResource.CreateControl<MusicView>(Container.Get<MusicViewModel>(), param.Values.FirstOrDefault().ToString());
                         break;
                     default:
+                        Ctrl = StaticResource.CreateControl<AxgleView>(Container.Get<AxgleViewModel>(), param.Values.FirstOrDefault().ToString());
                         break;
                 }
             }
@@ -166,6 +165,7 @@ namespace CandySugar.Entry.ViewModels
             }
         }
         #endregion
+
         public void ScreenActivity(CandyControl input)
         {
             Ctrl = input;

@@ -61,6 +61,8 @@ namespace CandySugar.Entry.CandyViews
 
             var QueryModule = StaticResource.FindVisualChild<RadioButton>(Querys).FirstOrDefault(t => t.CommandParameter.ToString() == CandySoft.Default.QueryModule.ToString());
             QueryModule.IsChecked = true;
+            var AXModule = StaticResource.FindVisualChild<RadioButton>(Category).FirstOrDefault(t => t.CommandParameter.ToString() == CandySoft.Default.AxModule.ToString());
+            AXModule.IsChecked = true;
             var KonachanModule = StaticResource.FindVisualChild<RadioButton>(Konachan).FirstOrDefault(t => t.CommandParameter.ToString() == CandySoft.Default.Module.ToString());
             KonachanModule.IsChecked = true;
         }
@@ -78,6 +80,11 @@ namespace CandySugar.Entry.CandyViews
         private void QueryModuelEvent(object sender, RoutedEventArgs e)
         {
             CandySoft.Default.QueryModule = (sender as RadioButton).CommandParameter.ToString().AsInt();
+        }
+
+        private void AxModuleEvent(object sender, RoutedEventArgs e)
+        {
+            CandySoft.Default.AxModule = (sender as RadioButton).CommandParameter.ToString().AsInt();
         }
     }
 }

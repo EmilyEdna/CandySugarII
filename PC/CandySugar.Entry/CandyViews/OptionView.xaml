@@ -249,6 +249,87 @@
                     Width="100"
                     Height="29.333"
                     VerticalContentAlignment="Center"
+                    Content="AX分类设置："
+                    FontFamily="{StaticResource FontStyle}"
+                    FontSize="14" />
+            </Canvas>
+            <Grid
+                x:Name="Category"
+                Width="340"
+                Height="40"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Canvas>
+                    <RadioButton
+                        Width="100"
+                        Height="20"
+                        HorizontalAlignment="Left"
+                        BorderBrush="Transparent"
+                        Checked="AxModuleEvent"
+                        CommandParameter="1"
+                        Content="上次观看"
+                        GroupName="AXModule" />
+                    <RadioButton
+                        Canvas.Left="100"
+                        Width="100"
+                        Height="20"
+                        BorderBrush="Transparent"
+                        Checked="AxModuleEvent"
+                        CommandParameter="2"
+                        Content="最新的"
+                        GroupName="AXModule" />
+                    <RadioButton
+                        Canvas.Left="200"
+                        Width="100"
+                        Height="20"
+                        BorderBrush="Transparent"
+                        Checked="AxModuleEvent"
+                        CommandParameter="3"
+                        Content="最多观看"
+                        GroupName="AXModule" />
+                </Canvas>
+                <Canvas Grid.Row="1">
+                    <RadioButton
+                        Width="100"
+                        Height="20"
+                        BorderBrush="Transparent"
+                        Checked="AxModuleEvent"
+                        CommandParameter="4"
+                        Content="热门的"
+                        GroupName="AXModule" />
+                    <RadioButton
+                        Canvas.Left="100"
+                        Width="100"
+                        Height="20"
+                        BorderBrush="Transparent"
+                        Checked="AxModuleEvent"
+                        CommandParameter="5"
+                        Content="多收藏"
+                        GroupName="AXModule" />
+                    <RadioButton
+                        Canvas.Left="200"
+                        Width="100"
+                        Height="20"
+                        BorderBrush="Transparent"
+                        Checked="AxModuleEvent"
+                        CommandParameter="6"
+                        Content="长时常"
+                        GroupName="AXModule" />
+                </Canvas>
+            </Grid>
+            <Canvas
+                Width="340"
+                Height="30"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                <Label
+                    Width="100"
+                    Height="29.333"
+                    VerticalContentAlignment="Center"
                     Content="文库设置："
                     FontFamily="{StaticResource FontStyle}"
                     FontSize="14" />
