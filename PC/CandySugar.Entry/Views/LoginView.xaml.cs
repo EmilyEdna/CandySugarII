@@ -25,17 +25,17 @@ namespace CandySugar.Entry.Views
             InitializeComponent();
         }
 
-        private void Border_MouseMove(object sender, MouseEventArgs e)
+        private void CloseEvent(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void MoveEvent(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 DragMove();
             }
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
     }
 }

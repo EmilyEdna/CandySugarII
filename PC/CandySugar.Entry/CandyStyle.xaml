@@ -317,9 +317,9 @@
                         Background="{DynamicResource SugarThemeSmoke}">
                         <Grid.Clip>
                             <RectangleGeometry
-                                RadiusX="15"
-                                RadiusY="15"
-                                Rect="0,0,400,300" />
+                                RadiusX="0"
+                                RadiusY="0"
+                                Rect="0,0,350,400" />
                         </Grid.Clip>
                         <Grid>
                             <ContentPresenter />

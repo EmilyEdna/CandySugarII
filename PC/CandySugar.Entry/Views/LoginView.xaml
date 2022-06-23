@@ -11,8 +11,8 @@
     xmlns:s="https://github.com/canton7/Stylet"
     xmlns:viewModels="clr-namespace:CandySugar.Entry.ViewModels"
     x:Name="login"
-    Width="400"
-    Height="300"
+    Width="350"
+    Height="400"
     d:DataContext="{d:DesignInstance Type=viewModels:LoginViewModel}"
     Style="{StaticResource CandyLoginWindow}"
     WindowStartupLocation="CenterScreen"
@@ -20,89 +20,98 @@
     <lib:CandyWindow.InputBindings>
         <KeyBinding Key="Enter" Command="{s:Action LoginAction}" />
     </lib:CandyWindow.InputBindings>
-    <Grid>
+    <Grid MouseMove="MoveEvent">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40" />
-            <RowDefinition />
+            <RowDefinition Height=".5*" />
+            <RowDefinition Height=".5*" />
         </Grid.RowDefinitions>
-        <Border
-            Height="40"
-            VerticalAlignment="Top"
-            Background="{DynamicResource SugarThemeAlis}"
-            MouseMove="Border_MouseMove">
-            <UniformGrid Margin="0,0,20,0" HorizontalAlignment="Right">
-                <Button
-                    Width="28"
-                    Height="28"
-                    md:ShadowAssist.ShadowDepth="Depth2"
-                    Background="{DynamicResource SugarThemeDefault}"
-                    BorderBrush="Transparent"
-                    Click="Button_Click"
-                    Foreground="{DynamicResource SugarThemeWhite}"
-                    Style="{DynamicResource MaterialDesignFloatingActionMiniButton}">
-                    <md:PackIcon
-                        Width="18"
-                        Height="18"
-                        Kind="WindowClose" />
-                </Button>
-            </UniformGrid>
-        </Border>
-        <Canvas Grid.Row="1">
-            <Rectangle
-                Canvas.Left="26"
-                Canvas.Top="15"
-                Width="350"
-                Height="210"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                RadiusX="10"
-                RadiusY="10">
-                <Rectangle.Fill>
-                    <SolidColorBrush Opacity="1" Color="White" />
-                </Rectangle.Fill>
-            </Rectangle>
-            <lib:CandyTextBox
-                Canvas.Left="100"
-                Canvas.Top="50"
-                Width="200"
-                PlaceHolder="Account"
-                Style="{StaticResource CandyTextBoxStyle}"
-                Text="{Binding Account, Mode=TwoWay}">
-                <lib:CandyTextBox.Icon>
-                    <md:PackIcon Kind="Account" />
-                </lib:CandyTextBox.Icon>
-            </lib:CandyTextBox>
+        <Canvas Background="{DynamicResource SugarThemeBlue}">
+            <hc:Gravatar
+                Canvas.Left="135"
+                Canvas.Top="40"
+                Style="{StaticResource GravatarCircleImg}">
+                <Image Source="{StaticResource i5}" />
+            </hc:Gravatar>
             <TextBlock
-                Canvas.Left="100"
-                Canvas.Top="80"
-                Text="{Binding AccountTip}"
-                Visibility="{Binding IsAccountOpen, Converter={StaticResource ToShow}}" />
-            <lib:CandyTextBox
-                Canvas.Left="100"
-                Canvas.Top="100"
-                Width="200"
-                IsPassWord="True"
-                PassWord="{Binding PassWord, Mode=TwoWay}"
-                PlaceHolder="PassWord"
-                Style="{StaticResource CandyTextBoxStyle}">
-                <lib:CandyTextBox.Icon>
-                    <md:PackIcon Kind="Password" />
-                </lib:CandyTextBox.Icon>
-            </lib:CandyTextBox>
-            <TextBlock
-                Canvas.Left="100"
-                Canvas.Top="130"
-                Text="{Binding PassWordTip}"
-                Visibility="{Binding IsPassWordOpen, Converter={StaticResource ToShow}}" />
-            <Button
-                Canvas.Left="100"
-                Canvas.Top="160"
-                Width="200"
-                Background="DeepSkyBlue"
-                BorderThickness="0"
-                Command="{s:Action LoginAction}"
-                Content="登录"
-                Foreground="Black" />
+                Canvas.Left="320"
+                Canvas.Top="5"
+                Foreground="{DynamicResource SugarThemeWhite}"
+                PreviewMouseDown="CloseEvent">
+                <md:PackIcon
+                    Width="25"
+                    Height="25"
+                    Kind="WindowClose">
+                    <md:PackIcon.Style>
+                        <Style TargetType="md:PackIcon">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="{DynamicResource SugarThemeRed}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </md:PackIcon.Style>
+                </md:PackIcon>
+            </TextBlock>
         </Canvas>
+        <Canvas Grid.Row="1" Background="{DynamicResource SugarThemeAlis}" />
+        <Border
+            Grid.RowSpan="2"
+            Width="260"
+            Height="200"
+            Margin="0,50,0,0"
+            Background="{DynamicResource SugarThemeWhite}"
+            BorderThickness="1">
+            <Border.Effect>
+                <DropShadowEffect
+                    BlurRadius="15"
+                    Opacity=".4"
+                    ShadowDepth="0"
+                    Color="{DynamicResource SugarThemeBlackColor}" />
+            </Border.Effect>
+            <Canvas>
+                <lib:CandyTextBox
+                    Canvas.Left="30"
+                    Canvas.Top="30"
+                    Width="200"
+                    PlaceHolder="Account"
+                    Style="{StaticResource CandyTextBoxStyle}"
+                    Text="{Binding Account, Mode=TwoWay}">
+                    <lib:CandyTextBox.Icon>
+                        <md:PackIcon Kind="Account" />
+                    </lib:CandyTextBox.Icon>
+                </lib:CandyTextBox>
+                <TextBlock
+                    Canvas.Left="30"
+                    Canvas.Top="60"
+                    Text="{Binding AccountTip}"
+                    Visibility="{Binding IsAccountOpen, Converter={StaticResource ToShow}}" />
+                <lib:CandyTextBox
+                    Canvas.Left="30"
+                    Canvas.Top="90"
+                    Width="200"
+                    IsPassWord="True"
+                    PassWord="{Binding PassWord, Mode=TwoWay}"
+                    PlaceHolder="PassWord"
+                    Style="{StaticResource CandyTextBoxStyle}">
+                    <lib:CandyTextBox.Icon>
+                        <md:PackIcon Kind="Password" />
+                    </lib:CandyTextBox.Icon>
+                </lib:CandyTextBox>
+                <TextBlock
+                    Canvas.Left="30"
+                    Canvas.Top="120"
+                    Text="{Binding PassWordTip}"
+                    Visibility="{Binding IsPassWordOpen, Converter={StaticResource ToShow}}" />
+                <Button
+                    Canvas.Left="30"
+                    Canvas.Top="150"
+                    Width="200"
+                    Background="DeepSkyBlue"
+                    BorderThickness="0"
+                    Command="{s:Action LoginAction}"
+                    Content="登录"
+                    Foreground="Black" />
+            </Canvas>
+        </Border>
     </Grid>
 </lib:CandyWindow>
