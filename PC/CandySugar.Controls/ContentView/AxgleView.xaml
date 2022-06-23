@@ -18,6 +18,7 @@
     d:DataContext="{d:DesignInstance Type=viewmodels:AxgleViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    Loaded="LoadEvent"
     mc:Ignorable="d">
     <Grid>
         <!--  加载动画  -->
@@ -136,7 +137,7 @@
                                     <lib:CandyButton
                                         s:View.ActionTarget="{Binding DataContext, ElementName=AxgleViewName}"
                                         Command="{s:Action ViewAction}"
-                                        CommandParameter="{Binding .}"
+                                        CommandParameter="{Binding Play}"
                                         Style="{StaticResource BtnIcon}">
                                         <md:PackIcon Kind="EyeOutline" />
                                     </lib:CandyButton>
@@ -163,6 +164,15 @@
                     </hc:Interaction.Triggers>
                 </hc:Pagination>
             </Grid>
+        </Grid>
+        <Grid x:Name="StepTwo" Visibility="{Binding StepTwo, Converter={StaticResource ToShow}}">
+            <UniformGrid>
+                <web:WebView2
+                    x:Name="WebViewCtrl"
+                    Height="{Binding ScreenHeight, Source={x:Static res:CandySoft.Default}}"
+                    DefaultBackgroundColor="Transparent"
+                    Source="{Binding PlayRoute}" />
+            </UniformGrid>
         </Grid>
     </Grid>
 </lib:CandyControl>

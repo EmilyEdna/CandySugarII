@@ -27,6 +27,7 @@ namespace CandySugar.Logic
             Bind<ICandyLabel>().To<CandyLabelImpl>();
             Bind<ICandyImage>().To<CandyImageImpl>();
             Bind<ICandyHnime>().To<CandyHnimeImpl>();
+            Bind<ICandyAxgle>().To<CandyAxgleImpl>();
             Bind<ICandyLog>().To<CandyLogImpl>();
         }
     }

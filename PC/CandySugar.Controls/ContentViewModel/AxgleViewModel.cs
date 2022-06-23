@@ -1,6 +1,9 @@
 ﻿using CandySugar.Library;
+using CandySugar.Logic.Entity.CandyEntity;
+using CandySugar.Logic.IService;
 using CandySugar.Resource.Properties;
 using HandyControl.Data;
+using Microsoft.Web.WebView2.Wpf;
 using Sdk.Component.Axgle.sdk;
 using Sdk.Component.Axgle.sdk.ViewModel;
 using Sdk.Component.Axgle.sdk.ViewModel.Enums;
@@ -22,10 +25,13 @@ namespace CandySugar.Controls.ContentViewModel
     {
         public IContainer Container;
         public IWindowManager WindowManager;
+        public ICandyAxgle CandyAxgle;
+        public WebView2 WebView { get; set; }
         public AxgleViewModel(IContainer Container, IWindowManager WindowManager)
         {
             this.WindowManager = WindowManager;
             this.Container = Container;
+            this.CandyAxgle = Container.Get<ICandyAxgle>();
             this.StepOne = true;
             this.StepTwo = false;
             this.Page = 1;
@@ -93,7 +99,12 @@ namespace CandySugar.Controls.ContentViewModel
             get => _QueryResult;
             set => SetAndNotify(ref _QueryResult, value);
         }
-
+        private string _PlayRoute;
+        public string PlayRoute
+        {
+            get => _PlayRoute;
+            set => SetAndNotify(ref _PlayRoute, value);
+        }
         #endregion
 
         #region Action
@@ -114,6 +125,14 @@ namespace CandySugar.Controls.ContentViewModel
             this.Page = input.Info;
             if (this.Keyword.IsNullOrEmpty()) InitCategory(this.Category);
             else InitQuery(this.Keyword);
+        }
+        public void SaveAction(AxgleSearchElementResult input)
+        {
+            Logic(input);
+        }
+        public void ViewAction(string input)
+        {
+            this.PlayRoute = input;
         }
         #endregion
 
@@ -183,6 +202,11 @@ namespace CandySugar.Controls.ContentViewModel
             var Target = AxgleCateData.CategoryResult.ElementResult.ToMapest<List<AxgleSearchElementResult>>();
             this.QueryResult = new ObservableCollection<AxgleSearchElementResult>(Target);
         }
+        private async void Logic(AxgleSearchElementResult input)
+        {
+            await this.CandyAxgle.Add(input.ToMapest<CandyAxgle>());
+        }
+
         #endregion
     }
 }

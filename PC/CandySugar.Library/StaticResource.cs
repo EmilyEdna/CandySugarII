@@ -339,12 +339,18 @@ namespace CandySugar.Library
         /// </summary>
         /// <param name="WebView"></param>
         /// <param name="Name"></param>
-        public static async void CreateWebView(WebView2 WebView, string Name)
+        public static  void CreateWebView(WebView2 WebView, string Name)
+        {
+            CreateWebView(WebView);
+            WebView.CoreWebView2.Navigate(new Uri($"{Environment.CurrentDirectory}\\Webs\\{Name}.html").AbsoluteUri);
+        }
+        /// <summary>
+        /// 初始化WebView
+        /// </summary>
+        /// <param name="WebView"></param>
+        public static async void CreateWebView(WebView2 WebView) 
         {
             await WebView.EnsureCoreWebView2Async(null);
-
-            WebView.CoreWebView2.Navigate(new Uri($"{Environment.CurrentDirectory}\\Webs\\{Name}.html").AbsoluteUri);
-
             WebView.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
             WebView.CoreWebView2.Settings.AreDevToolsEnabled = false;
         }

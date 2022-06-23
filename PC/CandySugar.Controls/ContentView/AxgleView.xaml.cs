@@ -1,4 +1,6 @@
-﻿using CandySugar.Library.Template;
+﻿using CandySugar.Controls.ContentViewModel;
+using CandySugar.Library;
+using CandySugar.Library.Template;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +33,16 @@ namespace CandySugar.Controls.ContentView
             var contentView = (dynamic)CoverViews.GetType().GetField("_viewContent", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(CoverViews);
             contentView.Background = new SolidColorBrush(Colors.Transparent);
             contentView.BorderThickness = new Thickness(0);
+        }
+
+        private void LoadEvent(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext != null)
+            {
+                var Model = (this.DataContext as AxgleViewModel);
+                StaticResource.CreateWebView(this.WebViewCtrl);
+                Model.WebView = this.WebViewCtrl;
+            }
         }
     }
 }
