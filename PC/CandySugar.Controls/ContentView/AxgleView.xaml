@@ -28,6 +28,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="55" />
                     <RowDefinition />
+                    <RowDefinition Height="50" />
                 </Grid.RowDefinitions>
                 <StackPanel HorizontalAlignment="Center">
                     <ListBox
@@ -48,12 +49,119 @@
                                     Command="{s:Action CategoryAction}"
                                     CommandParameter="{Binding AId}"
                                     Content="{Binding ShortName}"
+                                    Cursor="Hand"
                                     Opacity="1"
                                     Style="{StaticResource CategoryBtn}" />
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </StackPanel>
+                <hc:CoverView
+                    x:Name="CoverViews"
+                    Grid.Row="1"
+                    ItemContentHeight="100"
+                    ItemContentHeightFixed="True"
+                    ItemWidth="220"
+                    ItemsSource="{Binding QueryResult}"
+                    PreviewMouseLeftButtonDown="CoverClicked"
+                    ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                    Style="{StaticResource CoverViewBaseStyle}">
+                    <hc:CoverView.ItemHeaderTemplate>
+                        <DataTemplate>
+                            <UniformGrid>
+                                <Image
+                                    x:Name="Loading"
+                                    Width="25"
+                                    Height="25"
+                                    RenderTransformOrigin="0.5,0.5"
+                                    Source="{StaticResource i14}"
+                                    Stretch="UniformToFill">
+                                    <Image.RenderTransform>
+                                        <TransformGroup>
+                                            <RotateTransform Angle="0" />
+                                        </TransformGroup>
+                                    </Image.RenderTransform>
+                                    <Image.Triggers>
+                                        <EventTrigger RoutedEvent="Loaded">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation
+                                                        RepeatBehavior="Forever"
+                                                        Storyboard.TargetName="Loading"
+                                                        Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].Angle"
+                                                        From="0"
+                                                        To="359"
+                                                        Duration="0:0:02" />
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </Image.Triggers>
+                                </Image>
+                                <Border>
+                                    <Image
+                                        lib:ImageDependencyProperty.Source="{Binding Preview}"
+                                        SnapsToDevicePixels="True"
+                                        Stretch="Fill"
+                                        Tag="Axgle" />
+                                    <Border.Effect>
+                                        <DropShadowEffect
+                                            BlurRadius="6"
+                                            Opacity="1"
+                                            ShadowDepth="0"
+                                            Color="{DynamicResource SugarThemePinkColor}" />
+                                    </Border.Effect>
+                                </Border>
+                            </UniformGrid>
+                        </DataTemplate>
+                    </hc:CoverView.ItemHeaderTemplate>
+                    <hc:CoverView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Background="Transparent">
+                                <TextBlock Foreground="{DynamicResource SugarThemePink}" Text="{Binding Title, StringFormat=标题：{0}}" />
+                                <TextBlock Foreground="{DynamicResource SugarThemePink}" Text="{Binding Channel, StringFormat=分类：{0}}" />
+                                <TextBlock Foreground="{DynamicResource SugarThemePink}" Text="{Binding Duration, StringFormat=时常：{0}}" />
+                                <TextBlock Foreground="{DynamicResource SugarThemePink}" Text="{Binding Views, StringFormat=观看次数：{0}}" />
+                                <TextBlock Foreground="{DynamicResource SugarThemePink}" Text="{Binding AddTime, StringFormat=上传时间：{0}}" />
+                                <UniformGrid
+                                    Width="36"
+                                    HorizontalAlignment="Left"
+                                    Columns="2">
+                                    <lib:CandyButton
+                                        s:View.ActionTarget="{Binding DataContext, ElementName=AxgleViewName}"
+                                        Command="{s:Action SaveAction}"
+                                        CommandParameter="{Binding .}"
+                                        Style="{StaticResource BtnIcon}">
+                                        <md:PackIcon Kind="StarOutline" />
+                                    </lib:CandyButton>
+                                    <lib:CandyButton
+                                        s:View.ActionTarget="{Binding DataContext, ElementName=AxgleViewName}"
+                                        Command="{s:Action ViewAction}"
+                                        CommandParameter="{Binding .}"
+                                        Style="{StaticResource BtnIcon}">
+                                        <md:PackIcon Kind="EyeOutline" />
+                                    </lib:CandyButton>
+                                </UniformGrid>
+                            </StackPanel>
+                        </DataTemplate>
+                    </hc:CoverView.ItemTemplate>
+                </hc:CoverView>
+                <hc:Pagination
+                    Grid.Row="2"
+                    Margin="0,5,0,0"
+                    HorizontalAlignment="Center"
+                    IsJumpEnabled="False"
+                    MaxPageCount="{Binding Total}"
+                    Style="{StaticResource PageinationStyle}"
+                    PageIndex="{Binding Page}">
+                    <hc:Interaction.Triggers>
+                        <hc:EventTrigger EventName="PageUpdated">
+                            <hc:EventToCommand
+                                s:View.ActionTarget="{Binding DataContext, ElementName=AxgleViewName}"
+                                Command="{s:Action PageAction}"
+                                PassEventArgsToCommand="True" />
+                        </hc:EventTrigger>
+                    </hc:Interaction.Triggers>
+                </hc:Pagination>
             </Grid>
         </Grid>
     </Grid>

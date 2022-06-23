@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,6 +25,12 @@ namespace CandySugar.Controls.ContentView
         public AxgleView()
         {
             InitializeComponent();
+        }
+        private void CoverClicked(object sender, MouseButtonEventArgs e)
+        {
+            var contentView = (dynamic)CoverViews.GetType().GetField("_viewContent", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(CoverViews);
+            contentView.Background = new SolidColorBrush(Colors.Transparent);
+            contentView.BorderThickness = new Thickness(0);
         }
     }
 }

@@ -63,6 +63,7 @@
                                         s:View.ActionTarget="{Binding DataContext, ElementName=AnimeViewName}"
                                         Command="{s:Action CategoryAction}"
                                         Content="{Binding .}"
+                                        Cursor="Hand"
                                         FontSize="6.5"
                                         Opacity="1"
                                         Style="{StaticResource CategoryBtn}">
@@ -91,6 +92,7 @@
                                         s:View.ActionTarget="{Binding DataContext, ElementName=AnimeViewName}"
                                         Command="{s:Action CategoryAction}"
                                         Content="{Binding Name}"
+                                        Cursor="Hand"
                                         Opacity="1"
                                         Style="{StaticResource CategoryBtn}">
                                         <lib:CandyButton.CommandParameter>

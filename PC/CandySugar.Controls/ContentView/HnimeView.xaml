@@ -67,6 +67,7 @@
                                     Command="{s:Action CategoryAction}"
                                     CommandParameter="{Binding Route}"
                                     Content="{Binding Title}"
+                                    Cursor="Hand"
                                     Opacity="1"
                                     Style="{StaticResource CategoryBtn}" />
                             </DataTemplate>

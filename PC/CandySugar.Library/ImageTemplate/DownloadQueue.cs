@@ -1,19 +1,17 @@
 ﻿using CandySugar.Resource.Properties;
 using HandyControl.Controls;
+using Sdk.Component.Axgle.sdk;
 using Sdk.Component.Image.sdk;
 using Sdk.Component.Image.sdk.ViewModel;
 using Sdk.Component.Image.sdk.ViewModel.Enums;
 using Sdk.Component.Image.sdk.ViewModel.Request;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using Ax = Sdk.Component.Axgle.sdk.ViewModel;
 
 namespace CandySugar.Library.ImageTemplate
 {
@@ -50,7 +48,7 @@ namespace CandySugar.Library.ImageTemplate
                 {
                     try
                     {
-                        var bytes = await DownBytes(Info.Route);
+                        var bytes = await DownBytes(Info.Route, Info.Type);
                         var source = StaticResource.ToImage(bytes);
                         Info.ImageControl.Dispatcher.BeginInvoke(new Action<QueueImageInfo, BitmapSource>((img, bit) =>
                         {
@@ -70,7 +68,18 @@ namespace CandySugar.Library.ImageTemplate
                 AutoEvent.WaitOne();
             }
         }
-        private static async Task<byte[]> DownBytes(string input)
+        /// <summary>
+        /// Konachan
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private static async Task<byte[]> DownBytes(string input, int type)
+        {
+            if (type == 1) return await Axgle(input);
+            else return await Konachan(input);
+        }
+        #region Func
+        private static async Task<byte[]> Konachan(string input)
         {
             var ImageInitData = await ImageFactory.Image(opt =>
             {
@@ -88,12 +97,31 @@ namespace CandySugar.Library.ImageTemplate
             }).RunsAsync();
             return ImageInitData.DownResult.Bytes;
         }
-
-        public static void StartQueue(string Route, Image Control)
+        private static async Task<byte[]> Axgle(string input)
+        {
+           var AxgleCoverData = await AxgleFactory.Axgle(opt =>
+            {
+                opt.RequestParam = new Ax.Input
+                {
+                    CacheSpan = CandySoft.Default.Cache,
+                    Proxy = StaticResource.Proxy(),
+                    ImplType = StaticResource.ImplType(),
+                    AxgleType =  Ax.Enums.AxgleEnum.Cover,
+                    Cover = new Ax.Request.AxgleCover
+                    {
+                         KeyWord= input
+                    }
+                };
+            }).RunsAsync();
+            return AxgleCoverData.CoverResult.Bytes;
+        }
+        #endregion
+        public static void StartQueue(string Route, string Type, Image Control)
         {
             lock (Stacks)
             {
-                Stacks.Enqueue(new QueueImageInfo { Route = Route, ImageControl = Control });
+                int Category = Type.ToUpper().Equals("AXGLE") ? 1 : 2;
+                Stacks.Enqueue(new QueueImageInfo { Route = Route, Type = Category, ImageControl = Control });
                 AutoEvent.Set();
             }
         }

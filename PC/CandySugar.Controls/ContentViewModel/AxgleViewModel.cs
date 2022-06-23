@@ -1,5 +1,6 @@
 ﻿using CandySugar.Library;
 using CandySugar.Resource.Properties;
+using HandyControl.Data;
 using Sdk.Component.Axgle.sdk;
 using Sdk.Component.Axgle.sdk.ViewModel;
 using Sdk.Component.Axgle.sdk.ViewModel.Enums;
@@ -13,6 +14,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XExten.Advance.LinqFramework;
 
 namespace CandySugar.Controls.ContentViewModel
 {
@@ -38,6 +40,8 @@ namespace CandySugar.Controls.ContentViewModel
         #endregion
 
         #region Field
+        private string Keyword;
+        private int Category;
         #endregion
 
         #region CommomProperty_Bool
@@ -95,11 +99,21 @@ namespace CandySugar.Controls.ContentViewModel
         #region Action
         public void SearchAction(string input)
         {
+            this.Keyword = input;
             InitQuery(input);
         }
-        public void CategoryAction(int input)
+        public void CategoryAction(string input)
         {
-            InitCategory(input);
+            this.Keyword = string.Empty;
+            this.Category = input.AsInt();
+            this.Page = 1;
+            InitCategory(input.AsInt());
+        }
+        public void PageAction(FunctionEventArgs<int> input)
+        {
+            this.Page = input.Info;
+            if (this.Keyword.IsNullOrEmpty()) InitCategory(this.Category);
+            else InitQuery(this.Keyword);
         }
         #endregion
 
@@ -165,6 +179,9 @@ namespace CandySugar.Controls.ContentViewModel
                 };
             }).RunsAsync();
             this.Loading = false;
+            this.Total = AxgleCateData.CategoryResult.Total;
+            var Target = AxgleCateData.CategoryResult.ElementResult.ToMapest<List<AxgleSearchElementResult>>();
+            this.QueryResult = new ObservableCollection<AxgleSearchElementResult>(Target);
         }
         #endregion
     }

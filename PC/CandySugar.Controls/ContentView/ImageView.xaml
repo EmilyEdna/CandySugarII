@@ -124,7 +124,8 @@
                                 <Image
                                     lib:ImageDependencyProperty.Source="{Binding Preview}"
                                     SnapsToDevicePixels="True"
-                                    Stretch="Fill" />
+                                    Stretch="Fill"
+                                    Tag="Konachan" />
                                 <Border.Effect>
                                     <DropShadowEffect
                                         BlurRadius="6"

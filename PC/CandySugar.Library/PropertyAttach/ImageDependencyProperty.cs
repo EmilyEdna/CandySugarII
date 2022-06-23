@@ -33,7 +33,7 @@ namespace CandySugar.Library.PropertyAttach
         private static void OnSourceComplate(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             //执行下载队列
-            DownloadQueue.StartQueue(e.NewValue.ToString(), (Image)d);
+            DownloadQueue.StartQueue(e.NewValue.ToString(),((Image)d).Tag.ToString(), (Image)d);
         }
         #endregion
 

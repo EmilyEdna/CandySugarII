@@ -896,6 +896,7 @@
                             Command="{s:Action CategoryAction}"
                             CommandParameter="{Binding Key}"
                             Content="{Binding Value}"
+                            Cursor="Hand"
                             Opacity="1"
                             Style="{StaticResource CategoryBtn}" />
                     </DataTemplate>

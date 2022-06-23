@@ -10,6 +10,7 @@ namespace CandySugar.Library.ImageTemplate
     public class QueueImageInfo
     {
         public string Route { get; set; }
+        public int Type { get; set; }
         public Image ImageControl { get; set; }
     }
 }
