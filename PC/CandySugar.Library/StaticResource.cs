@@ -24,6 +24,25 @@ namespace CandySugar.Library
 {
     public class StaticResource
     {
+        private static string[] ClassName = { "alert alert-dismissable alert-danger",
+            "hd-text-icon",
+            "top-nav",
+            "well well-filters",
+            "navbar navbar-inverse navbar-fixed-top",
+            "nav nav-tabs",
+            "tab-content m-b-20",
+            "pull-left user-container",
+            "pull-right big-views hidden-xs",
+            "m-t-10 overflow-hidden",
+            "col-md-4 col-sm-5",
+            "footer-container",
+            "col-lg-12",
+            "fps60-text-icon",
+            "btn btn-primary",
+            "vote-box col-xs-7 col-sm-2 col-md-2",
+            "pull-right m-t-15",
+            "video-banner"};
+
         public static List<SilderModel> InitMenu()
         {
             List<SilderModel> model = new List<SilderModel>();
@@ -188,7 +207,6 @@ namespace CandySugar.Library
 
             return null;
         }
-
         /// <summary>
         /// 创建内容对象
         /// </summary>
@@ -353,6 +371,22 @@ namespace CandySugar.Library
             await WebView.EnsureCoreWebView2Async(null);
             WebView.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
             WebView.CoreWebView2.Settings.AreDevToolsEnabled = false;
+        }
+        public static void ClearAd(WebView2 WebView) 
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var item in ClassName)
+            {
+                sb.Append($"$(document.getElementsByClassName('{item}')).remove();");
+            }
+            sb.Append("$(document.getElementById('ps32-container')).remove();");
+            sb.Append("$(document.getElementsByTagName('iframe')).remove();");
+            sb.Append("$('div[style*=\"position:absolute;left:18px;display: block;font-size:10px;\"]').remove();");
+            sb.Append("$('div[style*=\"position:absolute;right:18px; display: block;font-size:10px;\"]').remove();");
+            sb.Append("$('#wrapper').css('padding-bottom','0px');");
+            sb.Append("$('body').css('padding-top','0px');");
+            sb.Append("$('#video-player').css({'max-width':'1190px','width':'1190px','margin-left':'-30px'});");
+            WebView.CoreWebView2.ExecuteScriptAsync(sb.ToString());
         }
         /// <summary>
         /// 获取壁纸模式

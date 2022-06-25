@@ -20,6 +20,18 @@
     d:DesignWidth="800"
     Loaded="LoadEvent"
     mc:Ignorable="d">
+    <lib:CandyControl.Resources>
+        <Style x:Key="BtnIcon" TargetType="lib:CandyButton">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Foreground" Value="{DynamicResource SugarThemeDefault}" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Transparent" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </lib:CandyControl.Resources>
     <Grid>
         <!--  加载动画  -->
         <hc:LoadingCircle Foreground="{DynamicResource SugarThemeDefault}" Visibility="{Binding Loading, Converter={StaticResource ToShow}}" />
@@ -166,7 +178,35 @@
             </Grid>
         </Grid>
         <Grid x:Name="StepTwo" Visibility="{Binding StepTwo, Converter={StaticResource ToShow}}">
-            <UniformGrid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="34" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button
+                    Width="auto"
+                    s:View.ActionTarget="{Binding DataContext, ElementName=AxgleViewName}"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Command="{s:Action ClearAdAction}"
+                    Content="去广告"
+                    Foreground="{DynamicResource SugarThemeWhite}"
+                    Style="{StaticResource MaterialDesignFlatLightBgButton}" />
+                <Button
+                    Grid.Column="1"
+                    s:View.ActionTarget="{Binding DataContext, ElementName=AxgleViewName}"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Command="{s:Action ReloadAction}"
+                    Content="重新加载"
+                    Foreground="{DynamicResource SugarThemeWhite}"
+                    Style="{StaticResource MaterialDesignFlatLightBgButton}" />
+            </Grid>
+            <UniformGrid Grid.Row="1">
                 <web:WebView2
                     x:Name="WebViewCtrl"
                     Height="{Binding ScreenHeight, Source={x:Static res:CandySoft.Default}}"

@@ -133,6 +133,17 @@ namespace CandySugar.Controls.ContentViewModel
         public void ViewAction(string input)
         {
             this.PlayRoute = input;
+            this.StepOne = false;
+            this.StepTwo = true;
+
+        }
+        public void ClearAdAction()
+        {
+            StaticResource.ClearAd(WebView);
+        }
+        public void ReloadAction()
+        {
+            WebView.CoreWebView2.Reload();
         }
         #endregion
 
@@ -206,7 +217,6 @@ namespace CandySugar.Controls.ContentViewModel
         {
             await this.CandyAxgle.Add(input.ToMapest<CandyAxgle>());
         }
-
         #endregion
     }
 }

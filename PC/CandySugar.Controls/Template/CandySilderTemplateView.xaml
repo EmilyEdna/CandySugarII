@@ -25,7 +25,6 @@
                 <RowDefinition Height="{c:Binding ((Height/5)*2), ElementName=head}" />
             </Grid.RowDefinitions>
             <ListBox
-                Margin="0,40,0,0"
                 VerticalAlignment="Top"
                 Background="Transparent"
                 BorderThickness="0"
