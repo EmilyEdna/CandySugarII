@@ -1,6 +1,7 @@
 ﻿using CandySugar.Library;
 using CandySugar.Library.Template;
 using CandySugar.Resource.Properties;
+using DryIoc;
 using System.Windows;
 using System.Windows.Media.Animation;
 
@@ -51,7 +52,7 @@ namespace CandySugar.Controls.Template
             if (parentWindow.WindowState == WindowState.Normal)
             {
                 parentWindow.WindowState = WindowState.Maximized;
-                parentWindow.Width= SystemParameters.PrimaryScreenWidth;
+                parentWindow.Width = SystemParameters.PrimaryScreenWidth;
                 parentWindow.Height = SystemParameters.PrimaryScreenHeight;
                 CandySoft.Default.ScreenWidth = SystemParameters.PrimaryScreenWidth;
                 CandySoft.Default.ScreenHeight = SystemParameters.PrimaryScreenHeight;
@@ -65,6 +66,22 @@ namespace CandySugar.Controls.Template
                 parentWindow.Width = (SystemParameters.PrimaryScreenWidth / 10) * 6;
                 parentWindow.Height = (SystemParameters.PrimaryScreenHeight / 10) * 7;
                 StaticResource.GridClipContent(parentWindow, CandySoft.Default.ScreenWidth, CandySoft.Default.ScreenHeight);
+            }
+        }
+
+        private bool IsOpen = true;
+        private void HandleEvent(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var win = (Window.GetWindow(this) as CandyWindow);
+            if (IsOpen)
+            {
+                IsOpen = false;
+                win.StarAnime("CloseSilder");
+            }
+            else
+            {
+                IsOpen = true;
+                win.StarAnime("OpenSilder");
             }
         }
     }

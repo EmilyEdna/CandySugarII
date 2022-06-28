@@ -36,7 +36,7 @@
                     RenderOptions.BitmapScalingMode="LowQuality"
                     SnapsToDevicePixels="True"
                     Source="{StaticResource i5}"
-                    Stretch="Uniform" />
+                    Stretch="Uniform" PreviewMouseDown="HandleEvent"/>
                 <lib:CandyTextBox
                     x:Name="SearchBox"
                     Grid.Column="1"

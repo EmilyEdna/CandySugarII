@@ -46,20 +46,5 @@ namespace CandySugar.Entry.Views
                 story.Begin(this);
             };
         }
-
-        private void TextBlock_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            var Pck = StaticResource.FindVisualChild<PackIcon>(sender as TextBlock).FirstOrDefault();
-            if (SilderMenu.Width > 0)
-            {
-                StarAnime("CloseSilder");
-                Pck.Kind = PackIconKind.MenuRight;
-            }
-            else
-            {
-                StarAnime("OpenSilder");
-                Pck.Kind = PackIconKind.MenuLeft;
-            }
-        }
     }
 }

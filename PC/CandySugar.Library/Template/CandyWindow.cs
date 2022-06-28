@@ -21,7 +21,7 @@ namespace CandySugar.Library.Template
             this.Height = CandySoft.Default.ScreenHeight;
         }
 
-        protected void StarAnime(string name) 
+        public void StarAnime(string name) 
         {
            BeginStoryboard((Storyboard)this.FindResource(name));         
         }

@@ -39,11 +39,12 @@
                 From="0"
                 To="200"
                 Duration="0:0:0.5" />
-            <ThicknessAnimation
-                Storyboard.TargetName="SilderHander"
-                Storyboard.TargetProperty="Margin"
-                From="0"
-                To="200,0,0,0"
+            <DoubleAnimation
+                Storyboard.TargetName="RightContent"
+                Storyboard.TargetProperty="Width"
+                From="{Binding Width, ElementName=window}"
+                To="{c:Binding (Width-200),
+                               ElementName=window}"
                 Duration="0:0:0.5" />
             <ThicknessAnimation
                 Storyboard.TargetName="RightContent"
@@ -59,11 +60,11 @@
                 From="200"
                 To="0"
                 Duration="0:0:0.5" />
-            <ThicknessAnimation
-                Storyboard.TargetName="SilderHander"
-                Storyboard.TargetProperty="Margin"
-                From="200,0,0,0"
-                To="0"
+            <DoubleAnimation
+                Storyboard.TargetName="RightContent"
+                Storyboard.TargetProperty="Width"
+                From="0"
+                To="{Binding Width, ElementName=window}"
                 Duration="0:0:0.5" />
             <ThicknessAnimation
                 Storyboard.TargetName="RightContent"
@@ -109,16 +110,7 @@
             VerticalAlignment="Top"
             BorderThickness="0"
             Content="{Binding SilderView}" />
-        <StackPanel
-            x:Name="SilderHander"
-            Width="10"
-            Margin="200,0,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center">
-            <TextBlock PreviewMouseLeftButtonDown="TextBlock_PreviewMouseLeftButtonDown">
-                <md:PackIcon x:Name="SilderIcon" Kind="MenuLeft" />
-            </TextBlock>
-        </StackPanel>
+
         <hc:ScrollViewer
             Height="400"
             HorizontalAlignment="Right"
