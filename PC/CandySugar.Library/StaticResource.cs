@@ -19,6 +19,8 @@ using XExten.Advance.StaticFramework;
 using XExten.Advance.LinqFramework;
 using System.Diagnostics;
 using Microsoft.Web.WebView2.Wpf;
+using Newtonsoft.Json.Linq;
+using XExten.Advance.HttpFramework.MultiFactory;
 
 namespace CandySugar.Library
 {
@@ -398,6 +400,18 @@ namespace CandySugar.Library
             else if (CandySoft.Default.Module == 2) return $"{CandySoft.Default.K12}";
             else if (CandySoft.Default.Module == 3) return $"{CandySoft.Default.K15}";
             else return $"{CandySoft.Default.K18}";
+        }
+        /// <summary>
+        /// 校验文件版本
+        /// </summary>
+        /// <returns></returns>
+        public static string GetVersion()
+        {
+            var serverVersion = IHttpMultiClient.HttpMulti.AddNode(opt =>
+            {
+                opt.NodePath = "https://gitee.com/EmilyEdna/CandySugar/raw/master/CandySugarOption";
+            }).Build().RunStringFirst();
+            return serverVersion.ToModel<JObject>()["WPF"].ToString();
         }
     }
 }

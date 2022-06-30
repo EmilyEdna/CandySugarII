@@ -1,6 +1,7 @@
 ﻿using CandySugar.Controls;
 using CandySugar.Entry.CandyViewModels;
 using CandySugar.Entry.ViewModels;
+using CandySugar.Library;
 using CandySugar.Logic;
 using CandySugar.Logic.IService;
 using HandyControl.Controls;
@@ -9,6 +10,7 @@ using Serilog;
 using Stylet;
 using StyletIoC;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Windows;
@@ -35,6 +37,34 @@ namespace CandySugar.Entry
                 .MinimumLevel.Information()
                 .WriteTo.File("Logs/Candy.log", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
+
+            //校验版本
+            var currentVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            var serverVersion = StaticResource.GetVersion();
+            if (!currentVersion.Equals(serverVersion))
+            {
+                //升级
+                var result = HandyControl.Controls.MessageBox.Info("检测到新版本，即将升级", "提示");
+                if (result == MessageBoxResult.OK)
+                {
+                    try
+                    {
+                        Process process = new Process();
+                        process.StartInfo.FileName = Path.Combine(Environment.CurrentDirectory, "CandySugar.Advance.exe");
+                        process.StartInfo.CreateNoWindow = true;
+                        process.Start();//启动
+                        process.CloseMainWindow();//通过向进程的主窗口发送关闭消息来关闭拥有用户界面的进程
+                        process.Close();//释放与此组件关联的所有资源
+                        Environment.Exit(0);
+                        Application.Current.Shutdown();
+                    }
+                    catch (Exception)
+                    {
+                        Environment.Exit(0);
+                        Application.Current.Shutdown();
+                    }
+                }
+            }
         }
 
         protected override void ConfigureIoC(IStyletIoCBuilder builder)

@@ -12,9 +12,8 @@
 		<FileVersion>1.0.0.0</FileVersion>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<ApplicationIcon>favicon.ico</ApplicationIcon>
+		<Author>EmilyEdna</Author>
 		<Company>EmilyEdna</Company>
-		<Authors>EmilyEdna</Authors>
-		<Product>甜糖</Product>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DefineConstants>TRACE;Core</DefineConstants>

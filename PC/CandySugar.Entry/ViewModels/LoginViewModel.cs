@@ -67,9 +67,6 @@ namespace CandySugar.Entry.ViewModels
 
         public async void LoginAction()
         {
-            this.Account = "EmilyEdna";
-            this.PassWord = "Admin";
-
             if (Check())
             {
                 WindowManager.ShowWindow(Container.Get<RootViewModel>());
@@ -93,12 +90,12 @@ namespace CandySugar.Entry.ViewModels
         private bool Check()
         {
             if (this.Account == null || this.PassWord == null) return false;
-            if (this.Account.ToLower().Equals("emilyedna") && this.PassWord.ToLower().Equals("admin"))
+            if (this.Account.ToLower().Equals("admin") && this.PassWord.ToLower().Equals("admin"))
             {
                 CandySoft.Default.IsAdmin = true;
                 return SdkLicense.Register(new SkdLicenseModel
                 {
-                    Account = this.Account,
+                    Account = "EmilyEdna",
                     Password = DateTime.Now.ToString("yyyyMMdd")
                 });
             }

@@ -110,7 +110,8 @@
                     BorderThickness="0"
                     Command="{s:Action LoginAction}"
                     Content="登录"
-                    Foreground="Black" />
+                    Foreground="Black"
+                    IsDefault="True" />
             </Canvas>
         </Border>
     </Grid>

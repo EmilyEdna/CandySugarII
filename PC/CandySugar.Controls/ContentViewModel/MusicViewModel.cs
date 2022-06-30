@@ -370,7 +370,7 @@ namespace CandySugar.Controls.ContentViewModel
         /// 删除列表
         /// </summary>
         /// <param name="input"></param>
-        public void Remove(Guid input)
+        public void RemoveAction(Guid input)
         {
             this.CandyMusic.Remove(CandyList.FirstOrDefault(t => t.CandyId == input));
             this.InitPlayList();
