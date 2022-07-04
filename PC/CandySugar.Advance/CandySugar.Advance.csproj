@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>net6.0-windows</TargetFramework>
+		<TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
 		<UseWPF>true</UseWPF>
 		<AssemblyName>CandySugar.Advance</AssemblyName>
 		<RootNamespace>CandySugar.Advance</RootNamespace>
@@ -14,6 +14,7 @@
 		<Copyright>Copyright © EmilyEdna 2022</Copyright>
 		<FileVersion>1.0.0.0</FileVersion>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<ApplicationIcon>favicon.ico</ApplicationIcon>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DefineConstants>TRACE;Core</DefineConstants>
@@ -21,6 +22,12 @@
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 		<DefineConstants>TRACE;Core</DefineConstants>
 	</PropertyGroup>
+	<ItemGroup>
+	  <None Remove="favicon.ico" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Content Include="favicon.ico" />
+	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="HandyControls" Version="3.3.10" />
 		<PackageReference Include="Stylet" Version="1.3.6" />
