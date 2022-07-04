@@ -99,15 +99,17 @@ namespace CandySugar.Entry.ViewModels
                     Password = DateTime.Now.ToString("yyyyMMdd")
                 });
             }
-            else
+            else if (this.Account.ToLower().Equals("admin") && this.PassWord.ToLower().Equals("123456"))
             {
                 CandySoft.Default.IsAdmin = false;
                 return SdkLicense.Register(new SkdLicenseModel
                 {
-                    Account = this.Account,
-                    Password = this.PassWord
+                    Account = "EmilyEdna",
+                    Password = DateTime.Now.ToString("yyyyMMdd")
                 });
             }
+            else
+                return false;
         }
     }
 }

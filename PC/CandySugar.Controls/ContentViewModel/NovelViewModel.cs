@@ -186,15 +186,15 @@ namespace CandySugar.Controls.ContentViewModel
             Loading = true;
             await Task.Delay(CandySoft.Default.WaitSpan);
             var NovelInitData = await NovelFactory.Novel(opt =>
-               {
-                   opt.RequestParam = new Input
-                   {
-                       CacheSpan = CandySoft.Default.Cache,
-                       Proxy = StaticResource.Proxy(),
-                       ImplType = StaticResource.ImplType(),
-                       NovelType = NovelEnum.Init
-                   };
-               }).RunsAsync();
+            {
+                opt.RequestParam = new Input
+                {
+                    CacheSpan = CandySoft.Default.Cache,
+                    Proxy = StaticResource.Proxy(),
+                    ImplType = StaticResource.ImplType(),
+                    NovelType = NovelEnum.Init
+                };
+            }).RunsAsync();
             Loading = false;
             CateResult = new ObservableCollection<NovelInitCategoryResult>(NovelInitData.CateInitResults);
         }
@@ -218,13 +218,13 @@ namespace CandySugar.Controls.ContentViewModel
             }).RunsAsync();
             Loading = false;
 
-            CateElementResult = new ObservableCollection<NovelCategoryElementResult>(NovelSearchData.SearchResult.ElementResults.Select(t => new NovelCategoryElementResult
+            CateElementResult = new ObservableCollection<NovelCategoryElementResult>(NovelSearchData.SearchResults.Select(t => new NovelCategoryElementResult
             {
                 Author = t.Author,
                 BookName = t.BookName,
                 DetailRoute = t.DetailRoute,
                 UpdateDate = t.UpdateDate,
-            }));
+            })); 
         }
         private async void InitCategory(string input)
         {
@@ -293,6 +293,7 @@ namespace CandySugar.Controls.ContentViewModel
                 };
             }).RunsAsync();
             Loading = false;
+            NovelViewData.ContentResult.Content = $"\t{NovelViewData.ContentResult.Content.Replace("　", "\n\t")}";
             ViewResult = NovelViewData.ContentResult;
             Logic(input);
         }

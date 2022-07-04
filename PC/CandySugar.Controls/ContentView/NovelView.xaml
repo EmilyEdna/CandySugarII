@@ -20,7 +20,7 @@
     mc:Ignorable="d">
     <lib:CandyControl.Resources>
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontSize" Value="18" />
             <Setter Property="Margin" Value="5" />
             <Setter Property="Width" Value="400" />
             <Setter Property="Foreground" Value="{DynamicResource SugarThemeAlis}" />
@@ -34,25 +34,16 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="lib:CandyButton">
-                        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <WrapPanel.Effect>
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <StackPanel.Effect>
                                 <DropShadowEffect
                                     BlurRadius="3"
                                     Opacity=".3"
                                     ShadowDepth="0"
                                     Color="{DynamicResource SugarThemeWhiteColor}" />
-                            </WrapPanel.Effect>
-                            <ContentPresenter
-                                x:Name="Icon"
-                                Width="16"
-                                Height="16"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Content="{TemplateBinding Icon}"
-                                ContentSource="Icon"
-                                SnapsToDevicePixels="True" />
+                            </StackPanel.Effect>
                             <TextBlock Foreground="{TemplateBinding Foreground}" Text="{TemplateBinding Content}" />
-                        </WrapPanel>
+                        </StackPanel>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Background" Value="Transparent" />
@@ -87,7 +78,6 @@
                                 Command="{s:Action CategoryAction}"
                                 CommandParameter="{Binding CollectRoute}"
                                 Content="{Binding CategoryName}"
-                                Cursor="Hand"
                                 Opacity="1"
                                 Style="{StaticResource CategoryBtn}" />
                         </DataTemplate>
@@ -190,70 +180,88 @@
                 Grid.Row="1"
                 Visibility="{Binding DetailVisible, Converter={StaticResource ToShow}}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height=".4*" />
-                    <RowDefinition Height=".6*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="50" />
                 </Grid.RowDefinitions>
                 <StackPanel>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width=".28*" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Border Margin="15,15,0,0" HorizontalAlignment="Left">
-                            <Image
-                                Width="200"
-                                Height="260"
-                                SnapsToDevicePixels="True"
-                                Source="{Binding DetailResult.Cover}" />
-                            <Border.Effect>
-                                <DropShadowEffect
-                                    BlurRadius="6"
-                                    Opacity="1"
-                                    ShadowDepth="0"
-                                    Color="{DynamicResource SugarThemePinkColor}" />
-                            </Border.Effect>
-                        </Border>
-                        <StackPanel
-                            Grid.Column="1"
-                            Margin="0,15,0,0"
-                            HorizontalAlignment="Left">
-                            <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding DetailResult.BookName, StringFormat=书名:{0}}" />
-                            <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding DetailResult.Author, StringFormat=作者:{0}}" />
-                            <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding DetailResult.BookType, StringFormat=类型:{0}}" />
-                            <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding DetailResult.Status, StringFormat=状态:{0}}" />
-                            <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding DetailResult.LastUpdateTime, StringFormat=更新时间:{0:yyyy-MM-dd HH:mm:ss}}" />
-                            <TextBlock
-                                Style="{StaticResource TextBlockStyle}"
-                                Text="{Binding DetailResult.Description, StringFormat=简介:{0}}"
-                                TextWrapping="WrapWithOverflow" />
-                        </StackPanel>
-                    </Grid>
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width=".28*" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Border Margin="15,15,0,0" HorizontalAlignment="Left">
+                                <Image
+                                    Width="200"
+                                    Height="260"
+                                    SnapsToDevicePixels="True"
+                                    Source="{Binding DetailResult.Cover}" />
+                                <Border.Effect>
+                                    <DropShadowEffect
+                                        BlurRadius="6"
+                                        Opacity="1"
+                                        ShadowDepth="0"
+                                        Color="{DynamicResource SugarThemePinkColor}" />
+                                </Border.Effect>
+                            </Border>
+                            <StackPanel
+                                Grid.Column="1"
+                                Margin="0,15,0,0"
+                                HorizontalAlignment="Left">
+                                <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding DetailResult.BookName, StringFormat=书名:{0}}" />
+                                <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding DetailResult.Author, StringFormat=作者:{0}}" />
+                                <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding DetailResult.BookType, StringFormat=类型:{0}}" />
+                                <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding DetailResult.Status, StringFormat=状态:{0}}" />
+                                <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding DetailResult.LastUpdateTime, StringFormat=更新时间:{0:yyyy-MM-dd HH:mm:ss}}" />
+                                <TextBlock
+                                    Style="{StaticResource TextBlockStyle}"
+                                    Text="{Binding DetailResult.Description, StringFormat=简介:{0}}"
+                                    TextWrapping="WrapWithOverflow" />
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                    <ListBox
+                        Background="Transparent"
+                        BorderThickness="0"
+                        ItemsSource="{Binding DetailResult.ElementResults}"
+                        Style="{StaticResource WrapPanelHorizontalListBox}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Width="{c:Binding (ScreenWidth-220), Source={x:Static res:CandySoft.Default}}" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Button
+                                    Margin="5,5,0,0"
+                                    s:View.ActionTarget="{Binding DataContext, ElementName=NovelViewName}"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Command="{s:Action ViewAction}"
+                                    CommandParameter="{Binding ChapterRoute}"
+                                    Content="{Binding ChapterName}"
+                                    Foreground="{DynamicResource SugarThemeAlis}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </StackPanel>
-                <ListBox
+                <hc:Pagination
                     Grid.Row="1"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    ItemsSource="{Binding DetailResult.ElementResults}"
-                    Style="{StaticResource WrapPanelHorizontalListBox}">
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Width="{c:Binding (ScreenWidth-220), Source={x:Static res:CandySoft.Default}}" />
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Button
-                                Margin="5,5,0,0"
+                    Margin="0,5,0,0"
+                    HorizontalAlignment="Center"
+                    IsJumpEnabled="False"
+                    MaxPageCount="{Binding DetailResult.Total}"
+                    Style="{StaticResource PageinationStyle}"
+                    PageIndex="{Binding DetailPage}">
+                    <hc:Interaction.Triggers>
+                        <hc:EventTrigger EventName="PageUpdated">
+                            <hc:EventToCommand
                                 s:View.ActionTarget="{Binding DataContext, ElementName=NovelViewName}"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Command="{s:Action ViewAction}"
-                                CommandParameter="{Binding ChapterRoute}"
-                                Content="{Binding ChapterName}"
-                                Foreground="{DynamicResource SugarThemeAlis}" />
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                                Command="{s:Action PageDetailAction}"
+                                PassEventArgsToCommand="True" />
+                        </hc:EventTrigger>
+                    </hc:Interaction.Triggers>
+                </hc:Pagination>
             </Grid>
         </Grid>
         <!--  文本内容  -->
@@ -288,7 +296,7 @@
                 Grid.Row="2"
                 Width="300"
                 HorizontalAlignment="Right"
-                Columns="3">
+                Columns="4">
                 <lib:CandyButton
                     s:View.ActionTarget="{Binding DataContext, ElementName=NovelViewName}"
                     Command="{s:Action ViewAction}"
@@ -306,6 +314,34 @@
                 <lib:CandyButton
                     s:View.ActionTarget="{Binding DataContext, ElementName=NovelViewName}"
                     Command="{s:Action ViewAction}"
+                    CommandParameter="{Binding ViewResult.PreviousPage}"
+                    Content="上一页(A)"
+                    Style="{StaticResource BtnPageStyle}">
+                    <lib:CandyButton.InputBindings>
+                        <KeyBinding
+                            Key="A"
+                            s:View.ActionTarget="{Binding DataContext, ElementName=NovelViewName}"
+                            Command="{s:Action ViewAction}"
+                            CommandParameter="{Binding ViewResult.PreviousPage}" />
+                    </lib:CandyButton.InputBindings>
+                </lib:CandyButton>
+                <lib:CandyButton
+                    s:View.ActionTarget="{Binding DataContext, ElementName=NovelViewName}"
+                    Command="{s:Action ViewAction}"
+                    CommandParameter="{Binding ViewResult.NextPage}"
+                    Content="下一页(D)"
+                    Style="{StaticResource BtnPageStyle}">
+                    <lib:CandyButton.InputBindings>
+                        <KeyBinding
+                            Key="D"
+                            s:View.ActionTarget="{Binding DataContext, ElementName=NovelViewName}"
+                            Command="{s:Action ViewAction}"
+                            CommandParameter="{Binding ViewResult.NextPage}" />
+                    </lib:CandyButton.InputBindings>
+                </lib:CandyButton>
+                <lib:CandyButton
+                    s:View.ActionTarget="{Binding DataContext, ElementName=NovelViewName}"
+                    Command="{s:Action ViewAction}"
                     CommandParameter="{Binding ViewResult.NextChapter}"
                     Content="下一章(→)"
                     Style="{StaticResource BtnPageStyle}">
@@ -316,15 +352,6 @@
                             Command="{s:Action ViewAction}"
                             CommandParameter="{Binding ViewResult.NextChapter}" />
                     </lib:CandyButton.InputBindings>
-                </lib:CandyButton>
-                <lib:CandyButton
-                    s:View.ActionTarget="{Binding DataContext, ElementName=NovelViewName}"
-                    Command="{s:Action HistoryAction}"
-                    Content="返回上级"
-                    Style="{StaticResource BtnPageStyle}">
-                    <lib:CandyButton.Icon>
-                        <md:PackIcon Kind="Restore" />
-                    </lib:CandyButton.Icon>
                 </lib:CandyButton>
             </UniformGrid>
         </Grid>
