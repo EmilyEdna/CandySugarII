@@ -12,10 +12,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
 
     <!-- Display name -->
-    <ApplicationTitle>CandySugar.Entry</ApplicationTitle>
+    <ApplicationTitle>Candy</ApplicationTitle>
 
     <!-- App Identifier -->
-    <ApplicationId>com.companyname.candysugar.entry</ApplicationId>
+    <ApplicationId>com.emilyedna.maui</ApplicationId>
     <ApplicationIdGuid>3B38B4D4-9DF5-4632-9107-B115044DF717</ApplicationIdGuid>
 
     <!-- Versions -->
@@ -27,6 +27,9 @@
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
     <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+    <Authors>EmilyEdna</Authors>
+    <Company>EmilyEdna</Company>
+    <Product>CandySugar</Product>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-android|AnyCPU'">
@@ -67,6 +70,12 @@
     <Compile Update="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <MauiXaml Update="Views\IndexView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
   </ItemGroup>
 
   <ProjectExtensions>

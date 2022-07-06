@@ -4,11 +4,11 @@ namespace CandySugar.Entry.ViewModels
 {
     public class LoginViewModel : BindableBase
     {
-        private ISemanticScreenReader ScreenReader;
+        private INavigationService NavigationService;
 
-        public LoginViewModel(ISemanticScreenReader ScreenReader)
+        public LoginViewModel(INavigationService NavigationService)
         {
-            this.ScreenReader = ScreenReader;
+            this.NavigationService = NavigationService;
         }
 
         #region 属性
@@ -31,9 +31,11 @@ namespace CandySugar.Entry.ViewModels
         {
             var res = SdkLicense.Register(new SkdLicenseModel
             {
-                Account = this.Account,
-                Password = this.Pwd
+                Account = "emilyedna", //this.Account,
+                Password = DateTime.Now.ToString("yyyyMMdd")
             });
+            if (res)
+                NavigationService.NavigateAsync(new Uri("IndexView", UriKind.Relative));
         });
         #endregion
     }

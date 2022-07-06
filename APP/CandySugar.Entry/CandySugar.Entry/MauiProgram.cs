@@ -11,7 +11,8 @@ namespace CandySugar.Entry
             {
                 prism.RegisterTypes(containerRegistry =>
                 {
-                    containerRegistry.RegisterForNavigation<LoginView>().RegisterInstance(SemanticScreenReader.Default);
+                    containerRegistry.RegisterForNavigation<LoginView>();
+                    containerRegistry.RegisterForNavigation<IndexView>();
                 }).OnAppStart("NavigationPage/LoginView");
             }).ConfigureFonts(fonts =>
             {
