@@ -8,7 +8,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="HandyControls" Version="3.3.10" />
-		<PackageReference Include="HtmlAgilityPack" Version="1.11.42" />
+		<PackageReference Include="HtmlAgilityPack" Version="1.11.43" />
 		<PackageReference Include="JavaScriptEngineSwitcher.Jint" Version="3.18.0-preview" />
 		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1210.39" />
 		<PackageReference Include="NAudio" Version="2.1.0" />

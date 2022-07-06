@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="CandySugar.Entry.Views.LoginView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:lib="http://lib.sugar.com"
+    xmlns:vm="clr-namespace:CandySugar.Entry.ViewModels"
+    x:DataType="vm:LoginViewModel"
+    BackgroundColor="AliceBlue"
+    NavigationPage.HasNavigationBar="False">
+    <VerticalStackLayout>
+        <StackLayout Background="SkyBlue" HeightRequest="60">
+            <Border HeightRequest="60">
+                <Label
+                    BackgroundColor="#00FFFFFF"
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    HorizontalOptions="Center"
+                    Text="欢迎使用CandySugar手机版"
+                    TextColor="White"
+                    VerticalOptions="Center" />
+            </Border>
+        </StackLayout>
+        <StackLayout
+            Margin="0,65,0,0"
+            HeightRequest="40"
+            HorizontalOptions="Center"
+            VerticalOptions="Start"
+            WidthRequest="40">
+            <StackLayout
+                HeightRequest="150"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                WidthRequest="150">
+                <Frame
+                    CornerRadius="50"
+                    HeightRequest="90"
+                    IsClippedToBounds="True"
+                    WidthRequest="90">
+                    <Image
+                        Margin="20"
+                        Aspect="AspectFill"
+                        HeightRequest="90"
+                        Source="head.png"
+                        WidthRequest="90" />
+                </Frame>
+            </StackLayout>
+        </StackLayout>
+        <StackLayout
+            Margin="0,80,0,0"
+            HorizontalOptions="Center"
+            VerticalOptions="Start">
+            <Border
+                Stroke="{StaticResource Gray100Brush}"
+                StrokeThickness="1"
+                WidthRequest="280">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="30" />
+                </Border.StrokeShape>
+                <HorizontalStackLayout
+                    Margin="10,0,0,0"
+                    VerticalOptions="End"
+                    WidthRequest="280">
+                    <Label
+                        Padding="1"
+                        MaxLines="1"
+                        Text="用户名"
+                        VerticalOptions="Center"
+                        WidthRequest="50" />
+                    <Line
+                        Stroke="{StaticResource Gray100}"
+                        VerticalOptions="Center"
+                        X1="0"
+                        X2="0"
+                        Y1="0"
+                        Y2="20" />
+                    <Entry
+                        x:Name="Account"
+                        Margin="5,0,0,0"
+                        ClearButtonVisibility="WhileEditing"
+                        Placeholder="请输入账号"
+                        Text="{Binding Account, Mode=TwoWay}"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Border>
+        </StackLayout>
+        <StackLayout
+            Margin="0,25,0,0"
+            HorizontalOptions="Center"
+            VerticalOptions="Start">
+            <Border
+                Stroke="{StaticResource Gray100Brush}"
+                StrokeThickness="1"
+                WidthRequest="280">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="30" />
+                </Border.StrokeShape>
+                <HorizontalStackLayout
+                    Margin="10,0,0,0"
+                    VerticalOptions="End"
+                    WidthRequest="280">
+                    <Label
+                        Padding="1"
+                        MaxLines="1"
+                        Text="密   码"
+                        VerticalOptions="Center"
+                        WidthRequest="50" />
+                    <Line
+                        Stroke="{StaticResource Gray100}"
+                        VerticalOptions="Center"
+                        X1="0"
+                        X2="0"
+                        Y1="0"
+                        Y2="20" />
+                    <Entry
+                        x:Name="Password"
+                        Margin="5,0,0,0"
+                        ClearButtonVisibility="WhileEditing"
+                        IsPassword="True"
+                        Placeholder="请输入密码"
+                        Text="{Binding Pwd, Mode=TwoWay}"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Border>
+        </StackLayout>
+        <StackLayout
+            Margin="0,25,0,0"
+            HorizontalOptions="Center"
+            VerticalOptions="Start">
+            <Button
+                Background="SkyBlue"
+                Command="{Binding LoginAction}"
+                FontSize="18"
+                HeightRequest="40"
+                Text="登录"
+                TextColor="White"
+                WidthRequest="280" />
+        </StackLayout>
+    </VerticalStackLayout>
+</ContentPage>
