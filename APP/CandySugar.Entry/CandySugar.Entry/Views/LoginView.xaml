@@ -9,7 +9,7 @@
     BackgroundColor="AliceBlue"
     NavigationPage.HasNavigationBar="False">
     <VerticalStackLayout>
-        <StackLayout Background="SkyBlue" HeightRequest="60">
+        <StackLayout Background="{StaticResource Pink}" HeightRequest="60">
             <Border HeightRequest="60">
                 <Label
                     BackgroundColor="#00FFFFFF"
@@ -80,7 +80,8 @@
                         ClearButtonVisibility="WhileEditing"
                         Placeholder="请输入账号"
                         Text="{Binding Account, Mode=TwoWay}"
-                        VerticalOptions="Center" />
+                        VerticalOptions="Center"
+                        WidthRequest="220" />
                 </HorizontalStackLayout>
             </Border>
         </StackLayout>
@@ -119,7 +120,8 @@
                         IsPassword="True"
                         Placeholder="请输入密码"
                         Text="{Binding Pwd, Mode=TwoWay}"
-                        VerticalOptions="Center" />
+                        VerticalOptions="Center"
+                        WidthRequest="220" />
                 </HorizontalStackLayout>
             </Border>
         </StackLayout>
@@ -128,7 +130,7 @@
             HorizontalOptions="Center"
             VerticalOptions="Start">
             <Button
-                Background="SkyBlue"
+                Background="{StaticResource Pink}"
                 Command="{Binding LoginAction}"
                 FontSize="18"
                 HeightRequest="40"

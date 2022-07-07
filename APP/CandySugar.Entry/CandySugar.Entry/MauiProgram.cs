@@ -12,11 +12,14 @@ namespace CandySugar.Entry
                 prism.RegisterTypes(containerRegistry =>
                 {
                     containerRegistry.RegisterForNavigation<LoginView>();
-                    containerRegistry.RegisterForNavigation<IndexView>();
                 }).OnAppStart("NavigationPage/LoginView");
             }).ConfigureFonts(fonts =>
             {
                 fonts.AddFont("DroidSans.ttf", "Sans");
+                fonts.AddFont("FontAwesome6Brands.otf", "Brands");
+                fonts.AddFont("FontAwesome6Regular.otf", "Regular");
+                fonts.AddFont("FontAwesome6Solid.otf", "Solid");
+                fonts.AddFont("FontAwesome6Thin.otf", "Thin");
             }).Build();
         }
     }

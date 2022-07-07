@@ -1,9 +1,9 @@
 namespace CandySugar.Entry.Views;
 
-public partial class IndexView : ContentPage
+public partial class IndexView : Shell
 {
-	public IndexView()
-	{
-		InitializeComponent();
-	}
+    public IndexView()
+    {
+        InitializeComponent();
+    }
 }

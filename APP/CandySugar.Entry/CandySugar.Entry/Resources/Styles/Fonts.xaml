@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:lib="clr-namespace:CandySugar.Library;assembly=CandySugar.Library">
+    <FontImage
+        x:Key="Book"
+        FontFamily="Solid"
+        Glyph="{Static lib:FontIcon.Book}"
+        Size="22"
+        Color="{StaticResource Red}" />
+    <FontImage
+        x:Key="Books"
+        FontFamily="Solid"
+        Glyph="{Static lib:FontIcon.Books}"
+        Size="22"
+        Color="{StaticResource Red}" />
+    <FontImage
+        x:Key="TV"
+        FontFamily="Solid"
+        Glyph="{Static lib:FontIcon.TvRetro}"
+        Size="22"
+        Color="{StaticResource Red}" />
+    <FontImage
+        x:Key="Sexlab"
+        FontFamily="Solid"
+        Glyph="{Static lib:FontIcon.Venus}"
+        Size="22"
+        Color="{StaticResource Red}" />
+    <FontImage
+        x:Key="Manga"
+        FontFamily="Solid"
+        Glyph="{Static lib:FontIcon.Citrus}"
+        Size="22"
+        Color="{StaticResource Red}" />
+    <FontImage
+        x:Key="Image"
+        FontFamily="Solid"
+        Glyph="{Static lib:FontIcon.Strawberry}"
+        Size="22"
+        Color="{StaticResource Red}" />
+    <FontImage
+        x:Key="Music"
+        FontFamily="Solid"
+        Glyph="{Static lib:FontIcon.Music}"
+        Size="22"
+        Color="{StaticResource Red}" />
+    <FontImage
+        x:Key="Edu"
+        FontFamily="Solid"
+        Glyph="{Static lib:FontIcon.GraduationCap}"
+        Size="22"
+        Color="{StaticResource Red}" />
+</ResourceDictionary>
