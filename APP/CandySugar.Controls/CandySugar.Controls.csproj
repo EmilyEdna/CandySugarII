@@ -20,4 +20,10 @@
 	  <ProjectReference Include="..\CandySugar.Library\CandySugar.Library.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="Views\NovelView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>
