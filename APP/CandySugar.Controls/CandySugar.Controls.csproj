@@ -21,6 +21,36 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Reference Include="Sdk.Component">
+	    <HintPath>..\..\Lib\Sdk.Component.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Sdk.Core">
+	    <HintPath>..\..\Lib\Sdk.Core.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Views\AnimeView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AxgleView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\HnimeView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ImageView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\LovelView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\MangaView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\MusicView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\NovelView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

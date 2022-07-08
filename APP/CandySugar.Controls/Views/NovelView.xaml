@@ -3,11 +3,59 @@
     x:Class="CandySugar.Controls.Views.NovelView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="NovelView">
-    <VerticalStackLayout>
-        <Label
-            HorizontalOptions="Center"
-            Text="小说"
-            VerticalOptions="Center" />
-    </VerticalStackLayout>
+    xmlns:sdk="clr-namespace:Sdk.Component.Novel.sdk.ViewModel.Response;assembly=Sdk.Component"
+    xmlns:vm="clr-namespace:CandySugar.Controls.ViewModels"
+    x:DataType="vm:NovelViewModel">
+    <ContentPage.BindingContext>
+        <vm:NovelViewModel />
+    </ContentPage.BindingContext>
+    <Grid BackgroundColor="{StaticResource Trans}" RowDefinitions="Auto,*">
+        <CollectionView
+            Grid.Row="0"
+            ItemsLayout="HorizontalList"
+            ItemsSource="{Binding InitResult}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="sdk:NovelInitCategoryResult">
+                    <Label
+                        Margin="5"
+                        Text="{Binding CategoryName}"
+                        TextColor="{StaticResource Pink}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CategoryAction, Source={RelativeSource AncestorType={x:Type vm:NovelViewModel}}}" CommandParameter="{Binding CollectRoute}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <CollectionView
+            Grid.Row="1"
+            ItemSizingStrategy="MeasureFirstItem"
+            ItemsSource="{Binding CategoryResult}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="sdk:NovelCategoryElementResult">
+                    <Border Stroke="{StaticResource Gray100Brush}" StrokeThickness="1">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="5" />
+                        </Border.StrokeShape>
+                        <StackLayout>
+                            <Label
+                                Margin="10,0,0,0"
+                                Text="{Binding BookName}"
+                                TextColor="{StaticResource Red}" />
+                            <Label
+                                Margin="10,0,0,0"
+                                FontSize="12"
+                                Text="{Binding Author, StringFormat='作者：{0}'}"
+                                TextColor="{StaticResource Pink}" />
+                            <Label
+                                Margin="10,0,0,0"
+                                FontSize="12"
+                                Text="{Binding UpdateDate, StringFormat='更新时间：{0}'}"
+                                TextColor="{StaticResource Pink}" />
+                        </StackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 </ContentPage>

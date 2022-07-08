@@ -1,4 +1,7 @@
-﻿using CandySugar.Entry.Views;
+﻿using CandySugar.Controls;
+using CandySugar.Controls.ViewModels;
+using CandySugar.Controls.Views;
+using CandySugar.Entry.Views;
 using Prism.Ioc;
 
 namespace CandySugar.Entry

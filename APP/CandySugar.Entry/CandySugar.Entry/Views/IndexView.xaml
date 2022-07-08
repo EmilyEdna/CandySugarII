@@ -3,8 +3,8 @@
     x:Class="CandySugar.Entry.Views.IndexView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ctrl="http://ctrl.sugar.com"
     xmlns:lib="http://lib.sugar.com"
-    xmlns:local="clr-namespace:CandySugar.Entry.Views"
     xmlns:vm="clr-namespace:CandySugar.Entry.ViewModels"
     BackgroundColor="{StaticResource Pink}"
     FlyoutWidth="200">
@@ -19,7 +19,7 @@
                 <Image
                     HeightRequest="24"
                     HorizontalOptions="Center"
-                    Source="{Binding FlyoutIcon}"
+                    Source="{Binding Icon}"
                     VerticalOptions="Center"
                     WidthRequest="24" />
                 <Label
@@ -89,50 +89,50 @@
         </StackLayout>
     </Shell.FlyoutFooter>
 
-    <FlyoutItem Title="小说" FlyoutIcon="{StaticResource Book}">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
-        </Tab>
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
+        <ShellContent
+            Title="小说"
+            ContentTemplate="{DataTemplate ctrl:NovelView}"
+            Icon="{StaticResource Book}"
+            Route="NovelView"
+            Shell.NavBarIsVisible="True" />
+        <ShellContent
+            Title="轻小说"
+            ContentTemplate="{DataTemplate ctrl:LovelView}"
+            Icon="{StaticResource Books}"
+            Route="LovelView" />
+        <ShellContent
+            Title="动漫"
+            ContentTemplate="{DataTemplate ctrl:AnimeView}"
+            Icon="{StaticResource TV}"
+            Route="AnimeView" />
+        <ShellContent
+            Title="黄漫"
+            ContentTemplate="{DataTemplate ctrl:HnimeView}"
+            Icon="{StaticResource Sexlab}"
+            IsVisible="{x:Static lib:CandySoft.IsAdmin}"
+            Route="HnimeView" />
+        <ShellContent
+            Title="漫画"
+            ContentTemplate="{DataTemplate ctrl:MangaView}"
+            Icon="{StaticResource Manga}"
+            Route="MangaView" />
+        <ShellContent
+            Title="壁纸"
+            ContentTemplate="{DataTemplate ctrl:ImageView}"
+            Icon="{StaticResource Image}"
+            Route="ImageView" />
+        <ShellContent
+            Title="音乐"
+            ContentTemplate="{DataTemplate ctrl:MusicView}"
+            Icon="{StaticResource Music}"
+            Route="MusicView" />
+        <ShellContent
+            Title="教育"
+            ContentTemplate="{DataTemplate ctrl:AxgleView}"
+            Icon="{StaticResource Edu}"
+            IsVisible="{x:Static lib:CandySoft.IsAdmin}"
+            Route="AxgleView" />
     </FlyoutItem>
-    <FlyoutItem Title="轻小说" FlyoutIcon="{StaticResource Books}">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
-        </Tab>
-    </FlyoutItem>
-    <FlyoutItem Title="动漫" FlyoutIcon="{StaticResource TV}">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
-        </Tab>
-    </FlyoutItem>
-    <FlyoutItem
-        Title="黄漫"
-        FlyoutIcon="{StaticResource Sexlab}"
-        IsVisible="{x:Static lib:CandySoft.IsAdmin}">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
-        </Tab>
-    </FlyoutItem>
-    <FlyoutItem Title="漫画" FlyoutIcon="{StaticResource Manga}">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
-        </Tab>
-    </FlyoutItem>
-    <FlyoutItem Title="壁纸" FlyoutIcon="{StaticResource Image}">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
-        </Tab>
-    </FlyoutItem>
-    <FlyoutItem Title="音乐" FlyoutIcon="{StaticResource Music}">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
-        </Tab>
-    </FlyoutItem>
-    <FlyoutItem
-        Title="教育"
-        FlyoutIcon="{StaticResource Edu}"
-        IsVisible="{x:Static lib:CandySoft.IsAdmin}">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
-        </Tab>
-    </FlyoutItem>
+
 </Shell>

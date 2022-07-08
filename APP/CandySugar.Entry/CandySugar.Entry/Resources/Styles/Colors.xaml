@@ -10,6 +10,7 @@
     <Color x:Key="Tertiary">#7E7D81</Color>
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>
+    <Color x:Key="Trans">Transparent</Color>
     <Color x:Key="Gray100">#E1E1E1</Color>
     <Color x:Key="Gray200">#C8C8C8</Color>
     <Color x:Key="Gray300">#ACACAC</Color>
@@ -23,6 +24,7 @@
     <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}" />
     <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}" />
     <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource Black}" />
+    <SolidColorBrush x:Key="TransBrush" Color="{StaticResource Trans}" />
     <SolidColorBrush x:Key="PinkBrush" Color="{StaticResource Pink}" />
     <SolidColorBrush x:Key="RedBrush" Color="{StaticResource Red}" />
     <SolidColorBrush x:Key="GreenBrush" Color="{StaticResource Green}" />
