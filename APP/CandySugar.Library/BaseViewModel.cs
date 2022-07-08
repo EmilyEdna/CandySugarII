@@ -8,6 +8,10 @@ namespace CandySugar.Library
 {
     public class BaseViewModel : BindableBase
     {
+        #region 字段
+        public bool CanRefresh = true;
+        #endregion
+
         #region 属性
         bool _IsBusy;
         public bool IsBusy
@@ -30,11 +34,24 @@ namespace CandySugar.Library
             set => SetProperty(ref _Page, value);
         }
 
-        int _Total;
-        public int Total
+        double _Total;
+        public double Total
         {
             get => _Total;
             set => SetProperty(ref _Total, value);
+        }
+        #endregion
+
+        #region 方法
+        protected virtual void ShowBusy()
+        {
+            if (CanRefresh)
+                IsBusy = true;
+        }
+        protected virtual void CloseBusy()
+        {
+            IsBusy = false;
+            IsRefreshing = false;
         }
         #endregion
     }

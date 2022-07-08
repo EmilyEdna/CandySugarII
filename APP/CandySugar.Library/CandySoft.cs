@@ -16,5 +16,6 @@ namespace CandySugar.Library
         public static string User { get; set; }= string.Empty;
         public static string Pwd { get; set; }= string.Empty;
         public static int QueryModule { get; set; } = 1;
+        public static int Wait { get; set; } = 300;
     }
 }

@@ -27,35 +27,55 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <CollectionView
+        <RefreshView
             Grid.Row="1"
-            ItemSizingStrategy="MeasureFirstItem"
-            ItemsSource="{Binding CategoryResult}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="sdk:NovelCategoryElementResult">
-                    <Border Stroke="{StaticResource Gray100Brush}" StrokeThickness="1">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="5" />
-                        </Border.StrokeShape>
-                        <StackLayout>
-                            <Label
-                                Margin="10,0,0,0"
-                                Text="{Binding BookName}"
-                                TextColor="{StaticResource Red}" />
-                            <Label
-                                Margin="10,0,0,0"
-                                FontSize="12"
-                                Text="{Binding Author, StringFormat='作者：{0}'}"
-                                TextColor="{StaticResource Pink}" />
-                            <Label
-                                Margin="10,0,0,0"
-                                FontSize="12"
-                                Text="{Binding UpdateDate, StringFormat='更新时间：{0}'}"
-                                TextColor="{StaticResource Pink}" />
-                        </StackLayout>
-                    </Border>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+            Command="{Binding RefreshAction}"
+            IsRefreshing="{Binding IsRefreshing}"
+            RefreshColor="{StaticResource Pink}">
+            <CollectionView
+                ItemSizingStrategy="MeasureFirstItem"
+                ItemsSource="{Binding CategoryResult}"
+                RemainingItemsThreshold="0"
+                RemainingItemsThresholdReachedCommand="{Binding LoadMoreAction}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="3" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="sdk:NovelCategoryElementResult">
+                        <Border Stroke="{StaticResource Gray100Brush}" StrokeThickness="1">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="5" />
+                            </Border.StrokeShape>
+                            <StackLayout>
+                                <Label
+                                    Margin="10,0,0,0"
+                                    Text="{Binding BookName}"
+                                    TextColor="{StaticResource Red}" />
+                                <Label
+                                    Margin="10,0,0,0"
+                                    FontSize="12"
+                                    Text="{Binding Author, StringFormat='作者：{0}'}"
+                                    TextColor="{StaticResource Pink}" />
+                                <Label
+                                    Margin="10,0,0,0"
+                                    FontSize="12"
+                                    Text="{Binding UpdateDate, StringFormat='更新时间：{0}'}"
+                                    TextColor="{StaticResource Pink}" />
+                            </StackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+        <ActivityIndicator
+            Grid.RowSpan="2"
+            HeightRequest="20"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            WidthRequest="20"
+            Color="{StaticResource Pink}" />
     </Grid>
+
 </ContentPage>

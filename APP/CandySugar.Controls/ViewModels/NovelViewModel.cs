@@ -16,6 +16,11 @@ namespace CandySugar.Controls.ViewModels
             InitNovel();
         }
 
+        #region 字段
+        string CategoryRoute = string.Empty;
+
+        #endregion
+
         #region 属性
         /// <summary>
         /// 首页分类
@@ -48,7 +53,8 @@ namespace CandySugar.Controls.ViewModels
                     await Shell.Current.DisplayAlert("网络异常！", "请检查网络是否通畅！", "是");
                     return;
                 }
-                IsBusy = true;
+                ShowBusy();
+                await Task.Delay(CandySoft.Wait);
                 var result = await NovelFactory.Novel(opt =>
                 {
                     opt.RequestParam = new Input
@@ -59,16 +65,12 @@ namespace CandySugar.Controls.ViewModels
                         NovelType = NovelEnum.Init
                     };
                 }).RunsAsync();
+                CloseBusy();
                 InitResult = new ObservableCollection<NovelInitCategoryResult>(result.CateInitResults);
             }
             catch (Exception ex)
             {
                 await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
-            }
-            finally
-            {
-                IsBusy = false;
-                IsRefreshing = false;
             }
         }
         private async void InitCategory(string input)
@@ -81,7 +83,8 @@ namespace CandySugar.Controls.ViewModels
                     await Shell.Current.DisplayAlert("网络异常！", "请检查网络是否通畅！", "是");
                     return;
                 }
-                IsBusy = true;
+                ShowBusy();
+                await Task.Delay(CandySoft.Wait);
                 var result = await NovelFactory.Novel(opt =>
                 {
                     opt.RequestParam = new Input
@@ -97,17 +100,20 @@ namespace CandySugar.Controls.ViewModels
                         }
                     };
                 }).RunsAsync();
-                Total = result.CategoryResult.Total;
-                CategoryResult = new ObservableCollection<NovelCategoryElementResult>(result.CategoryResult.ElementResults);
+                CloseBusy();
+                Total = Math.Ceiling(result.CategoryResult.Total / 20d);
+                if (CategoryResult == null)
+                    CategoryResult = new ObservableCollection<NovelCategoryElementResult>(result.CategoryResult.ElementResults);
+                else
+                    result.CategoryResult.ElementResults.ForEach(item =>
+                    {
+                        CategoryResult.Add(item);
+                    });
+
             }
             catch (Exception ex)
             {
                 await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
-            }
-            finally
-            {
-                IsBusy = false;
-                IsRefreshing = false;
             }
         }
         #endregion
@@ -115,7 +121,20 @@ namespace CandySugar.Controls.ViewModels
         #region 命令
         public DelegateCommand<string> CategoryAction => new(input =>
         {
+            this.Page = 1;
+            CanRefresh = true;
+            CategoryRoute = input;
             InitCategory(input);
+        });
+        public DelegateCommand RefreshAction => new(() =>
+        {
+            CanRefresh = false;
+            InitCategory(CategoryRoute);
+        });
+        public DelegateCommand LoadMoreAction => new(() =>
+        {
+            this.Page += 1;
+            InitCategory(CategoryRoute);
         });
         #endregion
     }
