@@ -9,6 +9,16 @@
     <ContentPage.BindingContext>
         <vm:NovelViewModel />
     </ContentPage.BindingContext>
+    <Shell.SearchHandler>
+        <SearchHandler
+            ClearIcon="{StaticResource Clear}"
+            Command="{Binding QueryAction}"
+            Placeholder="请输入小说名或作者名"
+            Query="{Binding KeyWord, Mode=TwoWay}"
+            QueryIcon="{StaticResource Search}"
+            ShowsResults="False"
+            TextColor="{StaticResource Green}" />
+    </Shell.SearchHandler>
     <Grid BackgroundColor="{StaticResource Trans}" RowDefinitions="Auto,*">
         <CollectionView
             Grid.Row="0"

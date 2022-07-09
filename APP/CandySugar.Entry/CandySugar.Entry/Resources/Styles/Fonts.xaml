@@ -52,4 +52,16 @@
         Glyph="{Static lib:FontIcon.GraduationCap}"
         Size="22"
         Color="{StaticResource Red}" />
+    <FontImage
+        x:Key="Search"
+        FontFamily="Thin"
+        Glyph="{Static lib:FontIcon.MagnifyingGlass}"
+        Size="22"
+        Color="{StaticResource Red}" />
+    <FontImage
+        x:Key="Clear"
+        FontFamily="Solid"
+        Glyph="{Static lib:FontIcon.CircleXmark}"
+        Size="22"
+        Color="{StaticResource Red}" />
 </ResourceDictionary>

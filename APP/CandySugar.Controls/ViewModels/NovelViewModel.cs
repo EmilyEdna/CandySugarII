@@ -5,7 +5,6 @@ using Sdk.Component.Novel.sdk.ViewModel.Enums;
 using Sdk.Component.Novel.sdk.ViewModel.Request;
 using Sdk.Component.Novel.sdk.ViewModel.Response;
 
-
 namespace CandySugar.Controls.ViewModels
 {
     public class NovelViewModel : BaseViewModel
@@ -22,6 +21,15 @@ namespace CandySugar.Controls.ViewModels
         #endregion
 
         #region 属性
+        string _KeyWord;
+        public string KeyWord
+        {
+            get => _KeyWord;
+            set
+            {
+                SetProperty(ref _KeyWord, value);
+            }
+        }
         /// <summary>
         /// 首页分类
         /// </summary>
@@ -116,6 +124,10 @@ namespace CandySugar.Controls.ViewModels
                 await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
             }
         }
+        private async void InitQuery() 
+        { 
+        
+        }
         #endregion
 
         #region 命令
@@ -135,6 +147,14 @@ namespace CandySugar.Controls.ViewModels
         {
             this.Page += 1;
             InitCategory(CategoryRoute);
+        });
+        public DelegateCommand QueryAction => new(() =>
+        {
+
+            if (!KeyWord.IsNullOrEmpty())
+            {
+                var x = KeyWord;
+            }
         });
         #endregion
     }
