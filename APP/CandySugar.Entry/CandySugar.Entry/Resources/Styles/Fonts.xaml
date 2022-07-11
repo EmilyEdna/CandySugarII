@@ -53,6 +53,12 @@
         Size="22"
         Color="{StaticResource Red}" />
     <FontImage
+        x:Key="His"
+        FontFamily="Solid"
+        Glyph="{Static lib:FontIcon.ClockRotateLeft}"
+        Size="22"
+        Color="{StaticResource Red}" />
+    <FontImage
         x:Key="Search"
         FontFamily="Thin"
         Glyph="{Static lib:FontIcon.MagnifyingGlass}"

@@ -11,7 +11,6 @@ namespace CandySugar.Controls.ViewModels
     {
         public NovelViewModel()
         {
-            this.Page = 1;
             InitNovel();
         }
 
@@ -51,7 +50,7 @@ namespace CandySugar.Controls.ViewModels
         #endregion
 
         #region 方法
-        private async void InitNovel()
+        async void InitNovel()
         {
             if (IsBusy) return;
             try
@@ -81,7 +80,7 @@ namespace CandySugar.Controls.ViewModels
                 await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
             }
         }
-        private async void InitCategory(string input)
+        async void InitCategory(string input)
         {
             if (IsBusy) return;
             try
@@ -124,9 +123,39 @@ namespace CandySugar.Controls.ViewModels
                 await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
             }
         }
-        private async void InitQuery() 
-        { 
-        
+        async void InitQuery()
+        {
+            if (IsBusy) return;
+            try
+            {
+                if (CandySoft.NetState.NetworkAccess != NetworkAccess.Internet)
+                {
+                    await Shell.Current.DisplayAlert("网络异常！", "请检查网络是否通畅！", "是");
+                    return;
+                }
+                ShowBusy();
+                await Task.Delay(CandySoft.Wait);
+                var result = await NovelFactory.Novel(opt =>
+                {
+                    opt.RequestParam = new Input
+                    {
+                        CacheSpan = CandySoft.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        NovelType = NovelEnum.Search,
+                        Search = new NovelSearch
+                        {
+                            KeyWord = KeyWord,
+                        }
+                    };
+                }).RunsAsync();
+                CloseBusy();
+                CategoryResult = new ObservableCollection<NovelCategoryElementResult>(result.SearchResults.ToMapest<List<NovelCategoryElementResult>>());
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+            }
         }
         #endregion
 
@@ -150,10 +179,9 @@ namespace CandySugar.Controls.ViewModels
         });
         public DelegateCommand QueryAction => new(() =>
         {
-
             if (!KeyWord.IsNullOrEmpty())
             {
-                var x = KeyWord;
+                InitQuery();
             }
         });
         #endregion

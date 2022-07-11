@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CandySugar.Library
 {
-    public class BaseViewModel : BindableBase
+    public class BaseViewModel : BindableBase, IQueryAttributable
     {
         #region 字段
         public bool CanRefresh = true;
@@ -52,6 +52,14 @@ namespace CandySugar.Library
         {
             IsBusy = false;
             IsRefreshing = false;
+        }
+
+        /// <summary>
+        /// 获取URL的参数
+        /// </summary>
+        /// <param name="query"></param>
+        public virtual void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
         }
         #endregion
     }

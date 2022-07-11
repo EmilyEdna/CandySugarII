@@ -6,63 +6,63 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Assets\favicon.ico" />
-    <None Remove="Assets\img1.png" />
-    <None Remove="Assets\img10.jpg" />
-    <None Remove="Assets\img11.jpg" />
-    <None Remove="Assets\img12.jpg" />
-    <None Remove="Assets\img13.jpg" />
-    <None Remove="Assets\img14.png" />
-    <None Remove="Assets\img2.png" />
-    <None Remove="Assets\img3.png" />
-    <None Remove="Assets\img4.png" />
-    <None Remove="Assets\img5.png" />
-    <None Remove="Assets\img6.jpg" />
-    <None Remove="Assets\img7.jpg" />
-    <None Remove="Assets\img8.jpg" />
-    <None Remove="Assets\img9.jpg" />
-    <None Remove="Assets\站酷快乐体2016修订版.ttf" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="Assets\favicon.ico" />
+		<None Remove="Assets\img1.png" />
+		<None Remove="Assets\img10.jpg" />
+		<None Remove="Assets\img11.jpg" />
+		<None Remove="Assets\img12.jpg" />
+		<None Remove="Assets\img13.jpg" />
+		<None Remove="Assets\img14.png" />
+		<None Remove="Assets\img2.png" />
+		<None Remove="Assets\img3.png" />
+		<None Remove="Assets\img4.png" />
+		<None Remove="Assets\img5.png" />
+		<None Remove="Assets\img6.jpg" />
+		<None Remove="Assets\img7.jpg" />
+		<None Remove="Assets\img8.jpg" />
+		<None Remove="Assets\img9.jpg" />
+		<None Remove="Assets\站酷快乐体2016修订版.ttf" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Resource Include="Assets\favicon.ico" />
-  </ItemGroup>
+	<ItemGroup>
+		<Resource Include="Assets\favicon.ico" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Resource Include="Assets\img1.png" />
-    <Resource Include="Assets\img10.jpg" />
-    <Resource Include="Assets\img11.jpg" />
-    <Resource Include="Assets\img12.jpg" />
-    <Resource Include="Assets\img13.jpg" />
-    <Resource Include="Assets\img14.png" />
-    <Resource Include="Assets\img2.png" />
-    <Resource Include="Assets\img3.png" />
-    <Resource Include="Assets\img4.png" />
-    <Resource Include="Assets\img5.png" />
-    <Resource Include="Assets\img6.jpg" />
-    <Resource Include="Assets\img7.jpg" />
-    <Resource Include="Assets\img8.jpg" />
-    <Resource Include="Assets\img9.jpg" />
-    <Resource Include="Assets\站酷快乐体2016修订版.ttf" />
-  </ItemGroup>
+	<ItemGroup>
+		<Resource Include="Assets\img1.png" />
+		<Resource Include="Assets\img10.jpg" />
+		<Resource Include="Assets\img11.jpg" />
+		<Resource Include="Assets\img12.jpg" />
+		<Resource Include="Assets\img13.jpg" />
+		<Resource Include="Assets\img14.png" />
+		<Resource Include="Assets\img2.png" />
+		<Resource Include="Assets\img3.png" />
+		<Resource Include="Assets\img4.png" />
+		<Resource Include="Assets\img5.png" />
+		<Resource Include="Assets\img6.jpg" />
+		<Resource Include="Assets\img7.jpg" />
+		<Resource Include="Assets\img8.jpg" />
+		<Resource Include="Assets\img9.jpg" />
+		<Resource Include="Assets\站酷快乐体2016修订版.ttf" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Properties\CandySoft.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>CandySoft.settings</DependentUpon>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Properties\CandySoft.Designer.cs">
+			<DesignTimeSharedInput>True</DesignTimeSharedInput>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>CandySoft.settings</DependentUpon>
+		</Compile>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="Properties\CandySoft.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>CandySoft.Designer.cs</LastGenOutput>
-    </None>
-    <None Update="Webs\Dplayer.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="Properties\CandySoft.settings">
+			<Generator>SettingsSingleFileGenerator</Generator>
+			<LastGenOutput>CandySoft.Designer.cs</LastGenOutput>
+		</None>
+		<None Update="Webs\Dplayer.html">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 
 </Project>

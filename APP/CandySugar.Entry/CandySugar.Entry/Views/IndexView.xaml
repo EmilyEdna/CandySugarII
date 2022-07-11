@@ -7,6 +7,7 @@
     xmlns:lib="http://lib.sugar.com"
     xmlns:vm="clr-namespace:CandySugar.Entry.ViewModels"
     BackgroundColor="{StaticResource Pink}"
+    CurrentItem="{x:Reference HistoryContent}"
     FlyoutWidth="200">
 
     <Shell.BindingContext>
@@ -89,13 +90,18 @@
         </StackLayout>
     </Shell.FlyoutFooter>
 
+    <ShellContent
+        x:Name="HistoryContent"
+        Title="历史"
+        ContentTemplate="{DataTemplate ctrl:HistoryView}"
+        Icon="{StaticResource His}"
+        Route="HistoryView" />
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent
             Title="小说"
             ContentTemplate="{DataTemplate ctrl:NovelView}"
             Icon="{StaticResource Book}"
-            Route="NovelView"
-            Shell.NavBarIsVisible="True" />
+            Route="NovelView" />
         <ShellContent
             Title="轻小说"
             ContentTemplate="{DataTemplate ctrl:LovelView}"
@@ -134,5 +140,4 @@
             IsVisible="{x:Static lib:CandySoft.IsAdmin}"
             Route="AxgleView" />
     </FlyoutItem>
-
 </Shell>

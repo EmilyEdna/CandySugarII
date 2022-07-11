@@ -13,9 +13,11 @@ namespace CandySugar.Library
         public static IConnectivity NetState => Connectivity.Current;
         public static string IP { get; set; } = string.Empty;
         public static int Port { get; set; } = -1;
-        public static string User { get; set; }= string.Empty;
-        public static string Pwd { get; set; }= string.Empty;
+        public static string User { get; set; } = string.Empty;
+        public static string Pwd { get; set; } = string.Empty;
         public static int QueryModule { get; set; } = 1;
         public static int Wait { get; set; } = 300;
+        public static string LightAccount { get; set; }
+        public static string LightPwd { get; set; }
     }
 }
