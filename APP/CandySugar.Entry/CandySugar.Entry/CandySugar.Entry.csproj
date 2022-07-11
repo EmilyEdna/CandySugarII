@@ -89,9 +89,7 @@
   </ItemGroup>
 
   <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionCandySugarEntryHideInfoBar="True" />
-    </VisualStudio>
+    <VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionCandySugarEntryHideInfoBar="True" XamarinHotReloadUnhandledDeviceExceptionCandySugarEntryHideInfoBar="True" /></VisualStudio>
   </ProjectExtensions>
 
 </Project>

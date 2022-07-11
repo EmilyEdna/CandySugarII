@@ -1,4 +1,5 @@
-﻿using CandySugar.Library;
+﻿using CandySugar.Controls.Views.LovelViews;
+using CandySugar.Library;
 using Sdk.Component.Plugins;
 using XExten.Advance.LinqFramework;
 
@@ -11,10 +12,15 @@ namespace CandySugar.Controls
         /// </summary>
         public static void RegistRoute()
         {
-            typeof(StaticResource).Assembly.ExportedTypes.Where(t => t.BaseType == typeof(ContentPage)).ForEnumerEach(item =>
-            {
-                Routing.RegisterRoute(item.Name, item);
-            });
+            typeof(StaticResource).Assembly.ExportedTypes.Where(t => t.BaseType == typeof(ContentPage))
+                .Where(t => !t.Namespace.Equals("CandySugar.Controls.Views"))
+                .ForEnumerEach(item =>
+                {
+                    Routing.RegisterRoute(item.Name, item);
+                });
+
+            //Routing.RegisterRoute("LovelView/LovelDetailView", typeof(LovelDetailView));
+            //Routing.RegisterRoute("LovelView/LovelDetailView/LovelContentView", typeof(LovelContentView));
         }
         /// <summary>
         /// 注册视图

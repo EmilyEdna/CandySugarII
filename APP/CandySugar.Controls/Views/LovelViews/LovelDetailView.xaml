@@ -3,9 +3,99 @@
     x:Class="CandySugar.Controls.Views.LovelViews.LovelDetailView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:sdk="clr-namespace:Sdk.Component.Lovel.sdk.ViewModel.Response;assembly=Sdk.Component"
     xmlns:vm="clr-namespace:CandySugar.Controls.ViewModels.LovelViewModels"
-    Title="asdasd">
+    Title="{Binding EleResult.BookName}"
+    x:DataType="vm:LovelDetailViewModel">
     <ContentPage.BindingContext>
         <vm:LovelDetailViewModel />
     </ContentPage.BindingContext>
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding BackAction}" />
+    </Shell.BackButtonBehavior>
+    <Grid RowDefinitions="Auto,*">
+        <Border
+            Stroke="{StaticResource Gray100Brush}"
+            StrokeShape="RoundRectangle 0"
+            StrokeThickness="1">
+            <Grid ColumnDefinitions="Auto,*">
+                <Border
+                    HeightRequest="130"
+                    StrokeShape="RoundRectangle 0"
+                    WidthRequest="90">
+                    <Image Aspect="Fill" Source="{Binding EleResult.Cover}" />
+                </Border>
+                <StackLayout Grid.Column="1">
+                    <Label
+                        Margin="10,0,0,0"
+                        Text="{Binding EleResult.BookName}"
+                        TextColor="{StaticResource Red}" />
+                    <Label
+                        Margin="10,0,0,0"
+                        FontSize="11"
+                        Text="{Binding EleResult.Author, StringFormat='作者：{0}'}"
+                        TextColor="{StaticResource Pink}" />
+                    <Label
+                        Margin="10,0,0,0"
+                        FontSize="11"
+                        Text="{Binding EleResult.Category, StringFormat='类别：{0}'}"
+                        TextColor="{StaticResource Pink}" />
+                    <Label
+                        Margin="10,0,0,0"
+                        FontSize="11"
+                        Text="{Binding EleResult.Status, StringFormat='状态：{0}'}"
+                        TextColor="{StaticResource Pink}" />
+                    <Label
+                        Margin="10,0,0,0"
+                        FontSize="11"
+                        Text="{Binding EleResult.Date, StringFormat='时间：{0:yyyy-MM-dd HH:mm:ss}'}"
+                        TextColor="{StaticResource Pink}" />
+                    <Label
+                        Margin="10,0,0,0"
+                        FontSize="11"
+                        LineBreakMode="WordWrap"
+                        Text="{Binding EleResult.Description, StringFormat='简介：{0}'}"
+                        TextColor="{StaticResource Pink}" />
+                </StackLayout>
+            </Grid>
+        </Border>
+        <CollectionView
+            Grid.Row="1"
+            ItemSizingStrategy="MeasureAllItems"
+            ItemsSource="{Binding ViewResult, Mode=TwoWay}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="3" Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="sdk:LovelViewResult">
+                    <Border
+                        Padding="5"
+                        Stroke="{StaticResource Gray100Brush}"
+                        StrokeThickness="1">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ViewAction, Source={RelativeSource AncestorType={x:Type vm:LovelDetailViewModel}}}" CommandParameter="{Binding .}" />
+                        </Border.GestureRecognizers>
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Label
+                            Margin="10,0,0,0"
+                            FontSize="16"
+                            LineBreakMode="WordWrap"
+                            Text="{Binding ChapterName}"
+                            TextColor="{StaticResource Red}" />
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <ActivityIndicator
+            Grid.RowSpan="2"
+            HeightRequest="20"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            WidthRequest="20"
+            Color="{StaticResource Green}" />
+    </Grid>
 </ContentPage>

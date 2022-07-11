@@ -1,12 +1,50 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CandySugar.Controls.Views.LovelViews.LovelContentView"
-             Title="LovelContentView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage
+    x:Class="CandySugar.Controls.Views.LovelViews.LovelContentView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:sdk="clr-namespace:Sdk.Component.Lovel.sdk.ViewModel.Response;assembly=Sdk.Component"
+    xmlns:vm="clr-namespace:CandySugar.Controls.ViewModels.LovelViewModels"
+    Title="{Binding Title}"
+    x:DataType="vm:LovelContentViewModel">
+    <ContentPage.BindingContext>
+        <vm:LovelContentViewModel />
+    </ContentPage.BindingContext>
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding BackAction}" />
+    </Shell.BackButtonBehavior>
+    <Grid BackgroundColor="AliceBlue">
+        <CollectionView
+            IsEnabled="{Binding Image}"
+            IsVisible="{Binding Image}"
+            ItemSizingStrategy="MeasureAllItems"
+            ItemsSource="{Binding Pic}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border
+                        Margin="0,0,0,1"
+                        Stroke="{StaticResource Gray100Brush}"
+                        StrokeShape="RoundRectangle 0"
+                        StrokeThickness="1">
+                        <Image Aspect="Fill" Source="{Binding .}" />
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <CollectionView
+            IsEnabled="{Binding Content}"
+            IsVisible="{Binding Content}"
+            ItemSizingStrategy="MeasureAllItems"
+            ItemsSource="{Binding Views}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Label
+                        FontSize="18"
+                        Text="{Binding .}"
+                        TextColor="{StaticResource Black}" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+
 </ContentPage>

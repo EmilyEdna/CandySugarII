@@ -96,7 +96,7 @@
         ContentTemplate="{DataTemplate ctrl:HistoryView}"
         Icon="{StaticResource His}"
         Route="HistoryView" />
-    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems" Route="RootElement">
         <ShellContent
             Title="小说"
             ContentTemplate="{DataTemplate ctrl:NovelView}"

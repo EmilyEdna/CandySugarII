@@ -5,8 +5,6 @@ using Sdk.Component.Lovel.sdk.ViewModel;
 using Sdk.Component.Lovel.sdk.ViewModel.Enums;
 using Sdk.Component.Lovel.sdk.ViewModel.Request;
 using Sdk.Component.Lovel.sdk.ViewModel.Response;
-using Sdk.Component.Novel.sdk;
-using Sdk.Component.Novel.sdk.ViewModel.Response;
 
 namespace CandySugar.Controls.ViewModels
 {
@@ -180,9 +178,9 @@ namespace CandySugar.Controls.ViewModels
                 await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
             }
         }
-        async void Navgation(string input)
+        async void Navgation(LovelCategoryElementResult input)
         {
-            await Shell.Current.GoToAsync($"{nameof(LovelDetailView)}?Route={input}");
+            await Shell.Current.GoToAsync(nameof(LovelDetailView), new Dictionary<string, object> { { "Route", input } });
         }
         #endregion
 
@@ -211,7 +209,7 @@ namespace CandySugar.Controls.ViewModels
             KeyWord = string.Empty;
             InitCategory(input);
         });
-        public DelegateCommand<string> DetailAction => new(input =>
+        public DelegateCommand<LovelCategoryElementResult> DetailAction => new(input =>
         {
             Navgation(input);
         });
