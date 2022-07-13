@@ -17,19 +17,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="HtmlAgilityPack" Version="1.11.43" />
-	  <PackageReference Include="JavaScriptEngineSwitcher.Jint" Version="3.18.0-preview" />
-	  <PackageReference Include="Prism.DryIoc.Maui" Version="8.1.228-beta" />
-	  <PackageReference Include="XExten.Advance" Version="1.2.4.1-preview" />
+		<PackageReference Include="XExten.Advance" Version="1.2.4.1-preview" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="PermissionCheck\" />
-	  <Folder Include="Template\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\CandySugar.Core\CandySugar.Logic.csproj" />
-	</ItemGroup>
-
 </Project>

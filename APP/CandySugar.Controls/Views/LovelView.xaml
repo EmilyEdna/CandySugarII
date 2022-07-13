@@ -13,7 +13,7 @@
         <SearchHandler
             ClearIcon="{StaticResource Clear}"
             Command="{Binding QueryAction}"
-            Placeholder="请输入小说名或作者名"
+            Placeholder="请输入小说名"
             Query="{Binding KeyWord, Mode=TwoWay}"
             QueryIcon="{StaticResource Search}"
             ShowsResults="False"

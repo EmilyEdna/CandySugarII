@@ -1,6 +1,7 @@
 ﻿using CandySugar.Controls.Views.LovelViews;
 using CandySugar.Library;
 using Sdk.Component.Plugins;
+using Sdk.Core;
 using XExten.Advance.LinqFramework;
 
 namespace CandySugar.Controls
@@ -18,9 +19,6 @@ namespace CandySugar.Controls
                 {
                     Routing.RegisterRoute(item.Name, item);
                 });
-
-            //Routing.RegisterRoute("LovelView/LovelDetailView", typeof(LovelDetailView));
-            //Routing.RegisterRoute("LovelView/LovelDetailView/LovelContentView", typeof(LovelContentView));
         }
         /// <summary>
         /// 注册视图
@@ -62,6 +60,32 @@ namespace CandySugar.Controls
             else if (CandySoft.QueryModule == 2) return SdkImpl.Rest;
             else if (CandySoft.QueryModule == 3) return SdkImpl.RPC;
             else return SdkImpl.User;
+        }
+
+        /// <summary>
+        /// 获取壁纸模式
+        /// </summary>
+        /// <returns></returns>
+        public static string ImageModule()
+        {
+            if (CandySoft.Module == 1) return string.Empty;
+            else if (CandySoft.Module == 2) return $"rating:safe";
+            else if (CandySoft.Module == 3) return $"rating:questionable";
+            else return $"rating:explicit";
+        }
+
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <returns></returns>
+        public static bool Login(string Account, string Pwd)
+        {
+            SdkOption.IsAppAgent = true;
+            return SdkLicense.Register(new SdkLicenseModel
+            {
+                Account = Account,
+                Password = Pwd
+            });
         }
     }
 }

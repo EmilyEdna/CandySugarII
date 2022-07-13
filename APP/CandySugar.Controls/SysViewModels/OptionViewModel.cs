@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CandySugar.Controls.SysViewModels
 {
-    public class HistoryViewModel: BaseViewModel
+    public class OptionViewModel: BaseViewModel
     {
     }
 }

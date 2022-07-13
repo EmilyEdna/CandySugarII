@@ -19,5 +19,6 @@ namespace CandySugar.Library
         public static int Wait { get; set; } = 300;
         public static string LightAccount { get; set; }
         public static string LightPwd { get; set; }
+        public static int Module { get; set; } = 1;
     }
 }

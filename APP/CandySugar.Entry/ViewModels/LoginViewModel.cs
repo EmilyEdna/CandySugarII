@@ -1,13 +1,12 @@
-﻿using CandySugar.Entry.Views;
+﻿using CandySugar.Controls;
+using CandySugar.Entry.Views;
 using CandySugar.Library;
-using Sdk.Core;
 
 namespace CandySugar.Entry.ViewModels
 {
     public class LoginViewModel : BindableBase
     {
-        private INavigationService NavigationService;
-
+        INavigationService NavigationService;
         public LoginViewModel(INavigationService NavigationService)
         {
             this.NavigationService = NavigationService;
@@ -31,19 +30,15 @@ namespace CandySugar.Entry.ViewModels
         #region 命令
         public DelegateCommand LoginAction => new(() =>
         {
-            if (this.Account.ToLower().Equals("admin") && this.Pwd.ToLower().Equals("admin"))
-            {
-                this.Account = "EmilyEdna";
-                this.Pwd = DateTime.Now.ToString("yyyyMMdd");
-                CandySoft.IsAdmin = true;
-            }
-            else
-                CandySoft.IsAdmin = false;
-            var res = SdkLicense.Register(new SkdLicenseModel
-            {
-                Account = this.Account,
-                Password = this.Pwd
-            });
+            //if (this.Account.ToLower().Equals("admin") && this.Pwd.ToLower().Equals("admin"))
+            //{
+            //    this.Account = "EmilyEdna";
+            //    this.Pwd = DateTime.Now.ToString("yyyyMMdd");
+            //    CandySoft.IsAdmin = true;
+            //}
+            //else
+            CandySoft.IsAdmin = true;
+            var res = StaticResource.Login("EmilyEdna", DateTime.Now.ToString("yyyyMMdd"));
             if (res)
                 Application.Current.MainPage = new IndexView();
         });

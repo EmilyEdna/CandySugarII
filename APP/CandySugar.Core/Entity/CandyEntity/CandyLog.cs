@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CandySugar.Entry.ViewModels
+namespace CandySugar.Logic.Entity.CandyEntity
 {
-    public class IndexViewModel : BindableBase
+    public class CandyLog : BaseEntity
     {
+        public string Stack { get; set; }
     }
 }

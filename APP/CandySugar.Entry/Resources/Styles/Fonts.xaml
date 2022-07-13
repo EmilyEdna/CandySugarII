@@ -59,6 +59,18 @@
         Size="22"
         Color="{StaticResource Red}" />
     <FontImage
+        x:Key="Opt"
+        FontFamily="Solid"
+        Glyph="{Static lib:FontIcon.Gear}"
+        Size="22"
+        Color="{StaticResource Red}" />
+    <FontImage
+        x:Key="Etc"
+        FontFamily="Solid"
+        Glyph="{Static lib:FontIcon.EllipsisVertical}"
+        Size="22"
+        Color="{StaticResource Red}" />
+    <FontImage
         x:Key="Search"
         FontFamily="Thin"
         Glyph="{Static lib:FontIcon.MagnifyingGlass}"

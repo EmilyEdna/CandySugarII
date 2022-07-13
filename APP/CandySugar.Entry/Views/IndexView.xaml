@@ -7,8 +7,8 @@
     xmlns:lib="http://lib.sugar.com"
     xmlns:vm="clr-namespace:CandySugar.Entry.ViewModels"
     BackgroundColor="{StaticResource Pink}"
-    CurrentItem="{x:Reference HistoryContent}"
-    FlyoutWidth="200">
+    FlyoutWidth="200"
+    TabBarIsVisible="False">
 
     <Shell.BindingContext>
         <vm:IndexViewModel />
@@ -89,13 +89,18 @@
             </StackLayout>
         </StackLayout>
     </Shell.FlyoutFooter>
-
-    <ShellContent
-        x:Name="HistoryContent"
-        Title="历史"
-        ContentTemplate="{DataTemplate ctrl:HistoryView}"
-        Icon="{StaticResource His}"
-        Route="HistoryView" />
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems" Route="OptionElement">
+        <ShellContent
+            Title="历史"
+            ContentTemplate="{DataTemplate ctrl:HistoryView}"
+            Icon="{StaticResource His}"
+            Route="HistoryView" />
+        <ShellContent
+            Title="设置"
+            ContentTemplate="{DataTemplate ctrl:OptionView}"
+            Icon="{StaticResource Opt}"
+            Route="OptionView" />
+    </FlyoutItem>
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems" Route="RootElement">
         <ShellContent
             Title="小说"
