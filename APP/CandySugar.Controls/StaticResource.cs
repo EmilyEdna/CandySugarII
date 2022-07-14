@@ -15,6 +15,7 @@ namespace CandySugar.Controls
         {
             typeof(StaticResource).Assembly.ExportedTypes.Where(t => t.BaseType == typeof(ContentPage))
                 .Where(t => !t.Namespace.Equals("CandySugar.Controls.Views"))
+                .Where(t => !t.Namespace.Equals("CandySugar.Controls.SysViews"))
                 .ForEnumerEach(item =>
                 {
                     Routing.RegisterRoute(item.Name, item);

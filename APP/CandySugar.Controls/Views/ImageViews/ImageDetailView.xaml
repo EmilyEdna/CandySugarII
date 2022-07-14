@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="CandySugar.Controls.Views.ImageViews.ImageDetailView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:CandySugar.Controls.ViewModels.ImageViewModels"
+    x:DataType="vm:ImageDetailViewModel"
+    Shell.NavBarIsVisible="False">
+    <ContentPage.BindingContext>
+        <vm:ImageDetailViewModel />
+    </ContentPage.BindingContext>
+    <ScrollView HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
+        <Border Stroke="{StaticResource Gray100Brush}" StrokeShape="RoundRectangle 0">
+            <Image Aspect="Fill" Source="{Binding Route}" />
+        </Border>
+    </ScrollView>
+</ContentPage>

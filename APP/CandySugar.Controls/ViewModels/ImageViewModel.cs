@@ -1,16 +1,17 @@
-﻿using CandySugar.Library;
+﻿using CandySugar.Controls.Views.ImageViews;
+using CandySugar.Library;
 using Sdk.Component.Image.sdk;
 using Sdk.Component.Image.sdk.ViewModel;
 using Sdk.Component.Image.sdk.ViewModel.Enums;
 using Sdk.Component.Image.sdk.ViewModel.Request;
 using Sdk.Component.Image.sdk.ViewModel.Response;
-using System.Net.Http;
 
 namespace CandySugar.Controls.ViewModels
 {
     public class ImageViewModel : BaseViewModel
     {
         readonly int Limit = 10;
+        bool LoadMore = false;
         public ImageViewModel()
         {
             this.Page = 1;
@@ -27,9 +28,15 @@ namespace CandySugar.Controls.ViewModels
         #endregion
 
         #region 命令 
+        public DelegateCommand<ImageElementResult> ViewAction => new(input =>
+        {
+            var param = input.OriginalJepg.IsNullOrEmpty() ? input.OriginalPng : input.OriginalJepg;
+            Navgation(param);
+        });
         public DelegateCommand QueryAction => new(() =>
         {
             SetRefresh();
+            LoadMore = false;
             Task.Run(() => InitSearch(KeyWord));
         });
         public DelegateCommand LoadMoreAction => new(() =>
@@ -37,18 +44,22 @@ namespace CandySugar.Controls.ViewModels
             SetRefresh();
             //网络慢不能使用异步加载更多
             if (Lock) return;
+            LoadMore = true;
             this.Page += 1;
             if (KeyWord.IsNullOrEmpty()) InitImage();
             else InitImage();
         });
         public DelegateCommand<string> SearchAction => new(input =>
         {
+            KeyWord = input;
             SetRefresh();
+            LoadMore = false;
             Task.Run(() => InitSearch(input));
         });
         public DelegateCommand RefreshAction => new(() =>
         {
             SetRefresh(false);
+            LoadMore = false;
             this.Page = 1;
             if (KeyWord.IsNullOrEmpty()) Task.Run(() => InitImage());
             else Task.Run(() => InitSearch(KeyWord));
@@ -86,7 +97,7 @@ namespace CandySugar.Controls.ViewModels
                 }).RunsAsync();
                 CloseBusy();
                 Total = result.GlobalResult.Total;
-                if (!CanRefresh)
+                if (!LoadMore)
                     ElementResults = new ObservableCollection<ImageElementResult>(result.GlobalResult.Result);
                 else
                 {
@@ -129,7 +140,7 @@ namespace CandySugar.Controls.ViewModels
                 }).RunsAsync();
                 CloseBusy();
                 Total = result.GlobalResult.Total;
-                if (!CanRefresh)
+                if (!LoadMore)
                     ElementResults = new ObservableCollection<ImageElementResult>(result.GlobalResult.Result);
                 else
                 {
@@ -141,6 +152,10 @@ namespace CandySugar.Controls.ViewModels
             {
                 await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
             }
+        }
+        async void Navgation(string input)
+        {
+            await Shell.Current.GoToAsync($"{nameof(ImageDetailView)}?Key={input}");
         }
         #endregion
     }

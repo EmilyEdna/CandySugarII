@@ -45,7 +45,11 @@
                                         Aspect="Fill"
                                         HeightRequest="180"
                                         Source="{Binding Preview}"
-                                        WidthRequest="265" />
+                                        WidthRequest="265">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding ViewAction, Source={RelativeSource AncestorType={x:Type vm:ImageViewModel}}}" CommandParameter="{Binding .}" />
+                                        </Image.GestureRecognizers>
+                                    </Image>
                                 </Border>
                                 <CollectionView
                                     Grid.Row="1"

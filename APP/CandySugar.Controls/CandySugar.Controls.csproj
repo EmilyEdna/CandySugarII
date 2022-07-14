@@ -37,4 +37,10 @@
 	  </Reference>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="Views\ImageViews\ImageDetailView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

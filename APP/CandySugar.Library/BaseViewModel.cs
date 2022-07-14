@@ -46,10 +46,7 @@ namespace CandySugar.Library
         public string KeyWord
         {
             get => _KeyWord;
-            set
-            {
-                SetProperty(ref _KeyWord, value);
-            }
+            set => SetProperty(ref _KeyWord, value);
         }
         #endregion
 
@@ -67,7 +64,7 @@ namespace CandySugar.Library
             IsRefreshing = false;
         }
 
-        protected virtual void SetRefresh(bool input=true) 
+        protected virtual void SetRefresh(bool input = true)
         {
             CanRefresh = input;
         }
