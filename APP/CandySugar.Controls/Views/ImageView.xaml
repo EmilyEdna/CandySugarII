@@ -19,38 +19,71 @@
             ShowsResults="False"
             TextColor="{StaticResource Green}" />
     </Shell.SearchHandler>
-    <CollectionView
-        ItemSizingStrategy="MeasureAllItems"
-        ItemsSource="{Binding ElementResults}"
-        RemainingItemsThreshold="0"
-        RemainingItemsThresholdReachedCommand="{Binding LoadMoreAction}">
-        <CollectionView.ItemsLayout>
-            <GridItemsLayout Orientation="Vertical" Span="2" />
-        </CollectionView.ItemsLayout>
-        <CollectionView.ItemTemplate>
-            <DataTemplate x:DataType="sdk:ImageElementResult">
-                <Grid ColumnDefinitions="*,*">
-                    <Border Stroke="{StaticResource Gray100Brush}" StrokeShape="RoundRectangle 3">
-                        <Grid Padding="5" RowDefinitions="Auto,*">
-                            <Border HeightRequest="150" StrokeShape="RoundRectangle 0">
-                                <Grid>
-                                    <Image Aspect="AspectFill" Source="{Binding Preview}" />
-                                    <ActivityIndicator
-                                        x:DataType="Image"
-                                        BindingContext="{Binding BindingContext, Source={RelativeSource Mode=FindAncestor, AncestorType={x:Type Image}}}"
-                                        HeightRequest="20"
-                                        HorizontalOptions="Center"
-                                        IsRunning="{Binding IsLoading}"
-                                        VerticalOptions="Center"
-                                        WidthRequest="20"
-                                        Color="{StaticResource Pink}" />
-                                </Grid>
-                            </Border>
-                            <Label Grid.Row="1" Text="{Binding Author}" />
-                        </Grid>
-                    </Border>
-                </Grid>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+    <Grid BackgroundColor="{StaticResource Trans}">
+        <RefreshView
+            Command="{Binding RefreshAction}"
+            IsRefreshing="{Binding IsRefreshing}"
+            RefreshColor="{StaticResource Pink}">
+            <CollectionView
+                ItemSizingStrategy="MeasureAllItems"
+                ItemsSource="{Binding ElementResults}"
+                RemainingItemsThreshold="0"
+                RemainingItemsThresholdReachedCommand="{Binding LoadMoreAction}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout
+                        HorizontalItemSpacing="5"
+                        Orientation="Vertical"
+                        Span="2"
+                        VerticalItemSpacing="5" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="sdk:ImageElementResult">
+                        <Border Stroke="{StaticResource Gray100Brush}" StrokeShape="RoundRectangle 3">
+                            <Grid Padding="2" RowDefinitions="Auto,*">
+                                <Border Stroke="{StaticResource Gray100Brush}" StrokeShape="RoundRectangle 1">
+                                    <Image
+                                        Aspect="Fill"
+                                        HeightRequest="180"
+                                        Source="{Binding Preview}"
+                                        WidthRequest="265" />
+                                </Border>
+                                <CollectionView
+                                    Grid.Row="1"
+                                    ItemSizingStrategy="MeasureFirstItem"
+                                    ItemsSource="{Binding Labels}">
+                                    <CollectionView.ItemsLayout>
+                                        <GridItemsLayout
+                                            HorizontalItemSpacing="5"
+                                            Orientation="Horizontal"
+                                            Span="2"
+                                            VerticalItemSpacing="5" />
+                                    </CollectionView.ItemsLayout>
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Label
+                                                FontSize="15"
+                                                Text="{Binding .}"
+                                                TextColor="{StaticResource Pink}">
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding SearchAction, Source={RelativeSource AncestorType={x:Type vm:ImageViewModel}}}" CommandParameter="{Binding .}" />
+                                                </Label.GestureRecognizers>
+                                            </Label>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+        <ActivityIndicator
+            HeightRequest="20"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            WidthRequest="20"
+            Color="{StaticResource Green}" />
+    </Grid>
 </ContentPage>

@@ -20,15 +20,6 @@ namespace CandySugar.Controls.ViewModels
         #endregion
 
         #region 属性
-        string _KeyWord;
-        public string KeyWord
-        {
-            get => _KeyWord;
-            set
-            {
-                SetProperty(ref _KeyWord, value);
-            }
-        }
         /// <summary>
         /// 首页分类
         /// </summary>
@@ -163,17 +154,18 @@ namespace CandySugar.Controls.ViewModels
         public DelegateCommand<string> CategoryAction => new(input =>
         {
             this.Page = 1;
-            CanRefresh = true;
+            SetRefresh();
             CategoryRoute = input;
             InitCategory(input);
         });
         public DelegateCommand RefreshAction => new(() =>
         {
-            CanRefresh = false;
+            SetRefresh(false);
             InitCategory(CategoryRoute);
         });
         public DelegateCommand LoadMoreAction => new(() =>
         {
+            if (Lock) return;
             this.Page += 1;
             InitCategory(CategoryRoute);
         });

@@ -24,11 +24,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="PermissionCheck\" />
-	  <Folder Include="Template\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <ProjectReference Include="..\CandySugar.Core\CandySugar.Logic.csproj" />
 	</ItemGroup>
 

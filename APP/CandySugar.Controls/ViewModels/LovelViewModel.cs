@@ -12,22 +12,13 @@ namespace CandySugar.Controls.ViewModels
     {
         public LovelViewModel()
         {
-            InitLovel();
+            Task.Run(() => InitLovel());
         }
         #region 字段
         string CategoryRoute = string.Empty;
         #endregion
 
         #region 属性
-        string _KeyWord;
-        public string KeyWord
-        {
-            get => _KeyWord;
-            set
-            {
-                SetProperty(ref _KeyWord, value);
-            }
-        }
         /// <summary>
         /// 类别
         /// </summary>
@@ -56,7 +47,7 @@ namespace CandySugar.Controls.ViewModels
         #endregion
 
         #region 方法
-        async Task InitLovel()
+        async void InitLovel()
         {
             if (IsBusy) return;
             try
@@ -189,15 +180,17 @@ namespace CandySugar.Controls.ViewModels
         {
             this.Page = 1;
             CategoryRoute = string.Empty;
-            InitQeury();
+            Task.Run(() => InitQeury());
         });
         public DelegateCommand RefreshAction => new(() =>
         {
+            SetRefresh(false);
             if (!CategoryRoute.IsNullOrEmpty())
-                InitCategory(this.CategoryRoute);
+                Task.Run(() => InitCategory(CategoryRoute));
         });
         public DelegateCommand LoadMoreAction => new(() =>
         {
+            if (Lock) return;
             this.Page += 1;
             if (KeyWord.IsNullOrEmpty()) InitCategory(CategoryRoute);
             else InitQeury();
@@ -205,9 +198,10 @@ namespace CandySugar.Controls.ViewModels
         public DelegateCommand<string> CategoryAction => new(input =>
         {
             this.Page = 1;
+            SetRefresh();
             CategoryRoute = input;
             KeyWord = string.Empty;
-            InitCategory(input);
+            Task.Run(() => InitCategory(input));
         });
         public DelegateCommand<LovelCategoryElementResult> DetailAction => new(input =>
         {

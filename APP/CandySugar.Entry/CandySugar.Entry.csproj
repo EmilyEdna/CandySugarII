@@ -34,7 +34,13 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-android|AnyCPU'">
     <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+    <AndroidEnableMultiDex>True</AndroidEnableMultiDex>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-android|AnyCPU'">
+    <AndroidEnableMultiDex>True</AndroidEnableMultiDex>
+  </PropertyGroup>
+
 
   <ItemGroup>
     <!-- App Icon -->
@@ -72,6 +78,12 @@
     <Reference Include="Sdk.Core">
       <HintPath>..\..\Lib\Sdk.Core.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <MauiXaml Update="Resources\Styles\Options.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
   </ItemGroup>
 
 

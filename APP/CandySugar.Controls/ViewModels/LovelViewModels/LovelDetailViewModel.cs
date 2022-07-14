@@ -20,7 +20,7 @@ namespace CandySugar.Controls.ViewModels.LovelViewModels
         public override void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             EleResult = query["Route"] as LovelCategoryElementResult;
-            InitDetail();
+            Task.Run(() => InitDetail());
         }
 
         #region 属性
@@ -39,7 +39,7 @@ namespace CandySugar.Controls.ViewModels.LovelViewModels
         #endregion
 
         #region 方法
-        async Task InitDetail()
+        async void InitDetail()
         {
             if (IsBusy) return;
             try
@@ -142,8 +142,8 @@ namespace CandySugar.Controls.ViewModels.LovelViewModels
         #region 命令
         public DelegateCommand<LovelViewResult> ViewAction => new(input =>
         {
-            if (input.IsDown) InitDown(input.ChapterRoute);
-            else InitContent(input);
+            if (input.IsDown) Task.Run(() => InitDown(input.ChapterRoute));
+            else Task.Run(() => InitContent(input));
         });
         public DelegateCommand BackAction => new(async () =>
         {

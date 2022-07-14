@@ -80,7 +80,9 @@ namespace CandySugar.Controls
         /// <returns></returns>
         public static bool Login(string Account, string Pwd)
         {
-            SdkOption.IsAppAgent = true;
+#if ANDROID
+            SdkOption.UseRealRoute = true;
+#endif
             return SdkLicense.Register(new SdkLicenseModel
             {
                 Account = Account,
