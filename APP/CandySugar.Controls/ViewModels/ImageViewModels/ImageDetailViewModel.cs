@@ -1,6 +1,7 @@
 ﻿using CandySugar.Library;
 using CandySugar.Library.AndroidCommon;
 using CandySugar.Library.AndroidCommon.Device;
+using CandySugar.Library.AndroidCommon.Screen;
 using System.Web;
 
 namespace CandySugar.Controls.ViewModels.ImageViewModels
@@ -11,6 +12,7 @@ namespace CandySugar.Controls.ViewModels.ImageViewModels
         public override void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             CrossDeviceOrientation.Current.LockOrientation(DeviceOrientations.Landscape);
+            ICrossScreen.ScreenState.HiddenStatusBar();
             Route = HttpUtility.UrlDecode(query["Key"].ToString());
         }
 

@@ -5,13 +5,30 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:CandySugar.Controls.ViewModels.ImageViewModels"
     x:DataType="vm:ImageDetailViewModel"
+    Disappearing="BackEvent"
     Shell.NavBarIsVisible="False">
     <ContentPage.BindingContext>
         <vm:ImageDetailViewModel />
     </ContentPage.BindingContext>
-    <ScrollView HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
-        <Border Stroke="{StaticResource Gray100Brush}" StrokeShape="RoundRectangle 0">
-            <Image Aspect="Fill" Source="{Binding Route}" />
-        </Border>
-    </ScrollView>
+    <Grid>
+        <StackLayout>
+            <ScrollView
+                HorizontalScrollBarVisibility="Never"
+                VerticalOptions="FillAndExpand"
+                VerticalScrollBarVisibility="Never">
+                <Image
+                    x:Name="Views"
+                    Aspect="AspectFit"
+                    Source="{Binding Route}" />
+            </ScrollView>
+        </StackLayout>
+        <ActivityIndicator
+            HeightRequest="20"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsLoading, Source={x:Reference Views}}"
+            IsVisible="{Binding IsLoading, Source={x:Reference Views}}"
+            VerticalOptions="Center"
+            WidthRequest="20"
+            Color="{StaticResource Green}" />
+    </Grid>
 </ContentPage>
