@@ -3,11 +3,107 @@
     x:Class="CandySugar.Controls.Views.AnimeView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="AnimeView">
-    <VerticalStackLayout>
-        <Label
+    xmlns:sdk="clr-namespace:Sdk.Component.Anime.sdk.ViewModel.Response;assembly=Sdk.Component"
+    xmlns:vm="clr-namespace:CandySugar.Controls.ViewModels"
+    x:DataType="vm:AnimeViewModel">
+    <ContentPage.BindingContext>
+        <vm:AnimeViewModel />
+    </ContentPage.BindingContext>
+    <Shell.SearchHandler>
+        <SearchHandler
+            ClearIcon="{StaticResource Clear}"
+            Command="{Binding QueryAction}"
+            Placeholder="请输入查询内容"
+            Query="{Binding KeyWord, Mode=TwoWay}"
+            QueryIcon="{StaticResource Search}"
+            ShowsResults="False"
+            TextColor="{StaticResource Green}" />
+    </Shell.SearchHandler>
+    <Grid BackgroundColor="{StaticResource Trans}" RowDefinitions="Auto,Auto,*">
+        <CollectionView
+            Grid.Row="0"
+            ItemsLayout="HorizontalList"
+            ItemsSource="{Binding Words}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Label
+                        Margin="5"
+                        Text="{Binding .}"
+                        TextColor="{StaticResource Pink}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CategoryLetterAction, Source={RelativeSource AncestorType={x:Type vm:LovelViewModel}}}" CommandParameter="{Binding .}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <CollectionView
+            Grid.Row="1"
+            ItemsLayout="HorizontalList"
+            ItemsSource="{Binding InitResult}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="sdk:AnimeWeekDayIndexResult">
+                    <Label
+                        Margin="5"
+                        Text="{Binding Name}"
+                        TextColor="{StaticResource Pink}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CategoryTypeAction, Source={RelativeSource AncestorType={x:Type vm:AnimeViewModel}}}" CommandParameter="{Binding Route}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <RefreshView
+            Grid.Row="2"
+            Command="{Binding RefreshAction}"
+            IsRefreshing="{Binding IsRefreshing}"
+            RefreshColor="{StaticResource Pink}">
+            <CollectionView
+                ItemSizingStrategy="MeasureFirstItem"
+                ItemsSource="{Binding SearchResult}"
+                RemainingItemsThreshold="0"
+                RemainingItemsThresholdReachedCommand="{Binding LoadMoreAction}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="3" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="sdk:AnimeSearchElementResult">
+                        <Border Stroke="{StaticResource Gray100Brush}" StrokeThickness="1">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding DetailAction, Source={RelativeSource AncestorType={x:Type vm:AnimeViewModel}}}" CommandParameter="{Binding .}" />
+                            </Border.GestureRecognizers>
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="0" />
+                            </Border.StrokeShape>
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Border
+                                    HeightRequest="130"
+                                    StrokeShape="RoundRectangle 0"
+                                    WidthRequest="90">
+                                    <Image Aspect="Fill" Source="{Binding Cover}" />
+                                </Border>
+                                <StackLayout Grid.Column="1" VerticalOptions="StartAndExpand">
+                                    <Label
+                                        Margin="10,0,0,0"
+                                        LineBreakMode="CharacterWrap "
+                                        Text="{Binding Name}"
+                                        TextColor="{StaticResource Red}" />
+                                </StackLayout>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+        <ActivityIndicator
+            Grid.RowSpan="3"
+            HeightRequest="20"
             HorizontalOptions="Center"
-            Text="动漫"
-            VerticalOptions="Center" />
-    </VerticalStackLayout>
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            WidthRequest="20"
+            Color="{StaticResource Green}" />
+    </Grid>
 </ContentPage>

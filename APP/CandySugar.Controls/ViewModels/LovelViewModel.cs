@@ -184,14 +184,16 @@ namespace CandySugar.Controls.ViewModels
         });
         public DelegateCommand RefreshAction => new(() =>
         {
+            this.Page = 1;
             SetRefresh(false);
-            if (!CategoryRoute.IsNullOrEmpty())
-                Task.Run(() => InitCategory(CategoryRoute));
+            if (!CategoryRoute.IsNullOrEmpty()) Task.Run(() => InitCategory(CategoryRoute));
+            else Task.Run(() => InitQeury());
         });
         public DelegateCommand LoadMoreAction => new(() =>
         {
             if (Lock) return;
             this.Page += 1;
+            if (this.Page > Total) return;
             if (KeyWord.IsNullOrEmpty()) InitCategory(CategoryRoute);
             else InitQeury();
         });

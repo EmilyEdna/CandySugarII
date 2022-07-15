@@ -1,12 +1,270 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CandySugar.Controls.Views.AnimeViews;
+using CandySugar.Controls.Views.LovelViews;
+using CandySugar.Library;
+using Sdk.Component.Anime.sdk;
+using Sdk.Component.Anime.sdk.ViewModel;
+using Sdk.Component.Anime.sdk.ViewModel.Enums;
+using Sdk.Component.Anime.sdk.ViewModel.Request;
+using Sdk.Component.Anime.sdk.ViewModel.Response;
+
 
 namespace CandySugar.Controls.ViewModels
 {
-    public class AnimeViewModel : BindableBase
+    public class AnimeViewModel : BaseViewModel
     {
+        public AnimeViewModel()
+        {
+            this.Page = 1;
+            this.Words = new ObservableCollection<string>("A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z".Split(","));
+            Task.Run(() => InitAnime());
+        }
+
+        #region 字段
+        bool IsCategoryType = true;
+        string CategoryKeyWord = string.Empty;
+        #endregion
+
+        #region 属性
+        /// <summary>
+        /// 字母
+        /// </summary>
+        ObservableCollection<string> _Words;
+        public ObservableCollection<string> Words
+        {
+            get => _Words;
+            set => SetProperty(ref _Words, value);
+        }
+        /// <summary>
+        /// 初始化结果
+        /// </summary>
+        ObservableCollection<AnimeWeekDayIndexResult> _InitResult;
+        public ObservableCollection<AnimeWeekDayIndexResult> InitResult
+        {
+            get => _InitResult;
+            set => SetProperty(ref _InitResult, value);
+        }
+        /// <summary>
+        /// 检索分类结果
+        /// </summary>
+        ObservableCollection<AnimeSearchElementResult> _SearchResult;
+        public ObservableCollection<AnimeSearchElementResult> SearchResult
+        {
+            get => _SearchResult;
+            set => SetProperty(ref _SearchResult, value);
+        }
+        /// <summary>
+        /// 详情结果
+        /// </summary>
+        ObservableCollection<AnimeDetailResult> _DetailResult;
+        public ObservableCollection<AnimeDetailResult> DetailResult
+        {
+            get => _DetailResult;
+            set => SetProperty(ref _DetailResult, value);
+        }
+        #endregion
+
+        #region 命令
+        public DelegateCommand QueryAction => new(() =>
+        {
+            this.Page = 1;
+            this.CategoryKeyWord = string.Empty;
+            Task.Run(() => InitSearch());
+        });
+        public DelegateCommand<string> CategoryTypeAction => new(input =>
+        {
+            SetRefresh();
+            this.Page = 1;
+            this.KeyWord = string.Empty;
+            this.CategoryKeyWord = input;
+            Task.Run(() => InitCatagory());
+        });
+        public DelegateCommand<string> CategoryLetterAction => new(input =>
+        {
+            SetRefresh();
+            this.Page = 1;
+            this.KeyWord = string.Empty;
+            this.CategoryKeyWord = input;
+            Task.Run(() => InitCatagory());
+        });
+        public DelegateCommand RefreshAction => new(() =>
+        {
+            this.Page = 1;
+            SetRefresh(false);
+            if (!KeyWord.IsNullOrEmpty()) InitSearch();
+            else InitCatagory();
+        });
+        public DelegateCommand LoadMoreAction => new(() =>
+        {
+
+            if (Lock) return;
+            this.Page += 1;
+            if (this.Page > Total) return;
+            if (KeyWord.IsNullOrEmpty()) InitCatagory();
+            else InitSearch();
+        });
+        public DelegateCommand<AnimeSearchElementResult> DetailAction => new(input =>
+        {
+            Task.Run(() => InitDetail(input.Route));
+        });
+        #endregion
+
+        #region 方法
+        async void InitAnime()
+        {
+            if (IsBusy) return;
+            try
+            {
+                if (CandySoft.NetState.NetworkAccess != NetworkAccess.Internet)
+                {
+                    await Shell.Current.DisplayAlert("网络异常！", "请检查网络是否通畅！", "是");
+                    return;
+                }
+                ShowBusy();
+                await Task.Delay(CandySoft.Wait);
+                var result = await AnimeFactory.Anime(opt =>
+                {
+                    opt.RequestParam = new Input
+                    {
+                        CacheSpan = CandySoft.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        AnimeType = AnimeEnum.Init
+                    };
+                }).RunsAsync();
+                CloseBusy();
+                InitResult = new ObservableCollection<AnimeWeekDayIndexResult>(result.RecResults);
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+            }
+        }
+        async void InitCatagory()
+        {
+            if (IsBusy) return;
+            try
+            {
+                if (CandySoft.NetState.NetworkAccess != NetworkAccess.Internet)
+                {
+                    await Shell.Current.DisplayAlert("网络异常！", "请检查网络是否通畅！", "是");
+                    return;
+                }
+                ShowBusy();
+                await Task.Delay(CandySoft.Wait);
+                var model = new AnimeCategory
+                {
+                    Route = CategoryKeyWord,
+                    Page = this.Page
+                };
+                if (!IsCategoryType)
+                    model.LetterType = Enum.Parse<AnimeLetterEnum>(CategoryKeyWord);
+                var result = await AnimeFactory.Anime(opt =>
+                {
+                    opt.RequestParam = new Input
+                    {
+                        CacheSpan = CandySoft.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        AnimeType = IsCategoryType ? AnimeEnum.CategoryType : AnimeEnum.Category,
+                        Category = model
+                    };
+                }).RunsAsync();
+                CloseBusy();
+                Total = result.SeachResult.Total;
+                if (SearchResult == null)
+                    SearchResult = new ObservableCollection<AnimeSearchElementResult>(result.SeachResult.ElementResult);
+                else
+                    result.SeachResult.ElementResult.ForEach(item =>
+                    {
+                        SearchResult.Add(item);
+                    });
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+            }
+        }
+        async void InitSearch()
+        {
+            if (IsBusy) return;
+            try
+            {
+                if (CandySoft.NetState.NetworkAccess != NetworkAccess.Internet)
+                {
+                    await Shell.Current.DisplayAlert("网络异常！", "请检查网络是否通畅！", "是");
+                    return;
+                }
+                ShowBusy();
+                await Task.Delay(CandySoft.Wait);
+                var result = await AnimeFactory.Anime(opt =>
+                {
+                    opt.RequestParam = new Input
+                    {
+                        CacheSpan = CandySoft.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        AnimeType = AnimeEnum.Search,
+                        Search = new AnimeSearch
+                        {
+                            KeyWord = KeyWord,
+                            Page = this.Page
+                        }
+                    };
+                }).RunsAsync();
+                CloseBusy();
+                Total = result.SeachResult.Total;
+                if (SearchResult == null)
+                    SearchResult = new ObservableCollection<AnimeSearchElementResult>(result.SeachResult.ElementResult);
+                else
+                    result.SeachResult.ElementResult.ForEach(item =>
+                    {
+                        SearchResult.Add(item);
+                    });
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+            }
+        }
+        async void InitDetail(string input)
+        {
+            if (IsBusy) return;
+            try
+            {
+                if (CandySoft.NetState.NetworkAccess != NetworkAccess.Internet)
+                {
+                    await Shell.Current.DisplayAlert("网络异常！", "请检查网络是否通畅！", "是");
+                    return;
+                }
+                ShowBusy();
+                await Task.Delay(CandySoft.Wait);
+                var result = await AnimeFactory.Anime(opt =>
+                {
+                    opt.RequestParam = new Input
+                    {
+                        CacheSpan = CandySoft.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        AnimeType = AnimeEnum.Detail,
+                        Detail = new AnimeDetail
+                        {
+                            Route = input
+                        }
+                    };
+                }).RunsAsync();
+                CloseBusy();
+                DetailResult = new ObservableCollection<AnimeDetailResult>(result.DetailResults.Where(t => t.IsDownURL == false));
+                Navgation(DetailResult.ToList());
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+            }
+        }
+        async void Navgation(List<AnimeDetailResult> input)
+        {
+            await Shell.Current.GoToAsync(nameof(AnimeDetailView), new Dictionary<string, object> { { "Route", input } });
+        }
+        #endregion
     }
 }

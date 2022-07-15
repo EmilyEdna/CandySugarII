@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="CandySugar.Controls.Views.AnimeViews.AnimeDetailView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:sdk="clr-namespace:Sdk.Component.Anime.sdk.ViewModel.Response;assembly=Sdk.Component"
+    xmlns:vm="clr-namespace:CandySugar.Controls.ViewModels.AnimeViewModels"
+    Title="{Binding Name}"
+    x:DataType="vm:AnimeDetailViewModel">
+    <ContentPage.BindingContext>
+        <vm:AnimeDetailViewModel />
+    </ContentPage.BindingContext>
+    <Grid RowDefinitions="Auto,*">
+        <Border
+            Stroke="{StaticResource Gray100Brush}"
+            StrokeShape="RoundRectangle 0"
+            StrokeThickness="1">
+            <Grid ColumnDefinitions="Auto,*">
+                <Border
+                    HeightRequest="130"
+                    StrokeShape="RoundRectangle 0"
+                    WidthRequest="90">
+                    <Image Aspect="Fill" Source="{Binding Cover}" />
+                </Border>
+                <StackLayout Grid.Column="1" VerticalOptions="StartAndExpand">
+                    <Label
+                        Margin="10,0,0,0"
+                        Text="{Binding Name}"
+                        TextColor="{StaticResource Red}" />
+                </StackLayout>
+            </Grid>
+        </Border>
+        <CollectionView
+            Grid.Row="1"
+            ItemSizingStrategy="MeasureAllItems"
+            ItemsSource="{Binding Query, Mode=TwoWay}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="3" Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="sdk:AnimeDetailResult">
+                    <Border
+                        Padding="5"
+                        Stroke="{StaticResource Gray100Brush}"
+                        StrokeThickness="1">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ViewAction, Source={RelativeSource AncestorType={x:Type vm:AnimeDetailViewModel}}}" CommandParameter="{Binding WatchRoute}" />
+                        </Border.GestureRecognizers>
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Label
+                            Margin="10,0,0,0"
+                            FontSize="16"
+                            LineBreakMode="WordWrap"
+                            Text="{Binding CollectName}"
+                            TextColor="{StaticResource Red}" />
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <ActivityIndicator
+            Grid.RowSpan="2"
+            HeightRequest="20"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            WidthRequest="20"
+            Color="{StaticResource Green}" />
+    </Grid>
+</ContentPage>

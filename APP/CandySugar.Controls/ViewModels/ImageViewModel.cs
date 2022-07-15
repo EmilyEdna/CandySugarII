@@ -46,6 +46,7 @@ namespace CandySugar.Controls.ViewModels
             if (Lock) return;
             LoadMore = true;
             this.Page += 1;
+            if (this.Page > Total) return;
             if (KeyWord.IsNullOrEmpty()) InitImage();
             else InitImage();
         });

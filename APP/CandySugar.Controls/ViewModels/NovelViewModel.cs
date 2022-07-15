@@ -167,6 +167,7 @@ namespace CandySugar.Controls.ViewModels
         {
             if (Lock) return;
             this.Page += 1;
+            if (this.Page > Total) return;
             InitCategory(CategoryRoute);
         });
         public DelegateCommand QueryAction => new(() =>

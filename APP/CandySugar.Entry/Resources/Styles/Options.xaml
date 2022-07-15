@@ -5,4 +5,5 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:lib="clr-namespace:CandySugar.Library.Converters;assembly=CandySugar.Library">
     <lib:MultiConverter x:Key="Multi" />
+    <lib:ParamConverter x:Key="Param" />
 </ResourceDictionary>
