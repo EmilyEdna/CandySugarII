@@ -6,7 +6,7 @@ using Android.Runtime;
 using Android.Views;
 using CandySugar.Library.AndroidCommon;
 using CandySugar.Library.AndroidCommon.Device;
-using Application = Android.App.Application;
+using OrientationListener = CandySugar.Library.Platforms.Android.CrossDevice.OrientationListener;
 
 namespace CandySugar.Library.Platforms.Android
 {
@@ -97,7 +97,7 @@ namespace CandySugar.Library.Platforms.Android
 
             instance.IsListenerEnabled = !isForms;
 
-            instance.OnOrientationChanged(new OrientationChangedEventArgs
+            instance.OnOrientationChanged(new OrientationChanged
             {
                 Orientation = CrossDeviceOrientation.Current.CurrentOrientation
             });
@@ -138,51 +138,4 @@ namespace CandySugar.Library.Platforms.Android
         }
     }
 
-
-    /// <summary>
-    ///     OrientationEventListener Android API:
-    ///     http://developer.android.com/reference/android/view/OrientationEventListener.html
-    /// </summary>
-    public class OrientationListener : OrientationEventListener
-    {
-        private readonly Action<OrientationChangedEventArgs> _onOrientationChanged;
-
-        private DeviceOrientations _cachedOrientation;
-
-        public OrientationListener(Action<OrientationChangedEventArgs> onOrientationChanged)
-            : base(Application.Context, SensorDelay.Normal)
-        {
-            _onOrientationChanged = onOrientationChanged;
-        }
-
-        public OrientationListener(IntPtr javaReference, JniHandleOwnership transfer)
-            : base(javaReference, transfer)
-        {
-        }
-
-        public OrientationListener(Context context)
-            : base(context)
-        {
-        }
-
-        public OrientationListener(Context context, SensorDelay rate)
-            : base(context, rate)
-        {
-        }
-
-        public override void OnOrientationChanged(int rotationDegrees)
-        {
-            var currentOrientation = CrossDeviceOrientation.Current.CurrentOrientation;
-
-            if (currentOrientation != _cachedOrientation)
-            {
-                _cachedOrientation = currentOrientation;
-
-                _onOrientationChanged(new OrientationChangedEventArgs
-                {
-                    Orientation = currentOrientation
-                });
-            }
-        }
-    }
 }

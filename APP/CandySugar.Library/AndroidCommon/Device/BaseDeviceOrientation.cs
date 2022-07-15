@@ -29,7 +29,7 @@ namespace CandySugar.Library.AndroidCommon.Device
         /// <summary>
         ///     Event that fires when orientation changes
         /// </summary>
-        public event OrientationChangedEventHandler OrientationChanged;
+        public event OrientationHandler.OrientationChangedEventHandler OrientationChanged;
 
         /// <summary>
         ///     Dispose of class and parent classes
@@ -44,7 +44,7 @@ namespace CandySugar.Library.AndroidCommon.Device
         ///     When orientation changes
         /// </summary>
         /// <param name="e"></param>
-        protected virtual void OnOrientationChanged(OrientationChangedEventArgs e)
+        protected virtual void OnOrientationChanged(OrientationChanged e)
         {
             OrientationChanged?.Invoke(this, e);
         }
@@ -65,11 +65,6 @@ namespace CandySugar.Library.AndroidCommon.Device
         {
             if (!_disposed)
             {
-                if (disposing)
-                {
-                    //dispose only
-                }
-
                 _disposed = true;
             }
         }

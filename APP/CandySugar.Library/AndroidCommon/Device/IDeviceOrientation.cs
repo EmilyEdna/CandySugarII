@@ -16,7 +16,7 @@ namespace CandySugar.Library.AndroidCommon.Device
         /// <summary>
         ///     Event handler when orientation changes
         /// </summary>
-        event OrientationChangedEventHandler OrientationChanged;
+        event OrientationHandler.OrientationChangedEventHandler OrientationChanged;
 
         /// <summary>
         ///     Lock orientation in the specified position
