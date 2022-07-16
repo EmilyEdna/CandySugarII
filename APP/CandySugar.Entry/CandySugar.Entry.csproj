@@ -59,12 +59,25 @@
     <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <MauiAsset Remove="Resources\Raw\Dplayer.html" />
+    <MauiAsset Remove="Resources\Raw\DPlayer.min.css" />
+    <MauiAsset Remove="Resources\Raw\DPlayer.min.js" />
+    <MauiAsset Remove="Resources\Raw\hls.min.js" />
+  </ItemGroup>
+
   <ItemGroup>
     <None Remove="Platforms\Android\Resources\drawable\netconfig.xml" />
     <None Remove="Resources\Fonts\FontAwesome6Brands.otf" />
     <None Remove="Resources\Fonts\FontAwesome6Regular.otf" />
     <None Remove="Resources\Fonts\FontAwesome6Solid.otf" />
     <None Remove="Resources\Fonts\FontAwesome6Thin.otf" />
+    <None Remove="Resources\Raw\DPlayer.min.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Raw\DPlayer.min.css" />
   </ItemGroup>
 
   <ItemGroup>
@@ -84,6 +97,12 @@
     <MauiXaml Update="Resources\Styles\Options.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\Raw\Dplayer.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 
