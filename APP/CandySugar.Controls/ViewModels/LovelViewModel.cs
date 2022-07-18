@@ -1,10 +1,12 @@
 ﻿using CandySugar.Controls.Views.LovelViews;
 using CandySugar.Library;
+using Microsoft.Maui.Storage;
 using Sdk.Component.Lovel.sdk;
 using Sdk.Component.Lovel.sdk.ViewModel;
 using Sdk.Component.Lovel.sdk.ViewModel.Enums;
 using Sdk.Component.Lovel.sdk.ViewModel.Request;
 using Sdk.Component.Lovel.sdk.ViewModel.Response;
+using static Microsoft.Maui.ApplicationModel.Permissions;
 
 namespace CandySugar.Controls.ViewModels
 {
@@ -169,9 +171,60 @@ namespace CandySugar.Controls.ViewModels
                 await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
             }
         }
-        async void Navgation(LovelCategoryElementResult input)
+        async void InitDetail(LovelCategoryElementResult input)
         {
-            await Shell.Current.GoToAsync(nameof(LovelDetailView), new Dictionary<string, object> { { "Route", input } });
+            if (IsBusy) return;
+            try
+            {
+                if (CandySoft.NetState.NetworkAccess != NetworkAccess.Internet)
+                {
+                    await Shell.Current.DisplayAlert("网络异常！", "请检查网络是否通畅！", "是");
+                    return;
+                }
+                ShowBusy();
+                await Task.Delay(CandySoft.Wait / 2);
+                var result_detail = await LovelFactory.Lovel(opt =>
+                {
+                    opt.RequestParam = new Input
+                    {
+                        CacheSpan = CandySoft.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        LovelType = LovelEnum.Detail,
+                        Detail = new LovelDetail
+                        {
+                            Route = input.DetailAddress
+                        }
+                    };
+                }).RunsAsync();
+
+                await Task.Delay(CandySoft.Wait / 2);
+                var result_chapter = await LovelFactory.Lovel(opt =>
+                {
+                    opt.RequestParam = new Input
+                    {
+                        CacheSpan = CandySoft.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        LovelType = LovelEnum.View,
+                        View = new LovelView
+                        {
+                            Route = result_detail.DetailResult.Route
+                        }
+                    };
+                }).RunsAsync();
+                CloseBusy();
+                Navgation(input, result_chapter.ViewResult);
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+            }
+        }
+
+        async void Navgation(LovelCategoryElementResult input, List<LovelViewResult> views)
+        {
+            await Shell.Current.GoToAsync(nameof(LovelDetailView), new Dictionary<string, object> { { "Route", input },{ "Result",views} });
         }
         #endregion
 
@@ -194,6 +247,7 @@ namespace CandySugar.Controls.ViewModels
             if (Lock) return;
             this.Page += 1;
             if (this.Page > Total) return;
+            SetRefresh();
             if (KeyWord.IsNullOrEmpty()) InitCategory(CategoryRoute);
             else InitQeury();
         });
@@ -207,7 +261,8 @@ namespace CandySugar.Controls.ViewModels
         });
         public DelegateCommand<LovelCategoryElementResult> DetailAction => new(input =>
         {
-            Navgation(input);
+            SetRefresh();
+            InitDetail(input);
         });
         #endregion
     }

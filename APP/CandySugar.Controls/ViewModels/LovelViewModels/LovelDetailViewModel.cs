@@ -12,6 +12,7 @@ using Sdk.Component.Lovel.sdk.ViewModel.Enums;
 using Sdk.Component.Lovel.sdk.ViewModel.Request;
 using static Microsoft.Maui.ApplicationModel.Permissions;
 using CandySugar.Controls.Views.LovelViews;
+using Prism.Navigation.Xaml;
 
 namespace CandySugar.Controls.ViewModels.LovelViewModels
 {
@@ -20,7 +21,7 @@ namespace CandySugar.Controls.ViewModels.LovelViewModels
         public override void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             EleResult = query["Route"] as LovelCategoryElementResult;
-            Task.Run(() => InitDetail());
+            ViewResult = new ObservableCollection<LovelViewResult>(query["Result"] as List<LovelViewResult>);
         }
 
         #region 属性
@@ -39,59 +40,6 @@ namespace CandySugar.Controls.ViewModels.LovelViewModels
         #endregion
 
         #region 方法
-        async void InitDetail()
-        {
-            if (IsBusy) return;
-            try
-            {
-                if (CandySoft.NetState.NetworkAccess != NetworkAccess.Internet)
-                {
-                    await Shell.Current.DisplayAlert("网络异常！", "请检查网络是否通畅！", "是");
-                    return;
-                }
-                ShowBusy();
-                await Task.Delay(CandySoft.Wait / 2);
-                var result_detail = await LovelFactory.Lovel(opt =>
-                {
-                    opt.RequestParam = new Input
-                    {
-                        CacheSpan = CandySoft.Cache,
-                        Proxy = StaticResource.Proxy(),
-                        ImplType = StaticResource.ImplType(),
-                        LovelType = LovelEnum.Detail,
-                        Detail = new LovelDetail
-                        {
-                            Route = EleResult.DetailAddress
-                        }
-                    };
-                }).RunsAsync();
-
-                await Task.Delay(CandySoft.Wait / 2);
-                var result_chapter = await LovelFactory.Lovel(opt =>
-                {
-                    opt.RequestParam = new Input
-                    {
-                        CacheSpan = CandySoft.Cache,
-                        Proxy = StaticResource.Proxy(),
-                        ImplType = StaticResource.ImplType(),
-                        LovelType = LovelEnum.View,
-                        View = new LovelView
-                        {
-                            Route = result_detail.DetailResult.Route
-                        }
-                    };
-                }).RunsAsync();
-
-                ViewResult = new ObservableCollection<LovelViewResult>(result_chapter.ViewResult);
-
-                CloseBusy();
-
-            }
-            catch (Exception ex)
-            {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
-            }
-        }
         async void InitDown(string input)
         {
             //请求权限
@@ -129,13 +77,17 @@ namespace CandySugar.Controls.ViewModels.LovelViewModels
                     await Shell.Current.DisplayAlert("提示！", "因版权问题，不再提供该小说的阅读", "是");
                     return;
                 }
-                var Param = new Dictionary<string, object> { { "Result", result.ContentResult }, { "Title", input.ChapterName }};
-                await Shell.Current.GoToAsync(nameof(LovelContentView), Param);
+                Navigation(new Dictionary<string, object> { { "Result", result.ContentResult }, { "Title", input.ChapterName } });
             }
             catch (Exception ex)
             {
                 await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
             }
+        }
+
+        async void Navigation(Dictionary<string,object> Param)
+        {
+            await Shell.Current.GoToAsync(nameof(LovelContentView), Param);
         }
         #endregion
 
