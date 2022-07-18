@@ -10,9 +10,6 @@
     <ContentPage.BindingContext>
         <vm:LovelDetailViewModel />
     </ContentPage.BindingContext>
-    <Shell.BackButtonBehavior>
-        <BackButtonBehavior Command="{Binding BackAction}" />
-    </Shell.BackButtonBehavior>
     <Grid RowDefinitions="Auto,*">
         <Border
             Stroke="{StaticResource Gray100Brush}"

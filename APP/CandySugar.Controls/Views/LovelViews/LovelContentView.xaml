@@ -10,9 +10,6 @@
     <ContentPage.BindingContext>
         <vm:LovelContentViewModel />
     </ContentPage.BindingContext>
-    <Shell.BackButtonBehavior>
-        <BackButtonBehavior Command="{Binding BackAction}" />
-    </Shell.BackButtonBehavior>
     <Grid BackgroundColor="AliceBlue">
         <CollectionView
             IsEnabled="{Binding Image}"

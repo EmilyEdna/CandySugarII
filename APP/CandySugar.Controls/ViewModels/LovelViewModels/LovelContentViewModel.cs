@@ -14,7 +14,6 @@ namespace CandySugar.Controls.ViewModels.LovelViewModels
         public override void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             Title = query["Title"].ToString();
-            EleResult = query["Data"] as LovelCategoryElementResult;
             var temp = (query["Result"] as LovelContentResult);
 
             if (!temp.Content.IsNullOrEmpty())
@@ -70,13 +69,6 @@ namespace CandySugar.Controls.ViewModels.LovelViewModels
             get => _EleResult;
             set => SetProperty(ref _EleResult, value);
         }
-        #endregion
-
-        #region 命令
-        public DelegateCommand BackAction => new(async () =>
-        {
-            await Shell.Current.GoToAsync(nameof(LovelDetailView), new Dictionary<string, object> { { "Route",EleResult} });
-        });
         #endregion
     }
 }

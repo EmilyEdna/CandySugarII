@@ -129,7 +129,7 @@ namespace CandySugar.Controls.ViewModels.LovelViewModels
                     await Shell.Current.DisplayAlert("提示！", "因版权问题，不再提供该小说的阅读", "是");
                     return;
                 }
-                var Param = new Dictionary<string, object> { { "Result", result.ContentResult }, { "Title", input.ChapterName },{ "Data",EleResult} };
+                var Param = new Dictionary<string, object> { { "Result", result.ContentResult }, { "Title", input.ChapterName }};
                 await Shell.Current.GoToAsync(nameof(LovelContentView), Param);
             }
             catch (Exception ex)
@@ -143,11 +143,7 @@ namespace CandySugar.Controls.ViewModels.LovelViewModels
         public DelegateCommand<LovelViewResult> ViewAction => new(input =>
         {
             if (input.IsDown) Task.Run(() => InitDown(input.ChapterRoute));
-            else Task.Run(() => InitContent(input));
-        });
-        public DelegateCommand BackAction => new(async () =>
-        {
-            await Shell.Current.GoToAsync($"../../../");
+            else InitContent(input);
         });
         #endregion
     }
