@@ -9,8 +9,8 @@
     <script src="hls.min.js"></script>
     <style>
         html, body {
-            width: 100%;
-            height: 100%;
+            width: 780px;
+            height: 360px;
             margin: auto;
             overflow: hidden;
         }
@@ -21,14 +21,13 @@
 
         #dplayer {
             flex: auto;
-            height: 726px;
+            height: 360px;
             border-bottom-right-radius: 15px;
         }
     </style>
     <script>
-        function Play(uri, height) {
+        function Play(uri) {
             var ele = document.getElementById('dplayer');
-            ele.style.height = `${height}px`;
             var dp = new DPlayer({
                 container: ele,
                 video: {

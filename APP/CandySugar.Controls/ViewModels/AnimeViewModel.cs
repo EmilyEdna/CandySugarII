@@ -74,6 +74,7 @@ namespace CandySugar.Controls.ViewModels
         {
             SetRefresh();
             this.Page = 1;
+            this.IsCategoryType = true;
             this.KeyWord = string.Empty;
             this.CategoryKeyWord = input;
             Task.Run(() => InitCatagory());
@@ -82,6 +83,7 @@ namespace CandySugar.Controls.ViewModels
         {
             SetRefresh();
             this.Page = 1;
+            this.IsCategoryType = false;
             this.KeyWord = string.Empty;
             this.CategoryKeyWord = input;
             Task.Run(() => InitCatagory());
@@ -104,7 +106,7 @@ namespace CandySugar.Controls.ViewModels
         });
         public DelegateCommand<AnimeSearchElementResult> DetailAction => new(input =>
         {
-            Task.Run(() => InitDetail(input.Route));
+            InitDetail(input.Route);
         });
         #endregion
 

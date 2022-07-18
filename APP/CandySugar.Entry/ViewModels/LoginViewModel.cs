@@ -9,6 +9,8 @@ namespace CandySugar.Entry.ViewModels
         INavigationService NavigationService;
         public LoginViewModel(INavigationService NavigationService)
         {
+            CandySoft.ScreenWidth = DeviceDisplay.Current.MainDisplayInfo.Width/3;
+            CandySoft.ScreenHeight = DeviceDisplay.Current.MainDisplayInfo.Height/3;
             this.NavigationService = NavigationService;
         }
 

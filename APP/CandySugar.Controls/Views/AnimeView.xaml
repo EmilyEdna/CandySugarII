@@ -31,7 +31,7 @@
                         Text="{Binding .}"
                         TextColor="{StaticResource Pink}">
                         <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding CategoryLetterAction, Source={RelativeSource AncestorType={x:Type vm:LovelViewModel}}}" CommandParameter="{Binding .}" />
+                            <TapGestureRecognizer Command="{Binding CategoryLetterAction, Source={RelativeSource AncestorType={x:Type vm:AnimeViewModel}}}" CommandParameter="{Binding .}" />
                         </Label.GestureRecognizers>
                     </Label>
                 </DataTemplate>
