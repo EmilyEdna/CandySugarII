@@ -64,7 +64,7 @@
                     <Label
                         Margin="10,0,0,0"
                         FontSize="11"
-                        LineBreakMode="WordWrap"
+                        LineBreakMode="TailTruncation"
                         Text="{Binding DetailResult.Description, StringFormat='简介：{0}'}"
                         TextColor="{StaticResource Pink}" />
                 </StackLayout>
