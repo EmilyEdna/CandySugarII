@@ -1,12 +1,4 @@
-﻿using CandySugar.Library;
-using Jint.Runtime;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CandySugar.Controls.ViewModels.MangaViewModels
+﻿namespace CandySugar.Controls.ViewModels.MangaViewModels
 {
     public class MangaWatchViewModel : BaseViewModel
     {

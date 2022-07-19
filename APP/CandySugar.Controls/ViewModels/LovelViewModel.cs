@@ -1,5 +1,4 @@
 ﻿using CandySugar.Controls.Views.LovelViews;
-using CandySugar.Library;
 using Microsoft.Maui.Storage;
 using Sdk.Component.Lovel.sdk;
 using Sdk.Component.Lovel.sdk.ViewModel;

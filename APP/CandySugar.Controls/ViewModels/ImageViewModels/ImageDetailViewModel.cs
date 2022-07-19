@@ -1,5 +1,4 @@
-﻿using CandySugar.Library;
-using CandySugar.Library.AndroidCommon;
+﻿using CandySugar.Library.AndroidCommon;
 using CandySugar.Library.AndroidCommon.Device;
 using CandySugar.Library.AndroidCommon.Screen;
 using System.Web;

@@ -1,11 +1,4 @@
-﻿using CandySugar.Controls.Views.LovelViews;
-using CandySugar.Library;
-using Sdk.Component.Lovel.sdk.ViewModel.Response;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Sdk.Component.Lovel.sdk.ViewModel.Response;
 
 namespace CandySugar.Controls.ViewModels.LovelViewModels
 {

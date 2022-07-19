@@ -1,15 +1,5 @@
 ﻿using CandySugar.Controls.Views.AnimeViews;
-using CandySugar.Library;
-using Sdk.Component.Anime.sdk;
-using Sdk.Component.Anime.sdk.ViewModel;
-using Sdk.Component.Anime.sdk.ViewModel.Enums;
-using Sdk.Component.Anime.sdk.ViewModel.Request;
 using Sdk.Component.Anime.sdk.ViewModel.Response;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CandySugar.Controls.ViewModels.AnimeViewModels
 {

@@ -1,6 +1,4 @@
 ﻿using CandySugar.Controls.Views.AnimeViews;
-using CandySugar.Controls.Views.LovelViews;
-using CandySugar.Library;
 using Sdk.Component.Anime.sdk;
 using Sdk.Component.Anime.sdk.ViewModel;
 using Sdk.Component.Anime.sdk.ViewModel.Enums;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CandySugar.Controls.ViewModels
 {
-    public class AxgleViewModel : BindableBase
+    public class AxgleViewModel : BaseViewModel
     {
     }
 }

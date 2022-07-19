@@ -1,5 +1,5 @@
 ﻿using CandySugar.Controls.Views.ImageViews;
-using CandySugar.Library;
+using CandySugar.Controls.Views.ImageViews.Popups;
 using Sdk.Component.Image.sdk;
 using Sdk.Component.Image.sdk.ViewModel;
 using Sdk.Component.Image.sdk.ViewModel.Enums;
@@ -64,6 +64,11 @@ namespace CandySugar.Controls.ViewModels
             this.Page = 1;
             if (KeyWord.IsNullOrEmpty()) Task.Run(() => InitImage());
             else Task.Run(() => InitSearch(KeyWord));
+        });
+
+        public DelegateCommand LabelPlusAction => new(() =>
+        {
+            PushPopup();
         });
         #endregion
 
@@ -157,6 +162,12 @@ namespace CandySugar.Controls.ViewModels
         async void Navgation(string input)
         {
             await Shell.Current.GoToAsync($"{nameof(ImageDetailView)}?Key={input}");
+        }
+
+        async void PushPopup()
+        {
+            ImageLabelView LabelView = new ImageLabelView();
+            await MopupService.Instance.PushAsync(LabelView);
         }
         #endregion
     }

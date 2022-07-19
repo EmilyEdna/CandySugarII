@@ -47,6 +47,9 @@
 	  <MauiXaml Update="Views\ImageViews\ImageDetailView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\ImageViews\Popups\ImageLabelView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\MangaViews\MangaChapterView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

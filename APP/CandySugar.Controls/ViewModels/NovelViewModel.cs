@@ -1,5 +1,4 @@
-﻿using CandySugar.Library;
-using Sdk.Component.Novel.sdk;
+﻿using Sdk.Component.Novel.sdk;
 using Sdk.Component.Novel.sdk.ViewModel;
 using Sdk.Component.Novel.sdk.ViewModel.Enums;
 using Sdk.Component.Novel.sdk.ViewModel.Request;

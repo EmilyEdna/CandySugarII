@@ -1,12 +1,6 @@
-﻿using CandySugar.Library;
-using CandySugar.Library.AndroidCommon;
+﻿using CandySugar.Library.AndroidCommon;
 using CandySugar.Library.AndroidCommon.Device;
 using CandySugar.Library.AndroidCommon.Screen;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace CandySugar.Controls.ViewModels.AnimeViewModels

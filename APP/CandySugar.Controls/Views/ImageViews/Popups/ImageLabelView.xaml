@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mo:PopupPage
+    x:Class="CandySugar.Controls.Views.ImageViews.Popups.ImageLabelView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mo="clr-namespace:Mopups.Pages;assembly=Mopups"
+    xmlns:vm="clr-namespace:CandySugar.Controls.ViewModels.ImageViewModels.PopupModels"
+    x:DataType="vm:ImageLabelViewModel"
+    BackgroundColor="#80E1E1E1"
+    CloseWhenBackgroundIsClicked="True"
+    HeightRequest="600"
+    WidthRequest="320">
+    <mo:PopupPage.BindingContext>
+        <vm:ImageLabelViewModel />
+    </mo:PopupPage.BindingContext>
+    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+        <Frame BorderColor="{StaticResource Gray200}" CornerRadius="20">
+            <Grid RowDefinitions="*,*,*">
+                <StackLayout
+                    Margin="0,20,0,0"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Start">
+                    <Border
+                        Stroke="{StaticResource Gray100Brush}"
+                        StrokeShape="RoundRectangle 30"
+                        StrokeThickness="1"
+                        WidthRequest="240">
+                        <HorizontalStackLayout
+                            Margin="10,0,0,0"
+                            VerticalOptions="End"
+                            WidthRequest="240">
+                            <Label
+                                Margin="5,0,0,0"
+                                Padding="1"
+                                MaxLines="1"
+                                Text="中文"
+                                VerticalOptions="Center"
+                                WidthRequest="40" />
+                            <Line
+                                Stroke="{StaticResource Gray100}"
+                                VerticalOptions="Center"
+                                X1="0"
+                                X2="0"
+                                Y1="0"
+                                Y2="20" />
+                            <Entry
+                                Margin="5,0,0,0"
+                                ClearButtonVisibility="WhileEditing"
+                                Placeholder="请输入中文标签名称"
+                                Text="{Binding Chinese, Mode=TwoWay}"
+                                VerticalOptions="Center"
+                                WidthRequest="200" />
+                        </HorizontalStackLayout>
+                    </Border>
+                </StackLayout>
+                <StackLayout
+                    Grid.Row="1"
+                    Margin="0,25,0,0"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Start">
+                    <Border
+                        Stroke="{StaticResource Gray100Brush}"
+                        StrokeShape="RoundRectangle 30"
+                        StrokeThickness="1"
+                        WidthRequest="240">
+                        <HorizontalStackLayout
+                            Margin="10,0,0,0"
+                            VerticalOptions="End"
+                            WidthRequest="240">
+                            <Label
+                                Margin="5,0,0,0"
+                                Padding="1"
+                                MaxLines="1"
+                                Text="英文"
+                                VerticalOptions="Center"
+                                WidthRequest="40" />
+                            <Line
+                                Stroke="{StaticResource Gray100}"
+                                VerticalOptions="Center"
+                                X1="0"
+                                X2="0"
+                                Y1="0"
+                                Y2="20" />
+                            <Entry
+                                Margin="5,0,0,0"
+                                ClearButtonVisibility="WhileEditing"
+                                Placeholder="请输入K站标签名称"
+                                Text="{Binding English, Mode=TwoWay}"
+                                VerticalOptions="Center"
+                                WidthRequest="200" />
+                        </HorizontalStackLayout>
+                    </Border>
+                </StackLayout>
+                <StackLayout
+                    Grid.Row="2"
+                    Margin="0,25,0,0"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Start">
+                    <Button
+                        Background="{StaticResource Pink}"
+                        Command="{Binding SaveAction}"
+                        FontSize="18"
+                        HeightRequest="40"
+                        Text="保存"
+                        TextColor="White"
+                        WidthRequest="240" />
+                </StackLayout>
+            </Grid>
+        </Frame>
+    </VerticalStackLayout>
+</mo:PopupPage>

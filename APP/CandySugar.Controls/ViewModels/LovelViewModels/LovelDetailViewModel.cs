@@ -1,18 +1,10 @@
-﻿using CandySugar.Library;
-using Sdk.Component.Lovel.sdk.ViewModel.Response;
+﻿using CandySugar.Controls.Views.LovelViews;
 using Sdk.Component.Lovel.sdk;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using Sdk.Component.Lovel.sdk.ViewModel;
 using Sdk.Component.Lovel.sdk.ViewModel.Enums;
 using Sdk.Component.Lovel.sdk.ViewModel.Request;
+using Sdk.Component.Lovel.sdk.ViewModel.Response;
 using static Microsoft.Maui.ApplicationModel.Permissions;
-using CandySugar.Controls.Views.LovelViews;
-using Prism.Navigation.Xaml;
 
 namespace CandySugar.Controls.ViewModels.LovelViewModels
 {

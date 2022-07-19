@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CandySugar.Controls.ViewModels
 {
-    public class MusicViewModel : BindableBase
+    public class MusicViewModel : BaseViewModel
     {
     }
 }

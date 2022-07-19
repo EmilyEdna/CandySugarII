@@ -1,16 +1,9 @@
-﻿using CandySugar.Library;
-using Sdk.Component.Manga.sdk.ViewModel.Response;
+﻿using CandySugar.Controls.Views.MangaViews;
 using Sdk.Component.Manga.sdk;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sdk.Component.Manga.sdk.ViewModel.Enums;
 using Sdk.Component.Manga.sdk.ViewModel;
+using Sdk.Component.Manga.sdk.ViewModel.Enums;
 using Sdk.Component.Manga.sdk.ViewModel.Request;
-using CandySugar.Controls.Views.MangaViews;
-using Prism.Navigation.Xaml;
+using Sdk.Component.Manga.sdk.ViewModel.Response;
 
 namespace CandySugar.Controls.ViewModels
 {
