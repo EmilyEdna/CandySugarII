@@ -52,10 +52,13 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="sdk:NovelCategoryElementResult">
-                        <Border Stroke="{StaticResource Gray100Brush}" StrokeThickness="1">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="5" />
-                            </Border.StrokeShape>
+                        <Border
+                            Stroke="{StaticResource Gray100Brush}"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="1">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding DetailAction, Source={RelativeSource AncestorType={x:Type vm:NovelViewModel}}}" CommandParameter="{Binding DetailRoute}" />
+                            </Border.GestureRecognizers>
                             <StackLayout>
                                 <Label
                                     Margin="10,0,0,0"

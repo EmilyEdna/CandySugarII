@@ -71,12 +71,6 @@
         Size="22"
         Color="{StaticResource Red}" />
     <FontImage
-        x:Key="Tag"
-        FontFamily="Thin"
-        Glyph="{Static lib:FontIcon.Tag}"
-        Size="22"
-        Color="{StaticResource Red}" />
-    <FontImage
         x:Key="Search"
         FontFamily="Thin"
         Glyph="{Static lib:FontIcon.MagnifyingGlass}"

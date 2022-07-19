@@ -1,4 +1,5 @@
-﻿using Sdk.Component.Novel.sdk;
+﻿using CandySugar.Controls.Views.NovelViews;
+using Sdk.Component.Novel.sdk;
 using Sdk.Component.Novel.sdk.ViewModel;
 using Sdk.Component.Novel.sdk.ViewModel.Enums;
 using Sdk.Component.Novel.sdk.ViewModel.Request;
@@ -10,7 +11,7 @@ namespace CandySugar.Controls.ViewModels
     {
         public NovelViewModel()
         {
-            InitNovel();
+            Task.Run(() => InitNovel());
         }
 
         #region 字段
@@ -70,7 +71,7 @@ namespace CandySugar.Controls.ViewModels
                 await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
             }
         }
-        async void InitCategory(string input)
+        async void InitCategory()
         {
             if (IsBusy) return;
             try
@@ -93,12 +94,12 @@ namespace CandySugar.Controls.ViewModels
                         Category = new NovelCategory
                         {
                             Page = this.Page,
-                            CategoryRoute = input,
+                            CategoryRoute = this.CategoryRoute,
                         }
                     };
                 }).RunsAsync();
                 CloseBusy();
-                Total = Math.Ceiling(result.CategoryResult.Total / 20d);
+                Total = result.CategoryResult.Total;
                 if (CategoryResult == null)
                     CategoryResult = new ObservableCollection<NovelCategoryElementResult>(result.CategoryResult.ElementResults);
                 else
@@ -147,6 +148,40 @@ namespace CandySugar.Controls.ViewModels
                 await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
             }
         }
+        async void InitDetail(string input)
+        {
+            if (IsBusy) return;
+            try
+            {
+                if (CandySoft.NetState.NetworkAccess != NetworkAccess.Internet)
+                {
+                    await Shell.Current.DisplayAlert("网络异常！", "请检查网络是否通畅！", "是");
+                    return;
+                }
+                ShowBusy();
+                await Task.Delay(CandySoft.Wait);
+                var result = await NovelFactory.Novel(opt =>
+                {
+                    opt.RequestParam = new Input
+                    {
+                        CacheSpan = CandySoft.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        NovelType = NovelEnum.Detail,
+                        Detail = new NovelDetail
+                        {
+                            DetailRoute = input
+                        }
+                    };
+                }).RunsAsync();
+                CloseBusy();
+                await Shell.Current.GoToAsync(nameof(NovelDetailView), new Dictionary<string, object> { { "Key", result.DetailResult }, { "Route", input } });
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+            }
+        }
         #endregion
 
         #region 命令
@@ -155,26 +190,32 @@ namespace CandySugar.Controls.ViewModels
             this.Page = 1;
             SetRefresh();
             CategoryRoute = input;
-            InitCategory(input);
+            CategoryResult = null;
+            Task.Run(() => InitCategory());
         });
         public DelegateCommand RefreshAction => new(() =>
         {
+            this.Page = 1;
             SetRefresh(false);
-            InitCategory(CategoryRoute);
+            CategoryResult = null;
+            Task.Run(() => InitCategory());
         });
         public DelegateCommand LoadMoreAction => new(() =>
         {
             if (Lock) return;
             this.Page += 1;
             if (this.Page > Total) return;
-            InitCategory(CategoryRoute);
+            InitCategory();
         });
         public DelegateCommand QueryAction => new(() =>
         {
             if (!KeyWord.IsNullOrEmpty())
-            {
-                InitQuery();
-            }
+                Task.Run(() => InitQuery());
+        });
+        public DelegateCommand<string> DetailAction => new(input =>
+        {
+            SetRefresh();
+            InitDetail(input);
         });
         #endregion
     }

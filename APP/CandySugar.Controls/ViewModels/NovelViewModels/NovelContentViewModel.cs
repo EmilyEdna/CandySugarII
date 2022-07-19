@@ -1,0 +1,102 @@
+﻿using Sdk.Component.Novel.sdk;
+using Sdk.Component.Novel.sdk.ViewModel;
+using Sdk.Component.Novel.sdk.ViewModel.Enums;
+using Sdk.Component.Novel.sdk.ViewModel.Request;
+using Sdk.Component.Novel.sdk.ViewModel.Response;
+using System.Linq;
+
+namespace CandySugar.Controls.ViewModels.NovelViewModels
+{
+    public class NovelContentViewModel : BaseViewModel
+    {
+        public override void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            var detail = (query["Key"] as NovelDetailElementResult);
+            InitContent(detail.ChapterRoute);
+        }
+
+        #region 属性
+        ObservableCollection<string> _Content;
+        public ObservableCollection<string> Content
+        {
+            get { return _Content; }
+            set { SetProperty(ref _Content, value); }
+        }
+        string _ChapterName;
+        public string ChapterName
+        {
+            get { return _ChapterName; }
+            set { SetProperty(ref _ChapterName, value); }
+        }
+        string _Next;
+        public string Next
+        {
+            get { return _Next; }
+            set { SetProperty(ref _Next, value); }
+        }
+        #endregion
+
+        #region 方法
+        async void InitContent(string input)
+        {
+            if (IsBusy) return;
+            try
+            {
+                if (CandySoft.NetState.NetworkAccess != NetworkAccess.Internet)
+                {
+                    await Shell.Current.DisplayAlert("网络异常！", "请检查网络是否通畅！", "是");
+                    return;
+                }
+                ShowBusy();
+                await Task.Delay(CandySoft.Wait);
+                var result = await NovelFactory.Novel(opt =>
+                {
+                    opt.RequestParam = new Input
+                    {
+                        CacheSpan = CandySoft.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        NovelType = NovelEnum.View,
+                        View = new NovelView
+                        {
+                            Route = input
+                        }
+                    };
+                }).RunsAsync();
+
+                this.ChapterName = result.ContentResult.ChapterName;
+
+                Next = result.ContentResult.NextPage.IsNullOrEmpty() ? result.ContentResult.NextChapter : result.ContentResult.NextPage;
+                result.ContentResult.Content = result.ContentResult.Content.Replace("　", "\t");
+
+                if (this.Content == null)
+                    this.Content = new ObservableCollection<string>(new List<string>());
+
+                result.ContentResult.Content.Split("\t", StringSplitOptions.RemoveEmptyEntries).ForEnumerEach(t =>
+                {
+                    this.Content.Add("\t\t\t\t\t" + t + "\r\n");
+                });
+                CloseBusy();
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+            }
+        }
+        #endregion
+
+        #region 命令
+        public DelegateCommand LoadMoreAction => new(() =>
+        {
+            if (Content.Count > 10000)
+            {
+                var temp = Content.ToList();
+                temp.RemoveRange(0, 10000);
+                Content = new ObservableCollection<string>(temp);
+            }
+            if (!Next.IsNullOrEmpty())
+                InitContent(Next);
+        });
+        #endregion
+    }
+}

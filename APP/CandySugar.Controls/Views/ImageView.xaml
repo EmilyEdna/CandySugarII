@@ -12,7 +12,6 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem
             Command="{Binding LabelPlusAction}"
-            IconImageSource="{StaticResource Tag}"
             Order="Secondary"
             Priority="0"
             Text="标签" />

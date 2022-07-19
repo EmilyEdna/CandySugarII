@@ -84,6 +84,12 @@ namespace CandySugar.Controls.ContentViewModel
             get => _CategoryTotal;
             set => SetAndNotify(ref _CategoryTotal, value);
         }
+        private int _DetailPage;
+        public int DetailPage
+        {
+            get => _DetailPage;
+            set => SetAndNotify(ref _DetailPage, value);
+        }
         #endregion
 
         #region Property
@@ -174,6 +180,13 @@ namespace CandySugar.Controls.ContentViewModel
             this.CategoryPage = input.Info;
             InitCategory(CategoryRoute);
         }
+
+        public void PageDetailAction(FunctionEventArgs<int> input)
+        {
+            this.DetailPage = input.Info;
+            InitDetail(DetailRoute);
+        }
+
         public void HistoryAction() {
             this.StepOne = true;
             this.StepTwo = false;
@@ -267,6 +280,7 @@ namespace CandySugar.Controls.ContentViewModel
                     NovelType = NovelEnum.Detail,
                     Detail = new NovelDetail
                     {
+                        Page =DetailPage,
                         DetailRoute = input,
                     }
                 };

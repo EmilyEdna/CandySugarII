@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="CandySugar.Controls.Views.NovelViews.NovelContentView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:CandySugar.Controls.ViewModels.NovelViewModels"
+    x:DataType="vm:NovelContentViewModel"
+    BackgroundColor="#DDCDA1"
+    Shell.NavBarIsVisible="False">
+    <ContentPage.BindingContext>
+        <vm:NovelContentViewModel />
+    </ContentPage.BindingContext>
+    <Grid RowDefinitions="30,*">
+        <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+            <Label
+                FontSize="22"
+                Text="{Binding ChapterName}"
+                TextColor="Black" />
+        </StackLayout>
+        <CollectionView
+            Grid.Row="1"
+            ItemSizingStrategy="MeasureFirstItem"
+            ItemsSource="{Binding Content, Mode=TwoWay}"
+            RemainingItemsThreshold="0"
+            RemainingItemsThresholdReachedCommand="{Binding LoadMoreAction}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Label
+                            FontSize="18"
+                            LineBreakMode="CharacterWrap"
+                            Text="{Binding .}"
+                            TextColor="Black" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <ActivityIndicator
+            Grid.RowSpan="2"
+            HeightRequest="20"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            WidthRequest="20"
+            Color="{StaticResource Green}" />
+    </Grid>
+</ContentPage>

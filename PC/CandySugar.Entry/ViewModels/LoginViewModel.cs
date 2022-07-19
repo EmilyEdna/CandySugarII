@@ -93,7 +93,7 @@ namespace CandySugar.Entry.ViewModels
             if (this.Account.ToLower().Equals("admin") && this.PassWord.ToLower().Equals("admin"))
             {
                 CandySoft.Default.IsAdmin = true;
-                return SdkLicense.Register(new SkdLicenseModel
+                return SdkLicense.Register(new SdkLicenseModel
                 {
                     Account = "EmilyEdna",
                     Password = DateTime.Now.ToString("yyyyMMdd")
@@ -102,7 +102,7 @@ namespace CandySugar.Entry.ViewModels
             else if (this.Account.ToLower().Equals("admin") && this.PassWord.ToLower().Equals("123456"))
             {
                 CandySoft.Default.IsAdmin = false;
-                return SdkLicense.Register(new SkdLicenseModel
+                return SdkLicense.Register(new SdkLicenseModel
                 {
                     Account = "EmilyEdna",
                     Password = DateTime.Now.ToString("yyyyMMdd")

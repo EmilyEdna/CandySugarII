@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="CandySugar.Controls.Views.NovelViews.NovelDetailView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:sdk="clr-namespace:Sdk.Component.Novel.sdk.ViewModel.Response;assembly=Sdk.Component"
+    xmlns:vm="clr-namespace:CandySugar.Controls.ViewModels.NovelViewModels"
+    Title="{Binding DetailResult.BookName}"
+    x:DataType="vm:NovelDetailViewModel">
+    <ContentPage.BindingContext>
+        <vm:NovelDetailViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding SortTypeAction}"
+            CommandParameter="true"
+            Order="Secondary"
+            Priority="0"
+            Text="正序" />
+        <ToolbarItem
+            Command="{Binding SortTypeAction}"
+            CommandParameter="false"
+            Order="Secondary"
+            Priority="1"
+            Text="倒叙" />
+    </ContentPage.ToolbarItems>
+    <Grid RowDefinitions="Auto,*">
+        <Border
+            Stroke="{StaticResource Gray100Brush}"
+            StrokeShape="RoundRectangle 0"
+            StrokeThickness="1">
+            <Grid ColumnDefinitions="Auto,*">
+                <Border
+                    HeightRequest="130"
+                    StrokeShape="RoundRectangle 0"
+                    WidthRequest="90">
+                    <Image Aspect="Fill" Source="{Binding DetailResult.Cover}" />
+                </Border>
+                <StackLayout Grid.Column="1">
+                    <Label
+                        Margin="10,0,0,0"
+                        Text="{Binding DetailResult.BookName}"
+                        TextColor="{StaticResource Red}" />
+                    <Label
+                        Margin="10,0,0,0"
+                        FontSize="11"
+                        Text="{Binding DetailResult.Author, StringFormat='作者：{0}'}"
+                        TextColor="{StaticResource Pink}" />
+                    <Label
+                        Margin="10,0,0,0"
+                        FontSize="11"
+                        Text="{Binding DetailResult.BookType, StringFormat='类别：{0}'}"
+                        TextColor="{StaticResource Pink}" />
+                    <Label
+                        Margin="10,0,0,0"
+                        FontSize="11"
+                        Text="{Binding DetailResult.Status, StringFormat='状态：{0}'}"
+                        TextColor="{StaticResource Pink}" />
+                    <Label
+                        Margin="10,0,0,0"
+                        FontSize="11"
+                        Text="{Binding DetailResult.LastUpdateTime, StringFormat='时间：{0:yyyy-MM-dd HH:mm:ss}'}"
+                        TextColor="{StaticResource Pink}" />
+                    <Label
+                        Margin="10,0,0,0"
+                        FontSize="11"
+                        LineBreakMode="WordWrap"
+                        Text="{Binding DetailResult.Description, StringFormat='简介：{0}'}"
+                        TextColor="{StaticResource Pink}" />
+                </StackLayout>
+            </Grid>
+        </Border>
+        <CollectionView
+            Grid.Row="1"
+            ItemSizingStrategy="MeasureAllItems"
+            ItemsSource="{Binding ElementResult, Mode=TwoWay}"
+            RemainingItemsThreshold="0"
+            RemainingItemsThresholdReachedCommand="{Binding LoadMoreAction}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="3" Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="sdk:NovelDetailElementResult">
+                    <Border
+                        Padding="5"
+                        Stroke="{StaticResource Gray100Brush}"
+                        StrokeThickness="1">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ViewAction, Source={RelativeSource AncestorType={x:Type vm:NovelDetailViewModel}}}" CommandParameter="{Binding .}" />
+                        </Border.GestureRecognizers>
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Label
+                            Margin="10,0,0,0"
+                            FontSize="16"
+                            LineBreakMode="WordWrap"
+                            Text="{Binding ChapterName}"
+                            TextColor="{StaticResource Red}" />
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <ActivityIndicator
+            Grid.RowSpan="2"
+            HeightRequest="20"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            WidthRequest="20"
+            Color="{StaticResource Green}" />
+    </Grid>
+</ContentPage>
