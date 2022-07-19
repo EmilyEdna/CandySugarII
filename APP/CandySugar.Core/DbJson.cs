@@ -24,8 +24,12 @@ namespace CandySugar.Logic
         {
             return Path.Combine(JRoute, $"{nameof(T)}.mod");
         }
-        private List<T> Add<T>(List<T> input)
+        private List<T> Add<T>(List<T> input) where T : BaseEntity
         {
+            input.ForEach(item =>
+            {
+                item.Create();
+            });
             var Data = Encoding.UTF8.GetBytes(SyncStatic.Compress(input.ToJson(), SecurityType.Base64));
             SyncStatic.WriteFile(Data, Route<T>());
             return input;
@@ -33,12 +37,13 @@ namespace CandySugar.Logic
         public List<T> Read<T>()
         {
             var JPath = Route<T>();
-            return SyncStatic.Decompress(SyncStatic.ReadFile(JPath), SecurityType.Base64).ToModel<List<T>>();
+            var result = SyncStatic.ReadFile(JPath);
+            if (result.IsNullOrEmpty()) return new List<T>();
+            return SyncStatic.Decompress(result, SecurityType.Base64).ToModel<List<T>>();
         }
         public List<T> InsertSingle<T>(T input) where T : BaseEntity
         {
             var Result = Read<T>();
-            input.Create();
             Result.Add(input);
             return Add(Result);
         }

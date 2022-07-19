@@ -19,7 +19,7 @@
         </StackLayout>
         <CollectionView
             Grid.Row="1"
-            ItemSizingStrategy="MeasureFirstItem"
+            ItemSizingStrategy="MeasureAllItems"
             ItemsSource="{Binding Content, Mode=TwoWay}"
             RemainingItemsThreshold="0"
             RemainingItemsThresholdReachedCommand="{Binding LoadMoreAction}">

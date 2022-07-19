@@ -4,12 +4,12 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:ctrl="http://ctrl.sugar.com"
+    xmlns:his="clr-namespace:CandySugar.Controls.SysViews.HistoryViews;assembly=CandySugar.Controls"
     xmlns:lib="http://lib.sugar.com"
     xmlns:vm="clr-namespace:CandySugar.Entry.ViewModels"
     BackgroundColor="{StaticResource Pink}"
     FlyoutWidth="200"
     TabBarIsVisible="False">
-
     <Shell.BindingContext>
         <vm:IndexViewModel />
     </Shell.BindingContext>
@@ -89,6 +89,7 @@
             </StackLayout>
         </StackLayout>
     </Shell.FlyoutFooter>
+
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems" Route="OptionElement">
         <ShellContent
             Title="历史"

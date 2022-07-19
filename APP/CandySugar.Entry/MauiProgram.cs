@@ -3,6 +3,7 @@ using CandySugar.Controls.ViewModels;
 using CandySugar.Controls.Views;
 using CandySugar.Entry.Views;
 using CandySugar.Logic;
+using CandySugar.Logic.Common;
 using Prism.Ioc;
 
 namespace CandySugar.Entry
@@ -11,7 +12,8 @@ namespace CandySugar.Entry
     {
         public static MauiApp CreateMauiApp()
         {
-            return MauiApp.CreateBuilder().UsePrismApp<App>(prism =>
+            return MauiApp.CreateBuilder().ConfigurationService()
+                .UsePrismApp<App>(prism =>
                 {
                     prism.RegisterTypes(containerRegistry =>
                     {

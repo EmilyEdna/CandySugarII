@@ -1,19 +1,21 @@
 ﻿using CandySugar.Controls.Views.NovelViews;
-using Sdk.Component.Novel.sdk.ViewModel;
 using Sdk.Component.Novel.sdk;
-using Sdk.Component.Novel.sdk.ViewModel.Response;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Sdk.Component.Novel.sdk.ViewModel;
 using Sdk.Component.Novel.sdk.ViewModel.Enums;
 using Sdk.Component.Novel.sdk.ViewModel.Request;
+using Sdk.Component.Novel.sdk.ViewModel.Response;
+
 
 namespace CandySugar.Controls.ViewModels.NovelViewModels
 {
     public class NovelDetailViewModel : BaseViewModel
     {
+        ICandyService Service;
+        public NovelDetailViewModel()
+        {
+            Service = CandyContainer.Instance.Resolves<ICandyService>();
+        }
+
         public override void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             this.Page = 1;
@@ -127,7 +129,15 @@ namespace CandySugar.Controls.ViewModels.NovelViewModels
         }
         async void Navigation(NovelDetailElementResult input)
         {
+            Logic(input);
             await Shell.Current.GoToAsync(nameof(NovelContentView), new Dictionary<string, object> { { "Key", input } });
+        }
+        void Logic(NovelDetailElementResult input)
+        {
+            var Model = DetailResult.ToMapest<CandyNovel>();
+            Model.Route = input.ChapterRoute;
+            Model.Chapter = input.ChapterName;
+            Service.AddOrAlterNovel(Model);
         }
         #endregion
     }

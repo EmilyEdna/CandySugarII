@@ -4,23 +4,36 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:CandySugar.Controls.SysViewModels"
-    x:DataType="vm:HistoryViewModel">
+    x:DataType="vm:HistoryViewModel"
+    Content="{Binding Contents}">
     <ContentPage.BindingContext>
         <vm:HistoryViewModel />
     </ContentPage.BindingContext>
     <ContentPage.ToolbarItems>
         <ToolbarItem
+            Command="{Binding HandlerAction}"
+            CommandParameter="1"
             Order="Secondary"
             Priority="0"
-            Text="Icon Item" />
+            Text="小说历史" />
         <ToolbarItem
+            Command="{Binding HandlerAction}"
+            CommandParameter="2"
             Order="Secondary"
             Priority="1"
-            Text="Text Item" />
+            Text="轻小说历史" />
         <ToolbarItem
+            Command="{Binding HandlerAction}"
+            CommandParameter="3"
             Order="Secondary"
             Priority="2"
-            Text="Secondary Text Item" />
+            Text="动漫历史" />
+        <ToolbarItem
+            Command="{Binding HandlerAction}"
+            CommandParameter="4"
+            Order="Secondary"
+            Priority="3"
+            Text="漫画历史" />
     </ContentPage.ToolbarItems>
 
 </ContentPage>
