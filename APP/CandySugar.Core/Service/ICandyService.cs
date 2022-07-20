@@ -26,5 +26,11 @@ namespace CandySugar.Logic.Service
         Pagination<CandyAnimeRoot> GetAnime(int PageIndex);
         void RemoveAnime(CandyAnimeRoot input);
         #endregion
+
+        #region 漫画
+        void AddOrAlterManga(CandyManga input);
+        Pagination<CandyManga> GetManga(int PageIndex);
+        void RemoveManga(CandyManga input);
+        #endregion
     }
 }

@@ -18,7 +18,7 @@ namespace CandySugar.Logic.Service
         #region 小说
         public void AddOrAlterNovel(CandyNovel input)
         {
-            var Data = base.Read<CandyNovel>().OrderByDescending(t => t.Span);
+            var Data = base.Read<CandyNovel>();
             var CheckData = Data.FirstOrDefault(t => t.BookName == input.BookName && t.Author == input.Author);
             if (CheckData != null)
                 base.Delete(CheckData);
@@ -26,7 +26,7 @@ namespace CandySugar.Logic.Service
         }
         public Pagination<CandyNovel> GetNovel(int PageIndex)
         {
-            var Data = base.Read<CandyNovel>();
+            var Data = base.Read<CandyNovel>().OrderByDescending(t => t.Span);
             return new Pagination<CandyNovel>
             {
                 Result = Data.Skip((PageIndex - 1) * 10).Take(10).ToList(),
@@ -74,7 +74,7 @@ namespace CandySugar.Logic.Service
         }
         public Pagination<CandyAnimeRoot> GetAnime(int PageIndex)
         {
-            var Data = base.Read<CandyAnimeRoot>().OrderByDescending(t=>t.Span);
+            var Data = base.Read<CandyAnimeRoot>().OrderByDescending(t => t.Span);
             return new Pagination<CandyAnimeRoot>
             {
                 Result = Data.Skip((PageIndex - 1) * 10).Take(10).ToList(),
@@ -82,6 +82,31 @@ namespace CandySugar.Logic.Service
             };
         }
         public void RemoveAnime(CandyAnimeRoot input)
+        {
+            base.Delete(input);
+        }
+        #endregion
+
+        #region 漫画
+        public void AddOrAlterManga(CandyManga input)
+        {
+            var Data = base.Read<CandyManga>();
+            var CheckData = Data.FirstOrDefault(t => t.Key == input.Key);
+            if (CheckData != null)
+                base.Delete(CheckData);
+            base.InsertSingle(input);
+
+        }
+        public Pagination<CandyManga> GetManga(int PageIndex)
+        {
+            var Data = base.Read<CandyManga>().OrderByDescending(t => t.Span);
+            return new Pagination<CandyManga>
+            {
+                Result = Data.Skip((PageIndex - 1) * 10).Take(10).ToList(),
+                Total = Math.Ceiling(Data.Count() / 10d)
+            };
+        }
+        public void RemoveManga(CandyManga input)
         {
             base.Delete(input);
         }

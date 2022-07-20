@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="CandySugar.Controls.SysViews.HistoryViews.MangaHistoryView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:CandySugar.Logic.Entity.CandyEntity;assembly=CandySugar.Logic"
+    xmlns:vm="clr-namespace:CandySugar.Controls.SysViewModels.HistoryViewModels"
+    x:DataType="vm:MangaHistoryViewModel">
+    <ContentView.BindingContext>
+        <vm:MangaHistoryViewModel />
+    </ContentView.BindingContext>
+    <Grid>
+        <CollectionView
+            ItemSizingStrategy="MeasureFirstItem"
+            ItemsSource="{Binding Manga}"
+            RemainingItemsThreshold="0"
+            RemainingItemsThresholdReachedCommand="{Binding LoadMoreAction}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="3" Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:CandyAnimeRoot">
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem
+                                    Command="{Binding RemoveAction, Source={RelativeSource AncestorType={x:Type vm:MangaHistoryViewModel}}}"
+                                    CommandParameter="{Binding .}"
+                                    IconImageSource="{StaticResource Del}"
+                                    Text="删除" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Border
+                            Stroke="{StaticResource Gray100Brush}"
+                            StrokeShape="RoundRectangle 0"
+                            StrokeThickness="1">
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Border
+                                    HeightRequest="130"
+                                    StrokeShape="RoundRectangle 0"
+                                    WidthRequest="90">
+                                    <Image Aspect="Fill" Source="{Binding Cover}" />
+                                </Border>
+                                <StackLayout Grid.Column="1">
+                                    <Label
+                                        Margin="10,0,0,0"
+                                        Text="{Binding Name}"
+                                        TextColor="{StaticResource Red}" />
+                                    <Label
+                                        Margin="10,0,0,0"
+                                        FontSize="12"
+                                        Text="{Binding CollectName, StringFormat='继续看[{0}]'}"
+                                        TextColor="{StaticResource Red}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding ViewAction, Source={RelativeSource AncestorType={x:Type vm:MangaHistoryViewModel}}}" CommandParameter="{Binding .}" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                </StackLayout>
+                            </Grid>
+                        </Border>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <ActivityIndicator
+            HeightRequest="20"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            WidthRequest="20"
+            Color="{StaticResource Violet}" />
+    </Grid>
+</ContentView>

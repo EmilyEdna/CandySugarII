@@ -228,16 +228,16 @@ namespace CandySugar.Controls.ViewModels
                     };
                 }).RunsAsync();
                 CloseBusy();
-                Navigation(result.ChapterResults, input.Name);
+                Navigation(result.ChapterResults, input.Name,input.Cover);
             }
             catch (Exception ex)
             {
                 await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
             }
         }
-        async void Navigation(List<MangaChapterDetailResult> input, string name)
+        async void Navigation(List<MangaChapterDetailResult> input, string name,string cover)
         {
-            await Shell.Current.GoToAsync(nameof(MangaChapterView), new Dictionary<string, object> { { "Name", name }, { "Chapter", input } });
+            await Shell.Current.GoToAsync(nameof(MangaChapterView), new Dictionary<string, object> { { "Name", name }, { "Chapter", input },{"Cover", cover } });
         }
         #endregion
     }

@@ -44,6 +44,9 @@
 	  <MauiXaml Update="SysViews\HistoryViews\LovelHistoryView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="SysViews\HistoryViews\MangaHistoryView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="SysViews\HistoryViews\NovelHistoryView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

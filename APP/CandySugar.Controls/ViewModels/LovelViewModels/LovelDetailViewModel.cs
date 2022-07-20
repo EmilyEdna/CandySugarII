@@ -102,6 +102,7 @@ namespace CandySugar.Controls.ViewModels.LovelViewModels
         #region 命令
         public DelegateCommand<LovelViewResult> ViewAction => new(input =>
         {
+            SetRefresh();
             if (input.IsDown) Task.Run(() => InitDown(input.ChapterRoute));
             else InitContent(input);
         });

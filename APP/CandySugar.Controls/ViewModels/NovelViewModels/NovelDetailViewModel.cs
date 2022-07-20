@@ -56,6 +56,7 @@ namespace CandySugar.Controls.ViewModels.NovelViewModels
         #region 命令
         public DelegateCommand LoadMoreAction => new(() =>
         {
+            SetRefresh();
             if (Lock) return;
             if (Sort)
             {
@@ -74,6 +75,7 @@ namespace CandySugar.Controls.ViewModels.NovelViewModels
         {
             this.Sort = bool.Parse(input);
             this.Total = DetailResult.Total;
+            SetRefresh();
             ElementResult = new ObservableCollection<NovelDetailElementResult>();
             InitDetail();
 

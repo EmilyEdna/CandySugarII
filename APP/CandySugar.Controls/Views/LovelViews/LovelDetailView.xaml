@@ -93,6 +93,6 @@
             IsVisible="{Binding IsBusy}"
             VerticalOptions="Center"
             WidthRequest="20"
-            Color="{StaticResource Green}" />
+            Color="{StaticResource Violet}" />
     </Grid>
 </ContentPage>

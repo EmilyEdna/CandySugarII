@@ -10,7 +10,7 @@
     <ContentPage.BindingContext>
         <vm:MangaChapterViewModel />
     </ContentPage.BindingContext>
-    <Grid RowDefinitions="20,Auto">
+    <Grid RowDefinitions="20,*">
         <ActivityIndicator
             HeightRequest="20"
             HorizontalOptions="Center"
@@ -18,7 +18,7 @@
             IsVisible="{Binding IsBusy}"
             VerticalOptions="Center"
             WidthRequest="20"
-            Color="{StaticResource Green}" />
+            Color="{StaticResource Violet}" />
         <CollectionView
             Grid.Row="1"
             ItemSizingStrategy="MeasureAllItems"

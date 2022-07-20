@@ -45,7 +45,11 @@ namespace CandySugar.Controls.ViewModels.AnimeViewModels
         #endregion
 
         #region 命令
-        public DelegateCommand<AnimeDetailResult> ViewAction => new(input => InitPlay(input));
+        public DelegateCommand<AnimeDetailResult> ViewAction => new(input =>
+        {
+            SetRefresh();
+            InitPlay(input);
+        });
         #endregion
 
         #region 方法
@@ -97,7 +101,7 @@ namespace CandySugar.Controls.ViewModels.AnimeViewModels
             Model.Route = PlayRoute;
             Model.Elements = Query.Select(t => new CandyAnimeElement
             {
-                AnimeName=Model.Name,
+                AnimeName = Model.Name,
                 Name = t.CollectName,
                 Route = t.WatchRoute
             }).ToList();

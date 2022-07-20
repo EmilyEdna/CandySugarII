@@ -1,56 +1,45 @@
-﻿using CandySugar.Controls.Views.MangaViews;
+﻿using Sdk.Component.Manga.sdk.ViewModel.Response;
 using Sdk.Component.Manga.sdk;
 using Sdk.Component.Manga.sdk.ViewModel;
 using Sdk.Component.Manga.sdk.ViewModel.Enums;
 using Sdk.Component.Manga.sdk.ViewModel.Request;
-using Sdk.Component.Manga.sdk.ViewModel.Response;
+using CandySugar.Controls.Views.MangaViews;
 
-namespace CandySugar.Controls.ViewModels.MangaViewModels
+namespace CandySugar.Controls.SysViewModels.HistoryViewModels
 {
-    public class MangaChapterViewModel : BaseViewModel
+    public class MangaHistoryViewModel : BaseViewModel
     {
         ICandyService CandyService;
-        public MangaChapterViewModel()
+        public MangaHistoryViewModel()
         {
+            this.Page = 1;
             CandyService = CandyContainer.Instance.Resolve<ICandyService>();
+            Query();
         }
-        public override void ApplyQueryAttributes(IDictionary<string, object> query)
-        {
-            Title = query["Name"].ToString();
-            Cover = query["Cover"].ToString();
-            DetailResult = new ObservableCollection<MangaChapterDetailResult>(query["Chapter"] as List<MangaChapterDetailResult>);
-        }
-        #region 属性
-        string _Title;
-        public string Title
-        {
-            get => _Title;
-            set => SetProperty(ref _Title, value);
-        }
-        string _Cover;
-        public string Cover
-        {
-            get => _Cover;
-            set => SetProperty(ref _Cover, value);
-        }
-        ObservableCollection<MangaChapterDetailResult> _DetailResult;
-        public ObservableCollection<MangaChapterDetailResult> DetailResult
-        {
-            get => _DetailResult;
-            set => SetProperty(ref _DetailResult, value);
-        }
-        #endregion
 
-        #region 命令
-        public DelegateCommand<MangaChapterDetailResult> ViewAction => new(input =>
+        #region 属性
+        ObservableCollection<CandyManga> _Manga;
+        public ObservableCollection<CandyManga> Manga
         {
-            SetRefresh();
-            InitContent(input);
-        });
+            get => _Manga;
+            set => SetProperty(ref _Manga, value);
+        }
         #endregion
 
         #region 方法
-        async void InitContent(MangaChapterDetailResult input)
+        void Query()
+        {
+            var result = CandyService.GetManga(this.Page);
+            Total = result.Total;
+            if (Manga == null)
+                Manga = new ObservableCollection<CandyManga>(result.Result);
+            else
+                result.Result.ForEach(item =>
+                {
+                    Manga.Add(item);
+                });
+        }
+        async void InitContent(CandyManga input)
         {
             if (IsBusy) return;
             try
@@ -93,7 +82,6 @@ namespace CandySugar.Controls.ViewModels.MangaViewModels
                     };
                 }).RunsAsync();
                 CloseBusy();
-                Logic(input);
                 Navigation(bytes.DwonResult.Bytes);
             }
             catch (Exception ex)
@@ -105,15 +93,27 @@ namespace CandySugar.Controls.ViewModels.MangaViewModels
         {
             await Shell.Current.GoToAsync(nameof(MangaWatchView), new Dictionary<string, object> { { "Result", input } });
         }
-        void Logic(MangaChapterDetailResult input)
+        #endregion
+
+        #region 命令
+        public DelegateCommand LoadMoreAction => new(() =>
         {
-            var Model = input.ToMapest<CandyManga>();
-            Model.CollectName = input.Title;
-            Model.Key = input.TagKey;
-            Model.Name = Title;
-            Model.Cover = Cover;
-            CandyService.AddOrAlterManga(Model);
-        }
+            this.Page += 1;
+            if (this.Page > Total) return;
+            Query();
+        });
+        public DelegateCommand<CandyManga> ViewAction => new(input =>
+        {
+            SetRefresh();
+            InitContent(input);
+        });
+        public DelegateCommand<CandyManga> RemoveAction => new(input =>
+        {
+            CandyService.RemoveManga(input);
+            var temp = Manga.ToList();
+            temp.RemoveAll(t => t.CandyId == input.CandyId);
+            Manga = new ObservableCollection<CandyManga>(temp);
+        });
         #endregion
     }
 }
