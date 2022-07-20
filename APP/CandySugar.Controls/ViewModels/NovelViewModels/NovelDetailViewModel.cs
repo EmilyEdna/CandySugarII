@@ -130,7 +130,7 @@ namespace CandySugar.Controls.ViewModels.NovelViewModels
         async void Navigation(NovelDetailElementResult input)
         {
             Logic(input);
-            await Shell.Current.GoToAsync(nameof(NovelContentView), new Dictionary<string, object> { { "Key", input } });
+            await Shell.Current.GoToAsync(nameof(NovelContentView), new Dictionary<string, object> { { "Key", input }, { "Book", DetailResult } });
         }
         void Logic(NovelDetailElementResult input)
         {

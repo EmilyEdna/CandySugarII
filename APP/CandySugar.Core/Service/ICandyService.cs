@@ -14,5 +14,11 @@ namespace CandySugar.Logic.Service
         Pagination<CandyNovel> GetNovel(int PageIndex);
         void RemoveNovel(CandyNovel input);
         #endregion
+
+        #region 轻小说
+        void AddOrAlterLovel(CandyLovel input);
+        Pagination<CandyLovel> GetLovel(int PageIndex);
+        void RemoveLovel(CandyLovel input);
+        #endregion
     }
 }

@@ -51,7 +51,7 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
         }
         #endregion
 
-            #region 命令
+        #region 命令
         public DelegateCommand LoadMoreAction => new(() =>
         {
             this.Page += 1;

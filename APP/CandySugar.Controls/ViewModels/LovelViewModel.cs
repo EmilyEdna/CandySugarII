@@ -232,14 +232,23 @@ namespace CandySugar.Controls.ViewModels
         {
             this.Page = 1;
             CategoryRoute = string.Empty;
+            QueryResult = null;
             Task.Run(() => InitQeury());
         });
         public DelegateCommand RefreshAction => new(() =>
         {
             this.Page = 1;
             SetRefresh(false);
-            if (!CategoryRoute.IsNullOrEmpty()) Task.Run(() => InitCategory(CategoryRoute));
-            else Task.Run(() => InitQeury());
+            if (!CategoryRoute.IsNullOrEmpty())
+            {
+                CategoryResult = null;
+                Task.Run(() => InitCategory(CategoryRoute));
+            }
+            else
+            {
+                QueryResult = null;
+                Task.Run(() => InitQeury());
+            }
         });
         public DelegateCommand LoadMoreAction => new(() =>
         {
@@ -256,6 +265,7 @@ namespace CandySugar.Controls.ViewModels
             SetRefresh();
             CategoryRoute = input;
             KeyWord = string.Empty;
+            CategoryResult = null;
             Task.Run(() => InitCategory(input));
         });
         public DelegateCommand<LovelCategoryElementResult> DetailAction => new(input =>

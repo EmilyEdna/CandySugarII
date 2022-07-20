@@ -9,9 +9,16 @@ namespace CandySugar.Controls.ViewModels.NovelViewModels
 {
     public class NovelContentViewModel : BaseViewModel
     {
+        ICandyService Service;
+        public NovelContentViewModel()
+        {
+            Service = CandyContainer.Instance.Resolves<ICandyService>();
+        }
+
         public override void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            var detail = (query["Key"] as NovelDetailElementResult);
+            var detail = query["Key"] as NovelDetailElementResult;
+            DetailResult = query["Book"] as NovelDetailRootResult;
             InitContent(detail.ChapterRoute);
         }
 
@@ -21,6 +28,13 @@ namespace CandySugar.Controls.ViewModels.NovelViewModels
         {
             get { return _Content; }
             set { SetProperty(ref _Content, value); }
+        }
+
+        NovelDetailRootResult _DetailResult;
+        public NovelDetailRootResult DetailResult
+        {
+            get => _DetailResult;
+            set => SetProperty(ref _DetailResult, value);
         }
         string _ChapterName;
         public string ChapterName
@@ -77,11 +91,19 @@ namespace CandySugar.Controls.ViewModels.NovelViewModels
                     this.Content.Add("\t\t\t\t\t" + t + "\r\n");
                 });
                 CloseBusy();
+                Logic(ChapterName, Next);
             }
             catch (Exception ex)
             {
                 await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
             }
+        }
+        void Logic(string ChapterName,string ChapterRoute)
+        {
+            var Model = DetailResult.ToMapest<CandyNovel>();
+            Model.Route = ChapterRoute;
+            Model.Chapter = ChapterName;
+            Service.AddOrAlterNovel(Model);
         }
         #endregion
 

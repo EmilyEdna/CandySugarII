@@ -1,4 +1,6 @@
 ﻿using CandySugar.Controls.Views.LovelViews;
+using Microsoft.Maui.Controls.PlatformConfiguration;
+using Microsoft.Maui.Storage;
 using Sdk.Component.Lovel.sdk;
 using Sdk.Component.Lovel.sdk.ViewModel;
 using Sdk.Component.Lovel.sdk.ViewModel.Enums;
@@ -10,6 +12,12 @@ namespace CandySugar.Controls.ViewModels.LovelViewModels
 {
     public class LovelDetailViewModel : BaseViewModel
     {
+        ICandyService CandyService;
+        public LovelDetailViewModel()
+        {
+            CandyService = CandyContainer.Instance.Resolve<ICandyService>();
+        }
+
         public override void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             EleResult = query["Route"] as LovelCategoryElementResult;
@@ -69,6 +77,7 @@ namespace CandySugar.Controls.ViewModels.LovelViewModels
                     await Shell.Current.DisplayAlert("提示！", "因版权问题，不再提供该小说的阅读", "是");
                     return;
                 }
+                Logic(input); 
                 Navigation(new Dictionary<string, object> { { "Result", result.ContentResult }, { "Title", input.ChapterName } });
             }
             catch (Exception ex)
@@ -76,10 +85,17 @@ namespace CandySugar.Controls.ViewModels.LovelViewModels
                 await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
             }
         }
-
-        async void Navigation(Dictionary<string,object> Param)
+        async void Navigation(Dictionary<string, object> Param)
         {
             await Shell.Current.GoToAsync(nameof(LovelContentView), Param);
+        }
+        void Logic(LovelViewResult input)
+        {
+            var Model = EleResult.ToMapest<CandyLovel>();
+            Model.Route = input.ChapterRoute;
+            Model.Chapter = input.ChapterName;
+            Model.BookType = EleResult.Category;
+            CandyService.AddOrAlterLovel(Model);
         }
         #endregion
 

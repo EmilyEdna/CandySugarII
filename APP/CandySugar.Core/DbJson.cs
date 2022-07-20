@@ -22,7 +22,7 @@ namespace CandySugar.Logic
         }
         private string Route<T>()
         {
-            return Path.Combine(JRoute, $"{nameof(T)}.mod");
+            return Path.Combine(JRoute, $"{typeof(T).Name}.mod");
         }
         private List<T> Add<T>(List<T> input) where T : BaseEntity
         {

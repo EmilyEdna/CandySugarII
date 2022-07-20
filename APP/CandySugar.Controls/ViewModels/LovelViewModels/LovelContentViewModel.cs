@@ -7,7 +7,7 @@ namespace CandySugar.Controls.ViewModels.LovelViewModels
         public override void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             Title = query["Title"].ToString();
-            var temp = (query["Result"] as LovelContentResult);
+            var temp = query["Result"] as LovelContentResult;
 
             if (!temp.Content.IsNullOrEmpty())
             {
