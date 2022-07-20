@@ -19,54 +19,65 @@
         </CollectionView.ItemsLayout>
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="model:CandyNovel">
-                <Border Stroke="{StaticResource Gray100Brush}" StrokeThickness="1">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ViewAction, Source={RelativeSource AncestorType={x:Type vm:LovelHistoryViewModel}}}" CommandParameter="{Binding .}" />
-                    </Border.GestureRecognizers>
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="0" />
-                    </Border.StrokeShape>
-                    <Grid ColumnDefinitions="Auto,*">
-                        <Border
-                            HeightRequest="130"
-                            StrokeShape="RoundRectangle 0"
-                            WidthRequest="90">
-                            <Image Aspect="Fill" Source="{Binding Cover}" />
-                        </Border>
-                        <StackLayout Grid.Column="1">
-                            <Label
-                                Margin="10,0,0,0"
-                                Text="{Binding BookName}"
-                                TextColor="{StaticResource Red}" />
-                            <Label
-                                Margin="10,0,0,0"
-                                FontSize="11"
-                                Text="{Binding Chapter, StringFormat='章节：{0}'}"
-                                TextColor="{StaticResource Pink}" />
-                            <Label
-                                Margin="10,0,0,0"
-                                FontSize="11"
-                                Text="{Binding Author, StringFormat='作者：{0}'}"
-                                TextColor="{StaticResource Pink}" />
-                            <Label
-                                Margin="10,0,0,0"
-                                FontSize="11"
-                                Text="{Binding BookType, StringFormat='类别：{0}'}"
-                                TextColor="{StaticResource Pink}" />
-                            <Label
-                                Margin="10,0,0,0"
-                                FontSize="11"
-                                Text="{Binding Status, StringFormat='状态：{0}'}"
-                                TextColor="{StaticResource Pink}" />
-                            <Label
-                                Margin="10,0,0,0"
-                                FontSize="11"
-                                LineBreakMode="TailTruncation"
-                                Text="{Binding Description, StringFormat='简介：{0}'}"
-                                TextColor="{StaticResource Pink}" />
-                        </StackLayout>
-                    </Grid>
-                </Border>
+                <SwipeView>
+                    <SwipeView.RightItems>
+                        <SwipeItems>
+                            <SwipeItem
+                                Command="{Binding RemoveAction, Source={RelativeSource AncestorType={x:Type vm:LovelHistoryViewModel}}}"
+                                CommandParameter="{Binding .}"
+                                IconImageSource="{StaticResource Del}"
+                                Text="删除" />
+                        </SwipeItems>
+                    </SwipeView.RightItems>
+                    <Border Stroke="{StaticResource Gray100Brush}" StrokeThickness="1">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ViewAction, Source={RelativeSource AncestorType={x:Type vm:LovelHistoryViewModel}}}" CommandParameter="{Binding .}" />
+                        </Border.GestureRecognizers>
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="0" />
+                        </Border.StrokeShape>
+                        <Grid ColumnDefinitions="Auto,*">
+                            <Border
+                                HeightRequest="130"
+                                StrokeShape="RoundRectangle 0"
+                                WidthRequest="90">
+                                <Image Aspect="Fill" Source="{Binding Cover}" />
+                            </Border>
+                            <StackLayout Grid.Column="1">
+                                <Label
+                                    Margin="10,0,0,0"
+                                    Text="{Binding BookName}"
+                                    TextColor="{StaticResource Red}" />
+                                <Label
+                                    Margin="10,0,0,0"
+                                    FontSize="11"
+                                    Text="{Binding Chapter, StringFormat='章节：{0}'}"
+                                    TextColor="{StaticResource Pink}" />
+                                <Label
+                                    Margin="10,0,0,0"
+                                    FontSize="11"
+                                    Text="{Binding Author, StringFormat='作者：{0}'}"
+                                    TextColor="{StaticResource Pink}" />
+                                <Label
+                                    Margin="10,0,0,0"
+                                    FontSize="11"
+                                    Text="{Binding BookType, StringFormat='类别：{0}'}"
+                                    TextColor="{StaticResource Pink}" />
+                                <Label
+                                    Margin="10,0,0,0"
+                                    FontSize="11"
+                                    Text="{Binding Status, StringFormat='状态：{0}'}"
+                                    TextColor="{StaticResource Pink}" />
+                                <Label
+                                    Margin="10,0,0,0"
+                                    FontSize="11"
+                                    LineBreakMode="TailTruncation"
+                                    Text="{Binding Description, StringFormat='简介：{0}'}"
+                                    TextColor="{StaticResource Pink}" />
+                            </StackLayout>
+                        </Grid>
+                    </Border>
+                </SwipeView>
             </DataTemplate>
         </CollectionView.ItemTemplate>
     </CollectionView>

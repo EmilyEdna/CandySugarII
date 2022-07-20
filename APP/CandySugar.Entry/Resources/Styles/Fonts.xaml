@@ -82,4 +82,10 @@
         Glyph="{Static lib:FontIcon.CircleXmark}"
         Size="22"
         Color="{StaticResource Red}" />
+    <FontImage
+        x:Key="Del"
+        FontFamily="Solid"
+        Glyph="{Static lib:FontIcon.TrashCan}"
+        Size="18"
+        Color="{StaticResource Red}" />
 </ResourceDictionary>

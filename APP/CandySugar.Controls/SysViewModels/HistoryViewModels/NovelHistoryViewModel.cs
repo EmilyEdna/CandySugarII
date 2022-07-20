@@ -62,6 +62,13 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
         {
             Navigation(input);
         });
+        public DelegateCommand<CandyNovel> RemoveAction => new(input =>
+        {
+            CandyService.RemoveNovel(input);
+            var temp = Novel.ToList();
+            temp.RemoveAll(t => t.CandyId == input.CandyId);
+            Novel = new ObservableCollection<CandyNovel>(temp);
+        });
         #endregion
     }
 }

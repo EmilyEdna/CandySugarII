@@ -38,7 +38,7 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
                     Lovel.Add(item);
                 });
         }
-        async void Navigation(Dictionary<string,object> lovel)
+        async void Navigation(Dictionary<string, object> lovel)
         {
             await Shell.Current.GoToAsync(nameof(LovelContentView), lovel);
         }
@@ -87,6 +87,13 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
         public DelegateCommand<CandyLovel> ViewAction => new(input =>
         {
             InitContent(input);
+        });
+        public DelegateCommand<CandyLovel> RemoveAction => new(input =>
+        {
+            CandyService.RemoveLovel(input);
+            var temp = Lovel.ToList();
+            temp.RemoveAll(t => t.CandyId == input.CandyId);
+            Lovel = new ObservableCollection<CandyLovel>(temp);
         });
         #endregion
     }
