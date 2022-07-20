@@ -22,8 +22,12 @@ public partial class AnimePlayView : ContentPage
     }
     async void ExcuteJs()
     {
-        await Task.Delay(3000);
-        await Player.EvaluateJavaScriptAsync($"Play('{ViewModel.Route}')");
+        while (!Player.IsLoaded)
+        {
+            await Task.Delay(500);
+        }
+        if (Player.IsLoaded)
+            await Player.EvaluateJavaScriptAsync($"Play('{ViewModel.Route}')");
     }
 
     private void ExitingEvent(object sender, EventArgs e)

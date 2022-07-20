@@ -44,7 +44,7 @@
                         Stroke="{StaticResource Gray100Brush}"
                         StrokeThickness="1">
                         <Border.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding ViewAction, Source={RelativeSource AncestorType={x:Type vm:AnimeDetailViewModel}}}" CommandParameter="{Binding WatchRoute}" />
+                            <TapGestureRecognizer Command="{Binding ViewAction, Source={RelativeSource AncestorType={x:Type vm:AnimeDetailViewModel}}}" CommandParameter="{Binding .}" />
                         </Border.GestureRecognizers>
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10" />

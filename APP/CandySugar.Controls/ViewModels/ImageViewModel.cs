@@ -31,7 +31,7 @@ namespace CandySugar.Controls.ViewModels
         public DelegateCommand<ImageElementResult> ViewAction => new(input =>
         {
             var param = input.OriginalJepg.IsNullOrEmpty() ? input.OriginalPng : input.OriginalJepg;
-            Navgation(param);
+            Navigation(param);
         });
         public DelegateCommand QueryAction => new(() =>
         {
@@ -159,7 +159,7 @@ namespace CandySugar.Controls.ViewModels
                 await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
             }
         }
-        async void Navgation(string input)
+        async void Navigation(string input)
         {
             await Shell.Current.GoToAsync($"{nameof(ImageDetailView)}?Key={input}");
         }

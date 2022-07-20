@@ -213,7 +213,7 @@ namespace CandySugar.Controls.ViewModels
                     };
                 }).RunsAsync();
                 CloseBusy();
-                Navgation(input, result_chapter.ViewResult);
+                Navigation(input, result_chapter.ViewResult);
             }
             catch (Exception ex)
             {
@@ -221,7 +221,7 @@ namespace CandySugar.Controls.ViewModels
             }
         }
 
-        async void Navgation(LovelCategoryElementResult input, List<LovelViewResult> views)
+        async void Navigation(LovelCategoryElementResult input, List<LovelViewResult> views)
         {
             await Shell.Current.GoToAsync(nameof(LovelDetailView), new Dictionary<string, object> { { "Route", input },{ "Result",views} });
         }

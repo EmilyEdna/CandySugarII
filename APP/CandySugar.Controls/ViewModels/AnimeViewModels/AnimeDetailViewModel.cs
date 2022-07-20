@@ -1,4 +1,8 @@
 ﻿using CandySugar.Controls.Views.AnimeViews;
+using Sdk.Component.Anime.sdk;
+using Sdk.Component.Anime.sdk.ViewModel;
+using Sdk.Component.Anime.sdk.ViewModel.Enums;
+using Sdk.Component.Anime.sdk.ViewModel.Request;
 using Sdk.Component.Anime.sdk.ViewModel.Response;
 
 namespace CandySugar.Controls.ViewModels.AnimeViewModels
@@ -35,10 +39,46 @@ namespace CandySugar.Controls.ViewModels.AnimeViewModels
         #endregion
 
         #region 命令
-        public DelegateCommand<string> ViewAction => new(input => Navigation(input));
+        public DelegateCommand<AnimeDetailResult> ViewAction => new(input => InitPlay(input));
         #endregion
 
         #region 方法
+
+        async void InitPlay(AnimeDetailResult input) {
+            if (IsBusy) return;
+            try
+            {
+                if (CandySoft.NetState.NetworkAccess != NetworkAccess.Internet)
+                {
+                    await Shell.Current.DisplayAlert("网络异常！", "请检查网络是否通畅！", "是");
+                    return;
+                }
+                ShowBusy();
+                await Task.Delay(CandySoft.Wait);
+                var result = await AnimeFactory.Anime(opt =>
+                {
+                    opt.RequestParam = new Input
+                    {
+                        CacheSpan = CandySoft.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        AnimeType = AnimeEnum.Watch,
+                        WatchPlay = new AnimeWatch
+                        {
+                            Route = input.WatchRoute,
+                            CollectName = input.CollectName,
+                        }
+                    };
+                }).RunsAsync();
+                CloseBusy();
+                Navigation(result.PlayResult.PlayURL);
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+            }
+        }
+
         async void Navigation(string input) 
         {
             await Shell.Current.GoToAsync($"{nameof(AnimePlayView)}?Key={input}");

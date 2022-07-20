@@ -254,14 +254,14 @@ namespace CandySugar.Controls.ViewModels
                 }).RunsAsync();
                 CloseBusy();
                 DetailResult = new ObservableCollection<AnimeDetailResult>(result.DetailResults.Where(t => t.IsDownURL == false));
-                Navgation(DetailResult.ToList());
+                Navigation(DetailResult.ToList());
             }
             catch (Exception ex)
             {
                 await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
             }
         }
-        async void Navgation(List<AnimeDetailResult> input)
+        async void Navigation(List<AnimeDetailResult> input)
         {
             await Shell.Current.GoToAsync(nameof(AnimeDetailView), new Dictionary<string, object> { { "Route", input } });
         }
