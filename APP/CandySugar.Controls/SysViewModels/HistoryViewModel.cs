@@ -37,6 +37,9 @@ namespace CandySugar.Controls.SysViewModels
                 case 2:
                     Contents = new LovelHistoryView();
                     break;
+                case 3:
+                    Contents = new AnimeHistoryView();
+                    break;
                 default:
                     break;
             }

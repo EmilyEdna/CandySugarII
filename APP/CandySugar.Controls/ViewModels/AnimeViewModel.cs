@@ -19,6 +19,7 @@ namespace CandySugar.Controls.ViewModels
 
         #region 字段
         bool IsCategoryType = true;
+        bool LoadMore = false;
         string CategoryKeyWord = string.Empty;
         #endregion
 
@@ -66,6 +67,7 @@ namespace CandySugar.Controls.ViewModels
         {
             this.Page = 1;
             this.CategoryKeyWord = string.Empty;
+            LoadMore = false;
             Task.Run(() => InitSearch());
         });
         public DelegateCommand<string> CategoryTypeAction => new(input =>
@@ -75,6 +77,7 @@ namespace CandySugar.Controls.ViewModels
             this.IsCategoryType = true;
             this.KeyWord = string.Empty;
             this.CategoryKeyWord = input;
+            LoadMore = false;
             Task.Run(() => InitCatagory());
         });
         public DelegateCommand<string> CategoryLetterAction => new(input =>
@@ -84,21 +87,23 @@ namespace CandySugar.Controls.ViewModels
             this.IsCategoryType = false;
             this.KeyWord = string.Empty;
             this.CategoryKeyWord = input;
+            LoadMore = false;
             Task.Run(() => InitCatagory());
         });
         public DelegateCommand RefreshAction => new(() =>
         {
             this.Page = 1;
             SetRefresh(false);
+            LoadMore = false;
             if (!KeyWord.IsNullOrEmpty()) InitSearch();
             else InitCatagory();
         });
         public DelegateCommand LoadMoreAction => new(() =>
         {
-
             if (Lock) return;
             this.Page += 1;
             if (this.Page > Total) return;
+            LoadMore = true;
             if (KeyWord.IsNullOrEmpty()) InitCatagory();
             else InitSearch();
         });
@@ -171,13 +176,13 @@ namespace CandySugar.Controls.ViewModels
                 }).RunsAsync();
                 CloseBusy();
                 Total = result.SeachResult.Total;
-                if (SearchResult == null)
-                    SearchResult = new ObservableCollection<AnimeSearchElementResult>(result.SeachResult.ElementResult);
-                else
+                if (LoadMore)
                     result.SeachResult.ElementResult.ForEach(item =>
                     {
                         SearchResult.Add(item);
                     });
+                else
+                    SearchResult = new ObservableCollection<AnimeSearchElementResult>(result.SeachResult.ElementResult);
             }
             catch (Exception ex)
             {
@@ -213,13 +218,13 @@ namespace CandySugar.Controls.ViewModels
                 }).RunsAsync();
                 CloseBusy();
                 Total = result.SeachResult.Total;
-                if (SearchResult == null)
-                    SearchResult = new ObservableCollection<AnimeSearchElementResult>(result.SeachResult.ElementResult);
-                else
+                if (LoadMore)
                     result.SeachResult.ElementResult.ForEach(item =>
                     {
                         SearchResult.Add(item);
                     });
+                else
+                    SearchResult = new ObservableCollection<AnimeSearchElementResult>(result.SeachResult.ElementResult);
             }
             catch (Exception ex)
             {

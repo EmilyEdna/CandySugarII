@@ -17,6 +17,7 @@ namespace CandySugar.Controls.ViewModels
         }
         #region 字段
         string CategoryRoute = string.Empty;
+        bool LoadMore = false;
         #endregion
 
         #region 属性
@@ -112,14 +113,13 @@ namespace CandySugar.Controls.ViewModels
                 }).RunsAsync();
                 CloseBusy();
                 Total = result.CategoryResult.Total;
-                if (CategoryResult == null)
-                    CategoryResult = new ObservableCollection<LovelCategoryElementResult>(result.CategoryResult.ElementResults);
-                else
+                if (LoadMore)
                     result.CategoryResult.ElementResults.ForEach(item =>
                     {
                         CategoryResult.Add(item);
                     });
-
+                else
+                    CategoryResult = new ObservableCollection<LovelCategoryElementResult>(result.CategoryResult.ElementResults);
             }
             catch (Exception ex)
             {
@@ -156,13 +156,13 @@ namespace CandySugar.Controls.ViewModels
                 }).RunsAsync();
                 CloseBusy();
                 Total = result.SearchResult.Total;
-                if (QueryResult == null)
-                    QueryResult = new ObservableCollection<LovelSearchElementResult>(result.SearchResult.ElementResults);
-                else
+                if (LoadMore)
                     result.SearchResult.ElementResults.ForEach(item =>
                     {
                         QueryResult.Add(item);
                     });
+                else
+                    QueryResult = new ObservableCollection<LovelSearchElementResult>(result.SearchResult.ElementResults);
                 CategoryResult = new ObservableCollection<LovelCategoryElementResult>(QueryResult.ToMapest<List<LovelCategoryElementResult>>());
             }
             catch (Exception ex)
@@ -223,7 +223,7 @@ namespace CandySugar.Controls.ViewModels
 
         async void Navigation(LovelCategoryElementResult input, List<LovelViewResult> views)
         {
-            await Shell.Current.GoToAsync(nameof(LovelDetailView), new Dictionary<string, object> { { "Route", input },{ "Result",views} });
+            await Shell.Current.GoToAsync(nameof(LovelDetailView), new Dictionary<string, object> { { "Route", input }, { "Result", views } });
         }
         #endregion
 
@@ -232,29 +232,25 @@ namespace CandySugar.Controls.ViewModels
         {
             this.Page = 1;
             CategoryRoute = string.Empty;
-            QueryResult = null;
+            LoadMore = false;
             Task.Run(() => InitQeury());
         });
         public DelegateCommand RefreshAction => new(() =>
         {
             this.Page = 1;
             SetRefresh(false);
+            LoadMore = false;
             if (!CategoryRoute.IsNullOrEmpty())
-            {
-                CategoryResult = null;
                 Task.Run(() => InitCategory(CategoryRoute));
-            }
             else
-            {
-                QueryResult = null;
                 Task.Run(() => InitQeury());
-            }
         });
         public DelegateCommand LoadMoreAction => new(() =>
         {
             if (Lock) return;
             this.Page += 1;
             if (this.Page > Total) return;
+            LoadMore = true;
             SetRefresh();
             if (KeyWord.IsNullOrEmpty()) InitCategory(CategoryRoute);
             else InitQeury();
@@ -265,7 +261,7 @@ namespace CandySugar.Controls.ViewModels
             SetRefresh();
             CategoryRoute = input;
             KeyWord = string.Empty;
-            CategoryResult = null;
+            LoadMore = false;
             Task.Run(() => InitCategory(input));
         });
         public DelegateCommand<LovelCategoryElementResult> DetailAction => new(input =>

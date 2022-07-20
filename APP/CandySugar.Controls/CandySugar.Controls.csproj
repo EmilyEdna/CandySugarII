@@ -38,6 +38,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="SysViews\HistoryViews\AnimeHistoryView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="SysViews\HistoryViews\LovelHistoryView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

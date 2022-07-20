@@ -1,4 +1,5 @@
 ﻿using CandySugar.Logic.ServiceModel;
+using Polly;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace CandySugar.Logic.Service
         #region 小说
         public void AddOrAlterNovel(CandyNovel input)
         {
-            var Data = base.Read<CandyNovel>();
+            var Data = base.Read<CandyNovel>().OrderByDescending(t => t.Span);
             var CheckData = Data.FirstOrDefault(t => t.BookName == input.BookName && t.Author == input.Author);
             if (CheckData != null)
                 base.Delete(CheckData);
@@ -49,7 +50,7 @@ namespace CandySugar.Logic.Service
         }
         public Pagination<CandyLovel> GetLovel(int PageIndex)
         {
-            var Data = base.Read<CandyLovel>();
+            var Data = base.Read<CandyLovel>().OrderByDescending(t => t.Span);
             return new Pagination<CandyLovel>
             {
                 Result = Data.Skip((PageIndex - 1) * 10).Take(10).ToList(),
@@ -57,6 +58,30 @@ namespace CandySugar.Logic.Service
             };
         }
         public void RemoveLovel(CandyLovel input)
+        {
+            base.Delete(input);
+        }
+        #endregion
+
+        #region 动漫
+        public void AddOrAlterAnime(CandyAnimeRoot input)
+        {
+            var Data = base.Read<CandyAnimeRoot>();
+            var CheckData = Data.FirstOrDefault(t => t.Name == input.Name);
+            if (CheckData != null)
+                base.Delete(CheckData);
+            base.InsertSingle(input);
+        }
+        public Pagination<CandyAnimeRoot> GetAnime(int PageIndex)
+        {
+            var Data = base.Read<CandyAnimeRoot>().OrderByDescending(t=>t.Span);
+            return new Pagination<CandyAnimeRoot>
+            {
+                Result = Data.Skip((PageIndex - 1) * 10).Take(10).ToList(),
+                Total = Math.Ceiling(Data.Count() / 10d)
+            };
+        }
+        public void RemoveAnime(CandyAnimeRoot input)
         {
             base.Delete(input);
         }

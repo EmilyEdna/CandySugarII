@@ -9,6 +9,12 @@ namespace CandySugar.Controls.ViewModels.AnimeViewModels
 {
     public class AnimeDetailViewModel : BaseViewModel
     {
+        ICandyService CandyService;
+        public AnimeDetailViewModel()
+        {
+            CandyService = CandyContainer.Instance.Resolve<ICandyService>();
+        }
+
         public override void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             var data = (List<AnimeDetailResult>)query["Route"];
@@ -43,8 +49,8 @@ namespace CandySugar.Controls.ViewModels.AnimeViewModels
         #endregion
 
         #region 方法
-
-        async void InitPlay(AnimeDetailResult input) {
+        async void InitPlay(AnimeDetailResult input)
+        {
             if (IsBusy) return;
             try
             {
@@ -70,6 +76,7 @@ namespace CandySugar.Controls.ViewModels.AnimeViewModels
                         }
                     };
                 }).RunsAsync();
+                Logic(input, result.PlayResult.PlayURL);
                 CloseBusy();
                 Navigation(result.PlayResult.PlayURL);
             }
@@ -79,9 +86,22 @@ namespace CandySugar.Controls.ViewModels.AnimeViewModels
             }
         }
 
-        async void Navigation(string input) 
+        async void Navigation(string input)
         {
             await Shell.Current.GoToAsync($"{nameof(AnimePlayView)}?Key={input}");
+        }
+
+        void Logic(AnimeDetailResult input, string PlayRoute)
+        {
+            var Model = input.ToMapest<CandyAnimeRoot>();
+            Model.Route = PlayRoute;
+            Model.Elements = Query.Select(t => new CandyAnimeElement
+            {
+                AnimeName=Model.Name,
+                Name = t.CollectName,
+                Route = t.WatchRoute
+            }).ToList();
+            CandyService.AddOrAlterAnime(Model);
         }
         #endregion
     }
