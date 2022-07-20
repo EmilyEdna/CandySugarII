@@ -116,7 +116,7 @@
                                         <TextBlock Style="{DynamicResource HnimeTextStyle}" Text="{Binding Title, StringFormat=标题:{0}}" />
                                         <TextBlock Style="{DynamicResource HnimeTextStyle}" Text="{Binding Property, StringFormat=属性:{0}}" />
                                         <TextBlock Style="{DynamicResource HnimeTextStyle}" Text="{Binding PlayCount, StringFormat=播放次数:{0}}" />
-                                        <TextBlock Style="{DynamicResource HnimeTextStyle}" Text="{Binding UpdateTime, StringFormat=最近时间:{0}}" />
+                                        <TextBlock Style="{DynamicResource HnimeTextStyle}" Text="{Binding UpdateTime, StringFormat=更新时间:{0}}" />
                                         <TextBlock Style="{DynamicResource HnimeTextStyle}" Text="{Binding Duration, StringFormat=时常:{0}}" />
                                     </StackPanel>
                                 </Grid>

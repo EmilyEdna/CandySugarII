@@ -3,11 +3,116 @@
     x:Class="CandySugar.Controls.Views.HnimeView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="HnimeView">
-    <VerticalStackLayout>
-        <Label
+    xmlns:sdk="clr-namespace:Sdk.Component.Hnime.sdk.ViewModel.Response;assembly=Sdk.Component"
+    xmlns:vm="clr-namespace:CandySugar.Controls.ViewModels"
+    x:DataType="vm:HnimeViewModel">
+    <ContentPage.BindingContext>
+        <vm:HnimeViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding LabelAction}"
+            Order="Secondary"
+            Priority="0"
+            Text="标签" />
+    </ContentPage.ToolbarItems>
+    <Shell.SearchHandler>
+        <SearchHandler
+            ClearIcon="{StaticResource Clear}"
+            Command="{Binding QueryAction}"
+            Placeholder="请输入查询内容"
+            Query="{Binding KeyWord, Mode=TwoWay}"
+            QueryIcon="{StaticResource Search}"
+            ShowsResults="False"
+            TextColor="{StaticResource Green}" />
+    </Shell.SearchHandler>
+    <Grid BackgroundColor="{StaticResource Trans}" RowDefinitions="Auto,*">
+        <CollectionView
+            Grid.Row="0"
+            ItemsLayout="HorizontalList"
+            ItemsSource="{Binding InitResult}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="sdk:HnimeInitResult">
+                    <Label
+                        Margin="5"
+                        Text="{Binding Title}"
+                        TextColor="{StaticResource Pink}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CategoryAction, Source={RelativeSource AncestorType={x:Type vm:HnimeViewModel}}}" CommandParameter="{Binding Route}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <RefreshView
+            Grid.Row="1"
+            Command="{Binding RefreshAction}"
+            IsRefreshing="{Binding IsRefreshing}"
+            RefreshColor="{StaticResource Pink}">
+            <CollectionView
+                ItemSizingStrategy="MeasureFirstItem"
+                ItemsSource="{Binding CategoryResult}"
+                RemainingItemsThreshold="0"
+                RemainingItemsThresholdReachedCommand="{Binding LoadMoreAction}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="3" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="sdk:HnimeSearchElementResult">
+                        <Border Stroke="{StaticResource Gray100Brush}" StrokeThickness="1">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding DetailAction, Source={RelativeSource AncestorType={x:Type vm:HnimeViewModel}}}" CommandParameter="{Binding .}" />
+                            </Border.GestureRecognizers>
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="0" />
+                            </Border.StrokeShape>
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Border
+                                    HeightRequest="130"
+                                    StrokeShape="RoundRectangle 0"
+                                    WidthRequest="90">
+                                    <Image Aspect="Fill" Source="{Binding Cover}" />
+                                </Border>
+                                <StackLayout Grid.Column="1">
+                                    <Label
+                                        Margin="10,0,0,0"
+                                        Text="{Binding Title}"
+                                        TextColor="{StaticResource Red}" />
+                                    <Label
+                                        Margin="10,0,0,0"
+                                        FontSize="11"
+                                        Text="{Binding Property, StringFormat='属性：{0}'}"
+                                        TextColor="{StaticResource Pink}" />
+                                    <Label
+                                        Margin="10,0,0,0"
+                                        FontSize="11"
+                                        Text="{Binding PlayCount, StringFormat='播放次数：{0}'}"
+                                        TextColor="{StaticResource Pink}" />
+                                    <Label
+                                        Margin="10,0,0,0"
+                                        FontSize="11"
+                                        Text="{Binding UpdateTime, StringFormat='更新时间：{0}'}"
+                                        TextColor="{StaticResource Pink}" />
+                                    <Label
+                                        Margin="10,0,0,0"
+                                        FontSize="11"
+                                        Text="{Binding Duration, StringFormat='时常：{0}'}"
+                                        TextColor="{StaticResource Pink}" />
+                                </StackLayout>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+        <ActivityIndicator
+            Grid.RowSpan="2"
+            HeightRequest="20"
             HorizontalOptions="Center"
-            Text="动漫2"
-            VerticalOptions="Center" />
-    </VerticalStackLayout>
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            WidthRequest="20"
+            Color="{StaticResource Violet}" />
+    </Grid>
 </ContentPage>

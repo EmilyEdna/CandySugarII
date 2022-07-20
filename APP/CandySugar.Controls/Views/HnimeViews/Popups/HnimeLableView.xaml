@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mo:PopupPage
+    x:Class="CandySugar.Controls.Views.HnimeViews.Popups.HnimeLableView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:dto="clr-namespace:CandySugar.Logic;assembly=CandySugar.Logic"
+    xmlns:lib="http://lib.sugar.com"
+    xmlns:mo="clr-namespace:Mopups.Pages;assembly=Mopups"
+    xmlns:sdk="clr-namespace:System.Collections;assembly=netstandard"
+    xmlns:vm="clr-namespace:CandySugar.Controls.ViewModels.HnimeViewModels.PopupModels"
+    x:DataType="vm:HnimeLableViewModel"
+    BackgroundColor="#80E1E1E1"
+    CloseWhenBackgroundIsClicked="True"
+    HeightRequest="600"
+    WidthRequest="320">
+    <mo:PopupPage.BindingContext>
+        <vm:HnimeLableViewModel />
+    </mo:PopupPage.BindingContext>
+    <Frame
+        BorderColor="{StaticResource Gray200}"
+        CornerRadius="20"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+        <Grid RowDefinitions="30,30,30,90,*,Auto">
+            <Label
+                Margin="10,2,0,2"
+                HorizontalOptions="StartAndExpand"
+                Text="类型"
+                TextColor="{StaticResource Pink}"
+                VerticalOptions="CenterAndExpand" />
+            <CollectionView Grid.Row="1" ItemsSource="{x:Static dto:ChineseHnimeLabel.Type}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout
+                        HorizontalItemSpacing="5"
+                        Orientation="Horizontal"
+                        Span="1"
+                        VerticalItemSpacing="5" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <RadioButton
+                            CheckedChanged="TypeEvent"
+                            Content="{Binding .}"
+                            FontSize="12"
+                            GroupName="ModuleType"
+                            TextColor="{StaticResource Pink}"
+                            Value="{Binding .}" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Label
+                Grid.Row="2"
+                Margin="10,2,0,2"
+                HorizontalOptions="StartAndExpand"
+                Text="品牌"
+                TextColor="{StaticResource Pink}"
+                VerticalOptions="CenterAndExpand" />
+            <CollectionView
+                Grid.Row="3"
+                ItemSizingStrategy="MeasureFirstItem"
+                ItemsLayout="HorizontalGrid,4"
+                ItemsSource="{x:Static dto:ChineseHnimeLabel.Brands}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <HorizontalStackLayout>
+                            <lib:CandyCheckBox CheckedChanged="TagEvent" Text="{Binding .}" />
+                            <Label Text="{Binding .}" TextColor="{StaticResource Pink}" />
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <CollectionView
+                Grid.Row="4"
+                ItemSizingStrategy="MeasureFirstItem"
+                ItemsSource="{x:Static dto:ChineseHnimeLabel.Labels}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="sdk:DictionaryEntry">
+                        <CollectionView ItemSizingStrategy="MeasureFirstItem" ItemsSource="{Binding .}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid RowDefinitions="Auto,*">
+                                        <Label
+                                            Margin="10,2,0,2"
+                                            Text="{Binding Key}"
+                                            TextColor="{StaticResource Pink}" />
+                                        <CollectionView
+                                            Grid.Row="1"
+                                            ItemSizingStrategy="MeasureAllItems"
+                                            ItemsSource="{Binding Value}">
+                                            <CollectionView.ItemsLayout>
+                                                <GridItemsLayout Orientation="Horizontal" Span="2" />
+                                            </CollectionView.ItemsLayout>
+                                            <CollectionView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <HorizontalStackLayout>
+                                                        <lib:CandyCheckBox CheckedChanged="TagEvent" Text="{Binding .}" />
+                                                        <Label
+                                                            Margin="0,4,0,0"
+                                                            Text="{Binding .}"
+                                                            TextColor="{StaticResource Pink}" />
+                                                    </HorizontalStackLayout>
+                                                </DataTemplate>
+                                            </CollectionView.ItemTemplate>
+                                        </CollectionView>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <StackLayout
+                Grid.Row="5"
+                Margin="0,25,0,0"
+                HorizontalOptions="Center"
+                VerticalOptions="Start">
+                <Button
+                    Background="{StaticResource Pink}"
+                    Clicked="SaveEvent"
+                    FontSize="18"
+                    HeightRequest="40"
+                    Text="保存"
+                    TextColor="White"
+                    WidthRequest="240" />
+            </StackLayout>
+        </Grid>
+    </Frame>
+</mo:PopupPage>
