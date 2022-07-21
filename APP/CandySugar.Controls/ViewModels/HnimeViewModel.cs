@@ -1,4 +1,5 @@
-﻿using CandySugar.Controls.Views.HnimeViews.Popups;
+﻿using CandySugar.Controls.Views.HnimeViews;
+using CandySugar.Controls.Views.HnimeViews.Popups;
 using Sdk.Component.Hnime.sdk;
 using Sdk.Component.Hnime.sdk.ViewModel;
 using Sdk.Component.Hnime.sdk.ViewModel.Enums;
@@ -9,10 +10,10 @@ namespace CandySugar.Controls.ViewModels
 {
     public class HnimeViewModel : BaseViewModel
     {
-       
+
         public HnimeViewModel()
         {
-            //Task.Run(() => InitHnime());
+            Task.Run(() => InitHnime());
             MessagingCenter.Subscribe<HnimeLableView, HnimeSearch>(this, "Query", (sender, parm) =>
             {
                 Query = parm;
@@ -43,11 +44,12 @@ namespace CandySugar.Controls.ViewModels
         #region 命令
         public DelegateCommand QueryAction => new(() =>
         {
+            this.Page = 1;
             Query ??= new HnimeSearch();
             Query.KeyWord = this.KeyWord;
+            Query.Page = this.Page;
             this.CategoryRoute = String.Empty;
             SetRefresh();
-            this.Page = 1;
             LoadMore = false;
             Task.Run(() => InitSearch());
         });
@@ -59,8 +61,13 @@ namespace CandySugar.Controls.ViewModels
             LoadMore = true;
             this.Page += 1;
             if (this.Page > Total) return;
-            if (Query != null) Task.Run(() => InitCategory());
-            else Task.Run(() => InitSearch());
+            if (Query != null)
+            {
+                Query.Page = this.Page;
+                Task.Run(() => InitCategory());
+            }
+            else
+                Task.Run(() => InitSearch());
 
         });
         public DelegateCommand LabelAction => new(() =>
@@ -72,10 +79,10 @@ namespace CandySugar.Controls.ViewModels
             SetRefresh(false);
             LoadMore = false;
             this.Page = 1;
-            if(Query!=null) Task.Run(() => InitCategory());
+            if (Query == null) Task.Run(() => InitCategory());
             else Task.Run(() => InitSearch());
         });
-        public DelegateCommand<string> CategoryAction => new(input => 
+        public DelegateCommand<string> CategoryAction => new(input =>
         {
             SetRefresh();
             this.Page = 1;
@@ -84,7 +91,7 @@ namespace CandySugar.Controls.ViewModels
             LoadMore = false;
             Task.Run(() => InitCategory());
         });
-        public DelegateCommand<HnimeSearchElementResult> DetailAction => new(input => { });
+        public DelegateCommand<HnimeSearchElementResult> DetailAction => new(input => InitPlay(input.Watch));
         #endregion
 
         #region 方法
@@ -199,10 +206,46 @@ namespace CandySugar.Controls.ViewModels
                 await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
             }
         }
+        async void InitPlay(string input)
+        {
+            if (IsBusy) return;
+            try
+            {
+                if (CandySoft.NetState.NetworkAccess != NetworkAccess.Internet)
+                {
+                    await Shell.Current.DisplayAlert("网络异常！", "请检查网络是否通畅！", "是");
+                    return;
+                }
+                ShowBusy();
+                await Task.Delay(CandySoft.Wait);
+                var result = await HnimeFactory.Hnime(opt =>
+                {
+                    opt.RequestParam = new Input
+                    {
+                        HnimeType = HnimeEnum.Watch,
+                        CacheSpan = CandySoft.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        Play = new HnimePlay { Route = input }
+                    };
+                }).RunsAsync();
+                CloseBusy();
+                var Play = result.PlayResults.Where(t => t.IsPlaying == true).FirstOrDefault().PlayRoute;
+                Navigation(Play);
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+            }
+        }
         async void PushPopup()
         {
             HnimeLableView LabelView = new HnimeLableView();
             await MopupService.Instance.PushAsync(LabelView);
+        }
+        async void Navigation(string input)
+        {
+            await Shell.Current.GoToAsync($"{nameof(HnimePlayView)}?Key={input}");
         }
         #endregion
     }

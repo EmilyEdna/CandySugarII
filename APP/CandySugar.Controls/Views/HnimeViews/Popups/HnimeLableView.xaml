@@ -63,7 +63,7 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <HorizontalStackLayout>
-                            <lib:CandyCheckBox CheckedChanged="TagEvent" Text="{Binding .}" />
+                            <lib:CandyCheckBox CheckedChanged="BrandEvent" Text="{Binding .}" />
                             <Label Text="{Binding .}" TextColor="{StaticResource Pink}" />
                         </HorizontalStackLayout>
                     </DataTemplate>

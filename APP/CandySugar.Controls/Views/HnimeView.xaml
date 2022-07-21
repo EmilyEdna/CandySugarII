@@ -29,6 +29,7 @@
     <Grid BackgroundColor="{StaticResource Trans}" RowDefinitions="Auto,*">
         <CollectionView
             Grid.Row="0"
+            HorizontalOptions="Center"
             ItemsLayout="HorizontalList"
             ItemsSource="{Binding InitResult}">
             <CollectionView.ItemTemplate>

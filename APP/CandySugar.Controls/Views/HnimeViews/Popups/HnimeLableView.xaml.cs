@@ -53,8 +53,9 @@ public partial class HnimeLableView : PopupPage
         Query.HnimeType = ((RadioButton)sender).Value.ToString();
     }
 
-    private void SaveEvent(object sender, EventArgs e)
+    private async void SaveEvent(object sender, EventArgs e)
     {
+        await MopupService.Instance.PopAllAsync();
         MessagingCenter.Send(this, "Query", Query);
     }
 }
