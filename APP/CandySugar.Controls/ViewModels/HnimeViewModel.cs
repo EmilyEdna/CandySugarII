@@ -15,9 +15,9 @@ namespace CandySugar.Controls.ViewModels
         {
             CandyService = CandyContainer.Instance.Resolves<ICandyService>();
             Task.Run(() => InitHnime());
-            MessagingCenter.Subscribe<HnimeLableView, HnimeSearch>(this, "Query", (sender, parm) =>
+            MessagingCenter.Subscribe<HnimeLableView, HnimeSearch>(this, "Query", (sender, param) =>
             {
-                Query = parm;
+                Query = param;
             });
         }
 

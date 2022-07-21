@@ -28,7 +28,7 @@ namespace CandySugar.Logic.Service
         }
         public CandyOption GetOption()
         {
-           return base.Read<CandyOption>().FirstOrDefault();
+            return base.Read<CandyOption>().FirstOrDefault();
         }
         #endregion
 
@@ -170,6 +170,10 @@ namespace CandySugar.Logic.Service
                 Result = Data.Skip((PageIndex - 1) * 10).Take(10).ToList(),
                 Total = Math.Ceiling(Data.Count() / 10d)
             };
+        }
+        public List<CandyLabel> SearcheTag(string input)
+        {
+            return base.Read<CandyLabel>().Where(t => t.ZhLabel.Contains(input) || t.EnLabel.Contains(input)).OrderByDescending(t => t.Span).ToList();
         }
         public void RemoveTag(CandyLabel input)
         {

@@ -47,6 +47,7 @@ namespace CandySugar.Logic.Service
         #region 标签
         void AddOrAlterTag(CandyLabel input);
         Pagination<CandyLabel> GetTag(int PageIndex);
+        List<CandyLabel> SearcheTag(string input);
         void RemoveTag(CandyLabel input);
         #endregion
     }

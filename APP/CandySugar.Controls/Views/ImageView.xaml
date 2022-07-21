@@ -3,6 +3,8 @@
     x:Class="CandySugar.Controls.Views.ImageView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:lib="http://lib.sugar.com"
+    xmlns:model="clr-namespace:CandySugar.Logic.Entity.CandyEntity;assembly=CandySugar.Logic"
     xmlns:sdk="clr-namespace:Sdk.Component.Image.sdk.ViewModel.Response;assembly=Sdk.Component"
     xmlns:vm="clr-namespace:CandySugar.Controls.ViewModels"
     x:DataType="vm:ImageViewModel">
@@ -17,14 +19,27 @@
             Text="标签" />
     </ContentPage.ToolbarItems>
     <Shell.SearchHandler>
-        <SearchHandler
+        <lib:CandyImageSearchHandler
             ClearIcon="{StaticResource Clear}"
             Command="{Binding QueryAction}"
             Placeholder="请输入标签"
             Query="{Binding KeyWord, Mode=TwoWay}"
             QueryIcon="{StaticResource Search}"
-            ShowsResults="False"
-            TextColor="{StaticResource Green}" />
+            ShowsResults="True"
+            TextColor="{StaticResource Green}">
+            <lib:CandyImageSearchHandler.ItemTemplate>
+                <DataTemplate x:DataType="model:CandyLabel">
+                    <Grid Padding="8" ColumnDefinitions="Auto,*">
+                        <Label Text="{Binding EnLabel}" TextColor="{StaticResource Red}" />
+                        <Label
+                            Grid.Column="1"
+                            FontSize="12"
+                            Text="{Binding ZhLabel}"
+                            TextColor="{StaticResource Pink}" />
+                    </Grid>
+                </DataTemplate>
+            </lib:CandyImageSearchHandler.ItemTemplate>
+        </lib:CandyImageSearchHandler>
     </Shell.SearchHandler>
     <Grid BackgroundColor="{StaticResource Trans}">
         <RefreshView
