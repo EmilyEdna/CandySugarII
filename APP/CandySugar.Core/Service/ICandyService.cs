@@ -32,7 +32,7 @@ namespace CandySugar.Logic.Service
         void RemoveAnime(CandyAnimeRoot input);
         #endregion
 
-        #region 动漫
+        #region Acg
         void AddOrAlterHnime(CandyHnime input);
         Pagination<CandyHnime> GetHnime(int PageIndex);
         void RemoveHnime(CandyHnime input);
@@ -42,6 +42,12 @@ namespace CandySugar.Logic.Service
         void AddOrAlterManga(CandyManga input);
         Pagination<CandyManga> GetManga(int PageIndex);
         void RemoveManga(CandyManga input);
+        #endregion
+
+        #region 标签
+        void AddOrAlterTag(CandyLabel input);
+        Pagination<CandyLabel> GetTag(int PageIndex);
+        void RemoveTag(CandyLabel input);
         #endregion
     }
 }

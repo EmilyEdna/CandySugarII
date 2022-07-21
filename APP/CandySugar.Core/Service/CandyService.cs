@@ -152,5 +152,29 @@ namespace CandySugar.Logic.Service
             base.Delete(input);
         }
         #endregion
+
+        #region 标签
+        public void AddOrAlterTag(CandyLabel input)
+        {
+            var Data = base.Read<CandyLabel>();
+            var CheckData = Data.FirstOrDefault(t => t.ZhLabel == input.ZhLabel && t.EnLabel == input.EnLabel);
+            if (CheckData != null)
+                base.Delete(CheckData);
+            base.InsertSingle(input);
+        }
+        public Pagination<CandyLabel> GetTag(int PageIndex)
+        {
+            var Data = base.Read<CandyLabel>().OrderByDescending(t => t.Span);
+            return new Pagination<CandyLabel>
+            {
+                Result = Data.Skip((PageIndex - 1) * 10).Take(10).ToList(),
+                Total = Math.Ceiling(Data.Count() / 10d)
+            };
+        }
+        public void RemoveTag(CandyLabel input)
+        {
+            base.Delete(input);
+        }
+        #endregion
     }
 }

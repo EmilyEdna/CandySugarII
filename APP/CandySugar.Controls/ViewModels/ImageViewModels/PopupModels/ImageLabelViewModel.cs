@@ -2,6 +2,12 @@
 {
     public class ImageLabelViewModel : BaseViewModel
     {
+        ICandyService CandyService;
+        public ImageLabelViewModel()
+        {
+            CandyService = CandyContainer.Instance.Resolves<ICandyService>();
+        }
+
         #region 属性
         string _Chinese;
         public string Chinese
@@ -21,9 +27,20 @@
         #region 命令
         public DelegateCommand SaveAction => new(() =>
         {
-
-
+            Logic();
         });
+        #endregion
+
+        #region 方法
+        async void Logic()
+        {
+            CandyService.AddOrAlterTag(new CandyLabel
+            {
+                EnLabel = English,
+                ZhLabel = Chinese
+            });
+            await MopupService.Instance.PopAllAsync();
+        }
         #endregion
     }
 }

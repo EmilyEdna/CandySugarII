@@ -10,9 +10,5 @@
         /// 中文标签
         /// </summary>
         public string ZhLabel { get; set; }
-        /// <summary>
-        /// 修改时间
-        /// </summary>
-        public DateTime? Modify { get; set; }
     }
 }
