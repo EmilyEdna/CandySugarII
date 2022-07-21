@@ -10,9 +10,10 @@ namespace CandySugar.Controls.ViewModels
 {
     public class HnimeViewModel : BaseViewModel
     {
-
+        ICandyService CandyService;
         public HnimeViewModel()
         {
+            CandyService = CandyContainer.Instance.Resolves<ICandyService>();
             Task.Run(() => InitHnime());
             MessagingCenter.Subscribe<HnimeLableView, HnimeSearch>(this, "Query", (sender, parm) =>
             {
@@ -91,7 +92,7 @@ namespace CandySugar.Controls.ViewModels
             LoadMore = false;
             Task.Run(() => InitCategory());
         });
-        public DelegateCommand<HnimeSearchElementResult> DetailAction => new(input => InitPlay(input.Watch));
+        public DelegateCommand<HnimeSearchElementResult> DetailAction => new(input => InitPlay(input));
         #endregion
 
         #region 方法
@@ -206,7 +207,7 @@ namespace CandySugar.Controls.ViewModels
                 await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
             }
         }
-        async void InitPlay(string input)
+        async void InitPlay(HnimeSearchElementResult input)
         {
             if (IsBusy) return;
             try
@@ -226,11 +227,12 @@ namespace CandySugar.Controls.ViewModels
                         CacheSpan = CandySoft.Cache,
                         Proxy = StaticResource.Proxy(),
                         ImplType = StaticResource.ImplType(),
-                        Play = new HnimePlay { Route = input }
+                        Play = new HnimePlay { Route = input.Watch }
                     };
                 }).RunsAsync();
                 CloseBusy();
                 var Play = result.PlayResults.Where(t => t.IsPlaying == true).FirstOrDefault().PlayRoute;
+                Logic(input, Play);
                 Navigation(Play);
             }
             catch (Exception ex)
@@ -242,6 +244,13 @@ namespace CandySugar.Controls.ViewModels
         {
             HnimeLableView LabelView = new HnimeLableView();
             await MopupService.Instance.PushAsync(LabelView);
+        }
+         void Logic(HnimeSearchElementResult input,string Play)
+        {
+            var Model = input.ToMapest<CandyHnime>();
+            Model.Name = input.Title;
+            Model.Route = Play;
+            CandyService.AddOrAlterHnime(Model);
         }
         async void Navigation(string input)
         {

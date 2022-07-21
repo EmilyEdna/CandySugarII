@@ -87,6 +87,30 @@ namespace CandySugar.Logic.Service
         }
         #endregion
 
+        #region ACG
+        public void AddOrAlterHnime(CandyHnime input)
+        {
+            var Data = base.Read<CandyHnime>();
+            var CheckData = Data.FirstOrDefault(t => t.Name == input.Name);
+            if (CheckData != null)
+                base.Delete(CheckData);
+            base.InsertSingle(input);
+        }
+        public Pagination<CandyHnime> GetHnime(int PageIndex)
+        {
+            var Data = base.Read<CandyHnime>().OrderByDescending(t => t.Span);
+            return new Pagination<CandyHnime>
+            {
+                Result = Data.Skip((PageIndex - 1) * 10).Take(10).ToList(),
+                Total = Math.Ceiling(Data.Count() / 10d)
+            };
+        }
+        public void RemoveHnime(CandyHnime input)
+        {
+            base.Delete(input);
+        }
+        #endregion
+
         #region 漫画
         public void AddOrAlterManga(CandyManga input)
         {
