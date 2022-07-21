@@ -43,6 +43,9 @@ namespace CandySugar.Controls.SysViewModels
                 case 4:
                     Contents = new MangaHistoryView();
                     break;
+                case 5:
+                    Contents = new HnimeHistoryView();
+                    break;
                 default:
                     break;
             }

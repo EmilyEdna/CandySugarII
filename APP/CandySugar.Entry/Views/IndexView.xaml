@@ -119,7 +119,7 @@
             Icon="{StaticResource TV}"
             Route="AnimeView" />
         <ShellContent
-            Title="黄漫"
+            Title="ACG"
             ContentTemplate="{DataTemplate ctrl:HnimeView}"
             Icon="{StaticResource Sexlab}"
             IsVisible="{x:Static lib:CandySoft.IsAdmin}"
