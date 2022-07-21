@@ -9,6 +9,11 @@ namespace CandySugar.Logic.Service
 {
     public interface ICandyService
     {
+        #region 设置
+        void AddOrAlterOption(CandyOption input);
+        CandyOption GetOption();
+        #endregion
+
         #region 小说
         void AddOrAlterNovel(CandyNovel input);
         Pagination<CandyNovel> GetNovel(int PageIndex);

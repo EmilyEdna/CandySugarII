@@ -52,13 +52,13 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="sdk:LovelCategoryElementResult">
-                        <Border Stroke="{StaticResource Gray100Brush}" StrokeThickness="1">
+                        <Border
+                            Stroke="{StaticResource Gray100Brush}"
+                            StrokeShape="RoundRectangle 0"
+                            StrokeThickness="1">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding DetailAction, Source={RelativeSource AncestorType={x:Type vm:LovelViewModel}}}" CommandParameter="{Binding .}" />
                             </Border.GestureRecognizers>
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="0" />
-                            </Border.StrokeShape>
                             <Grid ColumnDefinitions="Auto,*">
                                 <Border
                                     HeightRequest="130"

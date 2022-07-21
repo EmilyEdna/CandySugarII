@@ -1,17 +1,23 @@
 ﻿using CandySugar.Controls;
 using CandySugar.Entry.Views;
 using CandySugar.Library;
+using CandySugar.Logic.Common;
+using CandySugar.Logic.Service;
+using XExten.Advance.LinqFramework;
 
 namespace CandySugar.Entry.ViewModels
 {
     public class LoginViewModel : BindableBase
     {
         INavigationService NavigationService;
+        ICandyService CandyService;
         public LoginViewModel(INavigationService NavigationService)
         {
+            CandyService = CandyContainer.Instance.Resolve<ICandyService>();
             CandySoft.ScreenWidth = DeviceDisplay.Current.MainDisplayInfo.Width/3;
             CandySoft.ScreenHeight = DeviceDisplay.Current.MainDisplayInfo.Height/3;
             this.NavigationService = NavigationService;
+            Init();
         }
 
         #region 属性
@@ -44,6 +50,23 @@ namespace CandySugar.Entry.ViewModels
             if (res)
                 Application.Current.MainPage = new IndexView();
         });
+        #endregion
+        #region 方法
+        void Init()
+        {
+            var Model = CandyService.GetOption();
+            if (Model == null) return;
+            CandySoft.Cache = Model.Cache==0? CandySoft.Cache: Model.Cache;
+            CandySoft.LightAccount = Model.LightAccount;
+            CandySoft.IP = Model.IP.IsNullOrEmpty()? CandySoft.IP: Model.IP;
+            CandySoft.Module = Model.Module == 0 ? CandySoft.Module : Model.Module;
+            CandySoft.LightPwd = Model.LightPwd;
+            CandySoft.Port = Model.Port == 0 ? CandySoft.Port : Model.Port;
+            CandySoft.Pwd = Model.Pwd.IsNullOrEmpty() ? CandySoft.Pwd : Model.Pwd;
+            CandySoft.QueryModule = Model.QueryModule == 0 ? CandySoft.QueryModule : Model.QueryModule;
+            CandySoft.User = Model.User.IsNullOrEmpty() ? CandySoft.User : Model.User;
+            CandySoft.Wait = Model.Wait == 0 ? CandySoft.Wait : Model.Wait;
+        }
         #endregion
     }
 }

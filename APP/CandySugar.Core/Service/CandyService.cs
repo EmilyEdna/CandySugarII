@@ -15,6 +15,23 @@ namespace CandySugar.Logic.Service
 
         }
 
+        #region 设置
+        public void AddOrAlterOption(CandyOption input)
+        {
+            var Data = base.Read<CandyOption>();
+            if (Data.Count > 0)
+                Data.ForEach(item =>
+                {
+                    base.Delete(item);
+                });
+            base.InsertSingle(input);
+        }
+        public CandyOption GetOption()
+        {
+           return base.Read<CandyOption>().FirstOrDefault();
+        }
+        #endregion
+
         #region 小说
         public void AddOrAlterNovel(CandyNovel input)
         {

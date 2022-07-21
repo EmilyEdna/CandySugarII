@@ -4,6 +4,6 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:lib="clr-namespace:CandySugar.Library.Converters;assembly=CandySugar.Library">
-    <lib:MultiConverter x:Key="Multi" />
+    <lib:QueyConverter x:Key="Qeury" />
     <lib:ParamConverter x:Key="Param" />
 </ResourceDictionary>

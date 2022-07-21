@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CandySugar.Library.Converters
 {
-    public class MultiConverter : IValueConverter
+    public class QueyConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

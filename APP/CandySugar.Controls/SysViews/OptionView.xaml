@@ -3,4 +3,254 @@
     x:Class="CandySugar.Controls.SysViews.OptionView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="设置" />
+    xmlns:vm="clr-namespace:CandySugar.Controls.SysViewModels"
+    Title="设置"
+    x:DataType="vm:OptionViewModel">
+    <ContentPage.BindingContext>
+        <vm:OptionViewModel />
+    </ContentPage.BindingContext>
+    <VerticalStackLayout>
+        <Border
+            Stroke="{StaticResource GreenBrush}"
+            StrokeShape="RoundRectangle 0"
+            StrokeThickness="1">
+            <StackLayout Padding="2">
+                <Label
+                    Margin="5,0,0,0"
+                    FontSize="18"
+                    Text="代理设置"
+                    TextColor="{StaticResource Red}" />
+                <Grid ColumnDefinitions="*,*" RowDefinitions="*,*">
+                    <Border
+                        Stroke="{StaticResource PrimaryBrush}"
+                        StrokeShape="RoundRectangle 0"
+                        StrokeThickness="1"
+                        WidthRequest="170">
+                        <Entry
+                            Margin="5,0,0,0"
+                            ClearButtonVisibility="WhileEditing"
+                            Placeholder="代理IP"
+                            Text="{Binding IP, Mode=TwoWay}"
+                            VerticalOptions="Center"
+                            WidthRequest="170" />
+                    </Border>
+                    <Border
+                        Grid.Column="1"
+                        Stroke="{StaticResource PrimaryBrush}"
+                        StrokeShape="RoundRectangle 0"
+                        StrokeThickness="1"
+                        WidthRequest="170">
+                        <Entry
+                            Margin="5,0,0,0"
+                            ClearButtonVisibility="WhileEditing"
+                            Placeholder="代理端口"
+                            Text="{Binding Port, Mode=TwoWay}"
+                            VerticalOptions="Center"
+                            WidthRequest="170" />
+                    </Border>
+                    <Border
+                        Grid.Row="1"
+                        Stroke="{StaticResource PrimaryBrush}"
+                        StrokeShape="RoundRectangle 0"
+                        StrokeThickness="1"
+                        WidthRequest="170">
+                        <Entry
+                            Margin="5,0,0,0"
+                            ClearButtonVisibility="WhileEditing"
+                            Placeholder="代理账户"
+                            Text="{Binding User, Mode=TwoWay}"
+                            VerticalOptions="Center"
+                            WidthRequest="170" />
+                    </Border>
+                    <Border
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Stroke="{StaticResource PrimaryBrush}"
+                        StrokeShape="RoundRectangle 0"
+                        StrokeThickness="1"
+                        WidthRequest="170">
+                        <Entry
+                            Margin="5,0,0,0"
+                            ClearButtonVisibility="WhileEditing"
+                            Placeholder="代理密码"
+                            Text="{Binding Pwd, Mode=TwoWay}"
+                            VerticalOptions="Center"
+                            WidthRequest="170" />
+                    </Border>
+                </Grid>
+            </StackLayout>
+        </Border>
+        <Border
+            Stroke="{StaticResource VioletBrush}"
+            StrokeShape="RoundRectangle 0"
+            StrokeThickness="1">
+            <StackLayout Padding="2">
+                <Label
+                    Margin="5,0,0,0"
+                    FontSize="18"
+                    Text="软件设置"
+                    TextColor="{StaticResource Red}" />
+                <Grid ColumnDefinitions="*,*" RowDefinitions="*,*">
+                    <Border
+                        Stroke="{StaticResource PrimaryBrush}"
+                        StrokeShape="RoundRectangle 0"
+                        StrokeThickness="1"
+                        WidthRequest="170">
+                        <Entry
+                            Margin="5,0,0,0"
+                            ClearButtonVisibility="WhileEditing"
+                            Placeholder="缓存时常"
+                            Text="{Binding Cache, Mode=TwoWay}"
+                            VerticalOptions="Center"
+                            WidthRequest="170" />
+                    </Border>
+                    <Border
+                        Grid.Column="1"
+                        Stroke="{StaticResource PrimaryBrush}"
+                        StrokeShape="RoundRectangle 0"
+                        StrokeThickness="1"
+                        WidthRequest="170">
+                        <Entry
+                            Margin="5,0,0,0"
+                            ClearButtonVisibility="WhileEditing"
+                            Placeholder="等待时常"
+                            Text="{Binding Wait, Mode=TwoWay}"
+                            VerticalOptions="Center"
+                            WidthRequest="170" />
+                    </Border>
+                </Grid>
+            </StackLayout>
+        </Border>
+        <Border
+            Stroke="{StaticResource GreenBrush}"
+            StrokeShape="RoundRectangle 0"
+            StrokeThickness="1">
+            <StackLayout Padding="2">
+                <Label
+                    Margin="5,0,0,0"
+                    FontSize="18"
+                    Text="文库设置"
+                    TextColor="{StaticResource Red}" />
+                <Grid ColumnDefinitions="*,*" RowDefinitions="*,*">
+                    <Border
+                        Stroke="{StaticResource PrimaryBrush}"
+                        StrokeShape="RoundRectangle 0"
+                        StrokeThickness="1"
+                        WidthRequest="170">
+                        <Entry
+                            Margin="5,0,0,0"
+                            ClearButtonVisibility="WhileEditing"
+                            Placeholder="文库账号"
+                            Text="{Binding LightAccount, Mode=TwoWay}"
+                            VerticalOptions="Center"
+                            WidthRequest="170" />
+                    </Border>
+                    <Border
+                        Grid.Column="1"
+                        Stroke="{StaticResource PrimaryBrush}"
+                        StrokeShape="RoundRectangle 0"
+                        StrokeThickness="1"
+                        WidthRequest="170">
+                        <Entry
+                            Margin="5,0,0,0"
+                            ClearButtonVisibility="WhileEditing"
+                            Placeholder="文库密码"
+                            Text="{Binding LightPwd, Mode=TwoWay}"
+                            VerticalOptions="Center"
+                            WidthRequest="170" />
+                    </Border>
+                </Grid>
+            </StackLayout>
+        </Border>
+        <Border
+            Stroke="{StaticResource VioletBrush}"
+            StrokeShape="RoundRectangle 0"
+            StrokeThickness="1">
+            <StackLayout Padding="2">
+                <Label
+                    Margin="5,0,0,0"
+                    FontSize="18"
+                    Text="请求方式"
+                    TextColor="{StaticResource Red}" />
+                <HorizontalStackLayout>
+                    <RadioButton
+                        CheckedChanged="QueryEvent"
+                        Content="Multi"
+                        FontSize="12"
+                        GroupName="ModuleType"
+                        TextColor="{StaticResource Pink}"
+                        Value="1" />
+                    <RadioButton
+                        CheckedChanged="QueryEvent"
+                        Content="Reset"
+                        FontSize="12"
+                        GroupName="ModuleType"
+                        TextColor="{StaticResource Pink}"
+                        Value="2" />
+                    <RadioButton
+                        CheckedChanged="QueryEvent"
+                        Content="Rpc"
+                        FontSize="12"
+                        GroupName="ModuleType"
+                        TextColor="{StaticResource Pink}"
+                        Value="3" />
+                </HorizontalStackLayout>
+            </StackLayout>
+        </Border>
+        <Border
+            Stroke="{StaticResource GreenBrush}"
+            StrokeShape="RoundRectangle 0"
+            StrokeThickness="1">
+            <StackLayout Padding="2">
+                <Label
+                    Margin="5,0,0,0"
+                    FontSize="18"
+                    Text="壁纸年龄"
+                    TextColor="{StaticResource Red}" />
+                <HorizontalStackLayout>
+                    <RadioButton
+                        CheckedChanged="ModuleEvent"
+                        Content="全年龄"
+                        FontSize="12"
+                        GroupName="AgeType"
+                        TextColor="{StaticResource Pink}"
+                        Value="1" />
+                    <RadioButton
+                        CheckedChanged="ModuleEvent"
+                        Content="12岁"
+                        FontSize="12"
+                        GroupName="AgeType"
+                        TextColor="{StaticResource Pink}"
+                        Value="2" />
+                    <RadioButton
+                        CheckedChanged="ModuleEvent"
+                        Content="15岁"
+                        FontSize="12"
+                        GroupName="AgeType"
+                        TextColor="{StaticResource Pink}"
+                        Value="3" />
+                    <RadioButton
+                        CheckedChanged="ModuleEvent"
+                        Content="18岁"
+                        FontSize="12"
+                        GroupName="AgeType"
+                        TextColor="{StaticResource Pink}"
+                        Value="4" />
+                </HorizontalStackLayout>
+            </StackLayout>
+        </Border>
+        <StackLayout
+            Margin="0,15,0,0"
+            HorizontalOptions="Center"
+            VerticalOptions="Start">
+            <Button
+                Background="{StaticResource Pink}"
+                Command="{Binding SaveAction}"
+                FontSize="18"
+                HeightRequest="40"
+                Text="保存"
+                TextColor="White"
+                WidthRequest="280" />
+        </StackLayout>
+    </VerticalStackLayout>
+</ContentPage>
