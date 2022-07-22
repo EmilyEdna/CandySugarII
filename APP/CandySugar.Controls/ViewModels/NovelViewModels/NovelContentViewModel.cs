@@ -58,7 +58,7 @@ namespace CandySugar.Controls.ViewModels.NovelViewModels
             {
                 if (CandySoft.NetState.NetworkAccess != NetworkAccess.Internet)
                 {
-                    await Shell.Current.DisplayAlert("网络异常！", "请检查网络是否通畅！", "是");
+                    StaticResource.PopToast("请检查网络是否通畅!");
                     return;
                 }
                 ShowBusy();

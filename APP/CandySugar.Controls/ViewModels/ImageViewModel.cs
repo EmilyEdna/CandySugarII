@@ -89,7 +89,7 @@ namespace CandySugar.Controls.ViewModels
             {
                 if (CandySoft.NetState.NetworkAccess != NetworkAccess.Internet)
                 {
-                    await Shell.Current.DisplayAlert("网络异常！", "请检查网络是否通畅！", "是");
+                    StaticResource.PopToast("请检查网络是否通畅!");
                     return;
                 }
                 ShowBusy();
@@ -132,7 +132,7 @@ namespace CandySugar.Controls.ViewModels
             {
                 if (CandySoft.NetState.NetworkAccess != NetworkAccess.Internet)
                 {
-                    await Shell.Current.DisplayAlert("网络异常！", "请检查网络是否通畅！", "是");
+                    StaticResource.PopToast("请检查网络是否通畅!");
                     return;
                 }
                 ShowBusy();
@@ -184,6 +184,7 @@ namespace CandySugar.Controls.ViewModels
                 Preview = Preview,
                 Original = Original
             });
+            StaticResource.PopToast("收藏成功!");
         }
         #endregion
     }

@@ -1,11 +1,7 @@
 ﻿using CandySugar.Controls.SysViewModels;
 using CandySugar.Controls.SysViews;
-using CandySugar.Controls.Views.LovelViews;
-using CandySugar.Library;
-using Microsoft.Maui.Controls.PlatformConfiguration;
 using Sdk.Component.Plugins;
 using Sdk.Core;
-using XExten.Advance.LinqFramework;
 
 namespace CandySugar.Controls
 {
@@ -112,11 +108,11 @@ namespace CandySugar.Controls
         /// <param name="input"></param>
         public static async void PopToast(string input)
         {
+            //解决Toast在子线程问题
 #if ANDROID
             Android.OS.Looper.Prepare();
 #endif
-            var toast = Toast.Make(input);
-            await toast.Show();
+            await Toast.Make(input).Show();
 #if ANDROID
             Android.OS.Looper.Loop();
 #endif
