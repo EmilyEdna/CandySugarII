@@ -68,6 +68,9 @@
 	  <MauiXaml Update="Views\AnimeViews\AnimePlayView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\AxgleViews\AxglePlayView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\HnimeViews\HnimePlayView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

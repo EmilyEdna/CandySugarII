@@ -1,4 +1,5 @@
-﻿using Sdk.Component.Axgle.sdk;
+﻿using CandySugar.Controls.Views.AxgleViews;
+using Sdk.Component.Axgle.sdk;
 using Sdk.Component.Axgle.sdk.ViewModel;
 using Sdk.Component.Axgle.sdk.ViewModel.Enums;
 using Sdk.Component.Axgle.sdk.ViewModel.Request;
@@ -153,7 +154,6 @@ namespace CandySugar.Controls.ViewModels
                 }
                 else
                 {
-
                     var Target = result.CategoryResult.ElementResult.ToMapest<List<AxgleSearchElementResult>>();
                     this.QueryResult = new ObservableCollection<AxgleSearchElementResult>(Target);
                 }
@@ -165,7 +165,7 @@ namespace CandySugar.Controls.ViewModels
         }
         async void Navigation(string input)
         {
-            await Shell.Current.GoToAsync($"?Key={input}");
+            await Shell.Current.GoToAsync($"{nameof(AxglePlayView)}?Key={input}");
         }
         void Logic(AxgleSearchElementResult input)
         {
