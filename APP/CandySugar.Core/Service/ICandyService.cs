@@ -56,5 +56,11 @@ namespace CandySugar.Logic.Service
         Pagination<CandyImage> GetImage(int PageIndex);
         void RemoveImage(CandyImage input);
         #endregion
+
+        #region 教育
+        void AddOrAlterAxgle(CandyAxgle input);
+        Pagination<CandyAxgle> GetAxgle(int PageIndex);
+        void RemoveAxgle(CandyAxgle input);
+        #endregion
     }
 }

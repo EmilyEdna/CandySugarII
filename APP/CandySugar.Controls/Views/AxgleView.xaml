@@ -3,11 +3,156 @@
     x:Class="CandySugar.Controls.Views.AxgleView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="AxgleView">
-    <VerticalStackLayout>
-        <Label
+    xmlns:sdk="clr-namespace:Sdk.Component.Axgle.sdk.ViewModel.Response;assembly=Sdk.Component"
+    xmlns:vm="clr-namespace:CandySugar.Controls.ViewModels"
+    x:DataType="vm:AxgleViewModel">
+    <ContentPage.BindingContext>
+        <vm:AxgleViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding HandlerAction}"
+            CommandParameter="1"
+            Order="Secondary"
+            Priority="3"
+            Text="最近观看" />
+        <ToolbarItem
+            Command="{Binding HandlerAction}"
+            CommandParameter="2"
+            Order="Secondary"
+            Priority="0"
+            Text="最新的" />
+        <ToolbarItem
+            Command="{Binding HandlerAction}"
+            CommandParameter="3"
+            Order="Secondary"
+            Priority="4"
+            Text="最多观看" />
+        <ToolbarItem
+            Command="{Binding HandlerAction}"
+            CommandParameter="4"
+            Order="Secondary"
+            Priority="1"
+            Text="热门的" />
+        <ToolbarItem
+            Command="{Binding HandlerAction}"
+            CommandParameter="5"
+            Order="Secondary"
+            Priority="5"
+            Text="最多收藏" />
+        <ToolbarItem
+            Command="{Binding HandlerAction}"
+            CommandParameter="6"
+            Order="Secondary"
+            Priority="2"
+            Text="长时常" />
+    </ContentPage.ToolbarItems>
+    <Shell.SearchHandler>
+        <SearchHandler
+            ClearIcon="{StaticResource Clear}"
+            Command="{Binding QueryAction}"
+            Placeholder="请输入查询内容"
+            Query="{Binding KeyWord, Mode=TwoWay}"
+            QueryIcon="{StaticResource Search}"
+            ShowsResults="False"
+            TextColor="{StaticResource Green}" />
+    </Shell.SearchHandler>
+    <Grid BackgroundColor="{StaticResource Trans}" RowDefinitions="Auto,*">
+        <CollectionView
+            Grid.Row="0"
+            ItemsLayout="HorizontalList"
+            ItemsSource="{Binding InitResult}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="sdk:AxgleInitResult">
+                    <Label
+                        Margin="5"
+                        Text="{Binding ShortName}"
+                        TextColor="{StaticResource Pink}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CategoryAction, Source={RelativeSource AncestorType={x:Type vm:AxgleViewModel}}}" CommandParameter="{Binding AId}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <RefreshView
+            Grid.Row="1"
+            Command="{Binding RefreshAction}"
+            IsRefreshing="{Binding IsRefreshing}"
+            RefreshColor="{StaticResource Pink}">
+            <CollectionView
+                ItemSizingStrategy="MeasureFirstItem"
+                ItemsSource="{Binding QueryResult}"
+                RemainingItemsThreshold="0"
+                RemainingItemsThresholdReachedCommand="{Binding LoadMoreAction}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="3" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="sdk:AxgleSearchElementResult">
+                        <Border
+                            Stroke="{StaticResource Gray100Brush}"
+                            StrokeShape="RoundRectangle 0"
+                            StrokeThickness="1">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding PlayAction, Source={RelativeSource AncestorType={x:Type vm:AxgleViewModel}}}" CommandParameter="{Binding Play}" />
+                            </Border.GestureRecognizers>
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Border
+                                    HeightRequest="130"
+                                    StrokeShape="RoundRectangle 0"
+                                    WidthRequest="90">
+                                    <Image Aspect="Fill" Source="{Binding Preview}" />
+                                </Border>
+                                <StackLayout Grid.Column="1">
+                                    <Label
+                                        Margin="10,0,0,0"
+                                        LineBreakMode="WordWrap"
+                                        Text="{Binding Title}"
+                                        TextColor="{StaticResource Red}" />
+                                    <Label
+                                        Margin="10,0,0,0"
+                                        FontSize="11"
+                                        Text="{Binding Channel, StringFormat='类别：{0}'}"
+                                        TextColor="{StaticResource Pink}" />
+                                    <Label
+                                        Margin="10,0,0,0"
+                                        FontSize="11"
+                                        Text="{Binding Duration, StringFormat='时常：{0}'}"
+                                        TextColor="{StaticResource Pink}" />
+                                    <Label
+                                        Margin="10,0,0,0"
+                                        FontSize="11"
+                                        Text="{Binding Views, StringFormat='浏览次数：{0}'}"
+                                        TextColor="{StaticResource Pink}" />
+                                    <Label
+                                        Margin="10,0,0,0"
+                                        FontSize="11"
+                                        Text="{Binding AddTime, StringFormat='更新时间：{0}'}"
+                                        TextColor="{StaticResource Pink}" />
+                                    <Label
+                                        Margin="10,4,0,0"
+                                        Text="收藏"
+                                        TextColor="{StaticResource Primary}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding StarAction, Source={RelativeSource AncestorType={x:Type vm:AxgleViewModel}}}" CommandParameter="{Binding .}" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                </StackLayout>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+        <ActivityIndicator
+            Grid.RowSpan="2"
+            HeightRequest="20"
             HorizontalOptions="Center"
-            Text="教育"
-            VerticalOptions="Center" />
-    </VerticalStackLayout>
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            WidthRequest="20"
+            Color="{StaticResource Violet}" />
+    </Grid>
 </ContentPage>
