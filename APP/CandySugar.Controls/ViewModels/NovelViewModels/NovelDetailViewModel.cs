@@ -126,7 +126,7 @@ namespace CandySugar.Controls.ViewModels.NovelViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
         async void Navigation(NovelDetailElementResult input)

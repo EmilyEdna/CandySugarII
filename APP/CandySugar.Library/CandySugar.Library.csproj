@@ -17,6 +17,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="CommunityToolkit.Maui" Version="1.1.0" />
 	  <PackageReference Include="HtmlAgilityPack" Version="1.11.43" />
 	  <PackageReference Include="JavaScriptEngineSwitcher.Jint" Version="3.18.0-preview" />
 	  <PackageReference Include="Mopups" Version="1.0.1" />

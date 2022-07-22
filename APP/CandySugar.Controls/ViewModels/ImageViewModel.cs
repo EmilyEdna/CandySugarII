@@ -122,7 +122,7 @@ namespace CandySugar.Controls.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
         async void InitSearch(string input)
@@ -165,7 +165,7 @@ namespace CandySugar.Controls.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
         async void Navigation(string input)
@@ -177,8 +177,8 @@ namespace CandySugar.Controls.ViewModels
             ImageLabelView LabelView = new ImageLabelView();
             await MopupService.Instance.PushAsync(LabelView);
         }
-         void Logic(string Preview, string Original)
-        {         
+        void Logic(string Preview, string Original)
+        {
             CandyService.AddOrAlterImage(new CandyImage
             {
                 Preview = Preview,

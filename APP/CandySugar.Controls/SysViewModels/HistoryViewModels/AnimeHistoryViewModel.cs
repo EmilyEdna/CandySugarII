@@ -88,10 +88,10 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
-        void Logic(CandyAnimeElement input,string PlayRoute)
+        void Logic(CandyAnimeElement input, string PlayRoute)
         {
             var Model = Root.FirstOrDefault(t => t.Name == input.AnimeName);
             Model.CollectName = input.Name;

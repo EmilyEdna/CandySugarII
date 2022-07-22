@@ -86,7 +86,7 @@ namespace CandySugar.Controls.ViewModels.AnimeViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
 

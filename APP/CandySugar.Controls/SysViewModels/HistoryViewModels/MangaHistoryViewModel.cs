@@ -86,7 +86,7 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
         async void Navigation(List<byte[]> input)
@@ -121,7 +121,7 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
             SetRefresh();
             InitContent(input);
         });
-        public DelegateCommand<CandyManga> RemoveAction => new(input =>Remove(input));
+        public DelegateCommand<CandyManga> RemoveAction => new(input => Remove(input));
         #endregion
     }
 }

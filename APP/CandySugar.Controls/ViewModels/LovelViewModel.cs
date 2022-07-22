@@ -81,7 +81,7 @@ namespace CandySugar.Controls.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
         async void InitCategory(string input)
@@ -123,7 +123,7 @@ namespace CandySugar.Controls.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
         async void InitQeury()
@@ -167,7 +167,7 @@ namespace CandySugar.Controls.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
         async void InitDetail(LovelCategoryElementResult input)
@@ -217,7 +217,7 @@ namespace CandySugar.Controls.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
 

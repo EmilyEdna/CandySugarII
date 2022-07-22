@@ -141,7 +141,7 @@ namespace CandySugar.Controls.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
         async void InitCatagory()
@@ -186,7 +186,7 @@ namespace CandySugar.Controls.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
         async void InitSearch()
@@ -228,7 +228,7 @@ namespace CandySugar.Controls.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
         async void InitDetail(string input)
@@ -263,7 +263,7 @@ namespace CandySugar.Controls.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
         async void Navigation(List<AnimeDetailResult> input)

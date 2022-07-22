@@ -114,7 +114,7 @@ namespace CandySugar.Controls.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
         async void InitCategory()
@@ -156,7 +156,7 @@ namespace CandySugar.Controls.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
         async void InitQeury()
@@ -198,7 +198,7 @@ namespace CandySugar.Controls.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
         async void InitDetail(MangaCategoryElementResult input)
@@ -228,16 +228,16 @@ namespace CandySugar.Controls.ViewModels
                     };
                 }).RunsAsync();
                 CloseBusy();
-                Navigation(result.ChapterResults, input.Name,input.Cover);
+                Navigation(result.ChapterResults, input.Name, input.Cover);
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
-        async void Navigation(List<MangaChapterDetailResult> input, string name,string cover)
+        async void Navigation(List<MangaChapterDetailResult> input, string name, string cover)
         {
-            await Shell.Current.GoToAsync(nameof(MangaChapterView), new Dictionary<string, object> { { "Name", name }, { "Chapter", input },{"Cover", cover } });
+            await Shell.Current.GoToAsync(nameof(MangaChapterView), new Dictionary<string, object> { { "Name", name }, { "Chapter", input }, { "Cover", cover } });
         }
         #endregion
     }

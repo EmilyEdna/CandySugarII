@@ -95,10 +95,10 @@ namespace CandySugar.Controls.ViewModels.NovelViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
-        void Logic(string ChapterName,string ChapterRoute)
+        void Logic(string ChapterName, string ChapterRoute)
         {
             var Model = DetailResult.ToMapest<CandyNovel>();
             Model.Route = ChapterRoute;

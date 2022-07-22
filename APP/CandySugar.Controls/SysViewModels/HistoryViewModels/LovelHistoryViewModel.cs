@@ -84,7 +84,7 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
 

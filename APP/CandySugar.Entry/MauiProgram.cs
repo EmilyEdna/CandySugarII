@@ -1,10 +1,6 @@
-﻿using CandySugar.Controls;
-using CandySugar.Controls.ViewModels;
-using CandySugar.Controls.Views;
-using CandySugar.Entry.Views;
-using CandySugar.Logic;
+﻿using CandySugar.Entry.Views;
 using CandySugar.Logic.Common;
-using Prism.Ioc;
+using CommunityToolkit.Maui;
 
 namespace CandySugar.Entry
 {
@@ -19,7 +15,7 @@ namespace CandySugar.Entry
                     {
                         containerRegistry.RegisterForNavigation<LoginView>();
                     }).OnAppStart("NavigationPage/LoginView");
-                }).ConfigureFonts(fonts =>
+                }).UseMauiCommunityToolkit().ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("DroidSans.ttf", "Sans");
                     fonts.AddFont("FontAwesome6Brands.otf", "Brands");

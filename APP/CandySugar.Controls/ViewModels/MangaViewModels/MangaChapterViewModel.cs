@@ -98,7 +98,7 @@ namespace CandySugar.Controls.ViewModels.MangaViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
         async void Navigation(List<byte[]> input)

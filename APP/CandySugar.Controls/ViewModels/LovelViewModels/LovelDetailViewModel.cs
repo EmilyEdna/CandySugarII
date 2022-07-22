@@ -77,12 +77,12 @@ namespace CandySugar.Controls.ViewModels.LovelViewModels
                     await Shell.Current.DisplayAlert("提示！", "因版权问题，不再提供该小说的阅读", "是");
                     return;
                 }
-                Logic(input); 
+                Logic(input);
                 Navigation(new Dictionary<string, object> { { "Result", result.ContentResult }, { "Title", input.ChapterName } });
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
         async void Navigation(Dictionary<string, object> Param)

@@ -68,7 +68,7 @@ namespace CandySugar.Controls.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
         async void InitCategory()
@@ -111,7 +111,7 @@ namespace CandySugar.Controls.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
         async void InitQuery()
@@ -145,7 +145,7 @@ namespace CandySugar.Controls.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
         async void InitDetail(string input)
@@ -179,7 +179,7 @@ namespace CandySugar.Controls.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
         #endregion

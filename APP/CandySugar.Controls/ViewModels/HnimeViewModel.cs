@@ -124,7 +124,7 @@ namespace CandySugar.Controls.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
         async void InitCategory()
@@ -166,7 +166,7 @@ namespace CandySugar.Controls.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
         async void InitSearch()
@@ -204,7 +204,7 @@ namespace CandySugar.Controls.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
         async void InitPlay(HnimeSearchElementResult input)
@@ -237,7 +237,7 @@ namespace CandySugar.Controls.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("错误！", ex.Message, "是");
+                StaticResource.PopToast(ex.Message);
             }
         }
         async void PushPopup()
@@ -245,7 +245,7 @@ namespace CandySugar.Controls.ViewModels
             HnimeLableView LabelView = new HnimeLableView();
             await MopupService.Instance.PushAsync(LabelView);
         }
-         void Logic(HnimeSearchElementResult input,string Play)
+        void Logic(HnimeSearchElementResult input, string Play)
         {
             var Model = input.ToMapest<CandyHnime>();
             Model.Name = input.Title;
