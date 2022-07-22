@@ -1,4 +1,6 @@
-﻿using CandySugar.Controls.Views.LovelViews;
+﻿using CandySugar.Controls.SysViewModels;
+using CandySugar.Controls.SysViews;
+using CandySugar.Controls.Views.LovelViews;
 using CandySugar.Library;
 using Sdk.Component.Plugins;
 using Sdk.Core;
@@ -62,7 +64,6 @@ namespace CandySugar.Controls
             else if (CandySoft.QueryModule == 3) return SdkImpl.RPC;
             else return SdkImpl.User;
         }
-
         /// <summary>
         /// 获取壁纸模式
         /// </summary>
@@ -74,7 +75,6 @@ namespace CandySugar.Controls
             else if (CandySoft.Module == 3) return $"rating:questionable";
             else return $"rating:explicit";
         }
-
         /// <summary>
         /// 登录
         /// </summary>
@@ -88,6 +88,21 @@ namespace CandySugar.Controls
             {
                 Account = Account,
                 Password = Pwd
+            });
+        }
+        /// <summary>
+        /// 弹出确认框
+        /// </summary>
+        /// <param name="input"></param>
+        public static async void PopComfirm(string input,string Topic)
+        {
+            await MopupService.Instance.PushAsync(new ComfirmView
+            {
+                BindingContext = new ComfirmViewModel
+                {
+                    Topic= Topic,
+                    Msg = input
+                }
             });
         }
     }

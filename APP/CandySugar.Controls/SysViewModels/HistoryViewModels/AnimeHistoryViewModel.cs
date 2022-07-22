@@ -44,7 +44,20 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
         {
             await Shell.Current.GoToAsync($"{nameof(AnimePlayView)}?Key={input}");
         }
-
+        void Remove(CandyAnimeRoot input)
+        {
+            StaticResource.PopComfirm("确认删除", nameof(AnimeHistoryViewModel));
+            MessagingCenter.Subscribe<ComfirmViewModel, bool>(this, nameof(AnimeHistoryViewModel), (sender, args) =>
+            {
+                if (args == true)
+                {
+                    CandyService.RemoveAnime(input);
+                    var temp = Root.ToList();
+                    temp.RemoveAll(t => t.CandyId == input.CandyId);
+                    Root = new ObservableCollection<CandyAnimeRoot>(temp);
+                }
+            });
+        }
         async void InitPlay(CandyAnimeElement input)
         {
             try
@@ -105,13 +118,7 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
             InitPlay(input);
         });
 
-        public DelegateCommand<CandyAnimeRoot> RemoveAction => new(input =>
-        {
-            CandyService.RemoveAnime(input);
-            var temp = Root.ToList();
-            temp.RemoveAll(t => t.CandyId == input.CandyId);
-            Root = new ObservableCollection<CandyAnimeRoot>(temp);
-        });
+        public DelegateCommand<CandyAnimeRoot> RemoveAction => new(input => Remove(input));
         #endregion
     }
 }

@@ -39,6 +39,20 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
         {
             await Shell.Current.GoToAsync($"{nameof(HnimePlayView)}?Key={input}");
         }
+        void Remove(CandyHnime input)
+        {
+            StaticResource.PopComfirm("确认删除", nameof(HnimeHistoryViewModel));
+            MessagingCenter.Subscribe<ComfirmViewModel, bool>(this, nameof(HnimeHistoryViewModel), (sender, args) =>
+            {
+                if (args == true)
+                {
+                    CandyService.RemoveHnime(input);
+                    var temp = Root.ToList();
+                    temp.RemoveAll(t => t.CandyId == input.CandyId);
+                    Root = new ObservableCollection<CandyHnime>(temp);
+                }
+            });
+        }
         #endregion
 
         #region 命令
@@ -56,13 +70,7 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
 
      
 
-        public DelegateCommand<CandyHnime> RemoveAction => new(input =>
-        {
-            CandyService.RemoveHnime(input);
-            var temp = Root.ToList();
-            temp.RemoveAll(t => t.CandyId == input.CandyId);
-            Root = new ObservableCollection<CandyHnime>(temp);
-        });
+        public DelegateCommand<CandyHnime> RemoveAction => new(input => Remove(input));
         #endregion
     }
 }

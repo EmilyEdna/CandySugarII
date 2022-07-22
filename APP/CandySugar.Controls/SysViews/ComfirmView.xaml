@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mo:PopupPage
+    x:Class="CandySugar.Controls.SysViews.ComfirmView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mo="clr-namespace:Mopups.Pages;assembly=Mopups"
+    xmlns:vm="clr-namespace:CandySugar.Controls.SysViewModels"
+    x:DataType="vm:ComfirmViewModel"
+    BackgroundColor="#80E1E1E1"
+    CloseWhenBackgroundIsClicked="False"
+    HeightRequest="120"
+    WidthRequest="200">
+    <Border
+        HorizontalOptions="Center"
+        Stroke="{StaticResource Gray100}"
+        StrokeShape="RoundRectangle 20"
+        VerticalOptions="Center">
+        <Grid RowDefinitions="*,50">
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                <Label
+                    FontSize="18"
+                    Text="{Binding Msg}"
+                    TextColor="{StaticResource Pink}" />
+            </StackLayout>
+            <Grid
+                Grid.Row="1"
+                BackgroundColor="{StaticResource Pink}"
+                ColumnDefinitions="*,1,*">
+                <Button
+                    BackgroundColor="Transparent"
+                    BorderWidth="0"
+                    Clicked="ConfirmEvent"
+                    CommandParameter="1"
+                    FontSize="15"
+                    Text="确认"
+                    TextColor="{StaticResource Primary}" />
+                <Line
+                    Grid.Column="1"
+                    Stroke="{StaticResource WhiteBrush}"
+                    VerticalOptions="Center"
+                    X1="0"
+                    X2="0"
+                    Y1="0"
+                    Y2="50" />
+                <Button
+                    Grid.Column="2"
+                    BackgroundColor="Transparent"
+                    BorderWidth="0"
+                    Clicked="ConfirmEvent"
+                    CommandParameter="2"
+                    FontSize="15"
+                    Text="取消"
+                    TextColor="{StaticResource Primary}" />
+            </Grid>
+        </Grid>
+    </Border>
+</mo:PopupPage>

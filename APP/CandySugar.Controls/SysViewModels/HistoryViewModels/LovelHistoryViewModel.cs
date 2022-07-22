@@ -42,7 +42,20 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
         {
             await Shell.Current.GoToAsync(nameof(LovelContentView), lovel);
         }
-
+        void Remove(CandyLovel input)
+        {
+            StaticResource.PopComfirm("确认删除", nameof(LovelHistoryViewModel));
+            MessagingCenter.Subscribe<ComfirmViewModel, bool>(this, nameof(LovelHistoryViewModel), (sender, args) =>
+            {
+                if (args == true)
+                {
+                    CandyService.RemoveLovel(input);
+                    var temp = Lovel.ToList();
+                    temp.RemoveAll(t => t.CandyId == input.CandyId);
+                    Lovel = new ObservableCollection<CandyLovel>(temp);
+                }
+            });
+        }
         async void InitContent(CandyLovel input)
         {
             try
@@ -88,13 +101,7 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
         {
             InitContent(input);
         });
-        public DelegateCommand<CandyLovel> RemoveAction => new(input =>
-        {
-            CandyService.RemoveLovel(input);
-            var temp = Lovel.ToList();
-            temp.RemoveAll(t => t.CandyId == input.CandyId);
-            Lovel = new ObservableCollection<CandyLovel>(temp);
-        });
+        public DelegateCommand<CandyLovel> RemoveAction => new(input => Remove(input));
         #endregion
     }
 }

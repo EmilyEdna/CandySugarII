@@ -177,8 +177,8 @@ namespace CandySugar.Controls.ViewModels
             ImageLabelView LabelView = new ImageLabelView();
             await MopupService.Instance.PushAsync(LabelView);
         }
-        void Logic(string Preview, string Original)
-        {
+         void Logic(string Preview, string Original)
+        {         
             CandyService.AddOrAlterImage(new CandyImage
             {
                 Preview = Preview,

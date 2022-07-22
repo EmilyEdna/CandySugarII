@@ -1,8 +1,9 @@
-﻿using CandySugar.Controls.Views.ImageViews;
+﻿using CandySugar.Controls.SysViews;
+using CandySugar.Controls.Views.ImageViews;
 
 namespace CandySugar.Controls.SysViewModels.HistoryViewModels
 {
-    public class ImageHistoryViewModel: BaseViewModel
+    public class ImageHistoryViewModel : BaseViewModel
     {
         ICandyService CandyService;
         public ImageHistoryViewModel()
@@ -38,6 +39,21 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
         {
             await Shell.Current.GoToAsync($"{nameof(ImageDetailView)}?Key={input}");
         }
+
+        void Remove(CandyImage input)
+        {
+            StaticResource.PopComfirm("确认删除",nameof(ImageHistoryViewModel));
+            MessagingCenter.Subscribe<ComfirmViewModel, bool>(this, nameof(ImageHistoryViewModel), (sender, args) =>
+            {
+                if (args == true)
+                {
+                    CandyService.RemoveImage(input);
+                    var temp = Root.ToList();
+                    temp.RemoveAll(t => t.CandyId == input.CandyId);
+                    Root = new ObservableCollection<CandyImage>(temp);
+                }
+            });
+        }
         #endregion
 
         #region 命令
@@ -58,13 +74,7 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
 
         });
 
-        public DelegateCommand<CandyImage> RemoveAction => new(input =>
-        {
-            CandyService.RemoveImage(input);
-            var temp = Root.ToList();
-            temp.RemoveAll(t => t.CandyId == input.CandyId);
-            Root = new ObservableCollection<CandyImage>(temp);
-        });
+        public DelegateCommand<CandyImage> RemoveAction => new(input => Remove(input));
         #endregion
     }
 }

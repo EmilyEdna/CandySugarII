@@ -1,4 +1,5 @@
 ﻿using CandySugar.Controls.Views.NovelViews;
+using Esprima.Ast;
 using Sdk.Component.Novel.sdk.ViewModel.Response;
 using System;
 using System.Collections.Generic;
@@ -49,6 +50,20 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
             };
             await Shell.Current.GoToAsync(nameof(NovelContentView), new Dictionary<string, object> { { "Key", input } });
         }
+        void Remove(CandyNovel input)
+        {
+            StaticResource.PopComfirm("确认删除", nameof(NovelHistoryViewModel));
+            MessagingCenter.Subscribe<ComfirmViewModel, bool>(this, nameof(NovelHistoryViewModel), (sender, args) =>
+            {
+                if (args == true)
+                {
+                    CandyService.RemoveNovel(input);
+                    var temp = Novel.ToList();
+                    temp.RemoveAll(t => t.CandyId == input.CandyId);
+                    Novel = new ObservableCollection<CandyNovel>(temp);
+                }
+            });
+        }
         #endregion
 
         #region 命令
@@ -62,13 +77,7 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
         {
             Navigation(input);
         });
-        public DelegateCommand<CandyNovel> RemoveAction => new(input =>
-        {
-            CandyService.RemoveNovel(input);
-            var temp = Novel.ToList();
-            temp.RemoveAll(t => t.CandyId == input.CandyId);
-            Novel = new ObservableCollection<CandyNovel>(temp);
-        });
+        public DelegateCommand<CandyNovel> RemoveAction => new(input => Remove(input));
         #endregion
     }
 }

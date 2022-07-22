@@ -93,6 +93,20 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
         {
             await Shell.Current.GoToAsync(nameof(MangaWatchView), new Dictionary<string, object> { { "Result", input } });
         }
+        void Remove(CandyManga input)
+        {
+            StaticResource.PopComfirm("确认删除", nameof(MangaHistoryViewModel));
+            MessagingCenter.Subscribe<ComfirmViewModel, bool>(this, nameof(MangaHistoryViewModel), (sender, args) =>
+            {
+                if (args == true)
+                {
+                    CandyService.RemoveManga(input);
+                    var temp = Manga.ToList();
+                    temp.RemoveAll(t => t.CandyId == input.CandyId);
+                    Manga = new ObservableCollection<CandyManga>(temp);
+                }
+            });
+        }
         #endregion
 
         #region 命令
@@ -107,13 +121,7 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
             SetRefresh();
             InitContent(input);
         });
-        public DelegateCommand<CandyManga> RemoveAction => new(input =>
-        {
-            CandyService.RemoveManga(input);
-            var temp = Manga.ToList();
-            temp.RemoveAll(t => t.CandyId == input.CandyId);
-            Manga = new ObservableCollection<CandyManga>(temp);
-        });
+        public DelegateCommand<CandyManga> RemoveAction => new(input =>Remove(input));
         #endregion
     }
 }
