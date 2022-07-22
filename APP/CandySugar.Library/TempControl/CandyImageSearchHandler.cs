@@ -37,7 +37,7 @@ namespace CandySugar.Library.TempControl
         {
             this.Query = (item as CandyLabel).EnLabel;
             base.OnItemSelected(item);
-
+            (this.Command as DelegateCommand).Execute();
         }
     }
 }

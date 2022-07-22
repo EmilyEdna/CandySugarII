@@ -3,7 +3,6 @@
     x:Class="CandySugar.Controls.SysViews.HistoryView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:lib="http://lib.sugar.com"
     xmlns:vm="clr-namespace:CandySugar.Controls.SysViewModels"
     x:DataType="vm:HistoryViewModel"
     Content="{Binding Contents}">
@@ -38,9 +37,8 @@
         <ToolbarItem
             Command="{Binding HandlerAction}"
             CommandParameter="5"
-            IsEnabled="{x:Static lib:CandySoft.IsAdmin}"
             Order="Secondary"
-            Priority="3"
+            Priority="4"
             Text="ACG历史" />
     </ContentPage.ToolbarItems>
 

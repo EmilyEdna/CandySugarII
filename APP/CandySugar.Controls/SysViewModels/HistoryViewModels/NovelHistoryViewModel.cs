@@ -15,7 +15,7 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
         {
             this.Page = 1;
             CandyService = CandyContainer.Instance.Resolve<ICandyService>();
-            Query();
+            Task.Run(() => Query());
         }
 
         #region 属性
