@@ -50,5 +50,11 @@ namespace CandySugar.Logic.Service
         List<CandyLabel> SearcheTag(string input);
         void RemoveTag(CandyLabel input);
         #endregion
+
+        #region 壁纸
+        void AddOrAlterImage(CandyImage input);
+        Pagination<CandyImage> GetImage(int PageIndex);
+        void RemoveImage(CandyImage input);
+        #endregion
     }
 }

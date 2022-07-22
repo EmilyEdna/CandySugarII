@@ -40,6 +40,12 @@
             Order="Secondary"
             Priority="4"
             Text="ACG历史" />
+        <ToolbarItem
+            Command="{Binding HandlerAction}"
+            CommandParameter="7"
+            Order="Secondary"
+            Priority="6"
+            Text="壁纸收藏" />
     </ContentPage.ToolbarItems>
 
 </ContentPage>

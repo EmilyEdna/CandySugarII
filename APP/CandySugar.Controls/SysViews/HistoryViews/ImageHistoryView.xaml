@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="CandySugar.Controls.SysViews.HistoryViews.ImageHistoryView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:CandySugar.Logic.Entity.CandyEntity;assembly=CandySugar.Logic"
+    xmlns:vm="clr-namespace:CandySugar.Controls.SysViewModels.HistoryViewModels"
+    x:DataType="vm:ImageHistoryViewModel">
+    <ContentView.BindingContext>
+        <vm:ImageHistoryViewModel />
+    </ContentView.BindingContext>
+    <Grid BackgroundColor="{StaticResource Trans}">
+        <CollectionView
+            ItemSizingStrategy="MeasureFirstItem"
+            ItemsSource="{Binding Root}"
+            RemainingItemsThreshold="0"
+            RemainingItemsThresholdReachedCommand="{Binding LoadMoreAction}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout
+                    HorizontalItemSpacing="5"
+                    Orientation="Vertical"
+                    Span="2"
+                    VerticalItemSpacing="5" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:CandyImage">
+                    <Border Stroke="{StaticResource Gray100Brush}" StrokeShape="RoundRectangle 3">
+                        <Grid Padding="2" RowDefinitions="Auto,*">
+                            <Border Stroke="{StaticResource Gray100Brush}" StrokeShape="RoundRectangle 1">
+                                <Image
+                                    Aspect="Fill"
+                                    HeightRequest="180"
+                                    Source="{Binding Preview}"
+                                    WidthRequest="265">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ViewAction, Source={RelativeSource AncestorType={x:Type vm:ImageHistoryViewModel}}}" CommandParameter="{Binding .}" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Border>
+                            <HorizontalStackLayout Grid.Row="1" HorizontalOptions="EndAndExpand">
+                                <ImageButton
+                                    Margin="5,4,10,4"
+                                    Command="{Binding DownAction, Source={RelativeSource AncestorType={x:Type vm:ImageHistoryViewModel}}}"
+                                    CommandParameter="{Binding .}"
+                                    Source="{StaticResource Down}" />
+                                <ImageButton
+                                    Margin="10,4,5,4"
+                                    Command="{Binding RemoveAction, Source={RelativeSource AncestorType={x:Type vm:ImageHistoryViewModel}}}"
+                                    CommandParameter="{Binding .}"
+                                    Source="{StaticResource Del}" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentView>

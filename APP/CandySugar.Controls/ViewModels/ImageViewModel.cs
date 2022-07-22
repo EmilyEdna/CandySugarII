@@ -10,13 +10,19 @@ namespace CandySugar.Controls.ViewModels
 {
     public class ImageViewModel : BaseViewModel
     {
-        readonly int Limit = 10;
-        bool LoadMore = false;
+
         public ImageViewModel()
         {
             this.Page = 1;
+            CandyService = CandyContainer.Instance.Resolves<ICandyService>();
             Task.Run(() => InitImage());
         }
+
+        #region 字段
+        readonly int Limit = 10;
+        bool LoadMore = false;
+        ICandyService CandyService;
+        #endregion
 
         #region 属性
         ObservableCollection<ImageElementResult> _ElementResults;
@@ -65,10 +71,13 @@ namespace CandySugar.Controls.ViewModels
             if (KeyWord.IsNullOrEmpty()) Task.Run(() => InitImage());
             else Task.Run(() => InitSearch(KeyWord));
         });
-
         public DelegateCommand LabelPlusAction => new(() =>
         {
             PushPopup();
+        });
+        public DelegateCommand<ImageElementResult> StarAction => new(input =>
+        {
+            Logic(input.Preview, input.OriginalPng.IsNullOrEmpty() ? input.OriginalPng : input.OriginalJepg);
         });
         #endregion
 
@@ -163,11 +172,18 @@ namespace CandySugar.Controls.ViewModels
         {
             await Shell.Current.GoToAsync($"{nameof(ImageDetailView)}?Key={input}");
         }
-
         async void PushPopup()
         {
             ImageLabelView LabelView = new ImageLabelView();
             await MopupService.Instance.PushAsync(LabelView);
+        }
+        void Logic(string Preview, string Original)
+        {
+            CandyService.AddOrAlterImage(new CandyImage
+            {
+                Preview = Preview,
+                Original = Original
+            });
         }
         #endregion
     }

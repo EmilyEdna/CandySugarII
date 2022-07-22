@@ -88,10 +88,23 @@
         Glyph="{Static lib:FontIcon.CircleXmark}"
         Size="22"
         Color="{StaticResource Red}" />
+
     <FontImage
         x:Key="Del"
         FontFamily="Solid"
         Glyph="{Static lib:FontIcon.TrashCan}"
-        Size="18"
-        Color="{StaticResource Red}" />
+        Size="12"
+        Color="{StaticResource Primary}" />
+    <FontImage
+        x:Key="Star"
+        FontFamily="Solid"
+        Glyph="{Static lib:FontIcon.Star}"
+        Size="15"
+        Color="{StaticResource Primary}" />
+    <FontImage
+        x:Key="Down"
+        FontFamily="Solid"
+        Glyph="{Static lib:FontIcon.Down}"
+        Size="15"
+        Color="{StaticResource Primary}" />
 </ResourceDictionary>
