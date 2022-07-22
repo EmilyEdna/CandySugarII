@@ -59,30 +59,25 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
             });
         }
 
-        async Task<byte[]> Download(string input)
-        {
-            return (await ImageFactory.Image(opt =>
-             {
-                 opt.RequestParam = new Input
-                 {
-                     CacheSpan = CandySoft.Cache,
-                     Proxy = StaticResource.Proxy(),
-                     ImplType = StaticResource.ImplType(),
-                     ImageType = ImageEnum.Download,
-                     Download = new ImageDownload
-                     {
-                         Route = input
-                     }
-                 };
-             }).RunsAsync()).DownResult.Bytes;
-        }
-
         async void InitDownload(string input)
-        {    
-            var bytes = await Download(input);
+        {
+            var result = await ImageFactory.Image(opt =>
+            {
+                opt.RequestParam = new Input
+                {
+                    CacheSpan = CandySoft.Cache,
+                    Proxy = StaticResource.Proxy(),
+                    ImplType = StaticResource.ImplType(),
+                    ImageType = ImageEnum.Download,
+                    Download = new ImageDownload
+                    {
+                        Route = input
+                    }
+                };
+            }).RunsAsync();
             var Directory = SyncStatic.CreateDir(Path.Combine(ICrossExtension.Instance.AndriodPath, "CandyDown", "Wallpaper"));
             var Files = SyncStatic.CreateFile(Path.Combine(Directory, input.Split("/").LastOrDefault()));
-            var WriteResult = SyncStatic.WriteFile(bytes, Files);
+            var WriteResult = SyncStatic.WriteFile(result.DownResult.Bytes, Files);
             if (!WriteResult.IsNullOrEmpty())
                 StaticResource.PopToast("下载完成!");
         }

@@ -1,12 +1,9 @@
 ﻿using CandySugar.Controls.Views.LovelViews;
-using Microsoft.Maui.Controls.PlatformConfiguration;
-using Microsoft.Maui.Storage;
 using Sdk.Component.Lovel.sdk;
 using Sdk.Component.Lovel.sdk.ViewModel;
 using Sdk.Component.Lovel.sdk.ViewModel.Enums;
 using Sdk.Component.Lovel.sdk.ViewModel.Request;
 using Sdk.Component.Lovel.sdk.ViewModel.Response;
-using static Microsoft.Maui.ApplicationModel.Permissions;
 
 namespace CandySugar.Controls.ViewModels.LovelViewModels
 {
@@ -40,10 +37,28 @@ namespace CandySugar.Controls.ViewModels.LovelViewModels
         #endregion
 
         #region 方法
-        async void InitDown(string input)
+        async void InitDown(LovelViewResult input)
         {
-            //请求权限
-            await RequestAsync<StorageWrite>();
+            var result = await LovelFactory.Lovel(opt =>
+            {
+                opt.RequestParam = new Input
+                {
+                    CacheSpan = CandySoft.Cache,
+                    Proxy = StaticResource.Proxy(),
+                    ImplType = StaticResource.ImplType(),
+                    LovelType = LovelEnum.Download,
+                    Down = new LovelDown
+                    {
+                        BookName = input.BookName,
+                        UId = input.ChapterRoute.AsInt()
+                    }
+                };
+            }).RunsAsync();
+            var Directory = SyncStatic.CreateDir(Path.Combine(ICrossExtension.Instance.AndriodPath, "CandyDown", "Lovel"));
+            var Files = SyncStatic.CreateFile(Path.Combine(Directory, $"{input.BookName}.txt"));
+            var WriteResult = SyncStatic.WriteFile(result.DownResult.Bytes, Files);
+            if (!WriteResult.IsNullOrEmpty())
+                StaticResource.PopToast("下载完成!");
         }
         async void InitContent(LovelViewResult input)
         {
@@ -103,7 +118,11 @@ namespace CandySugar.Controls.ViewModels.LovelViewModels
         public DelegateCommand<LovelViewResult> ViewAction => new(input =>
         {
             SetRefresh();
-            if (input.IsDown) Task.Run(() => InitDown(input.ChapterRoute));
+            if (input.IsDown)
+            {
+                Task.Run(() => StaticResource.PopToast("开始下载!"));
+                InitDown(input);
+            }
             else InitContent(input);
         });
         #endregion
