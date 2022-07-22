@@ -1,5 +1,9 @@
-﻿using CandySugar.Controls.SysViews;
-using CandySugar.Controls.Views.ImageViews;
+﻿using CandySugar.Controls.Views.ImageViews;
+using Sdk.Component.Image.sdk;
+using Sdk.Component.Image.sdk.ViewModel;
+using Sdk.Component.Image.sdk.ViewModel.Enums;
+using Sdk.Component.Image.sdk.ViewModel.Request;
+
 
 namespace CandySugar.Controls.SysViewModels.HistoryViewModels
 {
@@ -42,7 +46,7 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
 
         void Remove(CandyImage input)
         {
-            StaticResource.PopComfirm("确认删除",nameof(ImageHistoryViewModel));
+            StaticResource.PopComfirm("确认删除", nameof(ImageHistoryViewModel));
             MessagingCenter.Subscribe<ComfirmViewModel, bool>(this, nameof(ImageHistoryViewModel), (sender, args) =>
             {
                 if (args == true)
@@ -53,6 +57,34 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
                     Root = new ObservableCollection<CandyImage>(temp);
                 }
             });
+        }
+
+        async Task<byte[]> Download(string input)
+        {
+            return (await ImageFactory.Image(opt =>
+             {
+                 opt.RequestParam = new Input
+                 {
+                     CacheSpan = CandySoft.Cache,
+                     Proxy = StaticResource.Proxy(),
+                     ImplType = StaticResource.ImplType(),
+                     ImageType = ImageEnum.Download,
+                     Download = new ImageDownload
+                     {
+                         Route = input
+                     }
+                 };
+             }).RunsAsync()).DownResult.Bytes;
+        }
+
+        async void InitDownload(string input)
+        {    
+            var bytes = await Download(input);
+            var Directory = SyncStatic.CreateDir(Path.Combine(ICrossExtension.Instance.AndriodPath, "CandyDown", "Wallpaper"));
+            var Files = SyncStatic.CreateFile(Path.Combine(Directory, input.Split("/").LastOrDefault()));
+            var WriteResult = SyncStatic.WriteFile(bytes, Files);
+            if (!WriteResult.IsNullOrEmpty())
+                StaticResource.PopToast("下载完成!");
         }
         #endregion
 
@@ -71,7 +103,8 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
 
         public DelegateCommand<CandyImage> DownAction => new(input =>
         {
-
+            Task.Run(() => StaticResource.PopToast("开始下载!"));
+            InitDownload(input.Original);
         });
 
         public DelegateCommand<CandyImage> RemoveAction => new(input => Remove(input));

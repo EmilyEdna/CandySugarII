@@ -1,5 +1,6 @@
 ﻿using CandySugar.Controls.SysViewModels;
 using CandySugar.Controls.SysViews;
+using CommunityToolkit.Maui.Core;
 using Sdk.Component.Plugins;
 using Sdk.Core;
 
@@ -106,17 +107,24 @@ namespace CandySugar.Controls
         /// 提示
         /// </summary>
         /// <param name="input"></param>
-        public static async void PopToast(string input)
+        /// <param name="IsLong"></param>
+        public static async void PopToast(string input, bool IsLong = false)
         {
-            //解决Toast在子线程问题
+            try
+            {
+                await Toast.Make(input, IsLong ? ToastDuration.Long : ToastDuration.Short).Show();
+            }
+            catch (Exception)
+            {
+                //解决Toast在子线程问题
 #if ANDROID
             Android.OS.Looper.Prepare();
 #endif
-            await Toast.Make(input).Show();
+                await Toast.Make(input, IsLong ? ToastDuration.Long : ToastDuration.Short).Show();
 #if ANDROID
             Android.OS.Looper.Loop();
 #endif
-
+            }
         }
     }
 }

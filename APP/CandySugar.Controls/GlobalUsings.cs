@@ -7,3 +7,4 @@ global using CandySugar.Logic.Entity.CandyEntity;
 global using CandySugar.Logic.Service;
 global using CandySugar.Logic.Common;
 global using CommunityToolkit.Maui.Alerts;
+global using CandySugar.Library.AndroidCommon;

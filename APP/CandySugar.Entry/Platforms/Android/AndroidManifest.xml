@@ -5,7 +5,15 @@
                android:icon="@mipmap/appicon"
                android:roundIcon="@mipmap/appicon_round"
                android:supportsRtl="true"
-               android:usesCleartextTraffic="true"></application>
+               android:usesCleartextTraffic="true">
+    <provider  android:name="androidx.core.content.FileProvider"
+       android:authorities="com.emilyedna.maui.fileprovider"
+       android:exported="false"
+       android:grantUriPermissions="true">
+      <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
+					   android:resource="@drawable/filepaths" />
+    </provider>
+  </application>
   <uses-sdk android:minSdkVersion="28" android:targetSdkVersion="29" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.INTERNET" />
