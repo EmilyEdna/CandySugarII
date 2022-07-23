@@ -10,5 +10,33 @@
     <ContentPage.BindingContext>
         <vm:AxglePlayViewModel />
     </ContentPage.BindingContext>
-    <WebView Source="{Binding Route}" />
+    <Grid ColumnDefinitions="20,*">
+        <Grid BackgroundColor="{StaticResource Pink}" RowDefinitions="*,1,*">
+            <ImageButton
+                BackgroundColor="Transparent"
+                BorderWidth="0"
+                Clicked="ConfirmEvent"
+                CommandParameter="1"
+                Source="{StaticResource Ad}" />
+            <Line
+                Grid.Row="1"
+                Stroke="{StaticResource WhiteBrush}"
+                VerticalOptions="Center"
+                X1="0"
+                X2="20"
+                Y1="0"
+                Y2="0" />
+            <ImageButton
+                Grid.Row="2"
+                BackgroundColor="Transparent"
+                BorderWidth="0"
+                Clicked="ConfirmEvent"
+                CommandParameter="2"
+                Source="{StaticResource Re}" />
+        </Grid>
+        <WebView
+            x:Name="Player"
+            Grid.Column="1"
+            Source="{Binding Route}" />
+    </Grid>
 </ContentPage>

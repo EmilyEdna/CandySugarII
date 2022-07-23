@@ -107,4 +107,17 @@
         Glyph="{Static lib:FontIcon.Down}"
         Size="15"
         Color="{StaticResource Primary}" />
+
+    <FontImage
+        x:Key="Ad"
+        FontFamily="Thin"
+        Glyph="{Static lib:FontIcon.RectangleAd}"
+        Size="15"
+        Color="{StaticResource Primary}" />
+    <FontImage
+        x:Key="Re"
+        FontFamily="Thin"
+        Glyph="{Static lib:FontIcon.ArrowRotateRight}"
+        Size="15"
+        Color="{StaticResource Primary}" />
 </ResourceDictionary>

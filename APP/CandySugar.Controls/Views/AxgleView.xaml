@@ -107,7 +107,7 @@
                                 <StackLayout Grid.Column="1">
                                     <Label
                                         Margin="10,0,0,0"
-                                        LineBreakMode="WordWrap"
+                                        LineBreakMode="TailTruncation"
                                         Text="{Binding Title}"
                                         TextColor="{StaticResource Red}" />
                                     <Label
