@@ -59,6 +59,12 @@
         Size="22"
         Color="{StaticResource Red}" />
     <FontImage
+        x:Key="Calendar"
+        FontFamily="Solid"
+        Glyph="{Static lib:FontIcon.CalendarDays}"
+        Size="22"
+        Color="{StaticResource Red}" />
+    <FontImage
         x:Key="His"
         FontFamily="Solid"
         Glyph="{Static lib:FontIcon.ClockRotateLeft}"

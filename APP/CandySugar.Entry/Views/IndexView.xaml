@@ -97,6 +97,11 @@
             Icon="{StaticResource His}"
             Route="HistoryView" />
         <ShellContent
+            Title="追番"
+            ContentTemplate="{DataTemplate ctrl:BangumiView}"
+            Icon="{StaticResource Calendar}"
+            Route="BangumiView" />
+        <ShellContent
             Title="标签"
             ContentTemplate="{DataTemplate ctrl:TagView}"
             Icon="{StaticResource Tag}"
