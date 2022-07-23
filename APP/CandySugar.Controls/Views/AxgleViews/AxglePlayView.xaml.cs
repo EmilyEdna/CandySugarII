@@ -23,7 +23,5 @@ public partial class AxglePlayView : ContentPage
             Player.Reload();
         else
             StaticResource.ClearAd(Player);
-
-
     }
 }
