@@ -41,6 +41,16 @@
             <ListBox.Background>
                 <SolidColorBrush Opacity=".5" Color="{DynamicResource SugarThemePinkColor}" />
             </ListBox.Background>
+            <ListBoxItem Content="ZF">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Selected">
+                        <i:InvokeCommandAction
+                            s:View.ActionTarget="{Binding DataContext, ElementName=History}"
+                            Command="{s:Action ChangeAction}"
+                            CommandParameter="{Binding Content, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ListBoxItem>
             <ListBoxItem Content="XS">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Selected">
@@ -113,6 +123,58 @@
             </ListBoxItem>
         </ListBox>
         <Grid Grid.Row="1">
+            <Grid x:Name="ZF" Visibility="{Binding ZF, Converter={StaticResource ToShow}}">
+                <ListBox
+                    Background="Transparent"
+                    BorderThickness="0"
+                    ItemsSource="{Binding BgmResult}"
+                    Style="{StaticResource WrapPanelHorizontalListBox}">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="7" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <Border Margin="15,15,0,0" HorizontalAlignment="Left">
+                                    <TextBlock Foreground="{DynamicResource SugarThemePink}" Text="{Binding WeekDay}" />
+                                    <Border.Effect>
+                                        <DropShadowEffect
+                                            BlurRadius="6"
+                                            Opacity="1"
+                                            ShadowDepth="0"
+                                            Color="{DynamicResource SugarThemePinkColor}" />
+                                    </Border.Effect>
+                                </Border>
+                                <ListBox
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    ItemsSource="{Binding Name}"
+                                    Style="{StaticResource StackPanelVerticalListBox}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Margin="15,15,0,0" HorizontalAlignment="Left">
+                                                <TextBlock
+                                                    Foreground="{DynamicResource SugarThemeSmoke}"
+                                                    Text="{Binding .}"
+                                                    TextWrapping="WrapWithOverflow" />
+                                                <Border.Effect>
+                                                    <DropShadowEffect
+                                                        BlurRadius="6"
+                                                        Opacity="1"
+                                                        ShadowDepth="0"
+                                                        Color="{DynamicResource SugarThemeBlackColor}" />
+                                                </Border.Effect>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
             <Grid x:Name="XS" Visibility="{Binding XS, Converter={StaticResource ToShow}}">
                 <ListBox
                     Background="Transparent"

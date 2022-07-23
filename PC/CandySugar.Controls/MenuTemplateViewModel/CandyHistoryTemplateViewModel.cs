@@ -4,18 +4,18 @@ using CandySugar.Logic.IService;
 using CandySugar.Resource.Properties;
 using HandyControl.Controls;
 using HandyControl.Data;
-using Polly.Caching;
+using NAudio;
+using Sdk.Component.Bgm.sdk;
+using Sdk.Component.Bgm.sdk.ViewModel.Enums;
+using Sdk.Component.Bgm.sdk.ViewModel.Response;
 using Sdk.Component.Image.sdk;
 using Sdk.Component.Image.sdk.ViewModel;
 using Sdk.Component.Image.sdk.ViewModel.Enums;
 using Sdk.Component.Image.sdk.ViewModel.Request;
 using Stylet;
 using StyletIoC;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -30,13 +30,14 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         {
             this.WindowManager = WindowManager;
             this.Container = Container;
+            ZF = true;
             XS = LXS = DM = HDM = MH = BZ = JY = false;
             CandyNovel = Container.Get<ICandyNovel>();
             CandyLovel = Container.Get<ICandyLovel>();
             CandyAnime = Container.Get<ICandyAnime>();
             CandyManga = Container.Get<ICandyManga>();
             CandyImage = Container.Get<ICandyImage>();
-            CandyHnime= Container.Get<ICandyHnime>();
+            CandyHnime = Container.Get<ICandyHnime>();
         }
 
         #region Field
@@ -58,6 +59,13 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         #endregion
 
         #region CommomProperty_Bool
+        private bool _ZF;
+        public bool ZF
+        {
+            get => _ZF;
+            set => SetAndNotify(ref _ZF, value);
+        }
+
         private bool _XS;
         public bool XS
         {
@@ -109,6 +117,12 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         #endregion
 
         #region Property
+        private ObservableCollection<BgmInitResult> _BgmResult;
+        public ObservableCollection<BgmInitResult> BgmResult
+        {
+            get => _BgmResult;
+            set => SetAndNotify(ref _BgmResult, value);
+        }
         private ObservableCollection<CandyNovel> _CandyNovelResult;
         public ObservableCollection<CandyNovel> CandyNovelResult
         {
@@ -157,39 +171,44 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         {
             switch (input)
             {
+                case "ZF":
+                    ZF = true;
+                    XS = LXS = DM = HDM = MH = BZ = JY = false;
+                    InitBGM();
+                    break;
                 case "XS":
                     XS = true;
-                    LXS = DM = HDM = MH = BZ = JY = false;
+                    ZF = LXS = DM = HDM = MH = BZ = JY = false;
                     InitNovel();
                     break;
                 case "LXS":
                     LXS = true;
-                    XS = DM = HDM = MH = BZ = JY = false;
+                    ZF = XS = DM = HDM = MH = BZ = JY = false;
                     InitLovel();
                     break;
                 case "DM":
                     DM = true;
-                    XS = LXS = HDM = MH = BZ = JY = false;
+                    ZF = XS = LXS = HDM = MH = BZ = JY = false;
                     InitAnime();
                     break;
                 case "HDM":
                     HDM = true;
-                    XS = LXS = DM = MH = BZ = JY = false;
+                    ZF = XS = LXS = DM = MH = BZ = JY = false;
                     InitHnime();
                     break;
                 case "MH":
                     MH = true;
-                    XS = LXS = DM = HDM = BZ = JY = false;
+                    ZF = XS = LXS = DM = HDM = BZ = JY = false;
                     InitManga();
                     break;
                 case "BZ":
                     BZ = true;
-                    MH = XS = LXS = DM = HDM = JY = false;
+                    ZF = MH = XS = LXS = DM = HDM = JY = false;
                     InitImage();
                     break;
                 default:
                     JY = true;
-                    XS = LXS = DM = HDM = MH = BZ = false;
+                    ZF = XS = LXS = DM = HDM = MH = BZ = false;
                     break;
             }
         }
@@ -205,10 +224,9 @@ namespace CandySugar.Controls.MenuTemplateViewModel
                 DelManga(Manga);
             if (input is CandyImage Image)
                 DelImage(Image);
-            if(input is CandyHnime Hnime)
+            if (input is CandyHnime Hnime)
                 DelHnime(Hnime);
         }
-
         public void ImagePageAction(FunctionEventArgs<int> input)
         {
             InitImage(input.Info);
@@ -218,7 +236,7 @@ namespace CandySugar.Controls.MenuTemplateViewModel
             Growl.Info("已添加到下载线程请稍后！");
             Task.Run(() =>
             {
-                var File = Regex.Split(input.Split("/").LastOrDefault(),"\\d+").LastOrDefault();
+                var File = Regex.Split(input.Split("/").LastOrDefault(), "\\d+").LastOrDefault();
                 var ImageInitData = ImageFactory.Image(opt =>
                 {
                     opt.RequestParam = new Input
@@ -239,6 +257,20 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         #endregion
 
         #region Method
+        private async void InitBGM()
+        {
+            var result = await BgmFactory.Bgm(opt =>
+             {
+                 opt.RequestParam = new Sdk.Component.Bgm.sdk.ViewModel.Input
+                 {
+                     CacheSpan = CandySoft.Default.Cache,
+                     Proxy = StaticResource.Proxy(),
+                     ImplType = StaticResource.ImplType(),
+                     BgmType = BgmEnum.Calendar,
+                 };
+             }).RunsAsync();
+            BgmResult = new ObservableCollection<BgmInitResult>(result.InitResults);
+        }
         private async void InitNovel()
         {
             CandyNovelResult = new ObservableCollection<CandyNovel>(await CandyNovel.Get());
@@ -295,7 +327,7 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         }
         private async void DelHnime(CandyHnime input)
         {
-           await CandyHnime.Remove(input);
+            await CandyHnime.Remove(input);
             InitHnime();
         }
         #endregion

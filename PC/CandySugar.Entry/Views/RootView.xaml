@@ -91,6 +91,7 @@
             VerticalAlignment="Top"
             DataContext="{Binding HeadViewModel}"
             MouseMove="CandyHeadTemplate_MouseMove" />
+        <!--  内容  -->
         <ContentControl
             x:Name="RightContent"
             Width="{c:Binding (Width-200),
@@ -100,6 +101,7 @@
             Margin="0,30,0,0"
             HorizontalAlignment="Right"
             Content="{Binding Ctrl}" />
+        <!--  菜单  -->
         <ContentControl
             x:Name="SilderMenu"
             Width="200"
@@ -110,7 +112,7 @@
             VerticalAlignment="Top"
             BorderThickness="0"
             Content="{Binding SilderView}" />
-
+        <!--  通知  -->
         <hc:ScrollViewer
             Height="400"
             HorizontalAlignment="Right"
@@ -123,6 +125,7 @@
                 VerticalAlignment="Bottom"
                 hc:Growl.GrowlParent="True" />
         </hc:ScrollViewer>
+        <!--  托盘  -->
         <tb:TaskbarIcon IconSource="{StaticResource fav}" TrayMouseDoubleClick="TaskbarIcon_TrayMouseDoubleClick">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu FontFamily="{StaticResource FontStyle}" Style="{StaticResource ContextMenuBaseStyle}">
