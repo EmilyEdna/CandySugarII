@@ -48,7 +48,7 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
                 ChapterName = novel.Chapter,
                 ChapterRoute = novel.Route
             };
-            await Shell.Current.GoToAsync(nameof(NovelContentView), new Dictionary<string, object> { { "Key", input } });
+            await Shell.Current.GoToAsync(nameof(NovelContentView), new Dictionary<string, object> { { "Key", input }, { "Book", novel.ToMapest<NovelDetailRootResult>() } });
         }
         void Remove(CandyNovel input)
         {
