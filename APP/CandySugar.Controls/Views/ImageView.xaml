@@ -86,10 +86,7 @@
                                     </CollectionView.ItemsLayout>
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate>
-                                            <Border
-                                                BackgroundColor="{StaticResource Primary}"
-                                                Stroke="{StaticResource BlackBrush}"
-                                                StrokeShape="RoundRectangle 3">
+                                            <Border Stroke="{StaticResource BlackBrush}" StrokeShape="RoundRectangle 3">
                                                 <Label
                                                     Padding="3,0,3,2"
                                                     HorizontalTextAlignment="Center"
