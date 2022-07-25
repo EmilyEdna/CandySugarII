@@ -14,8 +14,8 @@ namespace CandySugar.Entry.ViewModels
         public LoginViewModel(INavigationService NavigationService)
         {
             CandyService = CandyContainer.Instance.Resolve<ICandyService>();
-            CandySoft.ScreenWidth = DeviceDisplay.Current.MainDisplayInfo.Width/3;
-            CandySoft.ScreenHeight = DeviceDisplay.Current.MainDisplayInfo.Height/3;
+            CandySoft.ScreenWidth = DeviceDisplay.Current.MainDisplayInfo.Width / 3;
+            CandySoft.ScreenHeight = DeviceDisplay.Current.MainDisplayInfo.Height / 3;
             this.NavigationService = NavigationService;
             Init();
         }
@@ -38,17 +38,19 @@ namespace CandySugar.Entry.ViewModels
         #region 命令
         public DelegateCommand LoginAction => new(() =>
         {
-            //if (this.Account.ToLower().Equals("admin") && this.Pwd.ToLower().Equals("admin"))
-            //{
-            //    this.Account = "EmilyEdna";
-            //    this.Pwd = DateTime.Now.ToString("yyyyMMdd");
-            //    CandySoft.IsAdmin = true;
-            //}
-            //else
-            CandySoft.IsAdmin = true;
-            var res = StaticResource.Login("EmilyEdna", DateTime.Now.ToString("yyyyMMdd"));
+            if (this.Account.ToLower().Equals("admin") && this.Pwd.ToLower().Equals("123456"))
+            {
+                this.Account = "EmilyEdna";
+                this.Pwd = DateTime.Now.ToString("yyyyMMdd");
+                CandySoft.IsAdmin = true;
+            }
+            else
+                CandySoft.IsAdmin = false;
+            var res = StaticResource.Login(this.Account, this.Pwd);
             if (res)
                 Application.Current.MainPage = new IndexView();
+            else
+                StaticResource.PopToast("请填写正确的账户和密码！", true);
         });
         #endregion
         #region 方法
@@ -56,9 +58,9 @@ namespace CandySugar.Entry.ViewModels
         {
             var Model = CandyService.GetOption();
             if (Model == null) return;
-            CandySoft.Cache = Model.Cache==0? CandySoft.Cache: Model.Cache;
+            CandySoft.Cache = Model.Cache == 0 ? CandySoft.Cache : Model.Cache;
             CandySoft.LightAccount = Model.LightAccount;
-            CandySoft.IP = Model.IP.IsNullOrEmpty()? CandySoft.IP: Model.IP;
+            CandySoft.IP = Model.IP.IsNullOrEmpty() ? CandySoft.IP : Model.IP;
             CandySoft.Module = Model.Module == 0 ? CandySoft.Module : Model.Module;
             CandySoft.LightPwd = Model.LightPwd;
             CandySoft.Port = Model.Port == 0 ? CandySoft.Port : Model.Port;
