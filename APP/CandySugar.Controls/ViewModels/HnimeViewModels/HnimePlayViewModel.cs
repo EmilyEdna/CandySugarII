@@ -1,12 +1,7 @@
-﻿using CandySugar.Library.AndroidCommon;
-using CandySugar.Library.AndroidCommon.Device;
+﻿using CandySugar.Library.AndroidCommon.Device;
 using CandySugar.Library.AndroidCommon.Screen;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
+using XExten.Advance.InternalFramework.Securities.Common;
 
 namespace CandySugar.Controls.ViewModels.HnimeViewModels
 {
@@ -14,7 +9,7 @@ namespace CandySugar.Controls.ViewModels.HnimeViewModels
     {
         public override void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            Route = HttpUtility.UrlDecode(query["Key"].ToString());
+            Route = query["Key"].ToString();
             LoadMauiAsset();
             Hidden();
         }

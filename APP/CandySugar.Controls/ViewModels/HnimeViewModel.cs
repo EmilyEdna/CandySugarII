@@ -231,7 +231,12 @@ namespace CandySugar.Controls.ViewModels
                     };
                 }).RunsAsync();
                 CloseBusy();
-                var Play = result.PlayResults.Where(t => t.IsPlaying == true).FirstOrDefault().PlayRoute;
+                var Play = result.PlayResults.Where(t => t.IsPlaying == true)?.FirstOrDefault()?.PlayRoute;
+                if (Play.IsNullOrEmpty())
+                {
+                    StaticResource.PopToast("无视频源");
+                    return;
+                }
                 Logic(input, Play);
                 Navigation(Play);
             }
@@ -254,7 +259,7 @@ namespace CandySugar.Controls.ViewModels
         }
         async void Navigation(string input)
         {
-            await Shell.Current.GoToAsync($"{nameof(HnimePlayView)}?Key={input}");
+            await Shell.Current.GoToAsync(nameof(HnimePlayView), new Dictionary<string,object> { {"Key",input } });
         }
         #endregion
     }
