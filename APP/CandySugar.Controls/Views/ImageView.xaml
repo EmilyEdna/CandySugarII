@@ -61,7 +61,7 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="sdk:ImageElementResult">
                         <Border Stroke="{StaticResource Gray100Brush}" StrokeShape="RoundRectangle 3">
-                            <Grid Padding="2" RowDefinitions="Auto,50,20">
+                            <Grid Padding="2" RowDefinitions="Auto,60,20">
                                 <Border Stroke="{StaticResource Gray100Brush}" StrokeShape="RoundRectangle 1">
                                     <Image
                                         Aspect="Fill"
@@ -75,25 +75,31 @@
                                 </Border>
                                 <CollectionView
                                     Grid.Row="1"
-                                    ItemSizingStrategy="MeasureFirstItem"
+                                    ItemSizingStrategy="MeasureAllItems"
                                     ItemsSource="{Binding Labels}">
                                     <CollectionView.ItemsLayout>
                                         <GridItemsLayout
-                                            HorizontalItemSpacing="5"
+                                            HorizontalItemSpacing="2"
                                             Orientation="Horizontal"
-                                            Span="2"
-                                            VerticalItemSpacing="5" />
+                                            Span="3"
+                                            VerticalItemSpacing="2" />
                                     </CollectionView.ItemsLayout>
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate>
-                                            <Label
-                                                FontSize="15"
-                                                Text="{Binding .}"
-                                                TextColor="{StaticResource Pink}">
-                                                <Label.GestureRecognizers>
+                                            <Border
+                                                BackgroundColor="{StaticResource PrimaryBrush}"
+                                                Stroke="{StaticResource BlackBrush}"
+                                                StrokeShape="RoundRectangle 3">
+                                                <Label
+                                                    Padding="3,0,3,2"
+                                                    HorizontalTextAlignment="Center"
+                                                    Text="{Binding .}"
+                                                    TextColor="{StaticResource Violet}"
+                                                    VerticalTextAlignment="Center" />
+                                                <Border.GestureRecognizers>
                                                     <TapGestureRecognizer Command="{Binding SearchAction, Source={RelativeSource AncestorType={x:Type vm:ImageViewModel}}}" CommandParameter="{Binding .}" />
-                                                </Label.GestureRecognizers>
-                                            </Label>
+                                                </Border.GestureRecognizers>
+                                            </Border>
                                         </DataTemplate>
                                     </CollectionView.ItemTemplate>
                                 </CollectionView>
