@@ -11,12 +11,11 @@
         <vm:NovelContentViewModel />
     </ContentPage.BindingContext>
     <Grid RowDefinitions="30,*">
-        <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-            <Label
-                FontSize="22"
-                Text="{Binding ChapterName}"
-                TextColor="Black" />
-        </StackLayout>
+        <Label
+            Grid.Row="0"
+            FontSize="20"
+            Text="{Binding ChapterName}"
+            TextColor="{StaticResource Primary}" />
         <CollectionView
             Grid.Row="1"
             ItemSizingStrategy="MeasureAllItems"
