@@ -38,6 +38,12 @@ namespace CandySugar.Entry.ViewModels
         #region 命令
         public DelegateCommand LoginAction => new(() =>
         {
+            if (this.Account.IsNullOrEmpty() || this.Pwd.IsNullOrEmpty())
+            {
+                StaticResource.PopToast("请填写正确的账户和密码！", true);
+                return;
+            }
+
             if (this.Account.ToLower().Equals("admin") && this.Pwd.ToLower().Equals("123456"))
             {
                 this.Account = "EmilyEdna";
