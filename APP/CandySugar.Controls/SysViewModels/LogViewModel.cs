@@ -32,6 +32,12 @@ namespace CandySugar.Controls.SysViewModels
             if (this.Page > Total) return;
             Query();
         });
+
+        public DelegateCommand RefreshAction => new(() => {
+            this.Page = 1;
+            Root = new ObservableCollection<CandyLog>();
+            this.Query();
+        });
         #endregion
 
         #region 方法

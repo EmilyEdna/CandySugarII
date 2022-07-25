@@ -10,35 +10,49 @@
     <ContentPage.BindingContext>
         <vm:LogViewModel />
     </ContentPage.BindingContext>
-    <CollectionView
-        ItemSizingStrategy="MeasureAllItems"
-        ItemsSource="{Binding Root}"
-        RemainingItemsThreshold="0"
-        RemainingItemsThresholdReachedCommand="{Binding LoadMoreAction}">
-        <CollectionView.ItemTemplate>
-            <DataTemplate x:DataType="model:CandyLog">
-                <SwipeView>
-                    <SwipeView.RightItems>
-                        <SwipeItems>
-                            <SwipeItem
-                                Command="{Binding RemoveAction, Source={RelativeSource AncestorType={x:Type vm:LogViewModel}}}"
-                                CommandParameter="{Binding .}"
-                                IconImageSource="{StaticResource Del}"
-                                Text="删除" />
-                        </SwipeItems>
-                    </SwipeView.RightItems>
-                    <Border
-                        Stroke="{StaticResource Gray100Brush}"
-                        StrokeShape="RoundRectangle 0"
-                        StrokeThickness="1">
-                        <Label
-                            Margin="10,0,0,0"
-                            LineBreakMode="WordWrap"
-                            Text="{Binding Message}"
-                            TextColor="{StaticResource Primary}" />
-                    </Border>
-                </SwipeView>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+    <RefreshView
+        Command="{Binding RefreshAction}"
+        IsRefreshing="{Binding IsRefreshing}"
+        RefreshColor="{StaticResource Pink}">
+        <CollectionView
+            ItemSizingStrategy="MeasureAllItems"
+            ItemsSource="{Binding Root}"
+            RemainingItemsThreshold="0"
+            RemainingItemsThresholdReachedCommand="{Binding LoadMoreAction}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:CandyLog">
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem
+                                    Command="{Binding RemoveAction, Source={RelativeSource AncestorType={x:Type vm:LogViewModel}}}"
+                                    CommandParameter="{Binding .}"
+                                    IconImageSource="{StaticResource Del}"
+                                    Text="删除" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Border
+                            Stroke="{StaticResource Gray100Brush}"
+                            StrokeShape="RoundRectangle 0"
+                            StrokeThickness="1">
+                            <VerticalStackLayout Padding="5">
+                                <Label
+                                    Margin="5,0,0,0"
+                                    Padding="5"
+                                    LineBreakMode="WordWrap"
+                                    Text="{Binding Message, StringFormat='信息:{0}'}"
+                                    TextColor="{StaticResource Primary}" />
+                                <Label
+                                    Margin="5,0,0,0"
+                                    Padding="5"
+                                    LineBreakMode="WordWrap"
+                                    Text="{Binding Stack, StringFormat='堆栈:{0}'}"
+                                    TextColor="{StaticResource Primary}" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
 </ContentPage>

@@ -102,6 +102,7 @@ namespace CandySugar.Controls
         /// <returns></returns>
         public static bool Login(string Account, string Pwd)
         {
+            SdkOption.EnableLog = true;
 #if ANDROID
             SdkOption.UseRealRoute = true;
 #endif
