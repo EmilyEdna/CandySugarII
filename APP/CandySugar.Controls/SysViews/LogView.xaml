@@ -5,11 +5,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:model="clr-namespace:CandySugar.Logic.Entity.CandyEntity;assembly=CandySugar.Logic"
     xmlns:vm="clr-namespace:CandySugar.Controls.SysViewModels"
-    Title="日志"
+    Title="系统"
     x:DataType="vm:LogViewModel">
     <ContentPage.BindingContext>
         <vm:LogViewModel />
     </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding ClearAction}"
+            Order="Secondary"
+            Priority="0"
+            Text="清空日志" />
+    </ContentPage.ToolbarItems>
     <RefreshView
         Command="{Binding RefreshAction}"
         IsRefreshing="{Binding IsRefreshing}"

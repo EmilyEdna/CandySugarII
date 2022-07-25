@@ -25,10 +25,6 @@ namespace CandySugar.Controls.SysViewModels
         {
             InitContent(input.AsInt());
         });
-        public DelegateCommand ClearAction => new(() =>
-        {
-            CandyService.ClearLog();
-        });
         #endregion
 
         #region 方法

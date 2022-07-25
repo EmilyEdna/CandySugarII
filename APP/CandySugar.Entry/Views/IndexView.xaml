@@ -100,20 +100,20 @@
                 Title="追番"
                 ContentTemplate="{DataTemplate ctrl:BangumiView}"
                 Route="BangumiView" />
+        </Tab>
+        <Tab Title="系统功能" Icon="{StaticResource Opt}">
             <ShellContent
                 Title="日志"
                 ContentTemplate="{DataTemplate ctrl:LogView}"
                 Route="LogView" />
-        </Tab>
-        <Tab Title="系统功能" Icon="{StaticResource Opt}">
-            <ShellContent
-                Title="标签"
-                ContentTemplate="{DataTemplate ctrl:TagView}"
-                Route="TagView" />
             <ShellContent
                 Title="设置"
                 ContentTemplate="{DataTemplate ctrl:OptionView}"
                 Route="OptionView" />
+            <ShellContent
+                Title="标签"
+                ContentTemplate="{DataTemplate ctrl:TagView}"
+                Route="TagView" />
         </Tab>
     </FlyoutItem>
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems" Route="RootElement">

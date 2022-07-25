@@ -38,6 +38,11 @@ namespace CandySugar.Controls.SysViewModels
             Root = new ObservableCollection<CandyLog>();
             this.Query();
         });
+        public DelegateCommand ClearAction => new(() =>
+        {
+            CandyService.ClearLog();
+            Root = new ObservableCollection<CandyLog>();
+        });
         #endregion
 
         #region 方法

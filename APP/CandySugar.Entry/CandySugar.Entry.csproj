@@ -14,11 +14,10 @@
     <ApplicationTitle>Candy</ApplicationTitle>
 
     <!-- App Identifier -->
-    <ApplicationId>com.emilyedna.maui</ApplicationId>
+    <ApplicationId>com.github.emilyedna.candysugar</ApplicationId>
     <ApplicationIdGuid>3B38B4D4-9DF5-4632-9107-B115044DF717</ApplicationIdGuid>
 
     <!-- Versions -->
-    <ApplicationDisplayVersion>1.0.0.0</ApplicationDisplayVersion>
     <ApplicationVersion>1</ApplicationVersion>
 
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
@@ -30,6 +29,7 @@
     <Company>EmilyEdna</Company>
     <Product>CandySugar</Product>
     <BaseIntermediateOutputPath />
+    <Version>1.0.0.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-android|AnyCPU'">
