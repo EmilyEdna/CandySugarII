@@ -84,7 +84,7 @@
             <StackLayout HorizontalOptions="Start" VerticalOptions="Center">
                 <Label
                     Margin="20,0,0,0"
-                    Text="版本号1.0.0"
+                    Text="{Binding VersionCode, StringFormat='版本号{0}'}"
                     TextColor="{StaticResource Pink}" />
             </StackLayout>
         </StackLayout>

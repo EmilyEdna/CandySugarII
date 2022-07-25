@@ -17,5 +17,6 @@ namespace CandySugar.Library.AndroidCommon
 #endif
             }, LazyThreadSafetyMode.PublicationOnly).Value;
         string AndriodPath { get; }
+        void InstallApk();
     }
 }

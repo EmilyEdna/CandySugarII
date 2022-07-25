@@ -1,9 +1,12 @@
 ﻿using CandySugar.Controls.SysViewModels;
 using CandySugar.Controls.SysViews;
+using CandySugar.Library.AndroidCommon.Downs;
 using CommunityToolkit.Maui.Core;
+using Newtonsoft.Json.Linq;
 using Sdk.Component.Plugins;
 using Sdk.Core;
 using System.Text;
+using XExten.Advance.HttpFramework.MultiFactory;
 
 namespace CandySugar.Controls
 {
@@ -146,6 +149,10 @@ namespace CandySugar.Controls
 #endif
             }
         }
+        /// <summary>
+        /// 去广告
+        /// </summary>
+        /// <param name="WebView"></param>
         public static void ClearAd(WebView WebView)
         {
             StringBuilder sb = new StringBuilder();
@@ -161,6 +168,43 @@ namespace CandySugar.Controls
             sb.Append("$('body').css('padding-top','0px');");
             sb.Append("$('#video-player').css({'max-width':'1190px','width':'1190px','margin-left':'-30px'});");
             WebView.EvaluateJavaScriptAsync(sb.ToString());
+        }
+        /// <summary>
+        /// 升级APK
+        /// </summary>
+        public static void InstallApk()
+        {
+            var Cross = ICrossExtension.Instance;
+            var Route = Cross.AndriodPath;
+            var manager = CrossDown.Current;
+            manager.PathNameForDownloadedFile = new Func<IDownloadFile, string>(File => Path.Combine(Route, "CandySugar.apk"));
+#if ANDROID
+            ((Library.Platforms.Android.CrossDown.DownManager)manager).IsVisibleInDownloadsUi=true;
+#endif
+            var File = manager.CreateDownloadFile("https://ghproxy.com/https://github.com/EmilyEdna/KuRuMi/releases/download/1.0/CandySugar.apk");
+            File.PropertyChanged += (sender, obj) =>
+            {
+                var IsCompleted = ((IDownloadFile)sender).Status == DownFileStatus.COMPLETED;
+                if (obj.PropertyName == "Status" && IsCompleted)
+                {
+                    Cross.InstallApk();
+                }
+            };
+            manager.Start(File);
+        }
+        /// <summary>
+        /// 检查版本
+        /// </summary>
+        /// <returns></returns>
+        public static bool CheckVersion()
+        {
+            var ServerVersion = IHttpMultiClient.HttpMulti.AddNode(opt =>
+            {
+                opt.NodePath = "https://gitee.com/EmilyEdna/CandySugar/raw/master/CandySugarOption";
+            }).Build().RunStringFirst();
+            var AppVersion = ServerVersion.ToModel<JObject>()["App"].ToString();
+            if (AppVersion.Equals(AppInfo.Current.VersionString)) return false;
+            else return true;
         }
     }
 }
