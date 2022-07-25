@@ -46,6 +46,11 @@
             Order="Secondary"
             Priority="6"
             Text="壁纸收藏" />
+        <ToolbarItem
+            Command="{Binding ClearAction}"
+            Order="Secondary"
+            Priority="7"
+            Text="清空日志" />
     </ContentPage.ToolbarItems>
 
 </ContentPage>

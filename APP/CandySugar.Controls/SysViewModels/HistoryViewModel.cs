@@ -4,9 +4,10 @@ namespace CandySugar.Controls.SysViewModels
 {
     public class HistoryViewModel : BaseViewModel
     {
-
+        ICandyService CandyService;
         public HistoryViewModel()
         {
+            CandyService = CandyContainer.Instance.Resolve<ICandyService>();
             InitContent(1);
         }
 
@@ -23,6 +24,10 @@ namespace CandySugar.Controls.SysViewModels
         public DelegateCommand<string> HandlerAction => new(input =>
         {
             InitContent(input.AsInt());
+        });
+        public DelegateCommand ClearAction => new(() =>
+        {
+            CandyService.ClearLog();
         });
         #endregion
 
