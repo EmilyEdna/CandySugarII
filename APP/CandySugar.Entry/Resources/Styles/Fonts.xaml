@@ -5,12 +5,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:lib="clr-namespace:CandySugar.Library;assembly=CandySugar.Library">
     <FontImage
-        x:Key="Tag"
-        FontFamily="Solid"
-        Glyph="{Static lib:FontIcon.Tags}"
-        Size="22"
-        Color="{StaticResource Red}" />
-    <FontImage
         x:Key="Book"
         FontFamily="Solid"
         Glyph="{Static lib:FontIcon.Book}"
@@ -58,12 +52,7 @@
         Glyph="{Static lib:FontIcon.GraduationCap}"
         Size="22"
         Color="{StaticResource Red}" />
-    <FontImage
-        x:Key="Calendar"
-        FontFamily="Solid"
-        Glyph="{Static lib:FontIcon.CalendarDays}"
-        Size="22"
-        Color="{StaticResource Red}" />
+
     <FontImage
         x:Key="His"
         FontFamily="Solid"
@@ -94,7 +83,6 @@
         Glyph="{Static lib:FontIcon.CircleXmark}"
         Size="22"
         Color="{StaticResource Red}" />
-
     <FontImage
         x:Key="Del"
         FontFamily="Solid"

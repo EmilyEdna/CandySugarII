@@ -91,26 +91,30 @@
     </Shell.FlyoutFooter>
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems" Route="OptionElement">
-        <ShellContent
-            Title="历史"
-            ContentTemplate="{DataTemplate ctrl:HistoryView}"
-            Icon="{StaticResource His}"
-            Route="HistoryView" />
-        <ShellContent
-            Title="追番"
-            ContentTemplate="{DataTemplate ctrl:BangumiView}"
-            Icon="{StaticResource Calendar}"
-            Route="BangumiView" />
-        <ShellContent
-            Title="标签"
-            ContentTemplate="{DataTemplate ctrl:TagView}"
-            Icon="{StaticResource Tag}"
-            Route="TagView" />
-        <ShellContent
-            Title="设置"
-            ContentTemplate="{DataTemplate ctrl:OptionView}"
-            Icon="{StaticResource Opt}"
-            Route="OptionView" />
+        <Tab Title="日常功能" Icon="{StaticResource His}">
+            <ShellContent
+                Title="历史"
+                ContentTemplate="{DataTemplate ctrl:HistoryView}"
+                Route="HistoryView" />
+            <ShellContent
+                Title="追番"
+                ContentTemplate="{DataTemplate ctrl:BangumiView}"
+                Route="BangumiView" />
+            <ShellContent
+                Title="日志"
+                ContentTemplate="{DataTemplate ctrl:LogView}"
+                Route="LogView" />
+        </Tab>
+        <Tab Title="系统功能" Icon="{StaticResource Opt}">
+            <ShellContent
+                Title="标签"
+                ContentTemplate="{DataTemplate ctrl:TagView}"
+                Route="TagView" />
+            <ShellContent
+                Title="设置"
+                ContentTemplate="{DataTemplate ctrl:OptionView}"
+                Route="OptionView" />
+        </Tab>
     </FlyoutItem>
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems" Route="RootElement">
         <ShellContent

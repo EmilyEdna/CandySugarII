@@ -8,6 +8,7 @@ namespace CandySugar.Logic.Entity.CandyEntity
 {
     public class CandyLog : BaseEntity
     {
+        public string Message { get; set; }
         public string Stack { get; set; }
     }
 }

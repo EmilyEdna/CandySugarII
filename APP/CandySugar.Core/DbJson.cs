@@ -34,6 +34,12 @@ namespace CandySugar.Logic
             SyncStatic.WriteFile(Data, Route<T>());
             return input;
         }
+        public void Clear<T>() 
+        {
+            string JPath = Path.Combine(JRoute, $"{typeof(T).Name}.mod");
+            SyncStatic.DeleteFile(JPath);
+            SyncStatic.CreateFile(JPath);
+        }
         public List<T> Read<T>()
         {
             var JPath = Route<T>();

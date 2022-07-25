@@ -65,6 +65,9 @@
 	  <MauiXaml Update="SysViews\HistoryViews\NovelHistoryView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="SysViews\LogView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="SysViews\TagView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

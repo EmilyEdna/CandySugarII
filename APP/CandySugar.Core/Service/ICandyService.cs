@@ -62,5 +62,12 @@ namespace CandySugar.Logic.Service
         Pagination<CandyAxgle> GetAxgle(int PageIndex);
         void RemoveAxgle(CandyAxgle input);
         #endregion
+
+        #region 日志
+        void AddLog(CandyLog input);
+        Pagination<CandyLog> GetLog(int PageIndex);
+        void RemoveLog(CandyLog input);
+        void ClearLog();
+        #endregion
     }
 }
