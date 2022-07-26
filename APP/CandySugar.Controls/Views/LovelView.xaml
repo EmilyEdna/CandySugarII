@@ -69,6 +69,7 @@
                                 <StackLayout Grid.Column="1">
                                     <Label
                                         Margin="10,0,0,0"
+                                        LineBreakMode="WordWrap"
                                         Text="{Binding BookName}"
                                         TextColor="{StaticResource Red}" />
                                     <Label

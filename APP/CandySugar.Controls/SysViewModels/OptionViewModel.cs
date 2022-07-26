@@ -1,4 +1,6 @@
-﻿namespace CandySugar.Controls.SysViewModels
+﻿using XExten.Advance.CacheFramework.RunTimeCache;
+
+namespace CandySugar.Controls.SysViewModels
 {
     public class OptionViewModel : BaseViewModel
     {
@@ -76,6 +78,10 @@
         public DelegateCommand SaveAction => new(() =>
         {
             Logic();
+        });
+        public DelegateCommand CleanAction => new(() =>
+        {
+            MemoryCaches.RemoveAllCache();
         });
         #endregion
 

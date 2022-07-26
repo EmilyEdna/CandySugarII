@@ -245,6 +245,19 @@
             VerticalOptions="Start">
             <Button
                 Background="{StaticResource Pink}"
+                Command="{Binding CleanAction}"
+                FontSize="18"
+                HeightRequest="40"
+                Text="清空缓存"
+                TextColor="White"
+                WidthRequest="280" />
+        </StackLayout>
+        <StackLayout
+            Margin="0,15,0,0"
+            HorizontalOptions="Center"
+            VerticalOptions="Start">
+            <Button
+                Background="{StaticResource Pink}"
                 Command="{Binding SaveAction}"
                 FontSize="18"
                 HeightRequest="40"

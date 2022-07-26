@@ -66,7 +66,9 @@
     <Grid RowDefinitions="*,40">
         <RefreshView
             Command="{Binding RefreshAction}"
+            IsEnabled="{Binding SongVisible}"
             IsRefreshing="{Binding IsRefreshing}"
+            IsVisible="{Binding SongVisible}"
             RefreshColor="{StaticResource Pink}">
             <CollectionView
                 ItemsSource="{Binding SongResult}"
@@ -103,6 +105,52 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </RefreshView>
+        <RefreshView
+            Command="{Binding RefreshAction}"
+            IsEnabled="{Binding PlayVisible}"
+            IsRefreshing="{Binding IsRefreshing}"
+            IsVisible="{Binding PlayVisible}"
+            RefreshColor="{StaticResource Pink}">
+            <CollectionView
+                ItemsSource="{Binding PlayListResult}"
+                RemainingItemsThreshold="0"
+                RemainingItemsThresholdReachedCommand="{Binding LoadMorePlayListAction}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="sdk:MusicSheetElementResult">
+                        <Border
+                            Stroke="{StaticResource Gray100Brush}"
+                            StrokeShape="RoundRectangle 0"
+                            StrokeThickness="1">
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Border
+                                    HeightRequest="90"
+                                    StrokeShape="RoundRectangle 0"
+                                    WidthRequest="90">
+                                    <Image Aspect="Fill" Source="{Binding Cover}" />
+                                </Border>
+                                <StackLayout Grid.Column="1">
+                                    <Label
+                                        Margin="10,0,0,0"
+                                        LineBreakMode="WordWrap"
+                                        Text="{Binding SongSheetName}"
+                                        TextColor="{StaticResource Black}" />
+                                    <Label
+                                        Margin="10,5,0,0"
+                                        FontSize="11"
+                                        Text="{Binding ListenNumber, StringFormat='播放次数：{0}'}"
+                                        TextColor="{StaticResource Pink}" />
+                                    <Label
+                                        Margin="10,5,0,0"
+                                        FontSize="11"
+                                        Text="{Binding CreateTime, StringFormat='创建时间：{0}'}"
+                                        TextColor="{StaticResource Violet}" />
+                                </StackLayout>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
         <Border
             Grid.Row="1"
             Stroke="{StaticResource PinkBrush}"
@@ -118,7 +166,7 @@
                     TextColor="{StaticResource Primary}" />
                 <Line
                     Grid.Column="1"
-                    Stroke="{StaticResource PinkBrush}"
+                    Stroke="{StaticResource BlackBrush}"
                     VerticalOptions="Center"
                     X1="0"
                     X2="0"
@@ -135,5 +183,14 @@
                     TextColor="{StaticResource Primary}" />
             </Grid>
         </Border>
+        <ActivityIndicator
+            Grid.RowSpan="2"
+            HeightRequest="20"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            WidthRequest="20"
+            Color="{StaticResource Violet}" />
     </Grid>
 </ContentPage>

@@ -11,51 +11,69 @@ namespace CandySugar.Controls.ViewModels
 
         public MusicViewModel()
         {
-            QueryType = 1;
-            PlatformType = PlatformEnum.NeteaseMusic;
+            this.SongVisible = true;
+            this.PlayVisible = false;
         }
 
         #region 字段
-        PlatformEnum PlatformType;
-        int QueryType;
+        PlatformEnum PlatformType = PlatformEnum.NeteaseMusic;
+        int QueryType = 1;
+        bool LoadMore = false;
         #endregion
 
         #region 命令
         public DelegateCommand QueryAction => new(() =>
         {
             this.Page = 1;
+            this.LoadMore = false;
             SetRefresh(false);
-            if (QueryType == 1) InitSong(); else InitPlayList();
+            if (KeyWord.IsNullOrEmpty()) return;
+            Common();
         });
         public DelegateCommand<string> HandleAction => new(input =>
         {
             this.Page = 1;
+            this.LoadMore = false;
             PlatformType = (PlatformEnum)input.AsInt();
             SetRefresh(false);
             if (KeyWord.IsNullOrEmpty()) return;
-            if (QueryType == 1) InitSong(); else InitPlayList();
+            Common();
         });
         public DelegateCommand<string> TabAction => new(input =>
         {
             this.Page = 1;
             QueryType = input.AsInt();
+            this.LoadMore = false;
             SetRefresh(false);
             if (KeyWord.IsNullOrEmpty()) return;
-            if (QueryType == 1) InitSong(); else InitPlayList();
+            Common();
         });
         public DelegateCommand LoadMoreSongAction => new(() =>
         {
+            if (Lock) return;
+            this.Page += 1;
+            if (this.Page > Total) return;
+            if (KeyWord.IsNullOrEmpty()) return;
             SetRefresh();
+            this.LoadMore = true;
+            Common();
         });
         public DelegateCommand LoadMorePlayListAction => new(() =>
         {
+            if (Lock) return;
+            this.Page += 1;
+            if (this.Page > Total) return;
+            if (KeyWord.IsNullOrEmpty()) return;
             SetRefresh();
+            this.LoadMore = true;
+            Common();
         });
         public DelegateCommand RefreshAction => new(() =>
         {
             this.Page = 1;
+            this.LoadMore = false;
             SetRefresh(false);
-            if (QueryType == 1) InitSong(); else InitPlayList();
+            Common();
         });
         #endregion
 
@@ -66,9 +84,43 @@ namespace CandySugar.Controls.ViewModels
             get => _SongResult;
             set => SetProperty(ref _SongResult, value);
         }
+        ObservableCollection<MusicSheetElementResult> _PlayListResult;
+        public ObservableCollection<MusicSheetElementResult> PlayListResult
+        {
+            get => _PlayListResult;
+            set => SetProperty(ref _PlayListResult, value);
+        }
+
+        bool _SongVisible;
+        public bool SongVisible
+        {
+            get => _SongVisible;
+            set=>SetProperty(ref _SongVisible, value);
+        }
+        bool _PlayVisible;
+        public bool PlayVisible
+        {
+            get => _PlayVisible;
+            set => SetProperty(ref _PlayVisible, value);
+        }
         #endregion
 
-        #region 方法
+        #region 方法 
+        void Common() 
+        {
+            if (QueryType == 1)
+            {
+                this.SongVisible = true;
+                this.PlayVisible = false;
+                InitSong();
+            }
+            else
+            {
+                this.SongVisible = false;
+                this.PlayVisible = true;
+                InitPlayList();
+            }
+        }
         async void InitSong()
         {
             if (IsBusy) return;
@@ -98,8 +150,14 @@ namespace CandySugar.Controls.ViewModels
                     };
                 }).RunsAsync();
                 CloseBusy();
-                this.Total = result.SongResult.Total==null?0: result.SongResult.Total.Value;
-                SongResult = new ObservableCollection<MusicSongElementResult>(result.SongResult.ElementResults);
+                this.Total = result.SongResult.Total == null ? 0 : result.SongResult.Total.Value;
+                if (LoadMore)
+                    result.SongResult.ElementResults.ForEach(item =>
+                    {
+                        SongResult.Add(item);
+                    });
+                else
+                    SongResult = new ObservableCollection<MusicSongElementResult>(result.SongResult.ElementResults);
             }
             catch (Exception ex)
             {
@@ -135,7 +193,14 @@ namespace CandySugar.Controls.ViewModels
                     };
                 }).RunsAsync();
                 CloseBusy();
-
+                this.Total = result.SheetResult.Total == null ? 0 : result.SheetResult.Total.Value;
+                if (LoadMore)
+                    result.SheetResult.ElementResults.ForEach(item =>
+                    {
+                        PlayListResult.Add(item);
+                    });
+                else
+                    PlayListResult = new ObservableCollection<MusicSheetElementResult>(result.SheetResult.ElementResults);
             }
             catch (Exception ex)
             {
