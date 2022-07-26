@@ -17,6 +17,7 @@
     </ContentPage.BindingContext>
     <Shell.SearchHandler>
         <SearchHandler
+            x:Name="SearchHandle"
             ClearIcon="{StaticResource Clear}"
             Command="{Binding QueryAction}"
             Placeholder="请输入搜索内容"

@@ -29,7 +29,8 @@ namespace CandySugar.Controls.ViewModels
             this.LoadMore = false;
             SetRefresh(false);
             if (KeyWord.IsNullOrEmpty()) return;
-            Common();
+            CommonAsync();
+            MessagingCenter.Send(this, "QueryStart", true);
         });
         public DelegateCommand<string> HandleAction => new(input =>
         {
@@ -38,7 +39,7 @@ namespace CandySugar.Controls.ViewModels
             PlatformType = (PlatformEnum)input.AsInt();
             SetRefresh(false);
             if (KeyWord.IsNullOrEmpty()) return;
-            Common();
+            CommonAsync();
         });
         public DelegateCommand<string> TabAction => new(input =>
         {
@@ -47,7 +48,7 @@ namespace CandySugar.Controls.ViewModels
             this.LoadMore = false;
             SetRefresh();
             if (KeyWord.IsNullOrEmpty()) return;
-            Common();
+            CommonAsync();
         });
         public DelegateCommand LoadMoreSongAction => new(() =>
         {
@@ -75,12 +76,14 @@ namespace CandySugar.Controls.ViewModels
             this.LoadMore = false;
             if (KeyWord.IsNullOrEmpty()) return;
             SetRefresh(false);
-            Common();
+            CommonAsync();
         });
-        public DelegateCommand<MusicSheetElementResult> DetailAction => new(input => {
+        public DelegateCommand<MusicSheetElementResult> DetailAction => new(input =>
+        {
             InitPlayListDetail(input.SongSheetId.ToString());
         });
-        public DelegateCommand<MusicSongElementResult> AlbumAction => new(input => {
+        public DelegateCommand<MusicSongElementResult> AlbumAction => new(input =>
+        {
             InitAlbum(input.SongAlbumId);
         });
         #endregion
@@ -103,7 +106,7 @@ namespace CandySugar.Controls.ViewModels
         public bool SongVisible
         {
             get => _SongVisible;
-            set=>SetProperty(ref _SongVisible, value);
+            set => SetProperty(ref _SongVisible, value);
         }
         bool _PlayVisible;
         public bool PlayVisible
@@ -118,11 +121,11 @@ namespace CandySugar.Controls.ViewModels
         {
             await Shell.Current.GoToAsync(nameof(MusicAlbumView), new Dictionary<string, object> { { "Data", input } });
         }
-        async void NavigationToDetail(MusicSheetDetailRootResult input,string playId)
+        async void NavigationToDetail(MusicSheetDetailRootResult input, string playId)
         {
-            await Shell.Current.GoToAsync(nameof(MusicDetailView), new Dictionary<string, object> { { "Data", input },{ "Key", playId } });
+            await Shell.Current.GoToAsync(nameof(MusicDetailView), new Dictionary<string, object> { { "Data", input }, { "Key", playId } });
         }
-        void Common() 
+        void Common()
         {
             if (QueryType == 1)
             {
@@ -135,6 +138,21 @@ namespace CandySugar.Controls.ViewModels
                 this.SongVisible = false;
                 this.PlayVisible = true;
                 InitPlayList();
+            }
+        }
+        void CommonAsync()
+        {
+            if (QueryType == 1)
+            {
+                this.SongVisible = true;
+                this.PlayVisible = false;
+                Task.Run(() => InitSong());
+            }
+            else
+            {
+                this.SongVisible = false;
+                this.PlayVisible = true;
+                Task.Run(() => InitPlayList());
             }
         }
         async void InitSong()
@@ -258,7 +276,7 @@ namespace CandySugar.Controls.ViewModels
                 StaticResource.PopToast(ex.Message);
             }
         }
-        async void InitPlayListDetail(string input) 
+        async void InitPlayListDetail(string input)
         {
             if (IsBusy) return;
             try
@@ -286,7 +304,7 @@ namespace CandySugar.Controls.ViewModels
                     };
                 }).RunsAsync();
                 CloseBusy();
-                NavigationToDetail(result.SheetDetailResult,input);
+                NavigationToDetail(result.SheetDetailResult, input);
             }
             catch (Exception ex)
             {
