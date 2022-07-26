@@ -43,6 +43,7 @@ namespace CandySugar.Controls.SysViewModels
             CandyService.ClearLog();
             Root = new ObservableCollection<CandyLog>();
         });
+        public DelegateCommand<CandyLog> RemoveAction => new(input => Remove(input));
         #endregion
 
         #region 方法
@@ -57,6 +58,13 @@ namespace CandySugar.Controls.SysViewModels
                 {
                     Root.Add(item);
                 });
+        }
+        void Remove(CandyLog input)
+        {
+            CandyService.RemoveLog(input);
+            var temp = Root.ToList();
+            temp.RemoveAll(t => t.CandyId == input.CandyId);
+            Root = new ObservableCollection<CandyLog>(temp);
         }
         #endregion
     }

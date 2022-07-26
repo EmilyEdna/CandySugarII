@@ -23,7 +23,7 @@
                     <SwipeView.RightItems>
                         <SwipeItems>
                             <SwipeItem
-                                Command="{Binding RemoveAction, Source={RelativeSource AncestorType={x:Type vm:AnimeHistoryViewModel}}}"
+                                Command="{Binding RemoveAction, Source={RelativeSource AncestorType={x:Type vm:HnimeHistoryViewModel}}}"
                                 CommandParameter="{Binding .}"
                                 IconImageSource="{StaticResource Del}"
                                 Text="删除" />

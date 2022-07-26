@@ -3,11 +3,137 @@
     x:Class="CandySugar.Controls.Views.MusicView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="音乐">
-    <VerticalStackLayout>
-        <Label
-            HorizontalOptions="Center"
-            Text="暂不开发"
-            VerticalOptions="Center" />
-    </VerticalStackLayout>
+    xmlns:sdk="clr-namespace:Sdk.Component.Music.sdk.ViewModel.Response;assembly=Sdk.Component"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:CandySugar.Controls.ViewModels"
+    x:DataType="vm:MusicViewModel">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:ListToStringConverter x:Key="ListToString" Separator="," />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <vm:MusicViewModel />
+    </ContentPage.BindingContext>
+    <Shell.SearchHandler>
+        <SearchHandler
+            ClearIcon="{StaticResource Clear}"
+            Command="{Binding QueryAction}"
+            Placeholder="请输入搜索内容"
+            Query="{Binding KeyWord, Mode=TwoWay}"
+            QueryIcon="{StaticResource Search}"
+            ShowsResults="False"
+            TextColor="{StaticResource Green}" />
+    </Shell.SearchHandler>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding HandleAction}"
+            CommandParameter="1"
+            Order="Secondary"
+            Priority="0"
+            Text="QQ" />
+        <ToolbarItem
+            Command="{Binding HandleAction}"
+            CommandParameter="2"
+            Order="Secondary"
+            Priority="1"
+            Text="网易" />
+        <ToolbarItem
+            Command="{Binding HandleAction}"
+            CommandParameter="3"
+            Order="Secondary"
+            Priority="2"
+            Text="酷狗" />
+        <ToolbarItem
+            Command="{Binding HandleAction}"
+            CommandParameter="4"
+            Order="Secondary"
+            Priority="3"
+            Text="酷我" />
+        <ToolbarItem
+            Command="{Binding HandleAction}"
+            CommandParameter="5"
+            Order="Secondary"
+            Priority="4"
+            Text="B站" />
+        <ToolbarItem
+            Command="{Binding HandleAction}"
+            CommandParameter="6"
+            Order="Secondary"
+            Priority="5"
+            Text="咪咕" />
+    </ContentPage.ToolbarItems>
+    <Grid RowDefinitions="*,40">
+        <RefreshView
+            Command="{Binding RefreshAction}"
+            IsRefreshing="{Binding IsRefreshing}"
+            RefreshColor="{StaticResource Pink}">
+            <CollectionView
+                ItemsSource="{Binding SongResult}"
+                RemainingItemsThreshold="0"
+                RemainingItemsThresholdReachedCommand="{Binding LoadMoreSongAction}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="sdk:MusicSongElementResult">
+                        <Border
+                            Padding="5"
+                            Stroke="{StaticResource PrimaryBrush}"
+                            StrokeShape="RoundRectangle 0">
+                            <VerticalStackLayout>
+                                <Label
+                                    Padding="2"
+                                    FontSize="15"
+                                    LineBreakMode="WordWrap"
+                                    Text="{Binding SongName}"
+                                    TextColor="{StaticResource Black}" />
+                                <Label
+                                    Padding="2"
+                                    FontSize="12"
+                                    LineBreakMode="WordWrap"
+                                    Text="{Binding SongAlbumName, StringFormat='专辑:{0}'}"
+                                    TextColor="{StaticResource Pink}" />
+                                <Label
+                                    Padding="2"
+                                    FontSize="12"
+                                    LineBreakMode="WordWrap"
+                                    Text="{Binding SongArtistName, Converter={StaticResource ListToString}, StringFormat='歌手:{0}'}"
+                                    TextColor="{StaticResource Violet}" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+        <Border
+            Grid.Row="1"
+            Stroke="{StaticResource PinkBrush}"
+            StrokeShape="RoundRectangle 0,0,15,15">
+            <Grid BackgroundColor="{StaticResource Pink}" ColumnDefinitions="*,1,*">
+                <Button
+                    BackgroundColor="Transparent"
+                    BorderWidth="0"
+                    Command="{Binding TabAction}"
+                    CommandParameter="1"
+                    FontSize="15"
+                    Text="单曲"
+                    TextColor="{StaticResource Primary}" />
+                <Line
+                    Grid.Column="1"
+                    Stroke="{StaticResource PinkBrush}"
+                    VerticalOptions="Center"
+                    X1="0"
+                    X2="0"
+                    Y1="0"
+                    Y2="40" />
+                <Button
+                    Grid.Column="2"
+                    BackgroundColor="Transparent"
+                    BorderWidth="0"
+                    Command="{Binding TabAction}"
+                    CommandParameter="2"
+                    FontSize="15"
+                    Text="歌单"
+                    TextColor="{StaticResource Primary}" />
+            </Grid>
+        </Border>
+    </Grid>
 </ContentPage>

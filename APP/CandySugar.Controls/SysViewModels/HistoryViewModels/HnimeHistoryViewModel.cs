@@ -68,8 +68,6 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
             Navigation(input.Route);
         });
 
-     
-
         public DelegateCommand<CandyHnime> RemoveAction => new(input => Remove(input));
         #endregion
     }
