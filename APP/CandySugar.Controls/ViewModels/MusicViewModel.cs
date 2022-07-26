@@ -3,6 +3,7 @@ using Sdk.Component.Music.sdk.ViewModel.Response;
 using Sdk.Component.Music.sdk;
 using Sdk.Component.Music.sdk.ViewModel.Enums;
 using Sdk.Component.Music.sdk.ViewModel.Request;
+using CandySugar.Controls.Views.MusicViews;
 
 namespace CandySugar.Controls.ViewModels
 {
@@ -44,7 +45,7 @@ namespace CandySugar.Controls.ViewModels
             this.Page = 1;
             QueryType = input.AsInt();
             this.LoadMore = false;
-            SetRefresh(false);
+            SetRefresh();
             if (KeyWord.IsNullOrEmpty()) return;
             Common();
         });
@@ -72,8 +73,15 @@ namespace CandySugar.Controls.ViewModels
         {
             this.Page = 1;
             this.LoadMore = false;
+            if (KeyWord.IsNullOrEmpty()) return;
             SetRefresh(false);
             Common();
+        });
+        public DelegateCommand<MusicSheetElementResult> DetailAction => new(input => {
+            InitPlayListDetail(input.SongSheetId.ToString());
+        });
+        public DelegateCommand<MusicSongElementResult> AlbumAction => new(input => {
+            InitAlbum(input.SongAlbumId);
         });
         #endregion
 
@@ -106,6 +114,14 @@ namespace CandySugar.Controls.ViewModels
         #endregion
 
         #region 方法 
+        async void NavigationToAlbum(List<MusicSongElementResult> input)
+        {
+            await Shell.Current.GoToAsync(nameof(MusicAlbumView), new Dictionary<string, object> { { "Data", input } });
+        }
+        async void NavigationToDetail(MusicSheetDetailRootResult input,string playId)
+        {
+            await Shell.Current.GoToAsync(nameof(MusicDetailView), new Dictionary<string, object> { { "Data", input },{ "Key", playId } });
+        }
         void Common() 
         {
             if (QueryType == 1)
@@ -201,6 +217,76 @@ namespace CandySugar.Controls.ViewModels
                     });
                 else
                     PlayListResult = new ObservableCollection<MusicSheetElementResult>(result.SheetResult.ElementResults);
+            }
+            catch (Exception ex)
+            {
+                StaticResource.PopToast(ex.Message);
+            }
+        }
+        async void InitAlbum(string input)
+        {
+            if (IsBusy) return;
+            try
+            {
+                if (CandySoft.NetState.NetworkAccess != NetworkAccess.Internet)
+                {
+                    StaticResource.PopToast("请检查网络是否通畅!");
+                    return;
+                }
+                ShowBusy();
+                await Task.Delay(CandySoft.Wait);
+                var result = await MusicFactory.Music(opt =>
+                {
+                    opt.RequestParam = new Input
+                    {
+                        PlatformType = PlatformType,
+                        CacheSpan = CandySoft.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        MusicType = MusicEnum.AlbumDetail,
+                        AlbumDetail = new MusicAlbumDetail
+                        {
+                            AlbumId = input
+                        }
+                    };
+                }).RunsAsync();
+                CloseBusy();
+                NavigationToAlbum(result.AlbumResult.ElementResults);
+            }
+            catch (Exception ex)
+            {
+                StaticResource.PopToast(ex.Message);
+            }
+        }
+        async void InitPlayListDetail(string input) 
+        {
+            if (IsBusy) return;
+            try
+            {
+                if (CandySoft.NetState.NetworkAccess != NetworkAccess.Internet)
+                {
+                    StaticResource.PopToast("请检查网络是否通畅!");
+                    return;
+                }
+                ShowBusy();
+                await Task.Delay(CandySoft.Wait);
+                var result = await MusicFactory.Music(opt =>
+                {
+                    opt.RequestParam = new Input
+                    {
+                        PlatformType = PlatformType,
+                        CacheSpan = CandySoft.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        MusicType = MusicEnum.SheetDetail,
+                        SheetDetail = new MusicSheetDetail
+                        {
+                            Id = input
+                        }
+                    };
+                }).RunsAsync();
+                CloseBusy();
+                NavigationToDetail(result.SheetDetailResult,input);
             }
             catch (Exception ex)
             {

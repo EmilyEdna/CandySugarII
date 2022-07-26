@@ -19,8 +19,8 @@ namespace CandySugar.Controls
         {
             CandyService.AddLog(new CandyLog
             {
-                Message = className,
-                Stack = methodInfo
+                Message = $"{className}_{methodInfo}",
+                Stack = message.StackTrace
             });
             return Task.CompletedTask;
         }

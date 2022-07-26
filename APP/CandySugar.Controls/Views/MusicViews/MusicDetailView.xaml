@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="CandySugar.Controls.Views.MusicViews.MusicDetailView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:sdk="clr-namespace:Sdk.Component.Music.sdk.ViewModel.Response;assembly=Sdk.Component"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:CandySugar.Controls.ViewModels.MusicViewModels"
+    Title="歌单详情"
+    x:DataType="vm:MusicDetailViewModel">
+    <ContentPage.BindingContext>
+        <vm:MusicDetailViewModel />
+    </ContentPage.BindingContext>
+    <Grid RowDefinitions="Auto,*">
+        <Border
+            Stroke="{StaticResource Gray100Brush}"
+            StrokeShape="RoundRectangle 0"
+            StrokeThickness="1">
+            <Grid ColumnDefinitions="Auto,*">
+                <Border
+                    HeightRequest="90"
+                    StrokeShape="RoundRectangle 0"
+                    WidthRequest="90">
+                    <Image Aspect="Fill" Source="{Binding DetailResult.Logo}" />
+                </Border>
+                <StackLayout Grid.Column="1" Padding="3">
+                    <Label
+                        Margin="10,0,0,0"
+                        FontSize="15"
+                        Text="{Binding DetailResult.DissName}"
+                        TextColor="{StaticResource Black}" />
+                    <Label
+                        Margin="10,0,0,0"
+                        FontSize="11"
+                        Text="{Binding DetailResult.ListenNum, StringFormat='播放次数：{0}'}"
+                        TextColor="{StaticResource Primary}" />
+                    <Label
+                        Margin="10,0,0,0"
+                        FontSize="11"
+                        Text="{Binding DetailResult.MusicNum, StringFormat='歌曲数量：{0}'}"
+                        TextColor="{StaticResource Primary}" />
+                    <Label
+                        Margin="10,0,0,0"
+                        FontSize="11"
+                        Text="{Binding DetailResult.CreateTime, StringFormat='创建时间：{0}'}"
+                        TextColor="{StaticResource Primary}" />
+                </StackLayout>
+            </Grid>
+        </Border>
+        <CollectionView
+            Grid.Row="1"
+            ItemSizingStrategy="MeasureAllItems"
+            ItemsSource="{Binding DetailResult.ElementResults}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="3" Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="sdk:MusicSongElementResult">
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem
+                                    Command="{Binding AddPlayAction, Source={RelativeSource AncestorType={x:Type vm:MusicDetailViewModel}}}"
+                                    CommandParameter="{Binding .}"
+                                    IconImageSource="{StaticResource Play}"
+                                    Text="播放" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Border
+                            Padding="5"
+                            Stroke="{StaticResource Gray100Brush}"
+                            StrokeShape="RoundRectangle 0"
+                            StrokeThickness="1">
+                            <VerticalStackLayout>
+                                <VerticalStackLayout>
+                                    <Label
+                                        Padding="2"
+                                        FontSize="15"
+                                        LineBreakMode="WordWrap"
+                                        Text="{Binding SongName}"
+                                        TextColor="{StaticResource Black}" />
+                                    <Label
+                                        Padding="2"
+                                        FontSize="12"
+                                        LineBreakMode="WordWrap"
+                                        Text="{Binding SongAlbumName, StringFormat='专辑:{0}'}"
+                                        TextColor="{StaticResource Pink}" />
+                                    <Label
+                                        Padding="2"
+                                        FontSize="12"
+                                        LineBreakMode="WordWrap"
+                                        Text="{Binding SongArtistName, Converter={StaticResource ListToString}, StringFormat='歌手:{0}'}"
+                                        TextColor="{StaticResource Violet}" />
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </Border>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>

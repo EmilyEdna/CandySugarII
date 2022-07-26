@@ -98,6 +98,12 @@
 	  <MauiXaml Update="Views\MangaViews\MangaWatchView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\MusicViews\MusicAlbumView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\MusicViews\MusicDetailView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\NovelViews\NovelContentView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

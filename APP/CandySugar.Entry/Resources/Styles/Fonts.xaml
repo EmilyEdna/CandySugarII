@@ -103,6 +103,13 @@
         Color="{StaticResource Primary}" />
 
     <FontImage
+        x:Key="Play"
+        FontFamily="Solid"
+        Glyph="{Static lib:FontIcon.Play}"
+        Size="12"
+        Color="{StaticResource Red}" />
+
+    <FontImage
         x:Key="Ad"
         FontFamily="Thin"
         Glyph="{Static lib:FontIcon.RectangleAd}"

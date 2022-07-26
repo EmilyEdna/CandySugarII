@@ -63,8 +63,38 @@
             Priority="5"
             Text="咪咕" />
     </ContentPage.ToolbarItems>
-    <Grid RowDefinitions="*,40">
+    <Grid RowDefinitions="40,*">
+        <Border Stroke="{StaticResource BlackBrush}" StrokeShape="RoundRectangle 0">
+            <Grid BackgroundColor="{StaticResource Red}" ColumnDefinitions="*,1,*">
+                <Button
+                    BackgroundColor="Transparent"
+                    BorderWidth="0"
+                    Command="{Binding TabAction}"
+                    CommandParameter="1"
+                    FontSize="15"
+                    Text="单曲"
+                    TextColor="{StaticResource Primary}" />
+                <Line
+                    Grid.Column="1"
+                    Stroke="{StaticResource BlackBrush}"
+                    VerticalOptions="Center"
+                    X1="0"
+                    X2="0"
+                    Y1="0"
+                    Y2="40" />
+                <Button
+                    Grid.Column="2"
+                    BackgroundColor="Transparent"
+                    BorderWidth="0"
+                    Command="{Binding TabAction}"
+                    CommandParameter="2"
+                    FontSize="15"
+                    Text="歌单"
+                    TextColor="{StaticResource Primary}" />
+            </Grid>
+        </Border>
         <RefreshView
+            Grid.Row="1"
             Command="{Binding RefreshAction}"
             IsEnabled="{Binding SongVisible}"
             IsRefreshing="{Binding IsRefreshing}"
@@ -79,7 +109,11 @@
                         <Border
                             Padding="5"
                             Stroke="{StaticResource PrimaryBrush}"
-                            StrokeShape="RoundRectangle 0">
+                            StrokeShape="RoundRectangle 0"
+                            StrokeThickness="1">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding AlbumAction, Source={RelativeSource AncestorType={x:Type vm:MusicViewModel}}}" CommandParameter="{Binding .}" />
+                            </Border.GestureRecognizers>
                             <VerticalStackLayout>
                                 <Label
                                     Padding="2"
@@ -106,6 +140,7 @@
             </CollectionView>
         </RefreshView>
         <RefreshView
+            Grid.Row="1"
             Command="{Binding RefreshAction}"
             IsEnabled="{Binding PlayVisible}"
             IsRefreshing="{Binding IsRefreshing}"
@@ -121,6 +156,9 @@
                             Stroke="{StaticResource Gray100Brush}"
                             StrokeShape="RoundRectangle 0"
                             StrokeThickness="1">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding DetailAction, Source={RelativeSource AncestorType={x:Type vm:MusicViewModel}}}" CommandParameter="{Binding .}" />
+                            </Border.GestureRecognizers>
                             <Grid ColumnDefinitions="Auto,*">
                                 <Border
                                     HeightRequest="90"
@@ -151,38 +189,6 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </RefreshView>
-        <Border
-            Grid.Row="1"
-            Stroke="{StaticResource PinkBrush}"
-            StrokeShape="RoundRectangle 0,0,15,15">
-            <Grid BackgroundColor="{StaticResource Pink}" ColumnDefinitions="*,1,*">
-                <Button
-                    BackgroundColor="Transparent"
-                    BorderWidth="0"
-                    Command="{Binding TabAction}"
-                    CommandParameter="1"
-                    FontSize="15"
-                    Text="单曲"
-                    TextColor="{StaticResource Primary}" />
-                <Line
-                    Grid.Column="1"
-                    Stroke="{StaticResource BlackBrush}"
-                    VerticalOptions="Center"
-                    X1="0"
-                    X2="0"
-                    Y1="0"
-                    Y2="40" />
-                <Button
-                    Grid.Column="2"
-                    BackgroundColor="Transparent"
-                    BorderWidth="0"
-                    Command="{Binding TabAction}"
-                    CommandParameter="2"
-                    FontSize="15"
-                    Text="歌单"
-                    TextColor="{StaticResource Primary}" />
-            </Grid>
-        </Border>
         <ActivityIndicator
             Grid.RowSpan="2"
             HeightRequest="20"
