@@ -69,5 +69,12 @@ namespace CandySugar.Logic.Service
         void RemoveLog(CandyLog input);
         void ClearLog();
         #endregion
+
+        #region 音乐
+        void AddMusic(CandyMusic input);
+        List<CandyMusic> GetMusic();
+        void RemoveMusic(CandyMusic input);
+        void ClearMusic();
+        #endregion
     }
 }

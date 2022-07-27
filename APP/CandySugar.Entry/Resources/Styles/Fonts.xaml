@@ -108,6 +108,12 @@
         Glyph="{Static lib:FontIcon.Play}"
         Size="12"
         Color="{StaticResource Red}" />
+    <FontImage
+        x:Key="Album"
+        FontFamily="Solid"
+        Glyph="{Static lib:FontIcon.RecordVinyl}"
+        Size="12"
+        Color="{StaticResource Red}" />
 
     <FontImage
         x:Key="Ad"

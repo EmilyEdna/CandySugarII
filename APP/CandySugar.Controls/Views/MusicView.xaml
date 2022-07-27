@@ -107,35 +107,48 @@
                 RemainingItemsThresholdReachedCommand="{Binding LoadMoreSongAction}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="sdk:MusicSongElementResult">
-                        <Border
-                            Padding="5"
-                            Stroke="{StaticResource PrimaryBrush}"
-                            StrokeShape="RoundRectangle 0"
-                            StrokeThickness="1">
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding AlbumAction, Source={RelativeSource AncestorType={x:Type vm:MusicViewModel}}}" CommandParameter="{Binding .}" />
-                            </Border.GestureRecognizers>
-                            <VerticalStackLayout>
-                                <Label
-                                    Padding="2"
-                                    FontSize="15"
-                                    LineBreakMode="WordWrap"
-                                    Text="{Binding SongName}"
-                                    TextColor="{StaticResource Black}" />
-                                <Label
-                                    Padding="2"
-                                    FontSize="12"
-                                    LineBreakMode="WordWrap"
-                                    Text="{Binding SongAlbumName, StringFormat='专辑:{0}'}"
-                                    TextColor="{StaticResource Pink}" />
-                                <Label
-                                    Padding="2"
-                                    FontSize="12"
-                                    LineBreakMode="WordWrap"
-                                    Text="{Binding SongArtistName, Converter={StaticResource ListToString}, StringFormat='歌手:{0}'}"
-                                    TextColor="{StaticResource Violet}" />
-                            </VerticalStackLayout>
-                        </Border>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem
+                                        Command="{Binding AlbumAction, Source={RelativeSource AncestorType={x:Type vm:MusicViewModel}}}"
+                                        CommandParameter="{Binding .}"
+                                        IconImageSource="{StaticResource Album}"
+                                        Text="专辑" />
+                                    <SwipeItem
+                                        Command="{Binding AddPlayAction, Source={RelativeSource AncestorType={x:Type vm:MusicViewModel}}}"
+                                        CommandParameter="{Binding .}"
+                                        IconImageSource="{StaticResource Play}"
+                                        Text="播放" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Border
+                                Padding="5"
+                                Stroke="{StaticResource PrimaryBrush}"
+                                StrokeShape="RoundRectangle 0"
+                                StrokeThickness="1">
+                                <VerticalStackLayout>
+                                    <Label
+                                        Padding="2"
+                                        FontSize="15"
+                                        LineBreakMode="WordWrap"
+                                        Text="{Binding SongName}"
+                                        TextColor="{StaticResource Black}" />
+                                    <Label
+                                        Padding="2"
+                                        FontSize="12"
+                                        LineBreakMode="WordWrap"
+                                        Text="{Binding SongAlbumName, StringFormat='专辑:{0}'}"
+                                        TextColor="{StaticResource Pink}" />
+                                    <Label
+                                        Padding="2"
+                                        FontSize="12"
+                                        LineBreakMode="WordWrap"
+                                        Text="{Binding SongArtistName, Converter={StaticResource ListToString}, StringFormat='歌手:{0}'}"
+                                        TextColor="{StaticResource Violet}" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </SwipeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

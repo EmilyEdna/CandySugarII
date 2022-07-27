@@ -252,5 +252,24 @@ namespace CandySugar.Logic.Service
             base.Clear<CandyLog>();
         }
         #endregion
+
+        #region 音乐
+        public void AddMusic(CandyMusic input)
+        {
+            base.InsertSingle(input);
+        }
+        public List<CandyMusic> GetMusic()
+        {
+            return base.Read<CandyMusic>().OrderByDescending(t => t.Span).ToList(); 
+        }
+        public void RemoveMusic(CandyMusic input)
+        {
+            base.Delete(input);
+        }
+        public void ClearMusic()
+        {
+            base.Clear<CandyMusic>();
+        }
+        #endregion
     }
 }
