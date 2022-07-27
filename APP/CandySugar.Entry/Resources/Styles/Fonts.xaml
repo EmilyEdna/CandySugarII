@@ -112,8 +112,8 @@
         x:Key="Album"
         FontFamily="Solid"
         Glyph="{Static lib:FontIcon.RecordVinyl}"
-        Size="12"
-        Color="{StaticResource Red}" />
+        Size="45"
+        Color="{StaticResource Black}" />
 
     <FontImage
         x:Key="Ad"

@@ -64,7 +64,16 @@
             Priority="5"
             Text="咪咕" />
     </ContentPage.ToolbarItems>
-    <Grid RowDefinitions="40,*">
+    <Grid RowDefinitions="40,*,55">
+        <ActivityIndicator
+            Grid.RowSpan="3"
+            HeightRequest="20"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            WidthRequest="20"
+            Color="{StaticResource Violet}" />
         <Border Stroke="{StaticResource BlackBrush}" StrokeShape="RoundRectangle 0">
             <Grid BackgroundColor="{StaticResource Red}" ColumnDefinitions="*,1,*">
                 <Button
@@ -203,14 +212,11 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </RefreshView>
-        <ActivityIndicator
-            Grid.RowSpan="2"
-            HeightRequest="20"
-            HorizontalOptions="Center"
-            IsRunning="{Binding IsBusy}"
-            IsVisible="{Binding IsBusy}"
-            VerticalOptions="Center"
-            WidthRequest="20"
-            Color="{StaticResource Violet}" />
+        <Grid
+            Grid.Row="2"
+            BackgroundColor="{StaticResource Red}"
+            ColumnDefinitions="Auto,*,30">
+            <Image Margin="20,0,0,0" Source="{StaticResource Album}" />
+        </Grid>
     </Grid>
 </ContentPage>
