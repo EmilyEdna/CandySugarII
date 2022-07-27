@@ -65,10 +65,10 @@ namespace CandySugar.Controls.ViewModels
             if (Query != null)
             {
                 Query.Page = this.Page;
-                Task.Run(() => InitCategory());
+                Task.Run(() => InitSearch());
             }
             else
-                Task.Run(() => InitSearch());
+                Task.Run(() => InitCategory());
 
         });
         public DelegateCommand LabelAction => new(() =>
