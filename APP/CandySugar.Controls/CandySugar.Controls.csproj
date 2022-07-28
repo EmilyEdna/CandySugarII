@@ -23,7 +23,7 @@
 	  <MauiXaml Remove="Platforms\**" />
 	  <None Remove="Platforms\**" />
 	</ItemGroup>
-	
+
 	<ItemGroup>
 	  <ProjectReference Include="..\CandySugar.Library\CandySugar.Library.csproj" />
 	</ItemGroup>

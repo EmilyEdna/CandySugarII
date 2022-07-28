@@ -64,7 +64,7 @@
             Priority="5"
             Text="咪咕" />
     </ContentPage.ToolbarItems>
-    <Grid RowDefinitions="40,*,55">
+    <Grid RowDefinitions="40,*">
         <ActivityIndicator
             Grid.RowSpan="3"
             HeightRequest="20"
@@ -212,11 +212,55 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </RefreshView>
-        <Grid
+        <!--<Grid
             Grid.Row="2"
             BackgroundColor="{StaticResource Red}"
-            ColumnDefinitions="Auto,*,30">
-            <Image Margin="20,0,0,0" Source="{StaticResource Album}" />
-        </Grid>
+            ColumnDefinitions="*,40">
+            <VerticalStackLayout>
+                <HorizontalStackLayout Margin="20,0,0,0">
+                    <Label
+                        FontSize="16"
+                        Text="一路生花"
+                        TextColor="Black" />
+                    <Label
+                        Margin="0,2,0,0"
+                        FontSize="13"
+                        Text="(文艺新)"
+                        TextColor="Black" />
+                    <Grid Margin="100,10,0,0" ColumnDefinitions="*,Auto,*">
+                        <Label
+                            Grid.Column="0"
+                            FontSize="13"
+                            HorizontalOptions="End"
+                            Text="4:01"
+                            TextColor="Black" />
+                        <Label
+                            Grid.Column="1"
+                            FontSize="13"
+                            HorizontalOptions="End"
+                            Text="/"
+                            TextColor="Black" />
+                        <Label
+                            Grid.Column="2"
+                            FontSize="13"
+                            HorizontalOptions="End"
+                            Text="4:01"
+                            TextColor="Black" />
+                    </Grid>
+                </HorizontalStackLayout>
+                <Slider
+                    Margin="5,0,0,0"
+                    Maximum="300"
+                    MinimumTrackColor="Black"
+                    WidthRequest="320" />
+            </VerticalStackLayout>
+            <ImageButton
+                x:Name="ModuleBtn"
+                Grid.Column="1"
+                Margin="0,0,10,0"
+                Clicked="TapEvent"
+                HeightRequest="30"
+                WidthRequest="30" />
+        </Grid>-->
     </Grid>
 </ContentPage>
