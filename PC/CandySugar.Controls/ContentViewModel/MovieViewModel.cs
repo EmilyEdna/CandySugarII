@@ -1,4 +1,6 @@
 ﻿using CandySugar.Library;
+using CandySugar.Logic.Entity.CandyEntity;
+using CandySugar.Logic.IService;
 using CandySugar.Resource.Properties;
 using HandyControl.Controls;
 using HandyControl.Data;
@@ -21,11 +23,13 @@ namespace CandySugar.Controls.ContentViewModel
     {
         public IContainer Container;
         public IWindowManager WindowManager;
+        public ICandyMovie CandyMovie;
         public WebView2 WebView { get; set; }
         public MovieViewModel(IContainer Container, IWindowManager WindowManager)
         {
             this.WindowManager = WindowManager;
             this.Container = Container;
+            this.CandyMovie = Container.Get<ICandyMovie>();
             this.Page = 1;
             this.StepOne = true;
             this.StepTwo = false;
@@ -34,6 +38,7 @@ namespace CandySugar.Controls.ContentViewModel
         #region Field
         private string KeyWord;
         private string CateRoute;
+        private MovieElementResult CurrentResult;
         #endregion
 
         #region CommomProperty_Bool
@@ -108,9 +113,10 @@ namespace CandySugar.Controls.ContentViewModel
         }
         public void LinkAction(MovieElementResult input)
         {
+            CurrentResult = input;
             InitWatch(input.Route);
         }
-        public void PlayAction(MovieDetailResult input) 
+        public void PlayAction(MovieDetailResult input)
         {
             InitPlay(input.Route);
         }
@@ -132,6 +138,10 @@ namespace CandySugar.Controls.ContentViewModel
                 this.Page = input.Info;
                 InitCategory(CateRoute);
             }
+        }
+        public void WatchAction(string input)
+        {
+            Play(input);
         }
         #endregion
 
@@ -172,21 +182,20 @@ namespace CandySugar.Controls.ContentViewModel
                     Proxy = StaticResource.Proxy(),
                     ImplType = StaticResource.ImplType(),
                     MovieType = MovieEnum.Watch,
-                    Play = new  MoviePlay
+                    Play = new MoviePlay
                     {
-                      Route= input
+                        Route = input
                     }
                 };
             }).RunsAsync();
             this.Loading = false;
-            if (InitPlay.PlayResult.Route.IsNullOrEmpty()) 
+            if (InitPlay.PlayResult.Route.IsNullOrEmpty())
             {
                 Growl.Info("当前播放地址无效,请更换其他线路!");
                 return;
             }
-            this.StepTwo = true;
-            this.StepOne = false;
-            await WebView.CoreWebView2.ExecuteScriptAsync($"Play('{InitPlay.PlayResult.Route}','{CandySoft.Default.ScreenHeight - 30}')");
+            Logic(InitPlay.PlayResult.Route);
+            Play(InitPlay.PlayResult.Route);
         }
         private async void InitCategory(string input)
         {
@@ -209,7 +218,7 @@ namespace CandySugar.Controls.ContentViewModel
             }).RunsAsync();
             this.Loading = false;
             this.Total = InitCate.RootResult.Total;
-            this.EleResult =new ObservableCollection<MovieElementResult>(InitCate.RootResult.ElementResults);
+            this.EleResult = new ObservableCollection<MovieElementResult>(InitCate.RootResult.ElementResults);
         }
         private async void InitWatch(string input)
         {
@@ -247,8 +256,8 @@ namespace CandySugar.Controls.ContentViewModel
                     Search = new MovieSearch
                     {
                         Page = this.Page,
-                        KeyWord=input,
-                        SearchId=this.SearchId
+                        KeyWord = input,
+                        SearchId = this.SearchId
                     }
                 };
             }).RunsAsync();
@@ -256,6 +265,21 @@ namespace CandySugar.Controls.ContentViewModel
             this.Total = InitSearch.RootResult.Total;
             this.SearchId = InitSearch.RootResult.SearchId;
             this.EleResult = new ObservableCollection<MovieElementResult>(InitSearch.RootResult.ElementResults);
+        }
+        private async void Logic(string input)
+        {
+            await CandyMovie.AddOrUpdate(new CandyMovie
+            {
+                Route = input,
+                Cover = CurrentResult.Cover,
+                Title = CurrentResult.Title
+            });
+        }
+        private async void Play(string input)
+        {
+            this.StepTwo = true;
+            this.StepOne = false;
+            await WebView.CoreWebView2.ExecuteScriptAsync($"Play('{input}','{CandySoft.Default.ScreenHeight - 30}')");
         }
         #endregion
     }

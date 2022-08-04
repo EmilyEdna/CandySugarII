@@ -85,12 +85,17 @@
                         ItemsSource="{Binding EleResult}"
                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
                         SelectionChanged="ItemSelected"
-                        Style="{StaticResource StackPanelVerticalListBox}">
+                        Style="{StaticResource WrapPanelHorizontalListBox}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="2" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid Margin="2,5,2,0">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="0.2*" />
+                                        <ColumnDefinition Width="0.5*" />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <Border>

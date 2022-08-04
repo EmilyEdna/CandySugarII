@@ -2,6 +2,7 @@
 using CandySugar.Logic.Entity.CandyEntity;
 using CandySugar.Logic.IService;
 using CandySugar.Resource.Properties;
+using DnsClient.Protocol;
 using HandyControl.Controls;
 using HandyControl.Data;
 using NAudio;
@@ -14,6 +15,7 @@ using Sdk.Component.Image.sdk.ViewModel.Enums;
 using Sdk.Component.Image.sdk.ViewModel.Request;
 using Stylet;
 using StyletIoC;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -31,13 +33,15 @@ namespace CandySugar.Controls.MenuTemplateViewModel
             this.WindowManager = WindowManager;
             this.Container = Container;
             ZF = true;
-            XS = LXS = DM = HDM = MH = BZ = JY = false;
+            XS = LXS = DM = HDM = MH = BZ = JY = DY = false;
             CandyNovel = Container.Get<ICandyNovel>();
             CandyLovel = Container.Get<ICandyLovel>();
             CandyAnime = Container.Get<ICandyAnime>();
             CandyManga = Container.Get<ICandyManga>();
             CandyImage = Container.Get<ICandyImage>();
             CandyHnime = Container.Get<ICandyHnime>();
+            CandyAxgle= Container.Get<ICandyAxgle>();
+            CandyMovie = Container.Get<ICandyMovie>();
         }
 
         #region Field
@@ -47,6 +51,8 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         private ICandyManga CandyManga;
         private ICandyImage CandyImage;
         private ICandyHnime CandyHnime;
+        private ICandyAxgle CandyAxgle;
+        private ICandyMovie CandyMovie;
         #endregion
 
         #region CommomProperty_Int
@@ -114,6 +120,13 @@ namespace CandySugar.Controls.MenuTemplateViewModel
             get => _JY;
             set => SetAndNotify(ref _JY, value);
         }
+
+        private bool _DY;
+        public bool DY
+        {
+            get => _DY;
+            set => SetAndNotify(ref _DY, value);
+        }
         #endregion
 
         #region Property
@@ -164,6 +177,20 @@ namespace CandySugar.Controls.MenuTemplateViewModel
             get => _CandyHnimeResult;
             set => SetAndNotify(ref _CandyHnimeResult, value);
         }
+
+        private ObservableCollection<CandyMovie> _CandyMovieResult;
+        public ObservableCollection<CandyMovie> CandyMovieResult
+        {
+            get => _CandyMovieResult;
+            set => SetAndNotify(ref _CandyMovieResult, value);
+        }
+
+        private ObservableCollection<CandyAxgle> _CandyAxgleResult;
+        public ObservableCollection<CandyAxgle> CandyAxgleResult
+        {
+            get => _CandyAxgleResult;
+            set => SetAndNotify(ref _CandyAxgleResult, value);
+        }
         #endregion
 
         #region Action
@@ -173,42 +200,48 @@ namespace CandySugar.Controls.MenuTemplateViewModel
             {
                 case "ZF":
                     ZF = true;
-                    XS = LXS = DM = HDM = MH = BZ = JY = false;
+                    XS = LXS = DM = HDM = MH = BZ = JY= DY = false;
                     InitBGM();
                     break;
                 case "XS":
                     XS = true;
-                    ZF = LXS = DM = HDM = MH = BZ = JY = false;
+                    ZF = LXS = DM = HDM = MH = BZ = JY = DY = false;
                     InitNovel();
                     break;
                 case "LXS":
                     LXS = true;
-                    ZF = XS = DM = HDM = MH = BZ = JY = false;
+                    ZF = XS = DM = HDM = MH = BZ = JY = DY = false;
                     InitLovel();
                     break;
                 case "DM":
                     DM = true;
-                    ZF = XS = LXS = HDM = MH = BZ = JY = false;
+                    ZF = XS = LXS = HDM = MH = BZ = JY= DY = false;
                     InitAnime();
                     break;
                 case "HDM":
                     HDM = true;
-                    ZF = XS = LXS = DM = MH = BZ = JY = false;
+                    ZF = XS = LXS = DM = MH = BZ = JY = DY = false;
                     InitHnime();
                     break;
                 case "MH":
                     MH = true;
-                    ZF = XS = LXS = DM = HDM = BZ = JY = false;
+                    ZF = XS = LXS = DM = HDM = BZ = JY = DY = false;
                     InitManga();
                     break;
                 case "BZ":
                     BZ = true;
-                    ZF = MH = XS = LXS = DM = HDM = JY = false;
+                    ZF = MH = XS = LXS = DM = HDM = JY = DY = false;
                     InitImage();
                     break;
-                default:
+                case "JY":
                     JY = true;
-                    ZF = XS = LXS = DM = HDM = MH = BZ = false;
+                    ZF = XS = LXS = DM = HDM = MH = BZ = DY = false;
+                    InitAxgle();
+                    break;
+                default:
+                    DY = true;
+                    ZF = XS = LXS = DM = HDM = MH = BZ = JY = false;
+                    InitMovie();
                     break;
             }
         }
@@ -226,7 +259,12 @@ namespace CandySugar.Controls.MenuTemplateViewModel
                 DelImage(Image);
             if (input is CandyHnime Hnime)
                 DelHnime(Hnime);
+            if (input is CandyAxgle Axgle)
+                DelAxgle(Axgle);
+            if (input is CandyMovie Movie)
+                DelMovie(Movie);
         }
+
         public void ImagePageAction(FunctionEventArgs<int> input)
         {
             InitImage(input.Info);
@@ -297,6 +335,14 @@ namespace CandySugar.Controls.MenuTemplateViewModel
             Total = data.Item2;
             CandyImageResult = new ObservableCollection<CandyImage>(data.Item1);
         }
+        private async void InitAxgle()
+        {
+            CandyAxgleResult = new ObservableCollection<CandyAxgle>(await CandyAxgle.Get());
+        }
+        private async void InitMovie()
+        {
+            CandyMovieResult = new ObservableCollection<CandyMovie>(await CandyMovie.Get());
+        }
         #endregion
 
         #region Remove
@@ -329,6 +375,17 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         {
             await CandyHnime.Remove(input);
             InitHnime();
+        }
+        private async void DelMovie(CandyMovie movie)
+        {
+            await CandyMovie.Remove(movie);
+            InitMovie();
+        }
+
+        private async void DelAxgle(CandyAxgle axgle)
+        {
+            await CandyAxgle.Remove(axgle);
+            InitAxgle();
         }
         #endregion
     }

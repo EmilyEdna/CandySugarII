@@ -142,6 +142,10 @@ namespace CandySugar.Entry.ViewModels
                     PlayRoute = Hnime.Route,
                     IsPlaying = true
                 }, "PlayAction");
+            if (input is CandyMovie Movie)
+                Ctrl = StaticResource.CreateControl<MovieView>(Container.Get<MovieViewModel>(), Movie.Route, "WatchAction");
+            if (input is CandyAxgle Axgle)
+                Ctrl = StaticResource.CreateControl<AxgleView>(Container.Get<AxgleViewModel>(), Axgle.Play, "ViewAction");
         }
         /// <summary>
         /// 菜单

@@ -91,6 +91,16 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </ListBoxItem>
+            <ListBoxItem Content="DY">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Selected">
+                        <i:InvokeCommandAction
+                            s:View.ActionTarget="{Binding DataContext, ElementName=History}"
+                            Command="{s:Action ChangeAction}"
+                            CommandParameter="{Binding Content, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ListBoxItem>
             <ListBoxItem Content="MH">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Selected">
@@ -681,6 +691,154 @@
                         </hc:EventTrigger>
                     </hc:Interaction.Triggers>
                 </hc:Pagination>
+            </Grid>
+            <Grid x:Name="DY" Visibility="{Binding DY, Converter={StaticResource ToShow}}">
+                <ListBox
+                    Background="Transparent"
+                    BorderThickness="0"
+                    ItemsSource="{Binding CandyMovieResult}"
+                    Style="{StaticResource WrapPanelHorizontalListBox}">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="3" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <WrapPanel Orientation="Vertical">
+                                <Border Margin="15,15,0,0" HorizontalAlignment="Left">
+                                    <Image
+                                        Width="150"
+                                        Height="195"
+                                        SnapsToDevicePixels="True"
+                                        Source="{Binding Cover}" />
+                                    <Border.Effect>
+                                        <DropShadowEffect
+                                            BlurRadius="6"
+                                            Opacity="1"
+                                            ShadowDepth="0"
+                                            Color="{DynamicResource SugarThemePinkColor}" />
+                                    </Border.Effect>
+                                </Border>
+                                <StackPanel Margin="15,15,0,0" HorizontalAlignment="Left">
+                                    <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding Title, StringFormat=名称:{0}}" />
+                                    <TextBlock Text="继续看">
+                                        <TextBlock.Style>
+                                            <Style BasedOn="{StaticResource TextBlockStyle}" TargetType="TextBlock">
+                                                <Setter Property="Cursor" Value="Hand" />
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Foreground" Value="{DynamicResource SugarThemeBlue}" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseUp">
+                                                <i:InvokeCommandAction Command="{s:Action ContinueAction}" CommandParameter="{Binding .}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBlock>
+                                    <TextBlock Text="操作:移除">
+                                        <TextBlock.Style>
+                                            <Style BasedOn="{StaticResource TextBlockStyle}" TargetType="TextBlock">
+                                                <Setter Property="Cursor" Value="Hand" />
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Foreground" Value="{DynamicResource SugarThemeOrange}" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseUp">
+                                                <i:InvokeCommandAction
+                                                    s:View.ActionTarget="{Binding DataContext, ElementName=History}"
+                                                    Command="{s:Action RemoveAction}"
+                                                    CommandParameter="{Binding .}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBlock>
+                                </StackPanel>
+                            </WrapPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+            <Grid x:Name="JY" Visibility="{Binding JY, Converter={StaticResource ToShow}}">
+                <ListBox
+                    Background="Transparent"
+                    BorderThickness="0"
+                    ItemsSource="{Binding CandyAxgleResult}"
+                    Style="{StaticResource WrapPanelHorizontalListBox}">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="3" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <WrapPanel Orientation="Vertical">
+                                <Border Margin="15,15,0,0" HorizontalAlignment="Left">
+                                    <Image
+                                        Width="150"
+                                        Height="195"
+                                        lib:ImageDependencyProperty.Source="{Binding Preview}"
+                                        SnapsToDevicePixels="True"
+                                        Tag="Axgle" />
+                                    <Border.Effect>
+                                        <DropShadowEffect
+                                            BlurRadius="6"
+                                            Opacity="1"
+                                            ShadowDepth="0"
+                                            Color="{DynamicResource SugarThemePinkColor}" />
+                                    </Border.Effect>
+                                </Border>
+                                <StackPanel Margin="15,15,0,0" HorizontalAlignment="Left">
+                                    <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding Title, StringFormat=名称:{0}}" />
+                                    <TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding Duration, StringFormat=时常:{0}}" />
+                                    <TextBlock Text="继续看">
+                                        <TextBlock.Style>
+                                            <Style BasedOn="{StaticResource TextBlockStyle}" TargetType="TextBlock">
+                                                <Setter Property="Cursor" Value="Hand" />
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Foreground" Value="{DynamicResource SugarThemeBlue}" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseUp">
+                                                <i:InvokeCommandAction Command="{s:Action ContinueAction}" CommandParameter="{Binding .}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBlock>
+                                    <TextBlock Text="操作:移除">
+                                        <TextBlock.Style>
+                                            <Style BasedOn="{StaticResource TextBlockStyle}" TargetType="TextBlock">
+                                                <Setter Property="Cursor" Value="Hand" />
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Foreground" Value="{DynamicResource SugarThemeOrange}" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseUp">
+                                                <i:InvokeCommandAction
+                                                    s:View.ActionTarget="{Binding DataContext, ElementName=History}"
+                                                    Command="{s:Action RemoveAction}"
+                                                    CommandParameter="{Binding .}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBlock>
+                                </StackPanel>
+                            </WrapPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </Grid>
         </Grid>
     </Grid>
