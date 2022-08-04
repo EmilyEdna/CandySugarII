@@ -62,8 +62,11 @@ namespace CandySugar.Controls.TemplateViewModel
                 case 7:
                     StaticResource.CreateControl<MusicView>(parentMethodInfo, parentDataContext, Container.Get<MusicViewModel>());
                     break;
-                default:
+                case 8:
                     StaticResource.CreateControl<AxgleView>(parentMethodInfo, parentDataContext, Container.Get<AxgleViewModel>());
+                    break;
+                default:
+                    StaticResource.CreateControl<MovieView>(parentMethodInfo, parentDataContext, Container.Get<MovieViewModel>());
                     break;
             }
         }

@@ -30,6 +30,7 @@ namespace CandySugar.Controls
             Bind<ImageViewModel>().ToSelf();
             Bind<MusicViewModel>().ToSelf();
             Bind<AxgleViewModel>().ToSelf();
+            Bind<MovieViewModel>().ToSelf();
         }
     }
 }

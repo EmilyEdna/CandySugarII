@@ -97,7 +97,7 @@
                                 Width="25"
                                 Height="25"
                                 RenderTransformOrigin="0.5,0.5"
-                                Source="{StaticResource i14}"
+                                Source="{StaticResource i16}"
                                 Stretch="UniformToFill">
                                 <Image.RenderTransform>
                                     <TransformGroup>

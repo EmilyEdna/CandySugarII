@@ -55,7 +55,7 @@ namespace CandySugar.Library
                 Name = "小说",
                 Show = true,
                 Query = "XS",
-                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img6.jpg"
+                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img6.png"
             });
             model.Add(new SilderModel
             {
@@ -64,7 +64,7 @@ namespace CandySugar.Library
                 Name = "轻小说",
                 Show = true,
                 Query = "LXS",
-                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img7.jpg"
+                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img7.png"
             });
             model.Add(new SilderModel
             {
@@ -73,7 +73,7 @@ namespace CandySugar.Library
                 Name = "动漫",
                 Show = true,
                 Query = "DM",
-                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img8.jpg"
+                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img8.png"
             });
             model.Add(new SilderModel
             {
@@ -82,7 +82,7 @@ namespace CandySugar.Library
                 Name = "H动漫",
                 Query = "HDM",
                 Show = CandySoft.Default.IsAdmin ? true : false,
-                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img9.jpg"
+                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img9.png"
             });
             model.Add(new SilderModel
             {
@@ -91,7 +91,7 @@ namespace CandySugar.Library
                 Name = "漫画",
                 Show = true,
                 Query = "MH",
-                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img10.jpg"
+                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img10.png"
             });
             model.Add(new SilderModel
             {
@@ -100,7 +100,7 @@ namespace CandySugar.Library
                 Name = "壁纸",
                 Show = true,
                 Query = "BZ",
-                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img11.jpg"
+                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img11.png"
             });
             model.Add(new SilderModel
             {
@@ -109,7 +109,7 @@ namespace CandySugar.Library
                 Name = "音乐",
                 Show = true,
                 Query = "YY",
-                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img12.jpg"
+                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img12.png"
             });
             model.Add(new SilderModel
             {
@@ -118,7 +118,16 @@ namespace CandySugar.Library
                 Name = "教育",
                 Query = "JY",
                 Show = CandySoft.Default.IsAdmin ? true : false,
-                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img13.jpg"
+                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img13.png"
+            });
+            model.Add(new SilderModel
+            {
+                FuncName = 9,
+                IconName = "MovieRoll",
+                Name = "电影",
+                Show = true,
+                Query = "DY",
+                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img14.png"
             });
             return model;
         }
@@ -359,9 +368,11 @@ namespace CandySugar.Library
         /// </summary>
         /// <param name="WebView"></param>
         /// <param name="Name"></param>
-        public static  void CreateWebView(WebView2 WebView, string Name)
+        public static async  void CreateWebView(WebView2 WebView, string Name)
         {
-            CreateWebView(WebView);
+            await WebView.EnsureCoreWebView2Async(null);
+            WebView.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
+            WebView.CoreWebView2.Settings.AreDevToolsEnabled = false;
             WebView.CoreWebView2.Navigate(new Uri($"{Environment.CurrentDirectory}\\Webs\\{Name}.html").AbsoluteUri);
         }
         /// <summary>

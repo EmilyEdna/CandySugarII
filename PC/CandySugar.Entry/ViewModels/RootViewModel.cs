@@ -87,8 +87,11 @@ namespace CandySugar.Entry.ViewModels
                     case "YY":
                         Ctrl = StaticResource.CreateControl<MusicView>(Container.Get<MusicViewModel>(), param.Values.FirstOrDefault().ToString());
                         break;
-                    default:
+                    case "JY":
                         Ctrl = StaticResource.CreateControl<AxgleView>(Container.Get<AxgleViewModel>(), param.Values.FirstOrDefault().ToString());
+                        break;
+                    default:
+                        Ctrl = StaticResource.CreateControl<MovieView>(Container.Get<MovieViewModel>(), param.Values.FirstOrDefault().ToString());
                         break;
                 }
             }
