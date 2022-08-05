@@ -23,6 +23,12 @@
         Size="22"
         Color="{StaticResource Red}" />
     <FontImage
+        x:Key="Mov"
+        FontFamily="Solid"
+        Glyph="{Static lib:FontIcon.ClapperboardPlay}"
+        Size="22"
+        Color="{StaticResource Red}" />
+    <FontImage
         x:Key="Sexlab"
         FontFamily="Solid"
         Glyph="{Static lib:FontIcon.Venus}"

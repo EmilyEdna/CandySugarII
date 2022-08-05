@@ -1,18 +1,18 @@
-using CandySugar.Controls.ViewModels.AnimeViewModels;
+using CandySugar.Controls.ViewModels.MovieVoewModels;
 
-namespace CandySugar.Controls.Views.AnimeViews;
+namespace CandySugar.Controls.Views.MovieViews;
 
-public partial class AnimePlayView : ContentPage
+public partial class MoviePlayView : ContentPage
 {
-    public AnimePlayView()
+    public MoviePlayView()
     {
         InitializeComponent();
     }
 
-    AnimePlayViewModel ViewModel;
+    MoviePlayViewModel ViewModel;
     private void LoadingEvent(object sender, EventArgs e)
     {
-        ViewModel = (AnimePlayViewModel)this.BindingContext;
+        ViewModel = (MoviePlayViewModel)this.BindingContext;
         HtmlWebViewSource Source = new()
         {
             Html = ViewModel.Content
@@ -29,6 +29,7 @@ public partial class AnimePlayView : ContentPage
         if (Player.IsLoaded)
             await Player.EvaluateJavaScriptAsync($"Play('{ViewModel.Route}')");
     }
+
     private void ExitingEvent(object sender, EventArgs e)
     {
         ViewModel.Show();

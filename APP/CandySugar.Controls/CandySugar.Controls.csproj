@@ -37,4 +37,16 @@
 	  </Reference>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="Views\MovieView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\MovieViews\MovieDetailView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\MovieViews\MoviePlayView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

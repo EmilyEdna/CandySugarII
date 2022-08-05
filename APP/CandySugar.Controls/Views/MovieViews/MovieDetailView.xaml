@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="CandySugar.Controls.Views.MovieViews.MovieDetailView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:sdk="clr-namespace:Sdk.Component.Movie.sdk.ViewModel.Response;assembly=Sdk.Component"
+    xmlns:vm="clr-namespace:CandySugar.Controls.ViewModels.MovieVoewModels"
+    Title="{Binding RootResult.Title}"
+    x:DataType="vm:MovieDetailViewModel">
+    <ContentPage.BindingContext>
+        <vm:MovieDetailViewModel />
+    </ContentPage.BindingContext>
+    <Grid RowDefinitions="Auto,*">
+        <Border
+            Stroke="{StaticResource Gray100Brush}"
+            StrokeShape="RoundRectangle 0"
+            StrokeThickness="1">
+            <Grid ColumnDefinitions="Auto,*">
+                <Border
+                    HeightRequest="130"
+                    StrokeShape="RoundRectangle 0"
+                    WidthRequest="90">
+                    <Image Aspect="Fill" Source="{Binding RootResult.Cover}" />
+                </Border>
+                <StackLayout Grid.Column="1">
+                    <Label
+                        Margin="10,0,0,0"
+                        Text="{Binding RootResult.Title}"
+                        TextColor="{StaticResource Red}" />
+                    <Label
+                        Margin="10,0,0,0"
+                        FontSize="11"
+                        Text="{Binding RootResult.ReleaseTime, StringFormat='时间：{0}'}"
+                        TextColor="{StaticResource Pink}" />
+                </StackLayout>
+            </Grid>
+        </Border>
+        <CollectionView
+            Grid.Row="1"
+            ItemSizingStrategy="MeasureAllItems"
+            ItemsSource="{Binding DetailResult, Mode=TwoWay}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="3" Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="sdk:MovieDetailResult">
+                    <Border
+                        Padding="5"
+                        Stroke="{StaticResource Gray100Brush}"
+                        StrokeThickness="1">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ViewAction, Source={RelativeSource AncestorType={x:Type vm:MovieDetailViewModel}}}" CommandParameter="{Binding Route}" />
+                        </Border.GestureRecognizers>
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Label
+                            Margin="10,0,0,0"
+                            FontSize="16"
+                            LineBreakMode="WordWrap"
+                            Text="{Binding Name}"
+                            TextColor="{StaticResource Red}" />
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <ActivityIndicator
+            Grid.RowSpan="2"
+            HeightRequest="20"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            WidthRequest="20"
+            Color="{StaticResource Violet}" />
+    </Grid>
+</ContentPage>

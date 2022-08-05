@@ -5,7 +5,6 @@ using Sdk.Component.Anime.sdk.ViewModel.Enums;
 using Sdk.Component.Anime.sdk.ViewModel.Request;
 using Sdk.Component.Anime.sdk.ViewModel.Response;
 
-
 namespace CandySugar.Controls.ViewModels
 {
     public class AnimeViewModel : BaseViewModel
@@ -100,6 +99,7 @@ namespace CandySugar.Controls.ViewModels
         });
         public DelegateCommand LoadMoreAction => new(() =>
         {
+            SetRefresh();
             if (Lock) return;
             this.Page += 1;
             if (this.Page > Total) return;

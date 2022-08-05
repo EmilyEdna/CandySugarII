@@ -128,6 +128,11 @@
             Icon="{StaticResource Books}"
             Route="LovelView" />
         <ShellContent
+            Title="电影"
+            ContentTemplate="{DataTemplate ctrl:MovieView}"
+            Icon="{StaticResource Mov}"
+            Route="MovieView" />
+        <ShellContent
             Title="动漫"
             ContentTemplate="{DataTemplate ctrl:AnimeView}"
             Icon="{StaticResource TV}"
