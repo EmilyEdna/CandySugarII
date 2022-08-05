@@ -43,7 +43,7 @@
             IsRefreshing="{Binding IsRefreshing}"
             RefreshColor="{StaticResource Pink}">
             <CollectionView
-                ItemSizingStrategy="MeasureFirstItem"
+                ItemSizingStrategy="MeasureAllItems"
                 ItemsSource="{Binding RootResult}"
                 RemainingItemsThreshold="0"
                 RemainingItemsThresholdReachedCommand="{Binding LoadMoreAction}">

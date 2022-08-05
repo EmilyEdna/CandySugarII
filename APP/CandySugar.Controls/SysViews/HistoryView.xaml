@@ -43,6 +43,12 @@
             Text="ACG历史" />
         <ToolbarItem
             Command="{Binding HandlerAction}"
+            CommandParameter="6"
+            Order="Secondary"
+            Priority="5"
+            Text="电影历史" />
+        <ToolbarItem
+            Command="{Binding HandlerAction}"
             CommandParameter="7"
             Order="Secondary"
             Priority="6"

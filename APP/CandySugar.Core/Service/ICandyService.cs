@@ -76,5 +76,11 @@ namespace CandySugar.Logic.Service
         void RemoveMusic(CandyMusic input);
         void ClearMusic();
         #endregion
+
+        #region 电影
+        void AddOrAlterMovie(CandyMovie input);
+        Pagination<CandyMovie> GetMovie(int PageIndex);
+        void RemoveMovie(CandyMovie input);
+        #endregion
     }
 }

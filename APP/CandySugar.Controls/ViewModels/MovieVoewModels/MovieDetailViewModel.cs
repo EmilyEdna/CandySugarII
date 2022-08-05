@@ -9,6 +9,12 @@ namespace CandySugar.Controls.ViewModels.MovieVoewModels
 {
     public class MovieDetailViewModel : BaseViewModel
     {
+        ICandyService CandyService;
+        public MovieDetailViewModel()
+        {
+            CandyService = CandyContainer.Instance.Resolve<ICandyService>();
+        }
+
         public override void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             RootResult = query["Query"] as MovieElementResult;
@@ -64,6 +70,7 @@ namespace CandySugar.Controls.ViewModels.MovieVoewModels
                     return;
                 }
                 Navigation(result.PlayResult.Route);
+                Logic(result.PlayResult.Route);
             }
             catch (Exception ex)
             {
@@ -72,7 +79,16 @@ namespace CandySugar.Controls.ViewModels.MovieVoewModels
         }
         async void Navigation(string input)
         {
-            await Shell.Current.GoToAsync(nameof(MoviePlayView), new Dictionary<string, object> { { "Key", input }});
+            await Shell.Current.GoToAsync(nameof(MoviePlayView), new Dictionary<string, object> { { "Key", input } });
+        }
+        void Logic(string input)
+        {
+            CandyService.AddOrAlterMovie(new CandyMovie
+            {
+                Title = RootResult.Title,
+                Cover = RootResult.Cover,
+                Route = input
+            });
         }
         #endregion
 

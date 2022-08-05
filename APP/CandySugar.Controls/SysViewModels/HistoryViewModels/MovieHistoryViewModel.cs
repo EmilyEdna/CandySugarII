@@ -1,12 +1,11 @@
-﻿using CandySugar.Controls.Views.HnimeViews;
-using Sdk.Component.Anime.sdk;
+﻿using CandySugar.Controls.Views.MovieViews;
 
 namespace CandySugar.Controls.SysViewModels.HistoryViewModels
 {
-    public class HnimeHistoryViewModel: BaseViewModel
+    public class MovieHistoryViewModel : BaseViewModel
     {
         ICandyService CandyService;
-        public HnimeHistoryViewModel()
+        public MovieHistoryViewModel()
         {
             this.Page = 1;
             CandyService = CandyContainer.Instance.Resolve<ICandyService>();
@@ -14,8 +13,8 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
         }
 
         #region 属性
-        ObservableCollection<CandyHnime> _Root;
-        public ObservableCollection<CandyHnime> Root
+        ObservableCollection<CandyMovie> _Root;
+        public ObservableCollection<CandyMovie> Root
         {
             get => _Root;
             set => SetProperty(ref _Root, value);
@@ -25,10 +24,10 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
         #region 方法
         void Query()
         {
-            var result = CandyService.GetHnime(this.Page);
+            var result = CandyService.GetMovie(this.Page);
             Total = result.Total;
             if (Root == null)
-                Root = new ObservableCollection<CandyHnime>(result.Result);
+                Root = new ObservableCollection<CandyMovie>(result.Result);
             else
                 result.Result.ForEach(item =>
                 {
@@ -37,19 +36,19 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
         }
         async void Navigation(string input)
         {
-            await Shell.Current.GoToAsync(nameof(HnimePlayView), new Dictionary<string, object> { { "Key", input } });
+            await Shell.Current.GoToAsync(nameof(MoviePlayView), new Dictionary<string, object> { { "Key", input } });
         }
-        void Remove(CandyHnime input)
+        void Remove(CandyMovie input)
         {
-            StaticResource.PopComfirm("确认删除", nameof(HnimeHistoryViewModel));
-            MessagingCenter.Subscribe<ComfirmViewModel, bool>(this, nameof(HnimeHistoryViewModel), (sender, args) =>
+            StaticResource.PopComfirm("确认删除", nameof(MovieHistoryViewModel));
+            MessagingCenter.Subscribe<ComfirmViewModel, bool>(this, nameof(MovieHistoryViewModel), (sender, args) =>
             {
                 if (args == true)
                 {
-                    CandyService.RemoveHnime(input);
+                    CandyService.RemoveMovie(input);
                     var temp = Root.ToList();
                     temp.RemoveAll(t => t.CandyId == input.CandyId);
-                    Root = new ObservableCollection<CandyHnime>(temp);
+                    Root = new ObservableCollection<CandyMovie>(temp);
                 }
             });
         }
@@ -63,12 +62,12 @@ namespace CandySugar.Controls.SysViewModels.HistoryViewModels
             Query();
         });
 
-        public DelegateCommand<CandyHnime> ViewAction => new(input =>
+        public DelegateCommand<CandyMovie> ViewAction => new(input =>
         {
             Navigation(input.Route);
         });
 
-        public DelegateCommand<CandyHnime> RemoveAction => new(input => Remove(input));
+        public DelegateCommand<CandyMovie> RemoveAction => new(input => Remove(input));
         #endregion
     }
 }

@@ -209,7 +209,7 @@ namespace CandySugar.Logic.Service
         public void AddOrAlterAxgle(CandyAxgle input)
         {
             var Data = base.Read<CandyAxgle>();
-            var CheckData = Data.FirstOrDefault(t => t.VId==input.VId);
+            var CheckData = Data.FirstOrDefault(t => t.VId == input.VId);
             if (CheckData != null)
                 base.Delete(CheckData);
             base.InsertSingle(input);
@@ -260,7 +260,7 @@ namespace CandySugar.Logic.Service
         }
         public List<CandyMusic> GetMusic()
         {
-            return base.Read<CandyMusic>().OrderByDescending(t => t.Span).ToList(); 
+            return base.Read<CandyMusic>().OrderByDescending(t => t.Span).ToList();
         }
         public void RemoveMusic(CandyMusic input)
         {
@@ -269,6 +269,30 @@ namespace CandySugar.Logic.Service
         public void ClearMusic()
         {
             base.Clear<CandyMusic>();
+        }
+        #endregion
+
+        #region 电影
+        public void AddOrAlterMovie(CandyMovie input)
+        {
+            var Data = base.Read<CandyMovie>();
+            var CheckData = Data.FirstOrDefault(t => t.Title == input.Title);
+            if (CheckData != null)
+                base.Delete(CheckData);
+            base.InsertSingle(input);
+        }
+        public Pagination<CandyMovie> GetMovie(int PageIndex)
+        {
+            var Data = base.Read<CandyMovie>().OrderByDescending(t => t.Span);
+            return new Pagination<CandyMovie>
+            {
+                Result = Data.Skip((PageIndex - 1) * 10).Take(10).ToList(),
+                Total = Math.Ceiling(Data.Count() / 10d)
+            };
+        }
+        public void RemoveMovie(CandyMovie input)
+        {
+            base.Delete(input);
         }
         #endregion
     }

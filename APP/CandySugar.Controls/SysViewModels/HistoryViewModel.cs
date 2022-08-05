@@ -47,6 +47,9 @@ namespace CandySugar.Controls.SysViewModels
                 case 5:
                     Contents = new HnimeHistoryView();
                     break;
+                case 6:
+                    Contents = new HnimeHistoryView();
+                    break;
                 case 7:
                     Contents = new ImageHistoryView();
                     break;
