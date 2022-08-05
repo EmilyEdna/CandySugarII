@@ -16,7 +16,7 @@ namespace CandySugar.Controls.ViewModels
         }
 
         #region 字段
-        string CategoryRoute=string.Empty;
+        string CategoryRoute = string.Empty;
         bool LoadMore = false;
         #endregion
 
@@ -95,7 +95,13 @@ namespace CandySugar.Controls.ViewModels
                 }).RunsAsync();
                 CloseBusy();
                 this.Total = result.RootResult.Total;
-                RootResult = new ObservableCollection<MovieElementResult>(result.RootResult.ElementResults);
+                if (LoadMore)
+                    result.RootResult.ElementResults.ForEach(item =>
+                    {
+                        RootResult.Add(item);
+                    });
+                else
+                    RootResult = new ObservableCollection<MovieElementResult>(result.RootResult.ElementResults);
             }
             catch (Exception ex)
             {
@@ -132,14 +138,20 @@ namespace CandySugar.Controls.ViewModels
                 }).RunsAsync();
                 CloseBusy();
                 this.Total = result.RootResult.Total;
-                RootResult = new ObservableCollection<MovieElementResult>(result.RootResult.ElementResults);
+                if (LoadMore)
+                    result.RootResult.ElementResults.ForEach(item =>
+                    {
+                        RootResult.Add(item);
+                    });
+                else
+                    RootResult = new ObservableCollection<MovieElementResult>(result.RootResult.ElementResults);
             }
             catch (Exception ex)
             {
                 StaticResource.PopToast(ex.Message);
             }
         }
-        async void InitDetail(MovieElementResult input) 
+        async void InitDetail(MovieElementResult input)
         {
             if (IsBusy) return;
             try
@@ -159,7 +171,7 @@ namespace CandySugar.Controls.ViewModels
                         Proxy = StaticResource.Proxy(),
                         ImplType = StaticResource.ImplType(),
                         MovieType = MovieEnum.Detail,
-                        Detail = new  MovieDetail
+                        Detail = new MovieDetail
                         {
                             Route = input.Route
                         }
@@ -173,9 +185,9 @@ namespace CandySugar.Controls.ViewModels
                 StaticResource.PopToast(ex.Message);
             }
         }
-        async void Navigation(MovieElementResult query,List<MovieDetailResult> input) 
+        async void Navigation(MovieElementResult query, List<MovieDetailResult> input)
         {
-            await Shell.Current.GoToAsync(nameof(MovieDetailView), new Dictionary<string, object> { { "Data", input },{ "Query",query} });
+            await Shell.Current.GoToAsync(nameof(MovieDetailView), new Dictionary<string, object> { { "Data", input }, { "Query", query } });
         }
         #endregion
 
@@ -204,7 +216,8 @@ namespace CandySugar.Controls.ViewModels
             if (KeyWord.IsNullOrEmpty()) InitCatagory();
             else InitSearch();
         });
-        public DelegateCommand<string> CategoryAction => new(input => {
+        public DelegateCommand<string> CategoryAction => new(input =>
+        {
             SetRefresh();
             this.Page = 1;
             this.CategoryRoute = input;

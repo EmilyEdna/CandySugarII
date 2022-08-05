@@ -49,11 +49,6 @@
                                     LineBreakMode="WordWrap"
                                     Text="{Binding Title}"
                                     TextColor="{StaticResource Red}" />
-                                <Label
-                                    Margin="10,0,0,0"
-                                    FontSize="11"
-                                    Text="{Binding ReleaseTime, StringFormat='时间：{0}'}"
-                                    TextColor="{StaticResource Pink}" />
                             </StackLayout>
                         </Grid>
                     </Border>
