@@ -196,6 +196,7 @@ namespace CandySugar.Controls.ViewModels
         {
             this.Page = 1;
             this.CategoryRoute = string.Empty;
+            this.LoadMore = false;
             InitSearch();
         });
         public DelegateCommand RefreshAction => new(() =>
