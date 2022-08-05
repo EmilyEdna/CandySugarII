@@ -7,7 +7,7 @@ namespace CandySugar.Controls.ViewModels.MovieVoewModels
     {
         public override void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            query["Key"].ToString();
+            Route= query["Key"].ToString();
             LoadMauiAsset();
             Hidden();
         }
