@@ -32,6 +32,7 @@
 		<None Remove="Assets\img8.png" />
 		<None Remove="Assets\img9.jpg" />
 		<None Remove="Assets\img9.png" />
+		<None Remove="Assets\water.ps" />
 		<None Remove="Assets\站酷快乐体2016修订版.ttf" />
 	</ItemGroup>
 
@@ -56,6 +57,7 @@
 		<Resource Include="Assets\img7.png" />
 		<Resource Include="Assets\img8.png" />
 		<Resource Include="Assets\img9.png" />
+		<Resource Include="Assets\water.ps" />
 		<Resource Include="Assets\站酷快乐体2016修订版.ttf" />
 	</ItemGroup>
 

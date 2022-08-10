@@ -1,4 +1,5 @@
 ﻿using CandySugar.Library.Template;
+using CandySugar.Library.TemplateEffects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,13 @@ namespace CandySugar.Entry.Views
     /// </summary>
     public partial class LoginView : CandyWindow
     {
+        WaterEffect waterEffect;
         public LoginView()
         {
             InitializeComponent();
+            waterEffect = new WaterEffect(100, 100);
+            login.Effect = waterEffect;
+            waterEffect.StartTime();
         }
 
         private void CloseEvent(object sender, MouseButtonEventArgs e)
@@ -36,6 +41,12 @@ namespace CandySugar.Entry.Views
             {
                 DragMove();
             }
+        }
+
+        private void MouseEvent(object sender, MouseButtonEventArgs e)
+        {
+            Point point = Mouse.GetPosition(e.Source as FrameworkElement);//WPF方法
+            waterEffect.Drop((float)(point.X / login.ActualWidth), (float)(point.Y / login.ActualHeight));//只在图片的中心触发波纹效果
         }
     }
 }

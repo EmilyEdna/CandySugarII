@@ -20,7 +20,7 @@
     <lib:CandyWindow.InputBindings>
         <KeyBinding Key="Enter" Command="{s:Action LoginAction}" />
     </lib:CandyWindow.InputBindings>
-    <Grid MouseMove="MoveEvent">
+    <Grid MouseMove="MoveEvent" MouseLeftButtonDown="MouseEvent">
         <Grid.RowDefinitions>
             <RowDefinition Height=".5*" />
             <RowDefinition Height=".5*" />
