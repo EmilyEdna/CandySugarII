@@ -10,14 +10,17 @@
     NavigationPage.HasNavigationBar="False">
     <VerticalStackLayout>
         <StackLayout Background="{StaticResource Pink}" HeightRequest="60">
-            <Border HeightRequest="60">
+            <Border
+                BackgroundColor="{StaticResource Trans}"
+                HeightRequest="60"
+                StrokeThickness="0">
                 <Label
-                    BackgroundColor="#00FFFFFF"
+                    BackgroundColor="{StaticResource Trans}"
                     FontAttributes="Bold"
                     FontSize="18"
                     HorizontalOptions="Center"
                     Text="欢迎使用CandySugar手机版"
-                    TextColor="White"
+                    TextColor="{StaticResource White}"
                     VerticalOptions="Center" />
             </Border>
         </StackLayout>
@@ -81,7 +84,7 @@
                         Placeholder="请输入账号"
                         Text="{Binding Account, Mode=TwoWay}"
                         VerticalOptions="Center"
-                        WidthRequest="220" />
+                        WidthRequest="210" />
                 </HorizontalStackLayout>
             </Border>
         </StackLayout>
@@ -121,7 +124,7 @@
                         Placeholder="请输入密码"
                         Text="{Binding Pwd, Mode=TwoWay}"
                         VerticalOptions="Center"
-                        WidthRequest="220" />
+                        WidthRequest="210" />
                 </HorizontalStackLayout>
             </Border>
         </StackLayout>

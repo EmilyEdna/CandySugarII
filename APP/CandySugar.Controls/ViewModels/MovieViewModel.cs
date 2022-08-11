@@ -18,6 +18,7 @@ namespace CandySugar.Controls.ViewModels
         #region 字段
         string CategoryRoute = string.Empty;
         bool LoadMore = false;
+        int SearchId = 0;
         #endregion
 
         #region 属性
@@ -132,12 +133,14 @@ namespace CandySugar.Controls.ViewModels
                         Search = new MovieSearch
                         {
                             Page = this.Page,
-                            KeyWord = this.KeyWord
+                            KeyWord = this.KeyWord,
+                            SearchId= SearchId
                         }
                     };
                 }).RunsAsync();
                 CloseBusy();
                 this.Total = result.RootResult.Total;
+                this.SearchId= result.RootResult.SearchId;
                 if (LoadMore)
                     result.RootResult.ElementResults.ForEach(item =>
                     {
@@ -196,6 +199,7 @@ namespace CandySugar.Controls.ViewModels
         {
             this.Page = 1;
             this.CategoryRoute = string.Empty;
+            this.SearchId = 0;
             this.LoadMore = false;
             InitSearch();
         });
@@ -204,6 +208,7 @@ namespace CandySugar.Controls.ViewModels
             this.Page = 1;
             SetRefresh(false);
             this.LoadMore = false;
+            this.SearchId = 0;
             if (!KeyWord.IsNullOrEmpty()) InitSearch();
             else InitCatagory();
         });
@@ -221,6 +226,7 @@ namespace CandySugar.Controls.ViewModels
         {
             SetRefresh();
             this.Page = 1;
+            this.SearchId = 0;
             this.CategoryRoute = input;
             this.KeyWord = string.Empty;
             this.LoadMore = false;
