@@ -59,6 +59,7 @@ namespace CandySugar.Entry.ViewModels
                 StaticResource.PopToast("请填写正确的账户和密码！", true);
         });
         #endregion
+
         #region 方法
         void Init()
         {
