@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net6.0;net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
@@ -14,19 +14,11 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="CommunityToolkit.Maui" Version="1.1.0" />
-	  <PackageReference Include="HtmlAgilityPack" Version="1.11.43" />
-	  <PackageReference Include="JavaScriptEngineSwitcher.Jint" Version="3.19.0-preview" />
-	  <PackageReference Include="Mopups" Version="1.0.1" />
-	  <PackageReference Include="Prism.DryIoc.Maui" Version="8.1.228-beta" />
-	  <PackageReference Include="XExten.Advance" Version="1.2.4.2-preview" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\CandySugar.Core\CandySugar.Logic.csproj" />
+	  <ProjectReference Include="..\CandySugar.Logic\CandySugar.Logic.csproj" />
 	</ItemGroup>
 
 </Project>
