@@ -13,7 +13,8 @@ namespace CandySugar.Controls.ViewModels.AxgleViewModels
     {
         public override void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            CrossDeviceOrientation.Current.LockOrientation(DeviceOrientations.Landscape);
+            //CrossDeviceOrientation.Current.LockOrientation(DeviceOrientations.Landscape);
+            ICrossHand.Instance.RegistEvent();
             ICrossScreen.ScreenState.HiddenStatusBar();
             Route = HttpUtility.UrlDecode(query["Key"].ToString());
         }

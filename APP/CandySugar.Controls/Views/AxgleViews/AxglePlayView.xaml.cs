@@ -13,6 +13,7 @@ public partial class AxglePlayView : ContentPage
     private void BackEvent(object sender, EventArgs e)
     {
         CrossDeviceOrientation.Current.LockOrientation(DeviceOrientations.Portrait);
+        ICrossHand.Instance.UnRegistEvent();
         ICrossScreen.ScreenState.ShowStatusBar();
     }
 

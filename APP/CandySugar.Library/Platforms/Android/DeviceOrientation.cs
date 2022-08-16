@@ -103,7 +103,7 @@ namespace CandySugar.Library.Platforms.Android
             });
         }
 
-        private ScreenOrientation Convert(DeviceOrientations orientation)
+        public ScreenOrientation Convert(DeviceOrientations orientation)
         {
             switch (orientation)
             {
