@@ -10,8 +10,7 @@ namespace CandySugar.Controls.ViewModels.ImageViewModels
 
         public override void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            //CrossDeviceOrientation.Current.LockOrientation(DeviceOrientations.Landscape);
-            ICrossHand.Instance.RegistEvent();
+            CrossDeviceOrientation.Current.LockOrientation(DeviceOrientations.Landscape);
             ICrossScreen.ScreenState.HiddenStatusBar();
             Route = HttpUtility.UrlDecode(query["Key"].ToString());
         }

@@ -39,13 +39,11 @@ namespace CandySugar.Controls.ViewModels.AnimeViewModels
         public void Show()
         {
             CrossDeviceOrientation.Current.LockOrientation(DeviceOrientations.Portrait);
-            ICrossHand.Instance.UnRegistEvent();
             ICrossScreen.ScreenState.ShowStatusBar();
         }
         public void Hidden()
         {
-            //CrossDeviceOrientation.Current.LockOrientation(DeviceOrientations.Landscape);
-            ICrossHand.Instance.RegistEvent();
+            CrossDeviceOrientation.Current.LockOrientation(DeviceOrientations.Landscape);
             ICrossScreen.ScreenState.HiddenStatusBar();
         }
         #endregion
