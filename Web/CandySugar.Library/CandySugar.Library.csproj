@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Furion" Version="4.2.5" />
+		<PackageReference Include="HtmlAgilityPack" Version="1.11.43" />
+		<PackageReference Include="JavaScriptEngineSwitcher.Jint" Version="3.19.0-preview" />
+		<PackageReference Include="SqlSugarCore" Version="5.1.2.2" />
+		<PackageReference Include="XExten.Advance" Version="1.2.4.2-preview" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="Sdk.Component">
+	    <HintPath>..\..\Lib\Sdk.Component.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Sdk.Core">
+	    <HintPath>..\..\Lib\Sdk.Core.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+</Project>
