@@ -1,4 +1,6 @@
-﻿using CandySugar.Library.ViewModel.SysDto;
+﻿using CandySugar.Library.Entity;
+using CandySugar.Library.ViewModel;
+using CandySugar.Library.ViewModel.SysDto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +13,6 @@ namespace CandySugar.Library.Logic.IService
     {
         Task<bool> UserRegist(UserRegistDto input);
         Task<bool> UserLogin(UserLoginDto input);
+        Task<PageOutDto<List<UserEntity>>> GetUser(GetUserDto input);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sdk.Component.Novel.sdk.ViewModel.Response;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace CandySugar.Library.Logic.IService
 {
     public interface INovelService
     {
-        Task<List<object>> Init();
+        Task<List<NovelInitCategoryResult>> Init();
     }
 }

@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Sdk.Component.Novel.sdk.ViewModel.Response;
 
 namespace CandySugar.Library.Logic.Service
 {
     public class NovelService : DbContext, INovelService, IScoped
     {
-        public async Task<List<object>> Init()
+        public async Task<List<NovelInitCategoryResult>> Init()
         {
             try
             {
@@ -27,9 +28,9 @@ namespace CandySugar.Library.Logic.Service
                             NovelType = NovelEnum.Init,
                         };
                     }).RunsAsync();
-                return null;
+                return data.CateInitResults;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }

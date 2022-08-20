@@ -1,6 +1,7 @@
 ﻿using CandySugar.Library.Logic.IService;
 using Furion.DynamicApiController;
 using Microsoft.AspNetCore.Mvc;
+using Sdk.Component.Novel.sdk.ViewModel.Response;
 
 namespace CandySugar.Entry.Contollers
 {
@@ -13,7 +14,7 @@ namespace CandySugar.Entry.Contollers
             this.NovelService = NovelService;
         }
         [HttpGet]
-        public async Task<List<object>> Init() => await NovelService.Init();
+        public async Task<List<NovelInitCategoryResult>> Init() => await NovelService.Init();
 
 
     }

@@ -7,6 +7,8 @@ namespace CandySugar.Entry
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCorsAccessor();
+
             services.AddControllers().AddNewtonsoftJson(opt =>
             {
                 opt.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
@@ -22,7 +24,7 @@ namespace CandySugar.Entry
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseCorsAccessor();
             app.UseInject(string.Empty);
 
             DbContext.Instance.InitTables();
