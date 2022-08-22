@@ -1,14 +1,12 @@
-﻿using Sdk.Component.Novel.sdk.ViewModel.Response;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CandySugar.Library.Entity.Novel;
+using CandySugar.Library.ViewModel;
 
 namespace CandySugar.Library.Logic.IService
 {
     public interface INovelService
     {
-        Task<List<NovelInitCategoryResult>> Init();
+        Task<List<NovelInitEntity>> Init();
+        Task<List<NovelSearchEntity>> Search(string input);
+        Task<PageOutDto<List<NovelCategoryEntity>>> Category(string input, int page);
     }
 }

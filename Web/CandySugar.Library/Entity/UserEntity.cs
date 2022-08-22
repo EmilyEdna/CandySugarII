@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace CandySugar.Library.Entity
 {
-    [SugarTable("UserEntity")]
     public class UserEntity : BaseEntity
     {
         public string UserName { get; set; }    

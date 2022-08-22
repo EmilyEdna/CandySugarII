@@ -1,7 +1,9 @@
-﻿using CandySugar.Library.Logic.IService;
+﻿using CandySugar.Library.Entity.Novel;
+using CandySugar.Library.Logic.IService;
+using CandySugar.Library.ViewModel;
 using Furion.DynamicApiController;
 using Microsoft.AspNetCore.Mvc;
-using Sdk.Component.Novel.sdk.ViewModel.Response;
+using System.Web;
 
 namespace CandySugar.Entry.Contollers
 {
@@ -14,8 +16,10 @@ namespace CandySugar.Entry.Contollers
             this.NovelService = NovelService;
         }
         [HttpGet]
-        public async Task<List<NovelInitCategoryResult>> Init() => await NovelService.Init();
-
-
+        public async Task<List<NovelInitEntity>> Init() => await NovelService.Init();
+        [HttpGet]
+        public async Task<List<NovelSearchEntity>> Search(string input) => await NovelService.Search(input);
+        [HttpGet]
+        public async Task<PageOutDto<List<NovelCategoryEntity>>> Category(string input, int page) => await NovelService.Category(HttpUtility.UrlDecode(input), page);
     }
 }
