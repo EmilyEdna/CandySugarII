@@ -22,5 +22,7 @@ namespace CandySugar.Entry.Contollers
         public async Task<bool> UserRegist(UserRegistDto input) => await SysService.UserRegist(input);
         [HttpPost]
         public async Task<PageOutDto<List<UserEntity>>> GetUser(GetUserDto input) => await SysService.GetUser(input);
+        [HttpPost]
+        public async Task<bool> RemoveUser(List<Guid> input) => await SysService.RemoveUser(input);
     }
 }

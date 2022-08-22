@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sdk.Component.Novel.sdk.ViewModel.Response;
+using Furion.FriendlyException;
 
 namespace CandySugar.Library.Logic.Service
 {
@@ -32,7 +33,7 @@ namespace CandySugar.Library.Logic.Service
             }
             catch (Exception ex)
             {
-                throw;
+                throw Oops.Oh(ex.Message);
             }
         }
     }

@@ -3,6 +3,7 @@ using CandySugar.Library.Logic.IService;
 using CandySugar.Library.ViewModel;
 using CandySugar.Library.ViewModel.SysDto;
 using Furion.DependencyInjection;
+using Org.BouncyCastle.Asn1.X509;
 using Sdk.Core;
 using SqlSugar;
 using System;
@@ -18,7 +19,7 @@ namespace CandySugar.Library.Logic.Service
     {
         public async Task<PageOutDto<List<UserEntity>>> GetUser(GetUserDto input)
         {
-            RefAsync<int> total =0;
+            RefAsync<int> total = 0;
             var data = await Scope().Queryable<UserEntity>()
                    .Where(t => t.UserName.Contains(input.UserName))
                    .ToPageListAsync(input.PageIndex, input.PageSize, total);
@@ -50,6 +51,11 @@ namespace CandySugar.Library.Logic.Service
             var target = input.ToMapest<UserEntity>();
             target.Status = 1;
             return (await Scope().Insertable(target).CallEntityMethod(t => t.Create()).ExecuteCommandAsync()) > 0;
+        }
+
+        public async Task<bool> RemoveUser(List<Guid> input)
+        {
+            return (await Scope().Deleteable<UserEntity>(t => input.Contains(t.Id)).ExecuteCommandAsync()) > 0;
         }
     }
 }
