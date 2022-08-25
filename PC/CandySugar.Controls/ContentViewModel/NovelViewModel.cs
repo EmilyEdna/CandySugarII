@@ -140,7 +140,7 @@ namespace CandySugar.Controls.ContentViewModel
         #region Override
         protected override void OnViewLoaded()
         {
-            InitNovel();
+            Task.Run(() => InitNovel());
         }
         #endregion
 
