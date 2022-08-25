@@ -3,6 +3,8 @@ using CandySugar.Library.Logic.IService;
 using CandySugar.Library.ViewModel;
 using Furion.DependencyInjection;
 using Furion.FriendlyException;
+using NStandard;
+using Polly.Caching;
 using Sdk.Component.Novel.sdk;
 using Sdk.Component.Novel.sdk.ViewModel;
 using Sdk.Component.Novel.sdk.ViewModel.Enums;
@@ -100,7 +102,7 @@ namespace CandySugar.Library.Logic.Service
                     };
                 }).RunsAsync();
                 NovelCategoryKeyEntity res = await Scope().Queryable<NovelCategoryKeyEntity>().Where(t => t.Key == input).FirstAsync();
-                if (data.CategoryResult != null&& page<=data.CategoryResult.Total)
+                if (data.CategoryResult != null && page <= data.CategoryResult.Total)
                 {
                     if (res != null)
                         await Scope().Updateable<NovelCategoryKeyEntity>().SetColumns(t => t.Current == page).Where(t => t.Id == res.Id).ExecuteCommandAsync();
@@ -123,6 +125,56 @@ namespace CandySugar.Library.Logic.Service
             catch (Exception ex)
             {
                 throw Oops.Oh(ex.Message);
+            }
+        }
+        public async Task<NovelDetailEntity> Detail(string input, int page)
+        {
+            try
+            {
+                var key = await Scope().Queryable<NovelDetailKeyEntity>().Where(t => t.Key == input && t.Current >= page).FirstAsync();
+                if (key != null)
+                {
+                    var model = await Scope().Queryable<NovelDetailEntity>().Where(t => t.KeyId == key.Id).Includes(t => t.Chapter).FirstAsync();
+                    return model;
+                }
+
+                var data = await NovelFactory.Novel(opt =>
+                {
+                    opt.RequestParam = new Input
+                    {
+                        ImplType = SdkImpl.Multi,
+                        NovelType = NovelEnum.Detail,
+                        Detail = new NovelDetail
+                        {
+                            Page = page,
+                            DetailRoute = input
+                        }
+                    };
+                }).RunsAsync();
+
+                NovelDetailKeyEntity res = await Scope().Queryable<NovelDetailKeyEntity>().Where(t => t.Key == input).FirstAsync();
+                if (res != null)
+                    await Scope().Updateable<NovelDetailKeyEntity>().SetColumns(t => t.Current == page).Where(t => t.Id == res.Id).ExecuteCommandAsync();
+                else
+                    res = await Scope().Insertable(new NovelDetailKeyEntity { Key = input, Total = data.DetailResult.Total, Current = page }).CallEntityMethod(t => t.Create()).ExecuteReturnEntityAsync();
+
+                var detail = data.DetailResult.ToMapest<NovelDetailEntity>();
+                var temp = await Scope().Queryable<NovelDetailEntity>().Where(t => t.BookName == detail.BookName && t.Author == detail.Author).FirstAsync();
+                if (temp == null)
+                    temp = await Scope().Insertable(detail).CallEntityMethod(t => t.SetKeyCreate(res.Id)).ExecuteReturnEntityAsync();
+                else
+                    await Scope().Updateable<NovelDetailEntity>().SetColumns(t => t.Total == detail.Total)
+                        .SetColumns(t => t.LastUpdateTime == detail.LastUpdateTime)
+                        .Where(t => t.Id == detail.Id).ExecuteCommandAsync();
+
+                await Scope().Insertable(detail.Chapter).CallEntityMethod(t => t.SetNavCreate(temp.Id)).ExecuteCommandAsync();
+
+                return detail;
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }

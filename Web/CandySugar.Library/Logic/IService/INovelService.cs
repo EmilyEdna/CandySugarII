@@ -8,5 +8,6 @@ namespace CandySugar.Library.Logic.IService
         Task<List<NovelInitEntity>> Init();
         Task<List<NovelSearchEntity>> Search(string input);
         Task<PageOutDto<List<NovelCategoryEntity>>> Category(string input, int page);
+        Task<NovelDetailEntity> Detail(string input, int page);
     }
 }

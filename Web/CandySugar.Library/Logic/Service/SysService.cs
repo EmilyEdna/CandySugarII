@@ -35,7 +35,7 @@ namespace CandySugar.Library.Logic.Service
             var data = await Scope().Queryable<UserEntity>()
                  .Where(t => t.UserName.Contains(input.Account) || t.Email.Contains(input.Account))
                  .Where(t => t.Password == input.Password)
-                 .Where(t => t.Status == 1)
+                 .Where(t => t.Status==true)
                  .FirstAsync();
             if (data != null)
                 return SdkLicense.Register(new SdkLicenseModel
@@ -49,13 +49,18 @@ namespace CandySugar.Library.Logic.Service
         public async Task<bool> UserRegist(UserRegistDto input)
         {
             var target = input.ToMapest<UserEntity>();
-            target.Status = 1;
+            target.Status = true;
             return (await Scope().Insertable(target).CallEntityMethod(t => t.Create()).ExecuteCommandAsync()) > 0;
         }
 
         public async Task<bool> RemoveUser(List<Guid> input)
         {
             return (await Scope().Deleteable<UserEntity>(t => input.Contains(t.Id)).ExecuteCommandAsync()) > 0;
+        }
+
+        public async Task<bool> UserStatus(Guid Id, bool Status)
+        {
+            return (await Scope().Updateable<UserEntity>().SetColumns(t => t.Status == Status).Where(t => t.Id == Id).ExecuteCommandAsync()) > 0;
         }
     }
 }

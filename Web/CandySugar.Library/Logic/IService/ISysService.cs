@@ -15,5 +15,6 @@ namespace CandySugar.Library.Logic.IService
         Task<bool> UserLogin(UserLoginDto input);
         Task<PageOutDto<List<UserEntity>>> GetUser(GetUserDto input);
         Task<bool> RemoveUser(List<Guid> input);
+        Task<bool> UserStatus(Guid Id, bool Status);
     }
 }
