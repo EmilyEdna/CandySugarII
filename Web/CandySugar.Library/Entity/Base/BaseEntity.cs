@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SqlSugar;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace CandySugar.Library.Entity.Base
 {
     public class BaseEntity
     {
+        [SugarColumn(IsPrimaryKey =true)]
         public Guid Id { get; set; }
         public DateTime Span { get; set; }
         public void Create()

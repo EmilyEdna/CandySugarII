@@ -23,5 +23,7 @@ namespace CandySugar.Entry.Contollers
         public async Task<PageOutDto<List<NovelCategoryEntity>>> Category(string input, int page) => await NovelService.Category(HttpUtility.UrlDecode(input), page);
         [HttpGet]
         public async Task<NovelDetailEntity> Detail(string input, int page) => await NovelService.Detail(HttpUtility.UrlDecode(input), page);
+        [HttpGet]
+        public async Task<NovelContentEntity> Content(string input) => await NovelService.Content(input);
     }
 }

@@ -3,6 +3,7 @@ using CandySugar.Library.Logic.IService;
 using CandySugar.Library.ViewModel;
 using Furion.DependencyInjection;
 using Furion.FriendlyException;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using NStandard;
 using Polly.Caching;
 using Sdk.Component.Novel.sdk;
@@ -159,22 +160,52 @@ namespace CandySugar.Library.Logic.Service
                     res = await Scope().Insertable(new NovelDetailKeyEntity { Key = input, Total = data.DetailResult.Total, Current = page }).CallEntityMethod(t => t.Create()).ExecuteReturnEntityAsync();
 
                 var detail = data.DetailResult.ToMapest<NovelDetailEntity>();
+                var chapter = data.DetailResult.ElementResults.ToMapest<List<NovelChapterEntity>>();
                 var temp = await Scope().Queryable<NovelDetailEntity>().Where(t => t.BookName == detail.BookName && t.Author == detail.Author).FirstAsync();
                 if (temp == null)
                     temp = await Scope().Insertable(detail).CallEntityMethod(t => t.SetKeyCreate(res.Id)).ExecuteReturnEntityAsync();
                 else
                     await Scope().Updateable<NovelDetailEntity>().SetColumns(t => t.Total == detail.Total)
                         .SetColumns(t => t.LastUpdateTime == detail.LastUpdateTime)
-                        .Where(t => t.Id == detail.Id).ExecuteCommandAsync();
+                        .Where(t => t.Id == temp.Id).ExecuteCommandAsync();
 
-                await Scope().Insertable(detail.Chapter).CallEntityMethod(t => t.SetNavCreate(temp.Id)).ExecuteCommandAsync();
-
+                await Scope().Insertable(chapter).CallEntityMethod(t => t.SetNavCreate(temp.Id)).ExecuteCommandAsync();
+                detail.Chapter = chapter;
                 return detail;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw Oops.Oh(ex.Message);
+            }
+        }
+        public async Task<NovelContentEntity> Content(string input)
+        {
+            try
+            {
+              var res = await Scope().Queryable<NovelContentEntity>()
+                    .Where(t => t.NextChapter.Contains(input) || t.NextPage.Contains(input) || t.PreviousChapter.Contains(input) || t.PreviousPage.Contains(input))
+                    .FirstAsync();
+                if (res != null) return res;
+                var data = await NovelFactory.Novel(opt =>
+                {
+                    opt.RequestParam = new Input
+                    {
+                        ImplType = SdkImpl.Multi,
+                        NovelType = NovelEnum.View,
+                        View = new NovelView
+                        {
+                            Route = input
+                        }
+                    };
+                }).RunsAsync();
+                var model = data.ContentResult.ToMapest<NovelContentEntity>();
+                await Scope().Insertable(model).ExecuteCommandAsync();
+                return model;
+            }
+            catch (Exception ex)
+            {
+                throw Oops.Oh(ex.Message);
             }
         }
     }
