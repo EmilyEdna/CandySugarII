@@ -9,6 +9,7 @@ namespace CandySugar.Library.Entity.Novel
 {
     public class NovelContentEntity:BaseEntity
     {
+        public string Route { get; set; }
         public string PreviousPage { get; set; }
         
         public string NextPage { get; set; }

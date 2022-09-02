@@ -183,9 +183,9 @@ namespace CandySugar.Library.Logic.Service
         {
             try
             {
-              var res = await Scope().Queryable<NovelContentEntity>()
-                    .Where(t => t.NextChapter.Contains(input) || t.NextPage.Contains(input) || t.PreviousChapter.Contains(input) || t.PreviousPage.Contains(input))
-                    .FirstAsync();
+                var res = await Scope().Queryable<NovelContentEntity>()
+                      .Where(t => t.Route.Contains(input) || t.NextChapter.Contains(input) || t.NextPage.Contains(input) || t.PreviousChapter.Contains(input) || t.PreviousPage.Contains(input))
+                      .FirstAsync();
                 if (res != null) return res;
                 var data = await NovelFactory.Novel(opt =>
                 {
@@ -200,7 +200,8 @@ namespace CandySugar.Library.Logic.Service
                     };
                 }).RunsAsync();
                 var model = data.ContentResult.ToMapest<NovelContentEntity>();
-                await Scope().Insertable(model).ExecuteCommandAsync();
+                model.Route = input;
+                await Scope().Insertable(model).CallEntityMethod(t=>t.Create()).ExecuteCommandAsync();
                 return model;
             }
             catch (Exception ex)
