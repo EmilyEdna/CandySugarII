@@ -19,8 +19,8 @@
         </CollectionView.ItemsLayout>
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="model:CandyAnimeRoot">
-                <SwipeView>
-                    <SwipeView.RightItems>
+                <!--<SwipeView>
+                    <SwipeView.LeftItems>
                         <SwipeItems>
                             <SwipeItem
                                 Command="{Binding RemoveAction, Source={RelativeSource AncestorType={x:Type vm:AnimeHistoryViewModel}}}"
@@ -28,68 +28,85 @@
                                 IconImageSource="{StaticResource Del}"
                                 Text="删除" />
                         </SwipeItems>
-                    </SwipeView.RightItems>
-                    <Border
-                        Stroke="{StaticResource Gray100Brush}"
-                        StrokeShape="RoundRectangle 0"
-                        StrokeThickness="1">
-                        <Grid ColumnDefinitions="Auto,*">
-                            <Border
-                                HeightRequest="130"
-                                StrokeShape="RoundRectangle 0"
-                                WidthRequest="90">
-                                <Image Aspect="Fill" Source="{Binding Cover}" />
-                            </Border>
-                            <StackLayout Grid.Column="1">
+                    </SwipeView.LeftItems>-->
+                <Border
+                    Stroke="{StaticResource Gray100Brush}"
+                    StrokeShape="RoundRectangle 0"
+                    StrokeThickness="1">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Border
+                            HeightRequest="130"
+                            StrokeShape="RoundRectangle 0"
+                            WidthRequest="90">
+                            <Image Aspect="Fill" Source="{Binding Cover}" />
+                        </Border>
+                        <StackLayout Grid.Column="1">
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
                                 <Label
                                     Margin="10,0,0,0"
                                     Text="{Binding Name}"
                                     TextColor="{StaticResource Red}" />
                                 <Label
-                                    Margin="10,0,0,0"
-                                    FontSize="12"
-                                    Text="{Binding CollectName, StringFormat='继续看[{0}]'}"
-                                    TextColor="{StaticResource Red}">
+                                    Grid.Column="1"
+                                    Margin="0,0,10,0"
+                                    HorizontalOptions="End"
+                                    Text="删除"
+                                    TextColor="{StaticResource Violet}">
                                     <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding ViewAction, Source={RelativeSource AncestorType={x:Type vm:AnimeHistoryViewModel}}}" CommandParameter="{Binding .}" />
+                                        <TapGestureRecognizer Command="{Binding RemoveAction, Source={RelativeSource AncestorType={x:Type vm:AnimeHistoryViewModel}}}" CommandParameter="{Binding .}" />
                                     </Label.GestureRecognizers>
                                 </Label>
-                                <CollectionView
-                                    Margin="10,5,0,0"
-                                    ItemSizingStrategy="MeasureAllItems"
-                                    ItemsSource="{Binding Elements}">
-                                    <CollectionView.ItemsLayout>
-                                        <GridItemsLayout
-                                            HorizontalItemSpacing="5"
-                                            Orientation="Horizontal"
-                                            Span="3"
-                                            VerticalItemSpacing="5" />
-                                    </CollectionView.ItemsLayout>
-                                    <CollectionView.ItemTemplate>
-                                        <DataTemplate x:DataType="model:CandyAnimeElement">
-                                            <Border
-                                                Stroke="{StaticResource GreenBrush}"
-                                                StrokeShape="RoundRectangle 0"
-                                                StrokeThickness="1">
-                                                <Label
-                                                    FontSize="11"
-                                                    HorizontalOptions="Center"
-                                                    HorizontalTextAlignment="Center"
-                                                    Text="{Binding Name}"
-                                                    TextColor="{StaticResource Red}"
-                                                    VerticalTextAlignment="Center">
-                                                    <Label.GestureRecognizers>
-                                                        <TapGestureRecognizer Command="{Binding ContinueAtion, Source={RelativeSource AncestorType={x:Type vm:AnimeHistoryViewModel}}}" CommandParameter="{Binding .}" />
-                                                    </Label.GestureRecognizers>
-                                                </Label>
-                                            </Border>
-                                        </DataTemplate>
-                                    </CollectionView.ItemTemplate>
-                                </CollectionView>
-                            </StackLayout>
-                        </Grid>
-                    </Border>
-                </SwipeView>
+                            </Grid>
+                            <Label
+                                Margin="10,0,0,0"
+                                FontSize="12"
+                                Text="{Binding CollectName, StringFormat='继续看[{0}]'}"
+                                TextColor="{StaticResource Red}">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ViewAction, Source={RelativeSource AncestorType={x:Type vm:AnimeHistoryViewModel}}}" CommandParameter="{Binding .}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <CollectionView
+                                Margin="10,5,0,0"
+                                ItemSizingStrategy="MeasureAllItems"
+                                ItemsSource="{Binding Elements}">
+                                <CollectionView.ItemsLayout>
+                                    <GridItemsLayout
+                                        HorizontalItemSpacing="5"
+                                        Orientation="Horizontal"
+                                        Span="3"
+                                        VerticalItemSpacing="5" />
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="model:CandyAnimeElement">
+                                        <Border
+                                            Stroke="{StaticResource GreenBrush}"
+                                            StrokeShape="RoundRectangle 0"
+                                            StrokeThickness="1">
+                                            <Label
+                                                FontSize="11"
+                                                HorizontalOptions="Center"
+                                                HorizontalTextAlignment="Center"
+                                                Text="{Binding Name}"
+                                                TextColor="{StaticResource Red}"
+                                                VerticalTextAlignment="Center">
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding ContinueAtion, Source={RelativeSource AncestorType={x:Type vm:AnimeHistoryViewModel}}}" CommandParameter="{Binding .}" />
+                                                </Label.GestureRecognizers>
+                                            </Label>
+                                        </Border>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </StackLayout>
+                    </Grid>
+                </Border>
+                <!--</SwipeView>-->
             </DataTemplate>
         </CollectionView.ItemTemplate>
     </CollectionView>
