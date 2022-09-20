@@ -43,6 +43,7 @@
         <hc:LoadingCircle Foreground="{DynamicResource SugarThemeDefault}" Visibility="{Binding Loading, Converter={StaticResource ToShow}}" />
         <!--  主体内容  -->
         <Grid x:Name="StepOne" Visibility="{Binding StepOne, Converter={StaticResource ToShow}}">
+            <!--  线路一  -->
             <Grid
                 x:Name="RouteOne"
                 IsEnabled="True"
@@ -180,6 +181,7 @@
                     </hc:Pagination>
                 </Grid>
             </Grid>
+            <!--  线路二  -->
             <Grid
                 x:Name="RouteTwo"
                 IsEnabled="False"
