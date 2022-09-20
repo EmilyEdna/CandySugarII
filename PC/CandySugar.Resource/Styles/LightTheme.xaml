@@ -3,6 +3,7 @@
 
     <!--#region 颜色-->
     <Color x:Key="SugarThemePinkColor">#FFFFC0CB</Color>
+    <Color x:Key="SugarThemeDeepPinkColor">#FFFF9999</Color>
     <Color x:Key="SugarThemeAlisColor">#FFF0F8FF</Color>
     <Color x:Key="SugarThemeSmokeColor">#FFE6E6FA</Color>
     <Color x:Key="SugarThemeBlueColor">#FF10AEC2</Color>
@@ -16,6 +17,7 @@
 
     <!--#region 颜色画刷-->
     <SolidColorBrush x:Key="SugarThemePink">#FFFFC0CB</SolidColorBrush>
+    <SolidColorBrush x:Key="SugarThemeDeepPink">#FFFF9999</SolidColorBrush>
     <SolidColorBrush x:Key="SugarThemeAlis">#FFF0F8FF</SolidColorBrush>
     <SolidColorBrush x:Key="SugarThemeSmoke">#FFE6E6FA</SolidColorBrush>
     <SolidColorBrush x:Key="SugarThemeBlue">#FF10AEC2</SolidColorBrush>
