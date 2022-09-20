@@ -455,7 +455,7 @@
     <!--  单选框样式  -->
     <Style x:Key="RadioBtn" TargetType="{x:Type RadioButton}">
         <Setter Property="Foreground" Value="Black" />
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Margin" Value="0,0,10,10" />
         <Setter Property="Height" Value="25" />

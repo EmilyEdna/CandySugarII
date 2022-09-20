@@ -43,6 +43,8 @@ namespace CandySugar.Controls.ContentView
                 this.RouteTwo.Visibility = Visibility.Collapsed;
                 Model.Switch = true;
                 Model.InitAnime();
+                if (!Model.KeyWord.IsNullOrEmpty())
+                    Model.SearchAction(Model.KeyWord);
             }
             else
             {
@@ -52,6 +54,8 @@ namespace CandySugar.Controls.ContentView
                 this.RouteOne.Visibility = Visibility.Collapsed;
                 Model.Switch = false;
                 Model.InitAnime();
+                if (!Model.KeyWord.IsNullOrEmpty())
+                    Model.SearchAction(Model.KeyWord);
             }
         }
 
