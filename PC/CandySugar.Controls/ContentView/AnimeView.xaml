@@ -251,7 +251,130 @@
         <Grid
             x:Name="RouteTwo"
             IsEnabled="False"
-            Visibility="Collapsed" />
+            Visibility="Collapsed">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <StackPanel>
+                    <ListBox
+                        Margin="0,5,0,0"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        ItemsSource="{Binding InitResult.Letters}"
+                        Style="{StaticResource WrapPanelHorizontalListBox}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Margin="5,0,0,0" HorizontalAlignment="Left" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <RadioButton
+                                    s:View.ActionTarget="{Binding DataContext, ElementName=AnimeViewName}"
+                                    Command="{s:Action RadioAction}"
+                                    Content="{Binding .}"
+                                    GroupName="Letter"
+                                    Style="{DynamicResource RadioBtn}">
+                                    <RadioButton.CommandParameter>
+                                        <MultiBinding Converter="{StaticResource ToMulti}">
+                                            <Binding Path="GroupName" RelativeSource="{RelativeSource Mode=Self}" />
+                                            <Binding Path="Content" RelativeSource="{RelativeSource Mode=Self}" />
+                                        </MultiBinding>
+                                    </RadioButton.CommandParameter>
+                                </RadioButton>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <ListBox
+                        Background="Transparent"
+                        BorderThickness="0"
+                        ItemsSource="{Binding InitResult.Types}"
+                        Style="{StaticResource WrapPanelHorizontalListBox}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Margin="5,0,0,0" HorizontalAlignment="Left" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <RadioButton
+                                    s:View.ActionTarget="{Binding DataContext, ElementName=AnimeViewName}"
+                                    Command="{s:Action RadioAction}"
+                                    Content="{Binding .}"
+                                    GroupName="Types"
+                                    Style="{DynamicResource RadioBtn}">
+                                    <RadioButton.CommandParameter>
+                                        <MultiBinding Converter="{StaticResource ToMulti}">
+                                            <Binding Path="GroupName" RelativeSource="{RelativeSource Mode=Self}" />
+                                            <Binding Path="Content" RelativeSource="{RelativeSource Mode=Self}" />
+                                        </MultiBinding>
+                                    </RadioButton.CommandParameter>
+                                </RadioButton>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <ListBox
+                        Background="Transparent"
+                        BorderThickness="0"
+                        ItemsSource="{Binding InitResult.Years}"
+                        Style="{StaticResource WrapPanelHorizontalListBox}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Margin="5,0,0,0" HorizontalAlignment="Left" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <RadioButton
+                                    s:View.ActionTarget="{Binding DataContext, ElementName=AnimeViewName}"
+                                    Command="{s:Action RadioAction}"
+                                    Content="{Binding .}"
+                                    GroupName="Years"
+                                    Style="{DynamicResource RadioBtn}">
+                                    <RadioButton.CommandParameter>
+                                        <MultiBinding Converter="{StaticResource ToMulti}">
+                                            <Binding Path="GroupName" RelativeSource="{RelativeSource Mode=Self}" />
+                                            <Binding Path="Content" RelativeSource="{RelativeSource Mode=Self}" />
+                                        </MultiBinding>
+                                    </RadioButton.CommandParameter>
+                                </RadioButton>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <ListBox
+                        Background="Transparent"
+                        BorderThickness="0"
+                        ItemsSource="{Binding InitResult.Area}"
+                        Style="{StaticResource WrapPanelHorizontalListBox}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Margin="5,0,0,0" HorizontalAlignment="Left" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <RadioButton
+                                    s:View.ActionTarget="{Binding DataContext, ElementName=AnimeViewName}"
+                                    Command="{s:Action RadioAction}"
+                                    Content="{Binding .}"
+                                    GroupName="Areas"
+                                    Style="{DynamicResource RadioBtn}">
+                                    <RadioButton.CommandParameter>
+                                        <MultiBinding Converter="{StaticResource ToMulti}">
+                                            <Binding Path="GroupName" RelativeSource="{RelativeSource Mode=Self}" />
+                                            <Binding Path="Content" RelativeSource="{RelativeSource Mode=Self}" />
+                                        </MultiBinding>
+                                    </RadioButton.CommandParameter>
+                                </RadioButton>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </Grid>
+
+        </Grid>
         <lib:CandyFloatButton
             x:Name="FloatBtn"
             Width="50"

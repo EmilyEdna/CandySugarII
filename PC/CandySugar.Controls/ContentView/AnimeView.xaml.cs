@@ -34,12 +34,15 @@ namespace CandySugar.Controls.ContentView
 
         private void FloatBtnClickEvent(object sender, EventArgs e)
         {
+            var Model = (this.DataContext as AnimeViewModel);
             if (((MenuItem)sender).CommandParameter.AsString().Equals("1"))
             {
                 this.RouteOne.IsEnabled = true;
                 this.RouteOne.Visibility = Visibility.Visible;
                 this.RouteTwo.IsEnabled = false;
                 this.RouteTwo.Visibility = Visibility.Collapsed;
+                Model.Switch = true;
+                Model.InitAnime();
             }
             else
             {
@@ -47,6 +50,8 @@ namespace CandySugar.Controls.ContentView
                 this.RouteTwo.Visibility = Visibility.Visible;
                 this.RouteOne.IsEnabled = false;
                 this.RouteOne.Visibility = Visibility.Collapsed;
+                Model.Switch = false;
+                Model.InitAnime();
             }
         }
 

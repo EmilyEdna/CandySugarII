@@ -35,6 +35,7 @@ namespace CandySugar.Controls.ContentViewModel
             this.Chars = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z".Split(",").ToList();
             this.CandyAnime = Container.Get<ICandyAnime>();
             this.CategoryPage = 1;
+            this.Switch = false;
             this.StepOne = true;
             this.StepTwo = false;
             OnViewLoaded();
@@ -58,6 +59,12 @@ namespace CandySugar.Controls.ContentViewModel
         {
             get => _StepTwo;
             set => SetAndNotify(ref _StepTwo, value);
+        }
+        private bool _Switch;
+        public bool Switch
+        {
+            get => _Switch;
+            set => SetAndNotify(ref _Switch, value);
         }
         #endregion
 
@@ -119,7 +126,15 @@ namespace CandySugar.Controls.ContentViewModel
             get => _PlayResult;
             set => SetAndNotify(ref _PlayResult, value);
         }
-
+        /// <summary>
+        /// 初始化结果
+        /// </summary>
+        private AnimeInitResult _InitResult;
+        public AnimeInitResult InitResult
+        {
+            get => _InitResult;
+            set => SetAndNotify(ref _InitResult, value);
+        }
         #endregion
 
         #region Override
@@ -130,6 +145,10 @@ namespace CandySugar.Controls.ContentViewModel
         #endregion
 
         #region Action
+        public void RadioAction(Dictionary<object, object> input)
+        {
+            var m = input;
+        }
         public void SearchAction(string input)
         {
             this.KeyWord = input;
@@ -161,7 +180,7 @@ namespace CandySugar.Controls.ContentViewModel
         #endregion
 
         #region Method
-        private async void InitAnime()
+        public async void InitAnime()
         {
             this.Loading = true;
             await Task.Delay(CandySoft.Default.WaitSpan);
@@ -172,11 +191,13 @@ namespace CandySugar.Controls.ContentViewModel
                     CacheSpan = CandySoft.Default.Cache,
                     Proxy = StaticResource.Proxy(),
                     ImplType = StaticResource.ImplType(),
+                    SourceType= Switch? AnimeSourceEnum.SBDM: AnimeSourceEnum.YSJDM,
                     AnimeType = AnimeEnum.Init
                 };
             }).RunsAsync();
             this.Loading = false;
-            DayResult = new ObservableCollection<AnimeWeekDayIndexResult>(AnimeInitData.RecResults);
+            InitResult = AnimeInitData.InitResult;
+            DayResult = new ObservableCollection<AnimeWeekDayIndexResult>(AnimeInitData.RecResults??new List<AnimeWeekDayIndexResult>());
         }
         private async void InitSearch(string input)
         {

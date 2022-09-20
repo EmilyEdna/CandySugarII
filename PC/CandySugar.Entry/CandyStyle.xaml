@@ -452,6 +452,42 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <!--  单选框样式  -->
+    <Style x:Key="RadioBtn" TargetType="{x:Type RadioButton}">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Margin" Value="0,0,10,10" />
+        <Setter Property="Height" Value="25" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Border
+                        x:Name="fore"
+                        Background="White"
+                        BorderThickness="0"
+                        CornerRadius="2">
+                        <ContentPresenter
+                            x:Name="content"
+                            Margin="8,0,8,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Content="{TemplateBinding Content}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter TargetName="fore" Property="Background" Value="#2CCFA0" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="fore" Property="Background" Value="#FFC0CB" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <!--  输入框样式  -->
     <Style
         x:Key="CandyTextBoxStyle"
