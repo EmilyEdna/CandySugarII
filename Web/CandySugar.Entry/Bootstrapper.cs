@@ -15,7 +15,7 @@ namespace CandySugar.Entry
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCorsAccessor();
-
+            services.AddJwt<JwtHandler>(null, null, null,true);
             services.AddControllers().AddNewtonsoftJson(opt =>
             {
                 opt.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";

@@ -2,7 +2,10 @@
 using CandySugar.Library.Logic.IService;
 using CandySugar.Library.ViewModel;
 using CandySugar.Library.ViewModel.SysDto;
+using Furion.DataEncryption;
 using Furion.DynamicApiController;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CandySugar.Entry.Contollers
@@ -10,13 +13,15 @@ namespace CandySugar.Entry.Contollers
     /// <summary>
     /// 系统
     /// </summary>
-    [ApiDescriptionSettings("系统", Tag = "系统", SplitCamelCase = false), NonUnify, Route("/api/sys")]
+    [ApiDescriptionSettings("系统", Tag = "系统", SplitCamelCase = false), NonUnify, Route("/api/sys"), AllowAnonymous]
     public class SysApplication : IDynamicApiController
     {
         readonly ISysService SysService;
-        public SysApplication(ISysService SysService)
+        readonly IHttpContextAccessor HttpContext;
+        public SysApplication(ISysService SysService, IHttpContextAccessor HttpContext)
         {
             this.SysService = SysService;
+            this.HttpContext = HttpContext;
         }
         /// <summary>
         /// 登录
@@ -24,7 +29,23 @@ namespace CandySugar.Entry.Contollers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<bool> UserLogin(UserLoginDto input) => await SysService.UserLogin(input);
+        public async Task<bool> UserLogin(UserLoginDto input)
+        {
+            var result = await SysService.UserLogin(input);
+            if (result)
+            {
+                var accessToken = JWTEncryption.Encrypt(new Dictionary<string, object>()
+                {
+                    { "Account", input.Account },
+                    { "Password",input.Password }
+                });
+                var refreshToken = JWTEncryption.GenerateRefreshToken(accessToken);
+                HttpContext.HttpContext.Response.Headers["access-token"] = accessToken;
+                HttpContext.HttpContext.Response.Headers["x-access-token"] = refreshToken;
+                return true;
+            }
+            else return false;
+        }
         /// <summary>
         /// 注册
         /// </summary>
@@ -39,7 +60,11 @@ namespace CandySugar.Entry.Contollers
         /// <returns></returns>
         [HttpPost]
         public async Task<PageOutDto<List<UserEntity>>> GetUser(GetUserDto input) => await SysService.GetUser(input);
-        //删除
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<bool> RemoveUser(List<Guid> input) => await SysService.RemoveUser(input);
         /// <summary>
