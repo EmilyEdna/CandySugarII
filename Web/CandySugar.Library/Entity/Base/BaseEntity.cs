@@ -9,12 +9,14 @@ namespace CandySugar.Library.Entity.Base
 {
     public class BaseEntity
     {
-        [SugarColumn(IsPrimaryKey =true)]
+        [SugarColumn(IsPrimaryKey = true)]
         public Guid Id { get; set; }
         public DateTime Span { get; set; }
-        public void Create()
+
+        public void Create(bool AutoId = true)
         {
-            this.Id = Guid.NewGuid();
+            if (AutoId)
+                this.Id = Guid.NewGuid();
             this.Span = DateTime.Now;
         }
     }

@@ -36,9 +36,9 @@ namespace CandySugar.Entry
         public override Task<bool> PipelineAsync(AuthorizationHandlerContext context, DefaultHttpContext httpContext)
         {
             var auth = context.User.Claims.ToDictionary(t => t.Type, t => t.Value);
-            if (auth.ContainsKey("Account") && auth.ContainsKey("Password"))
+            if (auth.ContainsKey("Account") && auth.ContainsKey("UserId"))
             {
-                if (!auth["Account"].IsNullOrEmpty() && !auth["Password"].IsNullOrEmpty() && DateTime.Now <= SyncStatic.ConvertStamptime(auth["exp"]))
+                if (!auth["Account"].IsNullOrEmpty() && !auth["UserId"].IsNullOrEmpty() && DateTime.Now <= SyncStatic.ConvertStamptime(auth["exp"]))
                 {
                     SdkLicense.Register(new SdkLicenseModel
                     {

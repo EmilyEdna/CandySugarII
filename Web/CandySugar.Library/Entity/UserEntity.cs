@@ -1,10 +1,5 @@
 ﻿using CandySugar.Library.Entity.Base;
 using SqlSugar;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CandySugar.Library.Entity
 {
@@ -14,5 +9,14 @@ namespace CandySugar.Library.Entity
         public string Password { get; set; }
         public string Email { get; set; }
         public bool Status { get; set; }
+        [Navigate(NavigateType.OneToOne, nameof(Id))]
+        public UserAttachEntity Option { get; set; }
+    }
+    public class UserAttachEntity : BaseEntity
+    {
+        /// <summary>
+        /// 请求类型 1:Multi 2:Rest 3:RPC
+        /// </summary>
+        public int RequestType { get; set; }
     }
 }

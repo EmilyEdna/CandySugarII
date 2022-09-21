@@ -32,12 +32,12 @@ namespace CandySugar.Entry.Contollers
         public async Task<bool> UserLogin(UserLoginDto input)
         {
             var result = await SysService.UserLogin(input);
-            if (result)
+            if (result!=null)
             {
                 var accessToken = JWTEncryption.Encrypt(new Dictionary<string, object>()
                 {
-                    { "Account", input.Account },
-                    { "Password",input.Password }
+                    { "UserId",result.Id },
+                    { "Account", result.UserName }
                 });
                 var refreshToken = JWTEncryption.GenerateRefreshToken(accessToken);
                 HttpContext.HttpContext.Response.Headers["access-token"] = accessToken;
@@ -75,5 +75,12 @@ namespace CandySugar.Entry.Contollers
         /// <returns></returns>
         [HttpGet]
         public async Task<bool> UserStatus(Guid Id, bool Status) => await SysService.UserStatus(Id, Status);
+        /// <summary>
+        /// 用户设置
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<UserAttachDto> UserOption(UserAttachDto input) => await SysService.UserOption(input);
     }
 }
