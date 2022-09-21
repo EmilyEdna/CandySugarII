@@ -285,7 +285,7 @@ namespace CandySugar.Controls.ContentViewModel
                     Proxy = StaticResource.Proxy(),
                     ImplType = StaticResource.ImplType(),
                     AnimeType = AnimeEnum.Category,
-                    SourceType = Switch ? AnimeSourceEnum.SBDM : AnimeSourceEnum.YSJDM,
+                    SourceType = AnimeSourceEnum.YSJDM,
                     Category =  new AnimeCategory
                     {
 
