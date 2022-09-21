@@ -13,5 +13,6 @@ namespace CandySugar.Library.Logic.IService
     {
         Task<List<LovelInitEntity>> Init();
         Task<PageOutDto<List<LovelSearchEntity>>> Search(string input, int page);
+        Task<PageOutDto<List<LovelCategoryEntity>>> Category(string input, int page);
     }
 }

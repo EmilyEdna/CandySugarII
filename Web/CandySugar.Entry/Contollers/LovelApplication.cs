@@ -3,7 +3,7 @@ using CandySugar.Library.Logic.IService;
 using CandySugar.Library.ViewModel;
 using Furion.DynamicApiController;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Web;
 
 namespace CandySugar.Entry.Contollers
 {
@@ -32,5 +32,13 @@ namespace CandySugar.Entry.Contollers
         /// <returns></returns>
         [HttpGet]
         public async Task<PageOutDto<List<LovelSearchEntity>>> Search(string input, int page)=> await LovelService.Search(input,page);
+        /// <summary>
+        /// 分类
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<PageOutDto<List<LovelCategoryEntity>>> Category(string input, int page) => await LovelService.Category(HttpUtility.UrlDecode(input), page);
     }
 }

@@ -21,7 +21,6 @@ namespace CandySugar.Library.Entity
         /// <summary>
         /// 缓存时常 分钟
         /// </summary>
-        [SugarColumn(DefaultValue ="5")]
         public int Cache { get; set; }
     }
 }

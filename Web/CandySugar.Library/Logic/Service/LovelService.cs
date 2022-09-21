@@ -65,7 +65,7 @@ namespace CandySugar.Library.Logic.Service
                     {
                         LovelType = LovelEnum.Search,
                         ImplType = StaticDictionary.ImplType(),
-                        CacheSpan= StaticDictionary.Cache(),
+                        CacheSpan = StaticDictionary.Cache(),
                         Search = new LovelSearch
                         {
                             KeyWord = input,
@@ -98,10 +98,58 @@ namespace CandySugar.Library.Logic.Service
                 throw Oops.Oh(ex.Message);
             }
         }
-        //public async Task<bool> Category()
-        //{
+        public async Task<PageOutDto<List<LovelCategoryEntity>>> Category(string input, int page)
+        {
+            RefAsync<int> total = 0;
+            var model = await Scope().Queryable<LovelCategoryEntity>().Where(t => t.CategoryRoute == input).ToPageListAsync(page, 20, total);
+            if (model.Count > 0)
+                return new PageOutDto<List<LovelCategoryEntity>>
+                {
+                    Total = total,
+                    Data = model
+                };
 
-        //}
+            var data = await LovelFactory.Lovel(opt =>
+            {
+                opt.RequestParam = new Input
+                {
+                    LovelType = LovelEnum.Category,
+                    ImplType = StaticDictionary.ImplType(),
+                    CacheSpan = StaticDictionary.Cache(),
+                    Category = new LovelCategory
+                    {
+                        Route = input,
+                        Page = page
+                    }
+                };
+            }).RunsAsync();
+
+            if (data.CategoryResult.ElementResults.Count <= 0)
+            {
+                return new PageOutDto<List<LovelCategoryEntity>>
+                {
+                    Total = total,
+                    Data = model
+                };
+            }
+            var entity = data.CategoryResult.ElementResults.ToMapest<List<LovelCategoryEntity>>();
+            var bookName = Scope().Queryable<LovelCategoryEntity>().Where(t => t.CategoryRoute == input).Select(t => t.BookName).ToList();
+            entity = entity.Where(t => !bookName.Contains(t.BookName)).ToList();
+            if (entity.Count != 0)
+            {
+                entity.ForEach(item =>
+                {
+                    item.CategoryRoute = input;
+                });
+                await Scope().Insertable(entity).CallEntityMethod(t => t.Create(true)).ExecuteCommandAsync();
+            }
+            return new PageOutDto<List<LovelCategoryEntity>>
+            {
+                Total = bookName.Count + entity.Count,
+                Data = entity
+            };
+
+        }
         //public async Task<bool> Detail()
         //{
 
