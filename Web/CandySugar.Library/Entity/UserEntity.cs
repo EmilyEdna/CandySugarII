@@ -18,5 +18,10 @@ namespace CandySugar.Library.Entity
         /// 请求类型 1:Multi 2:Rest 3:RPC
         /// </summary>
         public int RequestType { get; set; }
+        /// <summary>
+        /// 缓存时常 分钟
+        /// </summary>
+        [SugarColumn(DefaultValue ="5")]
+        public int Cache { get; set; }
     }
 }

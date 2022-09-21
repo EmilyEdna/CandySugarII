@@ -18,5 +18,10 @@ namespace CandySugar.Library
             else if (UserAttachEntity.RequestType == 2) return SdkImpl.Rest;
             else return SdkImpl.RPC;
         }
+        public static int Cache()
+        {
+            if (UserAttachEntity == null) return 5;
+            return UserAttachEntity.Cache;
+        }
     }
 }

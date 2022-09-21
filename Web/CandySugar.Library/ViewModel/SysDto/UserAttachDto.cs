@@ -12,5 +12,9 @@ namespace CandySugar.Library.ViewModel.SysDto
         /// 请求类型 1:Multi 2:Reset 3:RPC
         /// </summary>
         public int RequestType { get; set; }
+        /// <summary>
+        /// 缓存时常 分钟
+        /// </summary>
+        public int Cache { get; set; }
     }
 }

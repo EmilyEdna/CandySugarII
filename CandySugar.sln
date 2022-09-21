@@ -45,11 +45,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "网页端", "网页端", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "启动项", "启动项", "{FA32986D-A721-4548-A906-4948D6DE2A1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CandySugar.Entry", "Web\CandySugar.Entry\CandySugar.Entry.csproj", "{9FA041FA-C1E9-4C3B-A7E5-82808FE8A37D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CandySugar.Entry", "Web\CandySugar.Entry\CandySugar.Entry.csproj", "{9FA041FA-C1E9-4C3B-A7E5-82808FE8A37D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "类库", "类库", "{631EE658-15B5-43AC-9E6D-71733CFC529C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CandySugar.Library", "Web\CandySugar.Library\CandySugar.Library.csproj", "{827FB11C-8C7B-4706-BF00-888291F66D4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CandySugar.Library", "Web\CandySugar.Library\CandySugar.Library.csproj", "{827FB11C-8C7B-4706-BF00-888291F66D4A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

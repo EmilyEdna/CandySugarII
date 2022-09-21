@@ -31,6 +31,7 @@ namespace CandySugar.Library.Logic.Service
                     opt.RequestParam = new Input
                     {
                         ImplType = StaticDictionary.ImplType(),
+                        CacheSpan = StaticDictionary.Cache(),
                         NovelType = NovelEnum.Init,
                     };
                 }).RunsAsync();
@@ -43,21 +44,19 @@ namespace CandySugar.Library.Logic.Service
                 throw Oops.Oh(ex.Message);
             }
         }
-        public async Task<List<NovelSearchEntity>> Search(string input)
+        public async Task<List<NovelSearchEntity>> Search(string input, bool Forced)
         {
             try
             {
-                var key = await Scope().Queryable<NovelSeachKeyEntity>().Where(t => t.Key == input).FirstAsync();
-                if (key != null)
-                {
-                    return await Scope().Queryable<NovelSearchEntity>().Where(t => t.KeyId == key.Id).ToListAsync();
-                }
+                var query = await Scope().Queryable<NovelSearchEntity>().Where(t => t.BookName.Contains(input) || t.Author.Contains(input)).ToListAsync();
+                if (!Forced && query.Count > 0) return query;
                 var data = await NovelFactory.Novel(opt =>
                 {
                     opt.RequestParam = new Input
                     {
                         ImplType = StaticDictionary.ImplType(),
                         NovelType = NovelEnum.Search,
+                        CacheSpan = StaticDictionary.Cache(),
                         Search = new NovelSearch
                         {
                             KeyWord = input
@@ -65,8 +64,9 @@ namespace CandySugar.Library.Logic.Service
                     };
                 }).RunsAsync();
                 var entity = data.SearchResults.ToMapest<List<NovelSearchEntity>>();
-                var res = await Scope().Insertable(new NovelSeachKeyEntity { Key = input }).CallEntityMethod(t => t.Create(true)).ExecuteReturnEntityAsync();
-                await Scope().Insertable(entity).CallEntityMethod(t => t.SetKeyCreate(res.Id)).ExecuteCommandAsync();
+                entity = entity.Where(t => !query.Select(m => m.BookName).Contains(t.BookName)).Where(t => !query.Select(m => m.Author).Contains(t.Author)).ToList();
+                if (entity.Count != 0)
+                    await Scope().Insertable(entity).CallEntityMethod(t => t.Create(true)).ExecuteCommandAsync();
                 return entity;
             }
             catch (Exception ex)
@@ -89,12 +89,14 @@ namespace CandySugar.Library.Logic.Service
                         Data = model
                     };
                 }
+
                 var data = await NovelFactory.Novel(opt =>
                 {
                     opt.RequestParam = new Input
                     {
                         ImplType = StaticDictionary.ImplType(),
                         NovelType = NovelEnum.Category,
+                        CacheSpan = StaticDictionary.Cache(),
                         Category = new NovelCategory
                         {
                             Page = page,
@@ -102,6 +104,7 @@ namespace CandySugar.Library.Logic.Service
                         }
                     };
                 }).RunsAsync();
+
                 NovelCategoryKeyEntity res = await Scope().Queryable<NovelCategoryKeyEntity>().Where(t => t.Key == input).FirstAsync();
                 if (data.CategoryResult != null && page <= data.CategoryResult.Total)
                 {
@@ -145,6 +148,7 @@ namespace CandySugar.Library.Logic.Service
                     {
                         ImplType = StaticDictionary.ImplType(),
                         NovelType = NovelEnum.Detail,
+                        CacheSpan = StaticDictionary.Cache(),
                         Detail = new NovelDetail
                         {
                             Page = page,
@@ -193,6 +197,7 @@ namespace CandySugar.Library.Logic.Service
                     {
                         ImplType = StaticDictionary.ImplType(),
                         NovelType = NovelEnum.View,
+                        CacheSpan = StaticDictionary.Cache(),
                         View = new NovelView
                         {
                             Route = input
@@ -201,7 +206,7 @@ namespace CandySugar.Library.Logic.Service
                 }).RunsAsync();
                 var model = data.ContentResult.ToMapest<NovelContentEntity>();
                 model.Route = input;
-                await Scope().Insertable(model).CallEntityMethod(t=>t.Create(true)).ExecuteCommandAsync();
+                await Scope().Insertable(model).CallEntityMethod(t => t.Create(true)).ExecuteCommandAsync();
                 return model;
             }
             catch (Exception ex)
