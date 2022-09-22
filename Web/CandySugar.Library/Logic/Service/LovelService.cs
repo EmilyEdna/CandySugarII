@@ -150,21 +150,91 @@ namespace CandySugar.Library.Logic.Service
             };
 
         }
-        //public async Task<bool> Detail()
-        //{
-
-        //}
-        //public async Task<bool> View()
-        //{
-
-        //}
-        //public async Task<bool> Content()
-        //{
-
-        //}
-        //public async Task<bool> Download()
-        //{
-
-        //}
+        public async Task<LovelDetailEntity> Detail(string input)
+        {
+            var res = await Scope().Queryable<LovelDetailEntity>().Where(t => t.DetailRoute == input).FirstAsync();
+            if (res != null) return res;
+            var data = await LovelFactory.Lovel(opt =>
+               {
+                   opt.RequestParam = new Input
+                   {
+                       ImplType = StaticDictionary.ImplType(),
+                       CacheSpan = StaticDictionary.Cache(),
+                       LovelType = LovelEnum.Detail,
+                       Detail = new LovelDetail
+                       {
+                           Route = input
+                       }
+                   };
+               }).RunsAsync();
+            var entity = data.DetailResult.ToMapest<LovelDetailEntity>();
+            entity.DetailRoute = input;
+            return await Scope().Insertable(entity).CallEntityMethod(t => t.Create(true)).ExecuteReturnEntityAsync();
+        }
+        public async Task<List<LovelViewEntity>> View(string input)
+        {
+            var res = await Scope().Queryable<LovelViewEntity>().Where(t => t.ViewRoute == input).ToListAsync();
+            if (res.Count > 0) return res;
+            var data = await LovelFactory.Lovel(opt =>
+             {
+                 opt.RequestParam = new Input
+                 {
+                     LovelType = LovelEnum.View,
+                     ImplType = StaticDictionary.ImplType(),
+                     CacheSpan = StaticDictionary.Cache(),
+                     View = new LovelView
+                     {
+                         Route = input
+                     }
+                 };
+             }).RunsAsync();
+            var entity = data.ViewResult.ToMapest<List<LovelViewEntity>>();
+            entity.ForEach(item =>
+            {
+                item.ViewRoute = input;
+            });
+            await Scope().Insertable(entity).CallEntityMethod(t => t.Create(true)).ExecuteReturnEntityAsync();
+            return entity;
+        }
+        public async Task<LovelContentEntity> Content(string input)
+        {
+            var res = await Scope().Queryable<LovelContentEntity>().Where(t => t.ChapterRoute == input).FirstAsync();
+            if (res != null) return res;
+            var data = await LovelFactory.Lovel(opt =>
+            {
+                opt.RequestParam = new Input
+                {
+                    LovelType = LovelEnum.Content,
+                    ImplType = StaticDictionary.ImplType(),
+                    CacheSpan = StaticDictionary.Cache(),
+                    Content = new LovelContent
+                    {
+                        ChapterRoute = input
+                    }
+                };
+            }).RunsAsync();
+            var entity = data.ContentResult.ToMapest<LovelContentEntity>();
+            entity.ChapterRoute = input;
+            entity.Picture = data.ContentResult.Image != null && data.ContentResult.Image.Count > 0 ? string.Join(",", data.ContentResult.Image) : null;
+            return await Scope().Insertable(entity).CallEntityMethod(t => t.Create(true)).ExecuteReturnEntityAsync();
+        }
+        public async Task<byte[]> Download(string input)
+        {
+            var view = await Scope().Queryable<LovelViewEntity>().FirstAsync(t => t.BookName == input && t.IsDown == true);
+            var data = await LovelFactory.Lovel(opt =>
+            {
+                opt.RequestParam = new Input
+                {
+                    LovelType = LovelEnum.Download,
+                    ImplType = StaticDictionary.ImplType(),
+                    Down = new LovelDown
+                    {
+                        UId = view.ChapterRoute.AsInt(),
+                        BookName = view.BookName
+                    }
+                };
+            }).RunsAsync();
+            return data.DownResult.Bytes;
+        }
     }
 }
