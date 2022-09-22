@@ -1,17 +1,14 @@
 ﻿using CandySugar.Library.Entity.Lovel;
-using Sdk.Component.Lovel.sdk.ViewModel;
 using CandySugar.Library.Logic.IService;
+using CandySugar.Library.ViewModel;
 using Furion.DependencyInjection;
 using Furion.FriendlyException;
 using Sdk.Component.Lovel.sdk;
+using Sdk.Component.Lovel.sdk.ViewModel;
 using Sdk.Component.Lovel.sdk.ViewModel.Enums;
 using Sdk.Component.Lovel.sdk.ViewModel.Request;
-using XExten.Advance.LinqFramework;
-using CandySugar.Library.Entity.Novel;
-using CandySugar.Library.ViewModel;
 using SqlSugar;
-using Polly.Caching;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using XExten.Advance.LinqFramework;
 
 namespace CandySugar.Library.Logic.Service
 {
