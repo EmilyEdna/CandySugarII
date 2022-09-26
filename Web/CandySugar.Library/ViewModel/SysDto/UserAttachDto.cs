@@ -16,5 +16,9 @@ namespace CandySugar.Library.ViewModel.SysDto
         /// 缓存时常 分钟
         /// </summary>
         public int Cache { get; set; }
+        /// <summary>
+        /// 数据源 0:SBDM 1:YSJDM
+        /// </summary>
+        public int AnimeSource { get; set; }
     }
 }

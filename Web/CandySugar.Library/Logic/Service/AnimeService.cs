@@ -28,9 +28,16 @@ namespace CandySugar.Library.Logic.Service
                 Area = typeof(AnimeAreaEnum).GetEnumNames().ToList(),
                 Letters = typeof(AnimeLetterEnum).GetEnumNames().ToList(),
                 Types = typeof(AnimeTypeEnum).GetEnumNames().ToList(),
+                Years = new List<string>(), 
             };
-            var year = DateTime.Now.Year - 1995;
             res.Years.Add("全部");
+            var year = DateTime.Now.Year - 1995;
+            for (int index = 0; index <= year; index++)
+            {
+                res.Years.Add((1995 + index).ToString());
+            }
+
+            if (StaticDictionary.AnimeSource() == AnimeSourceEnum.YSJDM) return res;
 
             var read = await Scope().Queryable<AnimeInitEntity>().ToListAsync();
             if (read.Count > 0)

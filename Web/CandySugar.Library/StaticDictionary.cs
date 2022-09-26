@@ -20,6 +20,6 @@ namespace CandySugar.Library
             else return SdkImpl.RPC;
         }
         public static int Cache() => UserAttachEntity == null ? 5 : UserAttachEntity.Cache;
-        public static AnimeSourceEnum AnimeSource() => UserAttachEntity.AnimeSource == 0 ? AnimeSourceEnum.SBDM : AnimeSourceEnum.YSJDM;
+        public static AnimeSourceEnum AnimeSource() => UserAttachEntity?.AnimeSource == 0 ? AnimeSourceEnum.SBDM : AnimeSourceEnum.YSJDM;
     }
 }
