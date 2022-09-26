@@ -5,6 +5,7 @@ using Furion;
 using Furion.DynamicApiController;
 using Furion.FriendlyException;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Web;
 using XExten.Advance.StaticFramework;
 
@@ -26,7 +27,7 @@ namespace CandySugar.Entry.Contollers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<List<LovelInitEntity>> Init() => await LovelService.Init();
+        public async Task<CandyResult<List<LovelInitEntity>>> Init() => CandyResult<List<LovelInitEntity>>.Result(await LovelService.Init());
         /// <summary>
         /// 查询
         /// </summary>
@@ -34,7 +35,7 @@ namespace CandySugar.Entry.Contollers
         /// <param name="page"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<PageOutDto<List<LovelSearchEntity>>> Search(string input, int page=1) => await LovelService.Search(input, page);
+        public async Task<CandyResult<PageOutDto<List<LovelSearchEntity>>>> Search(string input, int page=1) => CandyResult<PageOutDto<List<LovelSearchEntity>>>.Result(await LovelService.Search(input, page));
         /// <summary>
         /// 分类
         /// </summary>
@@ -42,28 +43,28 @@ namespace CandySugar.Entry.Contollers
         /// <param name="page"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<PageOutDto<List<LovelCategoryEntity>>> Category(string input, int page=1) => await LovelService.Category(HttpUtility.UrlDecode(input), page);
+        public async Task<CandyResult<PageOutDto<List<LovelCategoryEntity>>>> Category(string input, int page=1) => CandyResult<PageOutDto<List<LovelCategoryEntity>>>.Result(await LovelService.Category(HttpUtility.UrlDecode(input), page));
         /// <summary>
         /// 详情
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<LovelDetailEntity> Detail(string input) => await LovelService.Detail(HttpUtility.UrlDecode(input));
+        public async Task<CandyResult<LovelDetailEntity>> Detail(string input) =>CandyResult<LovelDetailEntity>.Result(await LovelService.Detail(HttpUtility.UrlDecode(input)));
         /// <summary>
         /// 章节
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<List<LovelViewEntity>> View(string input) => await LovelService.View(HttpUtility.UrlDecode(input));
+        public async Task<CandyResult<List<LovelViewEntity>>> View(string input) =>CandyResult<List<LovelViewEntity>>.Result(await LovelService.View(HttpUtility.UrlDecode(input)));
         /// <summary>
         /// 内容
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<LovelContentEntity> Content(string input) => await LovelService.Content(HttpUtility.UrlDecode(input));
+        public async Task<CandyResult<LovelContentEntity>> Content(string input) =>CandyResult<LovelContentEntity>.Result(await LovelService.Content(HttpUtility.UrlDecode(input)));
         /// <summary>
         /// 下载
         /// </summary>

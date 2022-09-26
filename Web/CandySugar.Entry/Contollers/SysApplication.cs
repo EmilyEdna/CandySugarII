@@ -29,7 +29,7 @@ namespace CandySugar.Entry.Contollers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<bool> UserLogin(UserLoginDto input)
+        public async Task<CandyResult<bool>> UserLogin(UserLoginDto input)
         {
             var result = await SysService.UserLogin(input);
             if (result!=null)
@@ -42,9 +42,9 @@ namespace CandySugar.Entry.Contollers
                 var refreshToken = JWTEncryption.GenerateRefreshToken(accessToken);
                 HttpContext.HttpContext.Response.Headers["access-token"] = accessToken;
                 HttpContext.HttpContext.Response.Headers["x-access-token"] = refreshToken;
-                return true;
+                return CandyResult<bool>.Result(true);
             }
-            else return false;
+            else return CandyResult<bool>.Result(false);
         }
         /// <summary>
         /// 注册
@@ -52,21 +52,21 @@ namespace CandySugar.Entry.Contollers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<bool> UserRegist(UserRegistDto input) => await SysService.UserRegist(input);
+        public async Task<CandyResult<bool>> UserRegist(UserRegistDto input) => CandyResult<bool>.Result(await SysService.UserRegist(input));
         /// <summary>
         /// 查询
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<PageOutDto<List<UserEntity>>> GetUser(GetUserDto input) => await SysService.GetUser(input);
+        public async Task<CandyResult<PageOutDto<List<UserEntity>>>> GetUser(GetUserDto input) => CandyResult<PageOutDto<List<UserEntity>>>.Result(await SysService.GetUser(input));
         /// <summary>
         /// 删除
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<bool> RemoveUser(List<Guid> input) => await SysService.RemoveUser(input);
+        public async Task<CandyResult<bool>> RemoveUser(List<Guid> input) => CandyResult<bool>.Result(await SysService.RemoveUser(input));
         /// <summary>
         /// 状态
         /// </summary>
@@ -74,13 +74,13 @@ namespace CandySugar.Entry.Contollers
         /// <param name="Status"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<bool> UserStatus(Guid Id, bool Status) => await SysService.UserStatus(Id, Status);
+        public async Task<CandyResult<bool>> UserStatus(Guid Id, bool Status) => CandyResult<bool>.Result(await SysService.UserStatus(Id, Status));
         /// <summary>
         /// 用户设置
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<UserAttachDto> UserOption(UserAttachDto input) => await SysService.UserOption(input);
+        public async Task<CandyResult<UserAttachDto>> UserOption(UserAttachDto input) => CandyResult<UserAttachDto>.Result(await SysService.UserOption(input));
     }
 }

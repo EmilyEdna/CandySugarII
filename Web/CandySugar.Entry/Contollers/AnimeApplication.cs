@@ -27,14 +27,14 @@ namespace CandySugar.Entry.Contollers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<InitDto> Init() => await AnimeService.Init();
+        public async Task<CandyResult<InitDto>> Init() => CandyResult<InitDto>.Result(await AnimeService.Init());
         /// <summary>
         /// 分类
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<PageOutDto<List<AnimeGlobalEntity>>> Category(CateDto input)=> await AnimeService.Category(input);
+        public async Task<CandyResult<PageOutDto<List<AnimeGlobalEntity>>>> Category(CateDto input) => CandyResult<PageOutDto<List<AnimeGlobalEntity>>>.Result(await AnimeService.Category(input));
         /// <summary>
         /// 搜索
         /// </summary>
@@ -42,20 +42,20 @@ namespace CandySugar.Entry.Contollers
         /// <param name="page"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<PageOutDto<List<AnimeGlobalEntity>>> Search(string key, int page=1)=>await AnimeService.Search(key, page);
+        public async Task<CandyResult<PageOutDto<List<AnimeGlobalEntity>>>> Search(string key, int page = 1) => CandyResult<PageOutDto<List<AnimeGlobalEntity>>>.Result(await AnimeService.Search(key, page));
         /// <summary>
         /// 详情
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<List<AnimeDetailEntity>> Detail(string input)=> await AnimeService.Detail(HttpUtility.UrlDecode(input));
+        public async Task<CandyResult<List<AnimeDetailEntity>>> Detail(string input) => CandyResult<List<AnimeDetailEntity>>.Result(await AnimeService.Detail(HttpUtility.UrlDecode(input)));
         /// <summary>
         /// 观看
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<AnimePlayEntity> Watch(string input)=> await AnimeService.Watch(HttpUtility.UrlDecode(input));
+        public async Task<CandyResult<AnimePlayEntity>> Watch(string input) => CandyResult<AnimePlayEntity>.Result(await AnimeService.Watch(HttpUtility.UrlDecode(input)));
     }
 }

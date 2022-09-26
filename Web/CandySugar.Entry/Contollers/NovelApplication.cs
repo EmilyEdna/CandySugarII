@@ -23,7 +23,7 @@ namespace CandySugar.Entry.Contollers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<List<NovelInitEntity>> Init() => await NovelService.Init();
+        public async Task<CandyResult<List<NovelInitEntity>>> Init() => CandyResult<List<NovelInitEntity>>.Result(await NovelService.Init());
         /// <summary>
         /// 查询
         /// </summary>
@@ -31,7 +31,7 @@ namespace CandySugar.Entry.Contollers
         /// <param name="Forced">强制拉取</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<List<NovelSearchEntity>> Search(string input, bool Forced = false) => await NovelService.Search(input, Forced);
+        public async Task<CandyResult<List<NovelSearchEntity>>> Search(string input, bool Forced = false) => CandyResult<List<NovelSearchEntity>>.Result(await NovelService.Search(input, Forced));
         /// <summary>
         /// 分类
         /// </summary>
@@ -39,7 +39,7 @@ namespace CandySugar.Entry.Contollers
         /// <param name="page"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<PageOutDto<List<NovelCategoryEntity>>> Category(string input, int page) => await NovelService.Category(HttpUtility.UrlDecode(input), page);
+        public async Task<CandyResult<PageOutDto<List<NovelCategoryEntity>>>> Category(string input, int page) => CandyResult<PageOutDto<List<NovelCategoryEntity>>>.Result(await NovelService.Category(HttpUtility.UrlDecode(input), page));
         /// <summary>
         /// 详情
         /// </summary>
@@ -47,13 +47,13 @@ namespace CandySugar.Entry.Contollers
         /// <param name="page"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<NovelDetailEntity> Detail(string input, int page) => await NovelService.Detail(HttpUtility.UrlDecode(input), page);
+        public async Task<CandyResult<NovelDetailEntity>> Detail(string input, int page) => CandyResult<NovelDetailEntity>.Result(await NovelService.Detail(HttpUtility.UrlDecode(input), page));
         /// <summary>
         /// 内容
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<NovelContentEntity> Content(string input) => await NovelService.Content(HttpUtility.UrlDecode(input));
+        public async Task<CandyResult<NovelContentEntity>> Content(string input) => CandyResult<NovelContentEntity>.Result(await NovelService.Content(HttpUtility.UrlDecode(input)));
     }
 }
