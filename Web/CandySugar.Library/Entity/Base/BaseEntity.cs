@@ -13,7 +13,7 @@ namespace CandySugar.Library.Entity.Base
         public Guid Id { get; set; }
         public DateTime Span { get; set; }
 
-        public void Create(bool AutoId = true)
+        public virtual void Create(bool AutoId = true)
         {
             if (AutoId)
                 this.Id = Guid.NewGuid();

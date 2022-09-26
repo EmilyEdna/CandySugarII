@@ -1,4 +1,5 @@
 ﻿using CandySugar.Library.Entity;
+using Sdk.Component.Anime.sdk.ViewModel.Enums;
 using Sdk.Component.Plugins;
 using System;
 using System.Collections.Generic;
@@ -18,10 +19,7 @@ namespace CandySugar.Library
             else if (UserAttachEntity.RequestType == 2) return SdkImpl.Rest;
             else return SdkImpl.RPC;
         }
-        public static int Cache()
-        {
-            if (UserAttachEntity == null) return 5;
-            return UserAttachEntity.Cache;
-        }
+        public static int Cache() => UserAttachEntity == null ? 5 : UserAttachEntity.Cache;
+        public static AnimeSourceEnum AnimeSource() => UserAttachEntity.AnimeSource == 0 ? AnimeSourceEnum.SBDM : AnimeSourceEnum.YSJDM;
     }
 }

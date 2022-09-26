@@ -34,7 +34,7 @@ namespace CandySugar.Entry.Contollers
         /// <param name="page"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<PageOutDto<List<LovelSearchEntity>>> Search(string input, int page) => await LovelService.Search(input, page);
+        public async Task<PageOutDto<List<LovelSearchEntity>>> Search(string input, int page=1) => await LovelService.Search(input, page);
         /// <summary>
         /// 分类
         /// </summary>
@@ -42,7 +42,7 @@ namespace CandySugar.Entry.Contollers
         /// <param name="page"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<PageOutDto<List<LovelCategoryEntity>>> Category(string input, int page) => await LovelService.Category(HttpUtility.UrlDecode(input), page);
+        public async Task<PageOutDto<List<LovelCategoryEntity>>> Category(string input, int page=1) => await LovelService.Category(HttpUtility.UrlDecode(input), page);
         /// <summary>
         /// 详情
         /// </summary>
