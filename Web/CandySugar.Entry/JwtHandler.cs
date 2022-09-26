@@ -1,4 +1,6 @@
-﻿using Furion.Authorization;
+﻿using CandySugar.Library;
+using CandySugar.Library.Entity;
+using Furion.Authorization;
 using Furion.DataEncryption;
 using Furion.LinqBuilder;
 using Microsoft.AspNetCore.Authorization;
@@ -40,6 +42,8 @@ namespace CandySugar.Entry
             {
                 if (!auth["Account"].IsNullOrEmpty() && !auth["UserId"].IsNullOrEmpty() && DateTime.Now <= SyncStatic.ConvertStamptime(auth["exp"]))
                 {
+                    StaticDictionary.UserAttachEntity = DbContext.Instance.Scope().Queryable<UserAttachEntity>().First(t => t.Id.ToString() == auth["UserId"]);
+
                     SdkLicense.Register(new SdkLicenseModel
                     {
                         Account = "EmilyEdna",

@@ -30,5 +30,9 @@ namespace CandySugar.Library
             var models = typeof(DbContext).Assembly.GetTypes().Where(t => t.BaseType == typeof(BaseEntity)).ToArray();
             Scope().CodeFirst.InitTables(models);
         }
+        protected virtual T Force<T>(Func<bool, T> input)
+        {
+            return input.Invoke(StaticDictionary.UserAttachEntity.Force);
+        }
     }
 }
