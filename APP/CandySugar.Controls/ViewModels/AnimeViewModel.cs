@@ -12,7 +12,6 @@ namespace CandySugar.Controls.ViewModels
         public AnimeViewModel()
         {
             this.Page = 1;
-            this.Words = new ObservableCollection<string>("A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z".Split(","));
             Task.Run(() => InitAnime());
         }
 
@@ -137,7 +136,8 @@ namespace CandySugar.Controls.ViewModels
                     };
                 }).RunsAsync();
                 CloseBusy();
-                InitResult = new ObservableCollection<AnimeWeekDayIndexResult>(result.RecResults);
+                this.Words = new ObservableCollection<string>(result.InitResult.Letters.Where(t => !t.Equals("全部")));
+                InitResult = new ObservableCollection<AnimeWeekDayIndexResult>(result.InitResult.RecResults);
             }
             catch (Exception ex)
             {

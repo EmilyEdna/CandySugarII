@@ -32,7 +32,6 @@ namespace CandySugar.Controls.ContentViewModel
         {
             this.WindowManager = WindowManager;
             this.Container = Container;
-            this.Chars = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z".Split(",").ToList();
             this.CandyAnime = Container.Get<ICandyAnime>();
             this.CategoryPage = 1;
             this.Switch = true;
@@ -93,7 +92,12 @@ namespace CandySugar.Controls.ContentViewModel
         #endregion
 
         #region Property
-        public List<string> Chars { get; set; }
+        private ObservableCollection<string> _Chars;
+        public ObservableCollection<string> Chars
+        {
+            get => _Chars;
+            set => SetAndNotify(ref _Chars, value);
+        }
         private ObservableCollection<AnimeWeekDayIndexResult> _DayResult;
         /// <summary>
         /// 初始化结果
@@ -217,7 +221,8 @@ namespace CandySugar.Controls.ContentViewModel
             }).RunsAsync();
             this.Loading = false;
             InitResult = AnimeInitData.InitResult;
-            DayResult = new ObservableCollection<AnimeWeekDayIndexResult>(AnimeInitData.RecResults ?? new List<AnimeWeekDayIndexResult>());
+            this.Chars = new ObservableCollection<string>(AnimeInitData.InitResult.Letters.Where(t=>!t.Equals("全部")));
+            DayResult = new ObservableCollection<AnimeWeekDayIndexResult>(AnimeInitData.InitResult.RecResults ?? new List<AnimeWeekDayIndexResult>());
         }
         private async void InitSearch(string input)
         {
