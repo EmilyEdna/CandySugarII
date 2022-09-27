@@ -27,14 +27,10 @@ namespace CandySugar.Library.Entity.Novel
         public string BookType { get; set; }
 
         public string ShortRoute { get; set; }
-        public Guid KeyId { get; set; }
-        public void SetKeyCreate(Guid input)
-        {
-            base.Create();
-            this.KeyId = input;
-        }
 
-        [Navigate(NavigateType.OneToMany, nameof(NovelChapterEntity.KeyId))]
+        public string InfoRoute { get; set; }
+
+        [SugarColumn(IsIgnore =true)]
         public List<NovelChapterEntity> Chapter { get; set; }
     }
     public class NovelChapterEntity : BaseEntity
@@ -42,17 +38,10 @@ namespace CandySugar.Library.Entity.Novel
         public string ChapterName { get; set; }
         public string ChapterRoute { get; set; }
         public Guid KeyId { get; set; }
-        public void SetNavCreate(Guid input)
+        public void Create(Guid input) 
         {
-            base.Create();
-            this.KeyId = input;
+            KeyId = input;
+            base.Create(true);
         }
     }
-    public class NovelDetailKeyEntity : BaseEntity
-    {
-        public string Key { get; set; }
-        public int Total { get; set; }
-        public int Current { get; set; }
-    }
-
 }

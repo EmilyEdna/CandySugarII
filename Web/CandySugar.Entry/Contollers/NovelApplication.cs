@@ -28,10 +28,9 @@ namespace CandySugar.Entry.Contollers
         /// 查询
         /// </summary>
         /// <param name="input"></param>
-        /// <param name="Forced">强制拉取</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<CandyResult<List<NovelSearchEntity>>> Search(string input, bool Forced = false) => CandyResult<List<NovelSearchEntity>>.Result(await NovelService.Search(input, Forced));
+        public async Task<CandyResult<List<NovelSearchEntity>>> Search(string input) => CandyResult<List<NovelSearchEntity>>.Result(await NovelService.Search(input));
         /// <summary>
         /// 分类
         /// </summary>
