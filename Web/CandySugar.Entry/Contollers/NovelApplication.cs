@@ -35,10 +35,11 @@ namespace CandySugar.Entry.Contollers
         /// 分类
         /// </summary>
         /// <param name="input"></param>
+        /// <param name="type">分类类型 例如 玄幻奇幻</param>
         /// <param name="page"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<CandyResult<PageOutDto<List<NovelCategoryEntity>>>> Category(string input, int page) => CandyResult<PageOutDto<List<NovelCategoryEntity>>>.Result(await NovelService.Category(HttpUtility.UrlDecode(input), page));
+        public async Task<CandyResult<PageOutDto<List<NovelCategoryEntity>>>> Category(string input, string type, int page) => CandyResult<PageOutDto<List<NovelCategoryEntity>>>.Result(await NovelService.Category(HttpUtility.UrlDecode(input), type, page));
         /// <summary>
         /// 详情
         /// </summary>
