@@ -23,6 +23,7 @@
             <Setter Property="Foreground" Value="{DynamicResource SugarThemePink}" />
             <Setter Property="Margin" Value="0,6" />
             <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="TextWrapping" Value="WrapWithOverflow" />
         </Style>
     </lib:CandyControl.Resources>
@@ -50,7 +51,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
-                            <UniformGrid Columns="1">
+                            <UniformGrid>
                                 <Image
                                     x:Name="Loading"
                                     Width="25"
@@ -81,10 +82,9 @@
                                 </Image>
                                 <Border>
                                     <Image
-                                        Width="100"
-                                        Height="150"
                                         lib:ImageDependencyProperty.Source="{Binding Cover}"
                                         SnapsToDevicePixels="True"
+                                        Stretch="Fill"
                                         Tag="Comic" />
                                     <Border.Effect>
                                         <DropShadowEffect
@@ -127,6 +127,114 @@
                     </hc:EventTrigger>
                 </hc:Interaction.Triggers>
             </hc:Pagination>
+        </Grid>
+        <Grid x:Name="StepTwo" Visibility="{Binding StepTwo, Converter={StaticResource ToShow}}">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <UniformGrid Margin="2">
+                    <Image
+                        x:Name="Loading"
+                        Width="25"
+                        Height="25"
+                        RenderTransformOrigin="0.5,0.5"
+                        Source="{StaticResource i16}"
+                        Stretch="UniformToFill">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <RotateTransform Angle="0" />
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                        <Image.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            RepeatBehavior="Forever"
+                                            Storyboard.TargetName="Loading"
+                                            Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].Angle"
+                                            From="0"
+                                            To="359"
+                                            Duration="0:0:02" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Image.Triggers>
+                    </Image>
+                    <Border>
+                        <Image
+                            lib:ImageDependencyProperty.Source="{Binding Search.Cover}"
+                            SnapsToDevicePixels="True"
+                            Stretch="Fill"
+                            Tag="Comic" />
+                        <Border.Effect>
+                            <DropShadowEffect
+                                BlurRadius="6"
+                                Opacity="1"
+                                ShadowDepth="0"
+                                Color="{DynamicResource SugarThemePinkColor}" />
+                        </Border.Effect>
+                    </Border>
+                </UniformGrid>
+                <WrapPanel HorizontalAlignment="Left" Orientation="Vertical">
+                    <TextBlock
+                        FontSize="16"
+                        Style="{DynamicResource ComicTextStyle}"
+                        Text="{Binding Search.Name}" />
+                    <ListBox
+                        Background="Transparent"
+                        BorderThickness="0"
+                        ItemsSource="{Binding Views.Parodies}"
+                        Style="{StaticResource StackPanelHorizontalListBox}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <lib:CandyButton Content="{Binding Key}" Style="{DynamicResource CategoryBtn}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <WrapPanel>
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Style="{DynamicResource ComicTextStyle}"
+                            Text="作者" />
+                        <ListBox
+                            Background="Transparent"
+                            BorderThickness="0"
+                            ItemsSource="{Binding Views.Author}"
+                            Style="{StaticResource StackPanelHorizontalListBox}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+
+                                    <lib:CandyButton Content="{Binding Key}" Style="{DynamicResource CategoryBtn}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </WrapPanel>
+                    <WrapPanel>
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Style="{DynamicResource ComicTextStyle}"
+                            Text="语言" />
+                        <ListBox
+                            Background="Transparent"
+                            BorderThickness="0"
+                            ItemsSource="{Binding Views.Language}"
+                            Style="{StaticResource StackPanelHorizontalListBox}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <lib:CandyButton Content="{Binding Key}" Style="{DynamicResource CategoryBtn}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </WrapPanel>
+                </WrapPanel>
+            </Grid>
         </Grid>
     </Grid>
 </lib:CandyControl>

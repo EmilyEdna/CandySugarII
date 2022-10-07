@@ -79,6 +79,12 @@ namespace CandySugar.Controls.ContentViewModel
             get => _Views;
             set => SetAndNotify(ref _Views, value);
         }
+        private ComicSearchElementResult _Search;
+        public ComicSearchElementResult Search
+        {
+            get => _Search;
+            set => SetAndNotify(ref _Search, value);
+        }
         #endregion
 
         #region Field
@@ -89,6 +95,7 @@ namespace CandySugar.Controls.ContentViewModel
         #region Action
         public void ViewAction(ComicSearchElementResult input) 
         {
+            this.Search = input;
             this.StepOne = false;
             this.StepTwo = true;
             InitView(input.Route);

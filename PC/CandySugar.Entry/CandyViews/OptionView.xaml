@@ -490,7 +490,7 @@
                     Checked="QueryModuelEvent"
                     CommandParameter="2"
                     Content="Rest模式"
-                    GroupName="QueryModuelEvent" />
+                    GroupName="QueryModule" />
                 <RadioButton
                     Width="100"
                     Height="20"
