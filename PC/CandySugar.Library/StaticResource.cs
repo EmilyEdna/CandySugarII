@@ -87,47 +87,56 @@ namespace CandySugar.Library
             model.Add(new SilderModel
             {
                 FuncName = 5,
-                IconName = "RabbitVariant",
-                Name = "漫画",
-                Show = true,
-                Query = "MH",
+                IconName = "Crown",
+                Name = "同人",
+                Query = "HMH",
+                Show = CandySoft.Default.IsAdmin ? true : false,
                 BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img10.png"
             });
             model.Add(new SilderModel
             {
                 FuncName = 6,
-                IconName = "ImageFilterVintage",
-                Name = "壁纸",
+                IconName = "RabbitVariant",
+                Name = "漫画",
                 Show = true,
-                Query = "BZ",
+                Query = "MH",
                 BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img11.png"
             });
             model.Add(new SilderModel
             {
                 FuncName = 7,
-                IconName = "MusicNoteEighth",
-                Name = "音乐",
+                IconName = "ImageFilterVintage",
+                Name = "壁纸",
                 Show = true,
-                Query = "YY",
+                Query = "BZ",
                 BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img12.png"
             });
             model.Add(new SilderModel
             {
                 FuncName = 8,
-                IconName = "AccountTieWoman",
-                Name = "教育",
-                Query = "JY",
-                Show = CandySoft.Default.IsAdmin ? true : false,
+                IconName = "MusicNoteEighth",
+                Name = "音乐",
+                Show = true,
+                Query = "YY",
                 BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img13.png"
             });
             model.Add(new SilderModel
             {
                 FuncName = 9,
+                IconName = "AccountTieWoman",
+                Name = "教育",
+                Query = "JY",
+                Show = CandySoft.Default.IsAdmin ? true : false,
+                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img14.png"
+            });
+            model.Add(new SilderModel
+            {
+                FuncName = 10,
                 IconName = "MovieRoll",
                 Name = "电影",
                 Show = true,
                 Query = "DY",
-                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img14.png"
+                BackImage = "pack://application:,,,/CandySugar.Resource;component/Assets/Img15.png"
             });
             return model;
         }

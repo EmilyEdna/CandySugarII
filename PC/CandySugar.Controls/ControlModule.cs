@@ -26,6 +26,7 @@ namespace CandySugar.Controls
             Bind<LovelViewModel>().ToSelf();
             Bind<AnimeViewModel>().ToSelf();
             Bind<HnimeViewModel>().ToSelf();
+            Bind<ComicViewModel>().ToSelf();
             Bind<MangaViewModel>().ToSelf();
             Bind<ImageViewModel>().ToSelf();
             Bind<MusicViewModel>().ToSelf();

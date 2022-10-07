@@ -1,6 +1,7 @@
 ﻿using CandySugar.Resource.Properties;
 using HandyControl.Controls;
 using Sdk.Component.Axgle.sdk;
+using Sdk.Component.Comic.sdk;
 using Sdk.Component.Image.sdk;
 using Sdk.Component.Image.sdk.ViewModel;
 using Sdk.Component.Image.sdk.ViewModel.Enums;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Ax = Sdk.Component.Axgle.sdk.ViewModel;
+using Co = Sdk.Component.Comic.sdk.ViewModel;
 
 namespace CandySugar.Library.ImageTemplate
 {
@@ -76,7 +78,8 @@ namespace CandySugar.Library.ImageTemplate
         private static async Task<byte[]> DownBytes(string input, int type)
         {
             if (type == 1) return await Axgle(input);
-            else return await Konachan(input);
+            else if (type == 2) return await Konachan(input);
+            else return await Comic(input);
         }
         #region Func
         private static async Task<byte[]> Konachan(string input)
@@ -99,28 +102,43 @@ namespace CandySugar.Library.ImageTemplate
         }
         private static async Task<byte[]> Axgle(string input)
         {
-           var AxgleCoverData = await AxgleFactory.Axgle(opt =>
+            var AxgleCoverData = await AxgleFactory.Axgle(opt =>
+             {
+                 opt.RequestParam = new Ax.Input
+                 {
+                     CacheSpan = CandySoft.Default.Cache,
+                     Proxy = StaticResource.Proxy(),
+                     ImplType = StaticResource.ImplType(),
+                     AxgleType = Ax.Enums.AxgleEnum.Cover,
+                     Cover = new Ax.Request.AxgleCover
+                     {
+                         KeyWord = input
+                     }
+                 };
+             }).RunsAsync();
+            return AxgleCoverData.CoverResult.Bytes;
+        }
+        private static async Task<byte[]> Comic(string input)
+        {
+            var ComicData = await ComicFactory.Comic(opt =>
             {
-                opt.RequestParam = new Ax.Input
+                opt.RequestParam = new Co.Input
                 {
                     CacheSpan = CandySoft.Default.Cache,
                     Proxy = StaticResource.Proxy(),
                     ImplType = StaticResource.ImplType(),
-                    AxgleType =  Ax.Enums.AxgleEnum.Cover,
-                    Cover = new Ax.Request.AxgleCover
-                    {
-                         KeyWord= input
-                    }
+                    ComicType = Co.Enums.ComicEnum.Down,
+                    ImageRoute = input
                 };
             }).RunsAsync();
-            return AxgleCoverData.CoverResult.Bytes;
+            return ComicData.ImageBytes;
         }
         #endregion
         public static void StartQueue(string Route, string Type, Image Control)
         {
             lock (Stacks)
             {
-                int Category = Type.ToUpper().Equals("AXGLE") ? 1 : 2;
+                int Category = Type.ToUpper().Equals("AXGLE") ? 1 : (Type.ToUpper().Equals("KONACHAN") ? 2 : 3);
                 Stacks.Enqueue(new QueueImageInfo { Route = Route, Type = Category, ImageControl = Control });
                 AutoEvent.Set();
             }

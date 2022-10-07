@@ -54,15 +54,18 @@ namespace CandySugar.Controls.TemplateViewModel
                     StaticResource.CreateControl<HnimeView>(parentMethodInfo, parentDataContext, Container.Get<HnimeViewModel>());
                     break;
                 case 5:
-                    StaticResource.CreateControl<MangaView>(parentMethodInfo, parentDataContext, Container.Get<MangaViewModel>());
+                    StaticResource.CreateControl<ComicView>(parentMethodInfo, parentDataContext, Container.Get<ComicViewModel>());
                     break;
                 case 6:
-                    StaticResource.CreateControl<ImageView>(parentMethodInfo, parentDataContext, Container.Get<ImageViewModel>());
+                    StaticResource.CreateControl<MangaView>(parentMethodInfo, parentDataContext, Container.Get<MangaViewModel>());
                     break;
                 case 7:
-                    StaticResource.CreateControl<MusicView>(parentMethodInfo, parentDataContext, Container.Get<MusicViewModel>());
+                    StaticResource.CreateControl<ImageView>(parentMethodInfo, parentDataContext, Container.Get<ImageViewModel>());
                     break;
                 case 8:
+                    StaticResource.CreateControl<MusicView>(parentMethodInfo, parentDataContext, Container.Get<MusicViewModel>());
+                    break;
+                case 9:
                     StaticResource.CreateControl<AxgleView>(parentMethodInfo, parentDataContext, Container.Get<AxgleViewModel>());
                     break;
                 default:
