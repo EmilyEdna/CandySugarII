@@ -144,6 +144,12 @@
             IsVisible="{x:Static lib:CandySoft.IsAdmin}"
             Route="HnimeView" />
         <ShellContent
+            Title="Comic"
+            ContentTemplate="{DataTemplate ctrl:ComicView}"
+            Icon="{StaticResource Comic}"
+            IsVisible="{x:Static lib:CandySoft.IsAdmin}"
+            Route="HnimeView" />
+        <ShellContent
             Title="漫画"
             ContentTemplate="{DataTemplate ctrl:MangaView}"
             Icon="{StaticResource Manga}"

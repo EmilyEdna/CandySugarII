@@ -35,6 +35,12 @@
         Size="22"
         Color="{StaticResource Red}" />
     <FontImage
+        x:Key="Comic"
+        FontFamily="Solid"
+        Glyph="{Static lib:FontIcon.FaceGrinHearts}"
+        Size="22"
+        Color="{StaticResource Red}" />
+    <FontImage
         x:Key="Manga"
         FontFamily="Solid"
         Glyph="{Static lib:FontIcon.Citrus}"
