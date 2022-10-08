@@ -98,7 +98,8 @@ namespace CandySugar.Controls.ContentViewModel
             this.Search = input;
             this.StepOne = false;
             this.StepTwo = true;
-            InitView(input.Route);
+            if(input!=null)
+                InitView(input.Route);
         }
         public void SearchAction(string input)
         {
@@ -110,6 +111,18 @@ namespace CandySugar.Controls.ContentViewModel
             Page = input.Info;
             if (this.Keyword.IsNullOrEmpty() && !this.CategoryRoute.IsNullOrEmpty()) InitCategory();
             if (!this.Keyword.IsNullOrEmpty() && this.CategoryRoute.IsNullOrEmpty()) InitSearch();
+        }
+        public void CategoryAction(string input)
+        {
+            CategoryRoute = input;
+            this.StepOne = true;
+            this.StepTwo = false;
+            InitCategory();
+        }
+        public void BackAction()
+        {
+            this.StepOne = true;
+            this.StepTwo = false;
         }
         #endregion
 

@@ -25,5 +25,10 @@ namespace CandySugar.Controls.ContentView
         {
             InitializeComponent();
         }
+
+        private void BackEvent(object sender, RoutedEventArgs e)
+        {
+            CategoryResultList.SelectedIndex = -1;
+        }
     }
 }
