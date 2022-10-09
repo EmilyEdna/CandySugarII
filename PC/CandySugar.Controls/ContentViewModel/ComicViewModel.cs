@@ -28,6 +28,7 @@ namespace CandySugar.Controls.ContentViewModel
             this.Container = Container;
             this.StepOne = true;
             this.StepTwo = false;
+            this.StepThree = false;
             this.Page = 1;
         }
         #region CommomProperty_Bool
@@ -48,6 +49,12 @@ namespace CandySugar.Controls.ContentViewModel
         {
             get => _StepTwo;
             set => SetAndNotify(ref _StepTwo, value);
+        }
+        private bool _StepThree;
+        public bool StepThree
+        {
+            get => _StepThree;
+            set => SetAndNotify(ref _StepThree, value);
         }
         #endregion
 
@@ -85,6 +92,12 @@ namespace CandySugar.Controls.ContentViewModel
             get => _Search;
             set => SetAndNotify(ref _Search, value);
         }
+        private ObservableCollection<string> _Image;
+        public ObservableCollection<string> Image
+        {
+            get => _Image;
+            set => SetAndNotify(ref _Image, value);
+        }
         #endregion
 
         #region Field
@@ -93,12 +106,13 @@ namespace CandySugar.Controls.ContentViewModel
         #endregion
 
         #region Action
-        public void ViewAction(ComicSearchElementResult input) 
+        public void ViewAction(ComicSearchElementResult input)
         {
             this.Search = input;
             this.StepOne = false;
             this.StepTwo = true;
-            if(input!=null)
+            this.StepThree = false;
+            if (input != null)
                 InitView(input.Route);
         }
         public void SearchAction(string input)
@@ -117,12 +131,29 @@ namespace CandySugar.Controls.ContentViewModel
             CategoryRoute = input;
             this.StepOne = true;
             this.StepTwo = false;
+            this.StepThree = false;
             InitCategory();
         }
         public void BackAction()
         {
             this.StepOne = true;
             this.StepTwo = false;
+            this.StepThree = false;
+        }
+        public void ShowDetailAction()
+        {
+            this.StepOne = false;
+            this.StepTwo = false;
+            this.StepThree = true;
+            Image = new ObservableCollection<string>();
+            Views.Image.ForEach(item =>
+            {
+                var Spit = item.LastIndexOf("/") + 1;
+                var Len = item.Length - Spit;
+                var Hix = item.Substring(Spit, Len).Split(".");
+                var NewName = item.Substring(0, Spit) + Hix.FirstOrDefault().Replace("t", "") + "." + Hix.LastOrDefault();
+                Image.Add(NewName);
+            });
         }
         #endregion
 

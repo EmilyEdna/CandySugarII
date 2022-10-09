@@ -50,7 +50,7 @@
                 </ListBox.ItemsPanel>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
+                        <StackPanel Margin="2">
                             <UniformGrid>
                                 <Image
                                     x:Name="Loading"
@@ -82,10 +82,10 @@
                                 </Image>
                                 <Border>
                                     <Image
-                                        lib:ImageDependencyProperty.Source="{Binding Cover}"
+                                        lib:ImageThreadDependencyProperty.Source="{Binding Cover}"
                                         SnapsToDevicePixels="True"
                                         Stretch="Fill"
-                                        Tag="Comic" />
+                                        Tag="Small" />
                                     <Border.Effect>
                                         <DropShadowEffect
                                             BlurRadius="6"
@@ -169,10 +169,10 @@
                     </Image>
                     <Border>
                         <Image
-                            lib:ImageDependencyProperty.Source="{Binding Search.Cover}"
+                            lib:ImageThreadDependencyProperty.Source="{Binding Search.Cover}"
                             SnapsToDevicePixels="True"
                             Stretch="Fill"
-                            Tag="Comic" />
+                            Tag="Small" />
                         <Border.Effect>
                             <DropShadowEffect
                                 BlurRadius="6"
@@ -189,13 +189,14 @@
                     Orientation="Vertical">
                     <Grid>
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <TextBlock
-                            FontSize="16"
+                            FontSize="14"
                             Style="{DynamicResource ComicTextStyle}"
-                            Text="{Binding Search.Name}" />
+                            Text="{Binding Search.Name}"
+                            TextWrapping="Wrap" />
                         <WrapPanel Grid.Column="1" HorizontalAlignment="Right">
                             <Button
                                 Width="45"
@@ -211,6 +212,22 @@
                                 <md:PackIcon Kind="UndoVariant" />
                             </Button>
                         </WrapPanel>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Style="{DynamicResource ComicTextStyle}"
+                            Text="更新日期" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Style="{DynamicResource ComicTextStyle}"
+                            Text="{Binding Views.UpdateDate}" />
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -382,6 +399,129 @@
                     </Grid>
                 </StackPanel>
             </Grid>
+            <ListBox
+                Grid.Row="1"
+                Background="Transparent"
+                BorderThickness="0"
+                ItemsSource="{Binding Views.Image}"
+                Style="{StaticResource StackPanelHorizontalListBox}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="3" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <UniformGrid Margin="3">
+                            <Image
+                                x:Name="Loading"
+                                Width="25"
+                                Height="25"
+                                RenderTransformOrigin="0.5,0.5"
+                                Source="{StaticResource i16}"
+                                Stretch="UniformToFill">
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <RotateTransform Angle="0" />
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                                <Image.Triggers>
+                                    <EventTrigger RoutedEvent="Loaded">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                    RepeatBehavior="Forever"
+                                                    Storyboard.TargetName="Loading"
+                                                    Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].Angle"
+                                                    From="0"
+                                                    To="359"
+                                                    Duration="0:0:02" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Image.Triggers>
+                            </Image>
+                            <Border>
+                                <Image
+                                    lib:ImageThreadDependencyProperty.Source="{Binding .}"
+                                    SnapsToDevicePixels="True"
+                                    Stretch="Fill"
+                                    Tag="Small">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                                            <i:InvokeCommandAction s:View.ActionTarget="{Binding DataContext, ElementName=ComicViewName}" Command="{s:Action ShowDetailAction}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Image>
+                                <Border.Effect>
+                                    <DropShadowEffect
+                                        BlurRadius="6"
+                                        Opacity="1"
+                                        ShadowDepth="0"
+                                        Color="{DynamicResource SugarThemePinkColor}" />
+                                </Border.Effect>
+                            </Border>
+                        </UniformGrid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        <Grid x:Name="StepThree" Visibility="{Binding StepThree, Converter={StaticResource ToShow}}">
+            <ListBox
+                Grid.Row="1"
+                Background="Transparent"
+                BorderThickness="0"
+                ItemsSource="{Binding Image}"
+                Style="{StaticResource StackPanelVerticalListBox}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <UniformGrid Margin="3">
+                            <Image
+                                x:Name="Loading"
+                                Width="25"
+                                Height="25"
+                                RenderTransformOrigin="0.5,0.5"
+                                Source="{StaticResource i16}"
+                                Stretch="UniformToFill">
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <RotateTransform Angle="0" />
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                                <Image.Triggers>
+                                    <EventTrigger RoutedEvent="Loaded">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                    RepeatBehavior="Forever"
+                                                    Storyboard.TargetName="Loading"
+                                                    Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].Angle"
+                                                    From="0"
+                                                    To="359"
+                                                    Duration="0:0:02" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Image.Triggers>
+                            </Image>
+                            <Border>
+                                <Image
+                                    lib:ImageThreadDependencyProperty.Source="{Binding .}"
+                                    SnapsToDevicePixels="True"
+                                    Stretch="Fill"
+                                    Tag="Big" />
+                                <Border.Effect>
+                                    <DropShadowEffect
+                                        BlurRadius="6"
+                                        Opacity="1"
+                                        ShadowDepth="0"
+                                        Color="{DynamicResource SugarThemePinkColor}" />
+                                </Border.Effect>
+                            </Border>
+                        </UniformGrid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Grid>
     </Grid>
 </lib:CandyControl>

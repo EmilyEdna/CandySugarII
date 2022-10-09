@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Ax = Sdk.Component.Axgle.sdk.ViewModel;
-using Co = Sdk.Component.Comic.sdk.ViewModel;
 
 namespace CandySugar.Library.ImageTemplate
 {
@@ -78,8 +77,7 @@ namespace CandySugar.Library.ImageTemplate
         private static async Task<byte[]> DownBytes(string input, int type)
         {
             if (type == 1) return await Axgle(input);
-            else if (type == 2) return await Konachan(input);
-            else return await Comic(input);
+            else return await Konachan(input);
         }
         #region Func
         private static async Task<byte[]> Konachan(string input)
@@ -118,27 +116,13 @@ namespace CandySugar.Library.ImageTemplate
              }).RunsAsync();
             return AxgleCoverData.CoverResult.Bytes;
         }
-        private static async Task<byte[]> Comic(string input)
-        {
-            var ComicData = await ComicFactory.Comic(opt =>
-            {
-                opt.RequestParam = new Co.Input
-                {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    ComicType = Co.Enums.ComicEnum.Down,
-                    ImageRoute = input
-                };
-            }).RunsAsync();
-            return ComicData.ImageBytes;
-        }
+       
         #endregion
         public static void StartQueue(string Route, string Type, Image Control)
         {
             lock (Stacks)
             {
-                int Category = Type.ToUpper().Equals("AXGLE") ? 1 : (Type.ToUpper().Equals("KONACHAN") ? 2 : 3);
+                int Category = Type.ToUpper().Equals("AXGLE") ? 1 : 2;
                 Stacks.Enqueue(new QueueImageInfo { Route = Route, Type = Category, ImageControl = Control });
                 AutoEvent.Set();
             }

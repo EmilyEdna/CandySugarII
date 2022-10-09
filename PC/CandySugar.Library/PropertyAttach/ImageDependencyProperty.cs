@@ -1,4 +1,5 @@
 ﻿using CandySugar.Library.ImageTemplate;
+using HandyControl.Controls;
 using ImTools;
 using System;
 using System.Collections.Generic;
@@ -32,8 +33,15 @@ namespace CandySugar.Library.PropertyAttach
 
         private static void OnSourceComplate(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            //执行下载队列
-            DownloadQueue.StartQueue(e.NewValue.ToString(),((Image)d).Tag.ToString(), (Image)d);
+            try
+            {
+                //执行下载队列
+                DownloadQueue.StartQueue(e.NewValue.ToString(), ((Image)d).Tag.ToString(), (Image)d);
+            }
+            catch (Exception)
+            {
+               Growl.Info("线程等待中~~");
+            }
         }
         #endregion
 
