@@ -1,4 +1,5 @@
 ﻿using CandySugar.Controls.ViewModels.ComicViewModels.Dto;
+using CandySugar.Controls.Views.ComicViews;
 using Microsoft.Maui.Storage;
 using Sdk.Component.Comic.sdk.ViewModel.Response;
 using Sdk.Component.Lovel.sdk.ViewModel.Response;
@@ -89,12 +90,17 @@ namespace CandySugar.Controls.ViewModels.ComicViewModels
 
         #region 命令
         public DelegateCommand<string> CategoryAction => new(input => GoBack(input));
+        public DelegateCommand ViewAction => new(() => GoView());
         #endregion
 
         #region 方法
         async void GoBack(string input)
         {
             await Shell.Current.GoToAsync($"..", new Dictionary<string, object> { { "Key", input } });
+        }
+        async void GoView()
+        {
+            await Shell.Current.GoToAsync(nameof(ComicWatchView), new Dictionary<string, object> { { "Key", ViewResult.Image } });
         }
         #endregion
     }

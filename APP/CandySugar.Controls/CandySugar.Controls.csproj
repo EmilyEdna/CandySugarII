@@ -94,6 +94,9 @@
 	  <MauiXaml Update="Views\ComicViews\ComicDetailView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\ComicViews\ComicWatchView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\HnimeView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

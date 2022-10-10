@@ -21,7 +21,7 @@ namespace CandySugar.Controls.ViewModels
         {
             if (query.ContainsKey("Key"))
             {
-                if (query["Key"].ToString().IsNullOrEmpty())
+                if (!query["Key"].ToString().IsNullOrEmpty())
                 {
                     this.Page = 1;
                     SetRefresh();

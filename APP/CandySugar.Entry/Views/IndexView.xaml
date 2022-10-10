@@ -148,7 +148,7 @@
             ContentTemplate="{DataTemplate ctrl:ComicView}"
             Icon="{StaticResource Comic}"
             IsVisible="{x:Static lib:CandySoft.IsAdmin}"
-            Route="HnimeView" />
+            Route="ComicView" />
         <ShellContent
             Title="漫画"
             ContentTemplate="{DataTemplate ctrl:MangaView}"
