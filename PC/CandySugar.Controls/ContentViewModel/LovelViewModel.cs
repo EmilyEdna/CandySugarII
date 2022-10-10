@@ -38,7 +38,7 @@ namespace CandySugar.Controls.ContentViewModel
             OnViewLoaded();
         }
 
-        #region CommomProperty_Bool
+        #region 布尔
         private bool _Loading;
         public bool Loading
         {
@@ -65,7 +65,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region ComomProperty_Int
+        #region 整型
         private int _CategoryTotal;
         public int CategoryTotal
         {
@@ -80,7 +80,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Property
+        #region 属性
         private ObservableCollection<LovelInitResult> _CateResult;
         /// <summary>
         /// 类别
@@ -119,21 +119,21 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Override
+        #region 重写
         protected override void OnViewLoaded()
         {
             InitLovel();
         }
         #endregion
 
-        #region Field
+        #region 字段
         private string CategoryRoute;
         private string DetailRoute;
         private string KeyWord;
         private Guid PrimaryId = Guid.Empty;
         #endregion
 
-        #region Action
+        #region 命令
         public void SearchAction(string input)
         {
             this.KeyWord = input;
@@ -180,7 +180,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Method
+        #region 方法
         private async void InitLovel()
         {
             Loading = true;

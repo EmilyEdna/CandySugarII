@@ -16,7 +16,7 @@ namespace CandySugar.Library.PropertyAttach
 {
     public static class ImageDependencyProperty
     {
-        #region Field
+        #region 字段
 
         public static string GetSource(DependencyObject obj)
         {

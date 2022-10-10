@@ -24,7 +24,7 @@ namespace CandySugar.Controls.MenuTemplateViewModel
             CandyLabel = Container.Get<ICandyLabel>();
             InitGet();
         }
-        #region Property
+        #region 属性
         private string _EnLabel;
         public string EnLabel
         {
@@ -45,7 +45,7 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         }
         #endregion
 
-        #region Method
+        #region 方法
         private async void InitSave()
         {
             await this.CandyLabel.AddOrUpdate(new CandyLabel
@@ -62,9 +62,9 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         {
             await this.CandyLabel.Remove(input);
         }
-        #endregion 
+        #endregion
 
-        #region Action
+        #region 命令
         public void SaveAction()
         {
             InitSave();

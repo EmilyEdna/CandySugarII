@@ -40,7 +40,7 @@ namespace CandySugar.Controls.ContentViewModel
             OnViewLoaded();
         }
 
-        #region CommomProperty_Bool
+        #region 布尔
         private bool _Loading;
         public bool Loading
         {
@@ -67,7 +67,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region ComomProperty_Int
+        #region 整型
         private int _CategoryTotal;
         public int CategoryTotal
         {
@@ -82,7 +82,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Field
+        #region 字段
         public string KeyWord;
         private Dictionary<object, object> CateKeyWord;
         private AnimeLetterEnum Letter = AnimeLetterEnum.全部;
@@ -91,7 +91,7 @@ namespace CandySugar.Controls.ContentViewModel
         private string Years = string.Empty;
         #endregion
 
-        #region Property
+        #region 属性
         private ObservableCollection<string> _Chars;
         public ObservableCollection<string> Chars
         {
@@ -145,14 +145,14 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Override
+        #region 重写
         protected override void OnViewLoaded()
         {
             InitAnime();
         }
         #endregion
 
-        #region Action
+        #region 命令
         public void RadioAction(Dictionary<object, object> input)
         {
             if (input.Keys.FirstOrDefault().ToString().Equals("Letter"))
@@ -203,7 +203,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Method
+        #region 方法
         public async void InitAnime()
         {
             this.Loading = true;
@@ -221,7 +221,7 @@ namespace CandySugar.Controls.ContentViewModel
             }).RunsAsync();
             this.Loading = false;
             InitResult = AnimeInitData.InitResult;
-            this.Chars = new ObservableCollection<string>(AnimeInitData.InitResult.Letters.Where(t=>!t.Equals("全部")));
+            this.Chars = new ObservableCollection<string>(AnimeInitData.InitResult.Letters.Where(t => !t.Equals("全部")));
             DayResult = new ObservableCollection<AnimeWeekDayIndexResult>(AnimeInitData.InitResult.RecResults ?? new List<AnimeWeekDayIndexResult>());
         }
         private async void InitSearch(string input)
@@ -291,15 +291,15 @@ namespace CandySugar.Controls.ContentViewModel
                     ImplType = StaticResource.ImplType(),
                     AnimeType = AnimeEnum.Category,
                     SourceType = AnimeSourceEnum.YSJDM,
-                    Category =  new AnimeCategory
+                    Category = new AnimeCategory
                     {
 
                         LetterType = Letter,
-                        Area=Areas,
-                        Type= Types,
-                        Year= Years,
+                        Area = Areas,
+                        Type = Types,
+                        Year = Years,
                         Page = CategoryPage
-                    } 
+                    }
                 };
             }).RunsAsync();
             this.Loading = false;

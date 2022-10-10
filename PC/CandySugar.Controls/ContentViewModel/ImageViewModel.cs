@@ -43,7 +43,7 @@ namespace CandySugar.Controls.ContentViewModel
             OnViewLoaded();
         }
 
-        #region CommomProperty_Bool
+        #region 布尔
         private bool _Loading;
         public bool Loading
         {
@@ -64,7 +64,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region ComomProperty_Int
+        #region 整型
         private int _Total;
         public int Total
         {
@@ -79,7 +79,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Property
+        #region 属性
         private ObservableCollection<ImageElementResult> _ElementResult;
         public ObservableCollection<ImageElementResult> ElementResult
         {
@@ -100,18 +100,18 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Override
+        #region 重写
         protected override void OnViewLoaded()
         {
             InitImage();
         }
         #endregion
 
-        #region Field
+        #region 字段
         private string KeyWord;
         #endregion
 
-        #region Action
+        #region 命令
         public ICommand HistoryAction => new RelayCommand((obj) =>
         {
             this.StepOne = true;
@@ -142,7 +142,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Method
+        #region 方法
         private async void InitImage()
         {
             this.Loading = true;
@@ -216,7 +216,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Util
+        #region 工具
         private async Task<byte[]> DownBytes(string input)
         {
             var ImageInitData = await ImageFactory.Image(opt =>

@@ -39,7 +39,7 @@ namespace CandySugar.Controls.ContentViewModel
             OnViewLoaded();
         }
 
-        #region CommomProperty_Bool
+        #region 布尔
         private bool _Loading;
         public bool Loading
         {
@@ -60,7 +60,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region CommomProperty_Int
+        #region 整型
         private int _Page;
         public int Page
         {
@@ -75,7 +75,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Property
+        #region 属性
         private ObservableCollection<MangaInitCategoryResult> _CateResult;
         /// <summary>
         /// 初始化结果
@@ -114,19 +114,19 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Override
+        #region 重写
         protected override void OnViewLoaded()
         {
             InitManga();
         }
         #endregion
 
-        #region Field
+        #region 字段
         private string CategoryRoute;
         private string KeyWord;
         #endregion
 
-        #region Action
+        #region 命令
         public void CategoryAction(string input)
         {
             this.Page = 1;
@@ -166,7 +166,7 @@ namespace CandySugar.Controls.ContentViewModel
         });
         #endregion
 
-        #region Method
+        #region 方法
         private async void InitManga()
         {
             Loading = true;

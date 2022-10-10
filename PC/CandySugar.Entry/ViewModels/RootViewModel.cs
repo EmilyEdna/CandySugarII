@@ -47,7 +47,7 @@ namespace CandySugar.Entry.ViewModels
             set => SetAndNotify(ref _Ctrl, value);
         }
 
-        #region Action
+         #region 命令
         /// <summary>
         /// 全局查询
         /// </summary>

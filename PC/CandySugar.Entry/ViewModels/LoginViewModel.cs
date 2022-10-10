@@ -21,7 +21,7 @@ namespace CandySugar.Entry.ViewModels
             this.WindowManager = WindowManager;
             this.Container = Container;
         }
-        #region Property
+        #region 属性
         private string _Account;
         public string Account
         {

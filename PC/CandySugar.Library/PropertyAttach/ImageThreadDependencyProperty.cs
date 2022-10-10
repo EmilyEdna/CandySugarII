@@ -28,7 +28,7 @@ namespace CandySugar.Library.PropertyAttach
             OnComplate += new ComplateDelegate(OnDownloadComplateEvent);
         }
 
-        #region Field
+        #region 字段
         public static string GetSource(DependencyObject obj)
         {
             return (string)obj.GetValue(SourceProperty);

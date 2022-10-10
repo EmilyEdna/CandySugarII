@@ -38,7 +38,7 @@ namespace CandySugar.Controls.ContentViewModel
             OnViewLoaded();
         }
 
-        #region CommomProperty_Bool
+        #region 布尔
         private bool _Loading;
         public bool Loading
         {
@@ -71,7 +71,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region CommomProperty_Int
+        #region 整型
         private int _CategoryPage;
         public int CategoryPage
         {
@@ -92,7 +92,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Property
+        #region 属性
         private ObservableCollection<NovelInitCategoryResult> _CateResult;
         /// <summary>
         /// 首页分类
@@ -137,20 +137,20 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Override
+        #region 重写
         protected override void OnViewLoaded()
         {
             Task.Run(() => InitNovel());
         }
         #endregion
 
-        #region Field
+        #region 字段
         private string CategoryRoute;
         private string DetailRoute;
         private Guid PrimaryId = Guid.Empty;
         #endregion
 
-        #region Action
+        #region 命令
         public void SearchAction(string input)
         {
             this.SearchVisible = true;
@@ -187,13 +187,14 @@ namespace CandySugar.Controls.ContentViewModel
             InitDetail(DetailRoute);
         }
 
-        public void HistoryAction() {
+        public void HistoryAction()
+        {
             this.StepOne = true;
             this.StepTwo = false;
         }
         #endregion
 
-        #region Method
+        #region 方法
         private async void InitNovel()
         {
             Loading = true;
@@ -237,7 +238,7 @@ namespace CandySugar.Controls.ContentViewModel
                 BookName = t.BookName,
                 DetailRoute = t.DetailRoute,
                 UpdateDate = t.UpdateDate,
-            })); 
+            }));
         }
         private async void InitCategory(string input)
         {
@@ -280,7 +281,7 @@ namespace CandySugar.Controls.ContentViewModel
                     NovelType = NovelEnum.Detail,
                     Detail = new NovelDetail
                     {
-                        Page =DetailPage,
+                        Page = DetailPage,
                         DetailRoute = input,
                     }
                 };

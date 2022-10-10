@@ -55,7 +55,7 @@ namespace CandySugar.Controls.ContentViewModel
             this.NonPlay = false;
             OnViewLoaded();
         }
-        #region Field
+        #region 字段
         private PlatformEnum PlatformType;
         private string QueryWord;
         private int ChangeType;
@@ -65,7 +65,7 @@ namespace CandySugar.Controls.ContentViewModel
         private int Index;
         #endregion
 
-        #region CommomProperty_Bool
+        #region 布尔
         private bool _Loading;
         public bool Loading
         {
@@ -86,7 +86,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region ComomProperty_Int
+        #region 整型
         private int? _Total;
         public int? Total
         {
@@ -107,7 +107,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region ComomProperty_str
+        #region 字符串
         private string _Songer;
         public string Songer
         {
@@ -128,7 +128,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Property
+        #region 属性
         public Dictionary<PlatformEnum, string> Handle { get; set; }
         private ObservableCollection<MusicSongElementResult> _ItemResult;
         /// <summary>
@@ -201,7 +201,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Override
+        #region 重写
         protected override void OnViewLoaded()
         {
             timer = new Timer
@@ -212,7 +212,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Action
+        #region 命令
         /// <summary>
         /// 搜索
         /// </summary>
@@ -377,7 +377,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Method
+        #region 方法
         private async void InitSearch(string input)
         {
             this.Loading = true;
@@ -577,7 +577,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region  Commom
+        #region  工具
         private void PlayConditon()
         {
             var PlayNum = CandyList.Count;

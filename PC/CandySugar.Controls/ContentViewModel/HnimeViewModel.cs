@@ -39,12 +39,12 @@ namespace CandySugar.Controls.ContentViewModel
             OnViewLoaded();
         }
 
-        #region Field
+        #region 字段
         private HnimeSearch Query;
         private string CateRoute;
         #endregion
 
-        #region CommomProperty_Bool
+        #region 布尔
         private bool _Loading;
         public bool Loading
         {
@@ -65,7 +65,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region CommomProperty_Int
+        #region 整型
         private int _Page;
         public int Page
         {
@@ -80,7 +80,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Property
+        #region 属性
         private ObservableCollection<HnimeInitResult> _InitResult;
         public ObservableCollection<HnimeInitResult> InitResult
         {
@@ -101,14 +101,14 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Override
+        #region 重写
         protected override void OnViewLoaded()
         {
             InitHnime();
         }
         #endregion
 
-        #region Action
+        #region 命令
         public void CategoryAction(string input)
         {
             CateRoute = input;
@@ -151,7 +151,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Method
+        #region 方法
         private async void InitHnime()
         {
             this.Loading = true;

@@ -31,7 +31,8 @@ namespace CandySugar.Controls.ContentViewModel
             this.StepThree = false;
             this.Page = 1;
         }
-        #region CommomProperty_Bool
+
+        #region 布尔
         private bool _Loading;
         public bool Loading
         {
@@ -58,7 +59,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Property_Int
+        #region 整型
         private int _Page;
         public int Page
         {
@@ -73,7 +74,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Property
+        #region 属性
         private ObservableCollection<ComicSearchElementResult> _Element;
         public ObservableCollection<ComicSearchElementResult> Element
         {
@@ -100,12 +101,12 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Field
+        #region 字段
         private string Keyword;
         private string CategoryRoute;
         #endregion
 
-        #region Action
+        #region 命令
         public void ViewAction(ComicSearchElementResult input)
         {
             this.Search = input;
@@ -157,7 +158,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Method
+        #region 方法
         private async void InitSearch()
         {
             Loading = true;

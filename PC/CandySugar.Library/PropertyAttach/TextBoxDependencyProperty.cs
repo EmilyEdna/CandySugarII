@@ -13,7 +13,7 @@ namespace CandySugar.Library.PropertyAttach
     public class TextBoxDependencyProperty
     {
 
-        #region Fields
+        #region 字段
 
         /// <summary>
         /// 文本框和Visual画刷对应的字典

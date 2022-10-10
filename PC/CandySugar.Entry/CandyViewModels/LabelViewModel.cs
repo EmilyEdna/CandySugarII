@@ -23,7 +23,7 @@ namespace CandySugar.Entry.CandyViewModels
         public List<string> Brands { get; set; }
         public List<string> Properties { get; set; }
 
-        #region Action
+         #region 命令
         public void CategoryAction(string input)
         {
             this.Category = input;

@@ -40,11 +40,11 @@ namespace CandySugar.Controls.MenuTemplateViewModel
             CandyManga = Container.Get<ICandyManga>();
             CandyImage = Container.Get<ICandyImage>();
             CandyHnime = Container.Get<ICandyHnime>();
-            CandyAxgle= Container.Get<ICandyAxgle>();
+            CandyAxgle = Container.Get<ICandyAxgle>();
             CandyMovie = Container.Get<ICandyMovie>();
         }
 
-        #region Field
+        #region 字段
         private ICandyNovel CandyNovel;
         private ICandyLovel CandyLovel;
         private ICandyAnime CandyAnime;
@@ -55,7 +55,7 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         private ICandyMovie CandyMovie;
         #endregion
 
-        #region CommomProperty_Int
+        #region 整型
         private int _Total;
         public int Total
         {
@@ -64,7 +64,7 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         }
         #endregion
 
-        #region CommomProperty_Bool
+        #region 布尔
         private bool _ZF;
         public bool ZF
         {
@@ -129,7 +129,7 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         }
         #endregion
 
-        #region Property
+        #region 属性
         private ObservableCollection<BgmInitResult> _BgmResult;
         public ObservableCollection<BgmInitResult> BgmResult
         {
@@ -193,14 +193,14 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         }
         #endregion
 
-        #region Action
+        #region 命令
         public void ChangeAction(string input)
         {
             switch (input)
             {
                 case "ZF":
                     ZF = true;
-                    XS = LXS = DM = HDM = MH = BZ = JY= DY = false;
+                    XS = LXS = DM = HDM = MH = BZ = JY = DY = false;
                     InitBGM();
                     break;
                 case "XS":
@@ -215,7 +215,7 @@ namespace CandySugar.Controls.MenuTemplateViewModel
                     break;
                 case "DM":
                     DM = true;
-                    ZF = XS = LXS = HDM = MH = BZ = JY= DY = false;
+                    ZF = XS = LXS = HDM = MH = BZ = JY = DY = false;
                     InitAnime();
                     break;
                 case "HDM":
@@ -294,7 +294,7 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         }
         #endregion
 
-        #region Method
+        #region 方法
         private async void InitBGM()
         {
             var result = await BgmFactory.Bgm(opt =>
@@ -345,7 +345,7 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         }
         #endregion
 
-        #region Remove
+        #region 删除
         private async void DelNovel(CandyNovel input)
         {
             await CandyNovel.Remove(input);

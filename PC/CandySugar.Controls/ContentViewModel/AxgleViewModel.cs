@@ -38,19 +38,19 @@ namespace CandySugar.Controls.ContentViewModel
             OnViewLoaded();
         }
 
-        #region Override
+        #region 重写
         protected override void OnViewLoaded()
         {
             InitAxgle();
         }
         #endregion
 
-        #region Field
+        #region 字段
         private string Keyword;
         private int Category;
         #endregion
 
-        #region CommomProperty_Bool
+        #region 布尔
         private bool _Loading;
         public bool Loading
         {
@@ -71,7 +71,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region CommomProperty_Int
+        #region 整型
         private int _Page;
         public int Page
         {
@@ -86,7 +86,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Property
+        #region 属性
         private ObservableCollection<AxgleInitResult> _InitResult;
         public ObservableCollection<AxgleInitResult> InitResult
         {
@@ -107,7 +107,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Action
+        #region 命令
         public void SearchAction(string input)
         {
             this.Keyword = input;
@@ -147,7 +147,7 @@ namespace CandySugar.Controls.ContentViewModel
         }
         #endregion
 
-        #region Method
+        #region 方法
         private async void InitAxgle()
         {
             this.Loading = true;
