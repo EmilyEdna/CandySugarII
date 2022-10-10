@@ -9,6 +9,7 @@ using Sdk.Component.Lovel.sdk.ViewModel;
 using Sdk.Component.Lovel.sdk.ViewModel.Enums;
 using Sdk.Component.Lovel.sdk.ViewModel.Request;
 using Sdk.Component.Lovel.sdk.ViewModel.Response;
+using Serilog;
 using Stylet;
 using StyletIoC;
 using System;
@@ -183,167 +184,215 @@ namespace CandySugar.Controls.ContentViewModel
         #region 方法
         private async void InitLovel()
         {
-            Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var LovelInitData = await LovelFactory.Lovel(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var LovelInitData = await LovelFactory.Lovel(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    LovelType = LovelEnum.Init,
-                    Login = new LovelLogin
+                    opt.RequestParam = new Input
                     {
-                        Account = CandySoft.Default.WA,
-                        Password = CandySoft.Default.WP
-                    }
-                };
-            }).RunsAsync();
-            Loading = false;
-            CateResult = new ObservableCollection<LovelInitResult>(LovelInitData.InitResults);
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        LovelType = LovelEnum.Init,
+                        Login = new LovelLogin
+                        {
+                            Account = CandySoft.Default.WA,
+                            Password = CandySoft.Default.WP
+                        }
+                    };
+                }).RunsAsync();
+                Loading = false;
+                CateResult = new ObservableCollection<LovelInitResult>(LovelInitData.InitResults);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitCategory(string input)
         {
-            Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var LovelCateData = await LovelFactory.Lovel(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var LovelCateData = await LovelFactory.Lovel(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    LovelType = LovelEnum.Category,
-                    Category = new LovelCategory
+                    opt.RequestParam = new Input
                     {
-                        Page = CategoryPage,
-                        Route = input
-                    }
-                };
-            }).RunsAsync();
-            Loading = false;
-            CategoryTotal = LovelCateData.CategoryResult.Total;
-            CateElementResult = new ObservableCollection<LovelCategoryElementResult>(LovelCateData.CategoryResult.ElementResults);
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        LovelType = LovelEnum.Category,
+                        Category = new LovelCategory
+                        {
+                            Page = CategoryPage,
+                            Route = input
+                        }
+                    };
+                }).RunsAsync();
+                Loading = false;
+                CategoryTotal = LovelCateData.CategoryResult.Total;
+                CateElementResult = new ObservableCollection<LovelCategoryElementResult>(LovelCateData.CategoryResult.ElementResults);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitDetail(string input)
         {
-            Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var LovelDetailData = await LovelFactory.Lovel(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var LovelDetailData = await LovelFactory.Lovel(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    LovelType = LovelEnum.Detail,
-                    Detail = new LovelDetail
+                    opt.RequestParam = new Input
                     {
-                        Route = input
-                    }
-                };
-            }).RunsAsync();
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var LovelViewData = await LovelFactory.Lovel(opt =>
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        LovelType = LovelEnum.Detail,
+                        Detail = new LovelDetail
+                        {
+                            Route = input
+                        }
+                    };
+                }).RunsAsync();
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var LovelViewData = await LovelFactory.Lovel(opt =>
+                {
+                    opt.RequestParam = new Input
+                    {
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        LovelType = LovelEnum.View,
+                        View = new LovelView
+                        {
+                            Route = LovelDetailData.DetailResult.Route
+                        }
+                    };
+                }).RunsAsync();
+                Loading = false;
+                ViewResult = new ObservableCollection<LovelViewResult>(LovelViewData.ViewResult);
+            }
+            catch (Exception ex)
             {
-                opt.RequestParam = new Input
-                {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    LovelType = LovelEnum.View,
-                    View = new LovelView
-                    {
-                        Route = LovelDetailData.DetailResult.Route
-                    }
-                };
-            }).RunsAsync();
-            Loading = false;
-            ViewResult = new ObservableCollection<LovelViewResult>(LovelViewData.ViewResult);
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitDown(LovelViewResult input)
         {
-            var LovelDownData = await LovelFactory.Lovel(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                var LovelDownData = await LovelFactory.Lovel(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    LovelType = LovelEnum.Download,
-                    Down = new LovelDown
+                    opt.RequestParam = new Input
                     {
-                        BookName = input.BookName,
-                        UId = input.ChapterRoute.AsInt()
-                    }
-                };
-            }).RunsAsync();
-            StaticResource.Download(LovelDownData.DownResult.Bytes, "Lovel", input.BookName, "txt");
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        LovelType = LovelEnum.Download,
+                        Down = new LovelDown
+                        {
+                            BookName = input.BookName,
+                            UId = input.ChapterRoute.AsInt()
+                        }
+                    };
+                }).RunsAsync();
+                StaticResource.Download(LovelDownData.DownResult.Bytes, "Lovel", input.BookName, "txt");
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitContent(string input)
         {
-            Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var LovelContentData = await LovelFactory.Lovel(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var LovelContentData = await LovelFactory.Lovel(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    LovelType = LovelEnum.Content,
-                    Content = new LovelContent
+                    opt.RequestParam = new Input
                     {
-                        ChapterRoute = input
-                    }
-                };
-            }).RunsAsync();
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        LovelType = LovelEnum.Content,
+                        Content = new LovelContent
+                        {
+                            ChapterRoute = input
+                        }
+                    };
+                }).RunsAsync();
 
-            if (LovelContentData.ContentResult.Content.Equals("因版权问题，文库不再提供该小说的阅读！"))
-            {
-                Growl.Info("因版权问题，不再提供该小说的阅读");
-                return;
+                if (LovelContentData.ContentResult.Content.Equals("因版权问题，文库不再提供该小说的阅读！"))
+                {
+                    Growl.Info("因版权问题，不再提供该小说的阅读");
+                    return;
+                }
+                if (LovelContentData.ContentResult.Image.IsNullOrEmpty())
+                {
+                    StepOne = false;
+                    StepTwo = false;
+                    StepThree = true;
+                }
+                else
+                {
+                    StepOne = false;
+                    StepTwo = true;
+                    StepThree = false;
+                }
+                Logic(input);
+                Loading = false;
+                ContentResult = LovelContentData.ContentResult;
             }
-            if (LovelContentData.ContentResult.Image.IsNullOrEmpty())
+            catch (Exception ex)
             {
-                StepOne = false;
-                StepTwo = false;
-                StepThree = true;
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
             }
-            else
-            {
-                StepOne = false;
-                StepTwo = true;
-                StepThree = false;
-            }
-            Logic(input);
-            Loading = false;
-            ContentResult = LovelContentData.ContentResult;
         }
         private async void InitSearch(string input)
         {
-            Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var LovelQueryData = await LovelFactory.Lovel(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var LovelQueryData = await LovelFactory.Lovel(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    LovelType = LovelEnum.Search,
-                    Search = new LovelSearch
+                    opt.RequestParam = new Input
                     {
-                        KeyWord = input,
-                        SearchType = LovelSearchEnum.ArticleName,
-                        Page = CategoryPage
-                    }
-                };
-            }).RunsAsync();
-            Loading = false;
-            CategoryTotal = LovelQueryData.SearchResult.Total;
-            CateElementResult = new ObservableCollection<LovelCategoryElementResult>(LovelQueryData.SearchResult.ElementResults.ToMapest<List<LovelCategoryElementResult>>());
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        LovelType = LovelEnum.Search,
+                        Search = new LovelSearch
+                        {
+                            KeyWord = input,
+                            SearchType = LovelSearchEnum.ArticleName,
+                            Page = CategoryPage
+                        }
+                    };
+                }).RunsAsync();
+                Loading = false;
+                CategoryTotal = LovelQueryData.SearchResult.Total;
+                CateElementResult = new ObservableCollection<LovelCategoryElementResult>(LovelQueryData.SearchResult.ElementResults.ToMapest<List<LovelCategoryElementResult>>());
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void AddLovel(CandyLovel input)
         {

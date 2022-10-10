@@ -20,6 +20,7 @@ using System.Windows.Input;
 using HandyControl.Tools.Command;
 using CandySugar.Logic.IService;
 using CandySugar.Logic.Entity.CandyEntity;
+using Serilog;
 
 namespace CandySugar.Controls.ContentViewModel
 {
@@ -169,130 +170,170 @@ namespace CandySugar.Controls.ContentViewModel
         #region 方法
         private async void InitManga()
         {
-            Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var MangaInitData = await MangaFactory.Manga(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var MangaInitData = await MangaFactory.Manga(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    MangaType = MangaEnum.Init,
-                };
-            }).RunsAsync();
-            Loading = false;
-            CateResult = new ObservableCollection<MangaInitCategoryResult>(MangaInitData.CateInitResults);
+                    opt.RequestParam = new Input
+                    {
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        MangaType = MangaEnum.Init,
+                    };
+                }).RunsAsync();
+                Loading = false;
+                CateResult = new ObservableCollection<MangaInitCategoryResult>(MangaInitData.CateInitResults);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitSearch(string input)
         {
-            Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var MangaQueryData = await MangaFactory.Manga(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var MangaQueryData = await MangaFactory.Manga(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    MangaType = MangaEnum.Search,
-                    Search = new MangaSearch
+                    opt.RequestParam = new Input
                     {
-                        Page = Page,
-                        KeyWord = input
-                    }
-                };
-            }).RunsAsync();
-            Loading = false;
-            Total = MangaQueryData.SearchResult.Total;
-            var Target = MangaQueryData.SearchResult.ElementResults.ToMapper<List<MangaCategoryElementResult>>();
-            CateElementResult = new ObservableCollection<MangaCategoryElementResult>(Target);
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        MangaType = MangaEnum.Search,
+                        Search = new MangaSearch
+                        {
+                            Page = Page,
+                            KeyWord = input
+                        }
+                    };
+                }).RunsAsync();
+                Loading = false;
+                Total = MangaQueryData.SearchResult.Total;
+                var Target = MangaQueryData.SearchResult.ElementResults.ToMapper<List<MangaCategoryElementResult>>();
+                CateElementResult = new ObservableCollection<MangaCategoryElementResult>(Target);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitCategory(string input)
         {
-            Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var MangaCateData = await MangaFactory.Manga(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var MangaCateData = await MangaFactory.Manga(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    MangaType = MangaEnum.Category,
-                    Category = new MangaCategory
+                    opt.RequestParam = new Input
                     {
-                        Page = Page,
-                        Route = input
-                    }
-                };
-            }).RunsAsync();
-            Loading = false;
-            Total = MangaCateData.CategoryResult.Total;
-            CateElementResult = new ObservableCollection<MangaCategoryElementResult>(MangaCateData.CategoryResult.ElementResults);
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        MangaType = MangaEnum.Category,
+                        Category = new MangaCategory
+                        {
+                            Page = Page,
+                            Route = input
+                        }
+                    };
+                }).RunsAsync();
+                Loading = false;
+                Total = MangaCateData.CategoryResult.Total;
+                CateElementResult = new ObservableCollection<MangaCategoryElementResult>(MangaCateData.CategoryResult.ElementResults);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitDetail(string input)
         {
-            Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var MangaDetailData = await MangaFactory.Manga(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var MangaDetailData = await MangaFactory.Manga(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    MangaType = MangaEnum.Detail,
-                    Detail = new MangaDetail
+                    opt.RequestParam = new Input
                     {
-                        Route = input
-                    }
-                };
-            }).RunsAsync();
-            Loading = false;
-            DetailResult = new ObservableCollection<MangaChapterDetailResult>(MangaDetailData.ChapterResults);
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        MangaType = MangaEnum.Detail,
+                        Detail = new MangaDetail
+                        {
+                            Route = input
+                        }
+                    };
+                }).RunsAsync();
+                Loading = false;
+                DetailResult = new ObservableCollection<MangaChapterDetailResult>(MangaDetailData.ChapterResults);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitContent(string input)
         {
-            this.StepOne = false;
-            this.StepTwo = true;
-            Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var MangaCotnentlData = await MangaFactory.Manga(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                this.StepOne = false;
+                this.StepTwo = true;
+                Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var MangaCotnentlData = await MangaFactory.Manga(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    MangaType = MangaEnum.Content,
-                    Content = new MangaContent
+                    opt.RequestParam = new Input
                     {
-                        Route = input
-                    }
-                };
-            }).RunsAsync();
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var MangaByteData = await MangaFactory.Manga(opt =>
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        MangaType = MangaEnum.Content,
+                        Content = new MangaContent
+                        {
+                            Route = input
+                        }
+                    };
+                }).RunsAsync();
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var MangaByteData = await MangaFactory.Manga(opt =>
+                {
+                    opt.RequestParam = new Input
+                    {
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        MangaType = MangaEnum.Download,
+                        Down = new MangaBytes
+                        {
+                            Route = MangaCotnentlData.ContentResult.Route,
+                            CacheKey = MangaCotnentlData.ContentResult.CacheKey
+                        }
+                    };
+                }).RunsAsync();
+                Loading = false;
+                Logic(input);
+                var width = (int)(CandySoft.Default.ScreenWidth - 200);
+                var height = (int)(CandySoft.Default.ScreenHeight - 30);
+                ByteResult = new ObservableCollection<BitmapSource>(MangaByteData.DwonResult.Bytes.Select(t => StaticResource.ToImage(t, width, height)));
+            }
+            catch (Exception ex)
             {
-                opt.RequestParam = new Input
-                {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    MangaType = MangaEnum.Download,
-                    Down = new MangaBytes
-                    {
-                        Route = MangaCotnentlData.ContentResult.Route,
-                        CacheKey = MangaCotnentlData.ContentResult.CacheKey
-                    }
-                };
-            }).RunsAsync();
-            Loading = false;
-            Logic(input);
-            var width = (int)(CandySoft.Default.ScreenWidth - 200);
-            var height = (int)(CandySoft.Default.ScreenHeight - 30);
-            ByteResult = new ObservableCollection<BitmapSource>(MangaByteData.DwonResult.Bytes.Select(t => StaticResource.ToImage(t, width, height)));
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         protected async void Logic(string input)
         {

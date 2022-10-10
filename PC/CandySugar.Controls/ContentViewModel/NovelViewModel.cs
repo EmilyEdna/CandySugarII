@@ -17,6 +17,7 @@ using HandyControl.Data;
 using XExten.Advance.LinqFramework;
 using CandySugar.Logic.IService;
 using CandySugar.Logic.Entity.CandyEntity;
+using Serilog;
 
 namespace CandySugar.Controls.ContentViewModel
 {
@@ -197,120 +198,160 @@ namespace CandySugar.Controls.ContentViewModel
         #region 方法
         private async void InitNovel()
         {
-            Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var NovelInitData = await NovelFactory.Novel(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var NovelInitData = await NovelFactory.Novel(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    NovelType = NovelEnum.Init
-                };
-            }).RunsAsync();
-            Loading = false;
-            CateResult = new ObservableCollection<NovelInitCategoryResult>(NovelInitData.CateInitResults);
+                    opt.RequestParam = new Input
+                    {
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        NovelType = NovelEnum.Init
+                    };
+                }).RunsAsync();
+                Loading = false;
+                CateResult = new ObservableCollection<NovelInitCategoryResult>(NovelInitData.CateInitResults);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitSearch(string input)
         {
-            Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var NovelSearchData = await NovelFactory.Novel(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var NovelSearchData = await NovelFactory.Novel(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    NovelType = NovelEnum.Search,
-                    Search = new NovelSearch
+                    opt.RequestParam = new Input
                     {
-                        KeyWord = input
-                    }
-                };
-            }).RunsAsync();
-            Loading = false;
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        NovelType = NovelEnum.Search,
+                        Search = new NovelSearch
+                        {
+                            KeyWord = input
+                        }
+                    };
+                }).RunsAsync();
+                Loading = false;
 
-            CateElementResult = new ObservableCollection<NovelCategoryElementResult>(NovelSearchData.SearchResults.Select(t => new NovelCategoryElementResult
+                CateElementResult = new ObservableCollection<NovelCategoryElementResult>(NovelSearchData.SearchResults.Select(t => new NovelCategoryElementResult
+                {
+                    Author = t.Author,
+                    BookName = t.BookName,
+                    DetailRoute = t.DetailRoute,
+                    UpdateDate = t.UpdateDate,
+                }));
+            }
+            catch (Exception ex)
             {
-                Author = t.Author,
-                BookName = t.BookName,
-                DetailRoute = t.DetailRoute,
-                UpdateDate = t.UpdateDate,
-            }));
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitCategory(string input)
         {
-            this.SearchVisible = true;
-            this.DetailVisible = false;
-            Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var NovelCateData = await NovelFactory.Novel(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                this.SearchVisible = true;
+                this.DetailVisible = false;
+                Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var NovelCateData = await NovelFactory.Novel(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    NovelType = NovelEnum.Category,
-                    Category = new NovelCategory
+                    opt.RequestParam = new Input
                     {
-                        Page = this.CategoryPage,
-                        CategoryRoute = input,
-                    }
-                };
-            }).RunsAsync();
-            Loading = false;
-            CategoryTotal = NovelCateData.CategoryResult.Total;
-            CateElementResult = new ObservableCollection<NovelCategoryElementResult>(NovelCateData.CategoryResult.ElementResults);
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        NovelType = NovelEnum.Category,
+                        Category = new NovelCategory
+                        {
+                            Page = this.CategoryPage,
+                            CategoryRoute = input,
+                        }
+                    };
+                }).RunsAsync();
+                Loading = false;
+                CategoryTotal = NovelCateData.CategoryResult.Total;
+                CateElementResult = new ObservableCollection<NovelCategoryElementResult>(NovelCateData.CategoryResult.ElementResults);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitDetail(string input)
         {
-            this.SearchVisible = false;
-            this.DetailVisible = true;
-            Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var NovelDetailData = await NovelFactory.Novel(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                this.SearchVisible = false;
+                this.DetailVisible = true;
+                Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var NovelDetailData = await NovelFactory.Novel(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    NovelType = NovelEnum.Detail,
-                    Detail = new NovelDetail
+                    opt.RequestParam = new Input
                     {
-                        Page = DetailPage,
-                        DetailRoute = input,
-                    }
-                };
-            }).RunsAsync();
-            Loading = false;
-            DetailResult = NovelDetailData.DetailResult;
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        NovelType = NovelEnum.Detail,
+                        Detail = new NovelDetail
+                        {
+                            Page = DetailPage,
+                            DetailRoute = input,
+                        }
+                    };
+                }).RunsAsync();
+                Loading = false;
+                DetailResult = NovelDetailData.DetailResult;
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitView(string input)
         {
-            Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var NovelViewData = await NovelFactory.Novel(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var NovelViewData = await NovelFactory.Novel(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    NovelType = NovelEnum.View,
-                    View = new NovelView
+                    opt.RequestParam = new Input
                     {
-                        Route = input
-                    }
-                };
-            }).RunsAsync();
-            Loading = false;
-            NovelViewData.ContentResult.Content = $"\t{NovelViewData.ContentResult.Content.Replace("　", "\n\t")}";
-            ViewResult = NovelViewData.ContentResult;
-            Logic(input);
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        NovelType = NovelEnum.View,
+                        View = new NovelView
+                        {
+                            Route = input
+                        }
+                    };
+                }).RunsAsync();
+                Loading = false;
+                NovelViewData.ContentResult.Content = $"\t{NovelViewData.ContentResult.Content.Replace("　", "\n\t")}";
+                ViewResult = NovelViewData.ContentResult;
+                Logic(input);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitCandyNovel()
         {

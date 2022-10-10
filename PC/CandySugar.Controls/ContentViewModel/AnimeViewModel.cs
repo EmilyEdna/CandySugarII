@@ -10,6 +10,7 @@ using Sdk.Component.Anime.sdk.ViewModel;
 using Sdk.Component.Anime.sdk.ViewModel.Enums;
 using Sdk.Component.Anime.sdk.ViewModel.Request;
 using Sdk.Component.Anime.sdk.ViewModel.Response;
+using Serilog;
 using Stylet;
 using StyletIoC;
 using System;
@@ -206,154 +207,204 @@ namespace CandySugar.Controls.ContentViewModel
         #region 方法
         public async void InitAnime()
         {
-            this.Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var AnimeInitData = await AnimeFactory.Anime(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                this.Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var AnimeInitData = await AnimeFactory.Anime(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    SourceType = Switch ? AnimeSourceEnum.SBDM : AnimeSourceEnum.YSJDM,
-                    AnimeType = AnimeEnum.Init
-                };
-            }).RunsAsync();
-            this.Loading = false;
-            InitResult = AnimeInitData.InitResult;
-            this.Chars = new ObservableCollection<string>(AnimeInitData.InitResult.Letters.Where(t => !t.Equals("全部")));
-            DayResult = new ObservableCollection<AnimeWeekDayIndexResult>(AnimeInitData.InitResult.RecResults ?? new List<AnimeWeekDayIndexResult>());
+                    opt.RequestParam = new Input
+                    {
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        SourceType = Switch ? AnimeSourceEnum.SBDM : AnimeSourceEnum.YSJDM,
+                        AnimeType = AnimeEnum.Init
+                    };
+                }).RunsAsync();
+                this.Loading = false;
+                InitResult = AnimeInitData.InitResult;
+                this.Chars = new ObservableCollection<string>(AnimeInitData.InitResult.Letters.Where(t => !t.Equals("全部")));
+                DayResult = new ObservableCollection<AnimeWeekDayIndexResult>(AnimeInitData.InitResult.RecResults ?? new List<AnimeWeekDayIndexResult>());
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
+            
         }
         private async void InitSearch(string input)
         {
-            this.Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var AnimeQueryData = await AnimeFactory.Anime(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                this.Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var AnimeQueryData = await AnimeFactory.Anime(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    AnimeType = AnimeEnum.Search,
-                    SourceType = Switch ? AnimeSourceEnum.SBDM : AnimeSourceEnum.YSJDM,
-                    Search = new AnimeSearch
+                    opt.RequestParam = new Input
                     {
-                        KeyWord = input,
-                        Page = CategoryPage
-                    }
-                };
-            }).RunsAsync();
-            this.Loading = false;
-            CategoryTotal = AnimeQueryData.SeachResult.Total;
-            SearchResult = new ObservableCollection<AnimeSearchElementResult>(AnimeQueryData.SeachResult.ElementResult);
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        AnimeType = AnimeEnum.Search,
+                        SourceType = Switch ? AnimeSourceEnum.SBDM : AnimeSourceEnum.YSJDM,
+                        Search = new AnimeSearch
+                        {
+                            KeyWord = input,
+                            Page = CategoryPage
+                        }
+                    };
+                }).RunsAsync();
+                this.Loading = false;
+                CategoryTotal = AnimeQueryData.SeachResult.Total;
+                SearchResult = new ObservableCollection<AnimeSearchElementResult>(AnimeQueryData.SeachResult.ElementResult);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
+
         }
         private async void InitCategory(Dictionary<object, object> input)
         {
-            var key = input.Keys.FirstOrDefault().ToString();
-            var val = input.Values.FirstOrDefault().ToString();
-            this.Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var AnimeCateData = await AnimeFactory.Anime(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                var key = input.Keys.FirstOrDefault().ToString();
+                var val = input.Values.FirstOrDefault().ToString();
+                this.Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var AnimeCateData = await AnimeFactory.Anime(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    AnimeType = key.Equals("Char") ? AnimeEnum.Category : AnimeEnum.CategoryType,
-                    Category = key.Equals("Char") ? new AnimeCategory
+                    opt.RequestParam = new Input
                     {
-                        Route = val,
-                        LetterType = Enum.Parse<AnimeLetterEnum>(val),
-                        Page = CategoryPage
-                    } : new AnimeCategory
-                    {
-                        Route = val,
-                        Page = CategoryPage
-                    }
-                };
-            }).RunsAsync();
-            this.Loading = false;
-            CategoryTotal = AnimeCateData.SeachResult.Total;
-            SearchResult = new ObservableCollection<AnimeSearchElementResult>(AnimeCateData.SeachResult.ElementResult);
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        AnimeType = key.Equals("Char") ? AnimeEnum.Category : AnimeEnum.CategoryType,
+                        Category = key.Equals("Char") ? new AnimeCategory
+                        {
+                            Route = val,
+                            LetterType = Enum.Parse<AnimeLetterEnum>(val),
+                            Page = CategoryPage
+                        } : new AnimeCategory
+                        {
+                            Route = val,
+                            Page = CategoryPage
+                        }
+                    };
+                }).RunsAsync();
+                this.Loading = false;
+                CategoryTotal = AnimeCateData.SeachResult.Total;
+                SearchResult = new ObservableCollection<AnimeSearchElementResult>(AnimeCateData.SeachResult.ElementResult);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitCategory()
         {
-            this.Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var AnimeCateData = await AnimeFactory.Anime(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                this.Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var AnimeCateData = await AnimeFactory.Anime(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    AnimeType = AnimeEnum.Category,
-                    SourceType = AnimeSourceEnum.YSJDM,
-                    Category = new AnimeCategory
+                    opt.RequestParam = new Input
                     {
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        AnimeType = AnimeEnum.Category,
+                        SourceType = AnimeSourceEnum.YSJDM,
+                        Category = new AnimeCategory
+                        {
 
-                        LetterType = Letter,
-                        Area = Areas,
-                        Type = Types,
-                        Year = Years,
-                        Page = CategoryPage
-                    }
-                };
-            }).RunsAsync();
-            this.Loading = false;
-            CategoryTotal = AnimeCateData.SeachResult.Total;
-            SearchResult = new ObservableCollection<AnimeSearchElementResult>(AnimeCateData.SeachResult.ElementResult);
+                            LetterType = Letter,
+                            Area = Areas,
+                            Type = Types,
+                            Year = Years,
+                            Page = CategoryPage
+                        }
+                    };
+                }).RunsAsync();
+                this.Loading = false;
+                CategoryTotal = AnimeCateData.SeachResult.Total;
+                SearchResult = new ObservableCollection<AnimeSearchElementResult>(AnimeCateData.SeachResult.ElementResult);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitDetail(string input)
         {
-            Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var AnimeDetailData = await AnimeFactory.Anime(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var AnimeDetailData = await AnimeFactory.Anime(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    SourceType = Switch ? AnimeSourceEnum.SBDM : AnimeSourceEnum.YSJDM,
-                    ImplType = StaticResource.ImplType(),
-                    AnimeType = AnimeEnum.Detail,
-                    Detail = new AnimeDetail
+                    opt.RequestParam = new Input
                     {
-                        Route = input
-                    }
-                };
-            }).RunsAsync();
-            this.Loading = false;
-            DetailResult = new ObservableCollection<AnimeDetailResult>(AnimeDetailData.DetailResults.Where(t => t.IsDownURL == false));
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        SourceType = Switch ? AnimeSourceEnum.SBDM : AnimeSourceEnum.YSJDM,
+                        ImplType = StaticResource.ImplType(),
+                        AnimeType = AnimeEnum.Detail,
+                        Detail = new AnimeDetail
+                        {
+                            Route = input
+                        }
+                    };
+                }).RunsAsync();
+                this.Loading = false;
+                DetailResult = new ObservableCollection<AnimeDetailResult>(AnimeDetailData.DetailResults.Where(t => t.IsDownURL == false));
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitWatch(AnimeDetailResult input)
         {
-            this.StepTwo = true;
-            this.StepOne = false;
-            this.Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var AnimeWatchData = await AnimeFactory.Anime(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                this.StepTwo = true;
+                this.StepOne = false;
+                this.Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var AnimeWatchData = await AnimeFactory.Anime(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    SourceType = Switch ? AnimeSourceEnum.SBDM : AnimeSourceEnum.YSJDM,
-                    AnimeType = AnimeEnum.Watch,
-                    WatchPlay = new AnimeWatch
+                    opt.RequestParam = new Input
                     {
-                        CollectName = input.CollectName,
-                        Route = input.WatchRoute
-                    }
-                };
-            }).RunsAsync();
-            this.Loading = false;
-            PlayResult = AnimeWatchData.PlayResult;
-            Logic(input);
-            await WebView.CoreWebView2.ExecuteScriptAsync($"Play('{PlayResult.PlayURL}','{CandySoft.Default.ScreenHeight - 30}')");
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        SourceType = Switch ? AnimeSourceEnum.SBDM : AnimeSourceEnum.YSJDM,
+                        AnimeType = AnimeEnum.Watch,
+                        WatchPlay = new AnimeWatch
+                        {
+                            CollectName = input.CollectName,
+                            Route = input.WatchRoute
+                        }
+                    };
+                }).RunsAsync();
+                this.Loading = false;
+                PlayResult = AnimeWatchData.PlayResult;
+                Logic(input);
+                await WebView.CoreWebView2.ExecuteScriptAsync($"Play('{PlayResult.PlayURL}','{CandySoft.Default.ScreenHeight - 30}')");
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void Logic(AnimeDetailResult input)
         {

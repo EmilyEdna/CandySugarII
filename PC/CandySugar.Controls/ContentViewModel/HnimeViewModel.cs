@@ -10,6 +10,7 @@ using Sdk.Component.Hnime.sdk.ViewModel;
 using Sdk.Component.Hnime.sdk.ViewModel.Enums;
 using Sdk.Component.Hnime.sdk.ViewModel.Request;
 using Sdk.Component.Hnime.sdk.ViewModel.Response;
+using Serilog;
 using Stylet;
 using StyletIoC;
 using System;
@@ -154,84 +155,116 @@ namespace CandySugar.Controls.ContentViewModel
         #region 方法
         private async void InitHnime()
         {
-            this.Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var AcgInitData = await HnimeFactory.Hnime(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                this.Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var AcgInitData = await HnimeFactory.Hnime(opt =>
                 {
-                    HnimeType = HnimeEnum.Init,
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    Init = new HnimeInit() { InitLabel = false }
-                };
-            }).RunsAsync();
-            this.Loading = false;
-            InitResult = new ObservableCollection<HnimeInitResult>(AcgInitData.InitResults);
+                    opt.RequestParam = new Input
+                    {
+                        HnimeType = HnimeEnum.Init,
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        Init = new HnimeInit() { InitLabel = false }
+                    };
+                }).RunsAsync();
+                this.Loading = false;
+                InitResult = new ObservableCollection<HnimeInitResult>(AcgInitData.InitResults);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitQuery(HnimeSearch input)
         {
-            this.Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var AcgQueryData = await HnimeFactory.Hnime(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                this.Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var AcgQueryData = await HnimeFactory.Hnime(opt =>
                 {
-                    HnimeType = HnimeEnum.Search,
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    Search = input
-                };
-            }).RunsAsync();
-            this.Loading = false;
-            Total = AcgQueryData.SearchResult.Total;
-            QueryResult = new ObservableCollection<HnimeSearchElementResult>(AcgQueryData.SearchResult.ElementResult);
+                    opt.RequestParam = new Input
+                    {
+                        HnimeType = HnimeEnum.Search,
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        Search = input
+                    };
+                }).RunsAsync();
+                this.Loading = false;
+                Total = AcgQueryData.SearchResult.Total;
+                QueryResult = new ObservableCollection<HnimeSearchElementResult>(AcgQueryData.SearchResult.ElementResult);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitCategory(string input)
         {
-            this.Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var AcgCateData = await HnimeFactory.Hnime(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                this.Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var AcgCateData = await HnimeFactory.Hnime(opt =>
                 {
-                    HnimeType = HnimeEnum.Category,
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    Category = new HnimeCategory
+                    opt.RequestParam = new Input
                     {
-                        Route = input,
-                        Page = this.Page
-                    }
-                };
-            }).RunsAsync();
-            this.Loading = false;
-            Total = AcgCateData.SearchResult.Total;
-            QueryResult = new ObservableCollection<HnimeSearchElementResult>(AcgCateData.SearchResult.ElementResult);
+                        HnimeType = HnimeEnum.Category,
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        Category = new HnimeCategory
+                        {
+                            Route = input,
+                            Page = this.Page
+                        }
+                    };
+                }).RunsAsync();
+                this.Loading = false;
+                Total = AcgCateData.SearchResult.Total;
+                QueryResult = new ObservableCollection<HnimeSearchElementResult>(AcgCateData.SearchResult.ElementResult);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitWatch(string input)
         {
-            this.Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var AcgPlayData = await HnimeFactory.Hnime(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                this.Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var AcgPlayData = await HnimeFactory.Hnime(opt =>
                 {
-                    HnimeType = HnimeEnum.Watch,
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    Play = new HnimePlay
+                    opt.RequestParam = new Input
                     {
-                        Route = input
-                    }
-                };
-            }).RunsAsync();
-            this.Loading = false;
-            PlayResult = new ObservableCollection<HnimePlayResult>(AcgPlayData.PlayResults);
+                        HnimeType = HnimeEnum.Watch,
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        Play = new HnimePlay
+                        {
+                            Route = input
+                        }
+                    };
+                }).RunsAsync();
+                this.Loading = false;
+                PlayResult = new ObservableCollection<HnimePlayResult>(AcgPlayData.PlayResults);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitPlay(string input)
         {

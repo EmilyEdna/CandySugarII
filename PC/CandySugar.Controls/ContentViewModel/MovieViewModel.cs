@@ -10,8 +10,10 @@ using Sdk.Component.Movie.sdk.ViewModel;
 using Sdk.Component.Movie.sdk.ViewModel.Enums;
 using Sdk.Component.Movie.sdk.ViewModel.Request;
 using Sdk.Component.Movie.sdk.ViewModel.Response;
+using Serilog;
 using Stylet;
 using StyletIoC;
+using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using XExten.Advance.LinqFramework;
@@ -154,116 +156,156 @@ namespace CandySugar.Controls.ContentViewModel
         #region 方法
         private async void InitMovie()
         {
-            this.Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var InitData = await MovieFactory.Movie(opt =>
-             {
-                 opt.RequestParam = new Input
-                 {
-                     CacheSpan = CandySoft.Default.Cache,
-                     Proxy = StaticResource.Proxy(),
-                     ImplType = StaticResource.ImplType(),
-                     MovieType = MovieEnum.Init,
-                 };
-             }).RunsAsync();
-            this.Loading = false;
-            InitResult = new ObservableCollection<MovieInitResult>(InitData.InitResults);
+            try
+            {
+                this.Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var InitData = await MovieFactory.Movie(opt =>
+                {
+                    opt.RequestParam = new Input
+                    {
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        MovieType = MovieEnum.Init,
+                    };
+                }).RunsAsync();
+                this.Loading = false;
+                InitResult = new ObservableCollection<MovieInitResult>(InitData.InitResults);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitPlay(string input)
         {
-            this.Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var InitPlay = await MovieFactory.Movie(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                this.Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var InitPlay = await MovieFactory.Movie(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    MovieType = MovieEnum.Watch,
-                    Play = new MoviePlay
+                    opt.RequestParam = new Input
                     {
-                        Route = input
-                    }
-                };
-            }).RunsAsync();
-            this.Loading = false;
-            if (InitPlay.PlayResult.Route.IsNullOrEmpty())
-            {
-                Growl.Info("当前播放地址无效,请更换其他线路!");
-                return;
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        MovieType = MovieEnum.Watch,
+                        Play = new MoviePlay
+                        {
+                            Route = input
+                        }
+                    };
+                }).RunsAsync();
+                this.Loading = false;
+                if (InitPlay.PlayResult.Route.IsNullOrEmpty())
+                {
+                    Growl.Info("当前播放地址无效,请更换其他线路!");
+                    return;
+                }
+                Logic(InitPlay.PlayResult.Route);
+                Play(InitPlay.PlayResult.Route);
             }
-            Logic(InitPlay.PlayResult.Route);
-            Play(InitPlay.PlayResult.Route);
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitCategory(string input)
         {
-            this.Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var InitCate = await MovieFactory.Movie(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                this.Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var InitCate = await MovieFactory.Movie(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    MovieType = MovieEnum.Category,
-                    Category = new MovieCategory
+                    opt.RequestParam = new Input
                     {
-                        Page = this.Page,
-                        Route = input
-                    }
-                };
-            }).RunsAsync();
-            this.Loading = false;
-            this.Total = InitCate.RootResult.Total;
-            this.EleResult = new ObservableCollection<MovieElementResult>(InitCate.RootResult.ElementResults);
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        MovieType = MovieEnum.Category,
+                        Category = new MovieCategory
+                        {
+                            Page = this.Page,
+                            Route = input
+                        }
+                    };
+                }).RunsAsync();
+                this.Loading = false;
+                this.Total = InitCate.RootResult.Total;
+                this.EleResult = new ObservableCollection<MovieElementResult>(InitCate.RootResult.ElementResults);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitWatch(string input)
         {
-            this.Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var InitDetail = await MovieFactory.Movie(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                this.Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var InitDetail = await MovieFactory.Movie(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    MovieType = MovieEnum.Detail,
-                    Detail = new MovieDetail
+                    opt.RequestParam = new Input
                     {
-                        Route = input
-                    }
-                };
-            }).RunsAsync();
-            this.Loading = false;
-            DetailResult = new ObservableCollection<MovieDetailResult>(InitDetail.DetailResults);
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        MovieType = MovieEnum.Detail,
+                        Detail = new MovieDetail
+                        {
+                            Route = input
+                        }
+                    };
+                }).RunsAsync();
+                this.Loading = false;
+                DetailResult = new ObservableCollection<MovieDetailResult>(InitDetail.DetailResults);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitQuery(string input)
         {
-            this.Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var InitSearch = await MovieFactory.Movie(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                this.Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var InitSearch = await MovieFactory.Movie(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    MovieType = MovieEnum.Search,
-                    Search = new MovieSearch
+                    opt.RequestParam = new Input
                     {
-                        Page = this.Page,
-                        KeyWord = input,
-                        SearchId = this.SearchId
-                    }
-                };
-            }).RunsAsync();
-            this.Loading = false;
-            this.Total = InitSearch.RootResult.Total;
-            this.SearchId = InitSearch.RootResult.SearchId;
-            this.EleResult = new ObservableCollection<MovieElementResult>(InitSearch.RootResult.ElementResults);
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        MovieType = MovieEnum.Search,
+                        Search = new MovieSearch
+                        {
+                            Page = this.Page,
+                            KeyWord = input,
+                            SearchId = this.SearchId
+                        }
+                    };
+                }).RunsAsync();
+                this.Loading = false;
+                this.Total = InitSearch.RootResult.Total;
+                this.SearchId = InitSearch.RootResult.SearchId;
+                this.EleResult = new ObservableCollection<MovieElementResult>(InitSearch.RootResult.ElementResults);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void Logic(string input)
         {

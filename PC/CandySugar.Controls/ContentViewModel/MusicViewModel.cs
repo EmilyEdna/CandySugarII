@@ -23,6 +23,7 @@ using CandySugar.Library.AudioTemplate;
 using System.Timers;
 using XExten.Advance.LinqFramework;
 using NAudio.Wave;
+using Serilog;
 
 namespace CandySugar.Controls.ContentViewModel
 {
@@ -380,91 +381,123 @@ namespace CandySugar.Controls.ContentViewModel
         #region 方法
         private async void InitSearch(string input)
         {
-            this.Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var MusicQueryData = await MusicFactory.Music(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                this.Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var MusicQueryData = await MusicFactory.Music(opt =>
                 {
-                    PlatformType = this.PlatformType,
-                    CacheSpan = CandySoft.Default.Cache,
-                    MusicType = MusicEnum.Song,
-                    ImplType = StaticResource.ImplType(),
-                    Search = new MusicSearch
+                    opt.RequestParam = new Input
                     {
-                        Page = this.Page,
-                        KeyWord = input
-                    }
-                };
-            }).RunsAsync();
-            this.Loading = false;
-            Total = MusicQueryData.SongResult.Total;
-            ItemResult = new ObservableCollection<MusicSongElementResult>(MusicQueryData.SongResult.ElementResults);
+                        PlatformType = this.PlatformType,
+                        CacheSpan = CandySoft.Default.Cache,
+                        MusicType = MusicEnum.Song,
+                        ImplType = StaticResource.ImplType(),
+                        Search = new MusicSearch
+                        {
+                            Page = this.Page,
+                            KeyWord = input
+                        }
+                    };
+                }).RunsAsync();
+                this.Loading = false;
+                Total = MusicQueryData.SongResult.Total;
+                ItemResult = new ObservableCollection<MusicSongElementResult>(MusicQueryData.SongResult.ElementResults);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitQuery(string input)
         {
-            this.Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var MusicQueryData = await MusicFactory.Music(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                this.Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var MusicQueryData = await MusicFactory.Music(opt =>
                 {
-                    PlatformType = this.PlatformType,
-                    CacheSpan = CandySoft.Default.Cache,
-                    MusicType = MusicEnum.Sheet,
-                    ImplType = StaticResource.ImplType(),
-                    Search = new MusicSearch
+                    opt.RequestParam = new Input
                     {
-                        Page = this.Page,
-                        KeyWord = input
-                    }
-                };
-            }).RunsAsync();
-            this.Loading = false;
-            Total = MusicQueryData.SheetResult.Total;
-            ItemsResult = new ObservableCollection<MusicSheetElementResult>(MusicQueryData.SheetResult.ElementResults);
+                        PlatformType = this.PlatformType,
+                        CacheSpan = CandySoft.Default.Cache,
+                        MusicType = MusicEnum.Sheet,
+                        ImplType = StaticResource.ImplType(),
+                        Search = new MusicSearch
+                        {
+                            Page = this.Page,
+                            KeyWord = input
+                        }
+                    };
+                }).RunsAsync();
+                this.Loading = false;
+                Total = MusicQueryData.SheetResult.Total;
+                ItemsResult = new ObservableCollection<MusicSheetElementResult>(MusicQueryData.SheetResult.ElementResults);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitAlbum(string input)
         {
-            this.Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var MusicAlbumData = await MusicFactory.Music(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                this.Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var MusicAlbumData = await MusicFactory.Music(opt =>
                 {
-                    PlatformType = this.PlatformType,
-                    CacheSpan = CandySoft.Default.Cache,
-                    MusicType = MusicEnum.AlbumDetail,
-                    ImplType = StaticResource.ImplType(),
-                    AlbumDetail = new MusicAlbumDetail
+                    opt.RequestParam = new Input
                     {
-                        AlbumId = input
-                    }
-                };
-            }).RunsAsync();
-            this.Loading = false;
-            AlbumResult = new ObservableCollection<MusicSongElementResult>(MusicAlbumData.AlbumResult.ElementResults);
+                        PlatformType = this.PlatformType,
+                        CacheSpan = CandySoft.Default.Cache,
+                        MusicType = MusicEnum.AlbumDetail,
+                        ImplType = StaticResource.ImplType(),
+                        AlbumDetail = new MusicAlbumDetail
+                        {
+                            AlbumId = input
+                        }
+                    };
+                }).RunsAsync();
+                this.Loading = false;
+                AlbumResult = new ObservableCollection<MusicSongElementResult>(MusicAlbumData.AlbumResult.ElementResults);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitDetail(string input)
         {
-            this.Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var MusicDetailData = await MusicFactory.Music(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                this.Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var MusicDetailData = await MusicFactory.Music(opt =>
                 {
-                    PlatformType = this.PlatformType,
-                    MusicType = MusicEnum.SheetDetail,
-                    ImplType = StaticResource.ImplType(),
-                    CacheSpan = CandySoft.Default.Cache,
-                    SheetDetail = new MusicSheetDetail
+                    opt.RequestParam = new Input
                     {
-                        Id = input
-                    }
-                };
-            }).RunsAsync();
-            this.Loading = false;
-            DetailResult = MusicDetailData.SheetDetailResult;
+                        PlatformType = this.PlatformType,
+                        MusicType = MusicEnum.SheetDetail,
+                        ImplType = StaticResource.ImplType(),
+                        CacheSpan = CandySoft.Default.Cache,
+                        SheetDetail = new MusicSheetDetail
+                        {
+                            Id = input
+                        }
+                    };
+                }).RunsAsync();
+                this.Loading = false;
+                DetailResult = MusicDetailData.SheetDetailResult;
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitPlayList()
         {
@@ -507,73 +540,89 @@ namespace CandySugar.Controls.ContentViewModel
         }
         private async void InitDownloadPlay(string input)
         {
-            CandyMusic candy = CandyList.FirstOrDefault(t => t.SongId == input);
-            var Platform = (PlatformEnum)candy.Platform;
-            if (!candy.IsComplete)
+            try
             {
-                var MusicPlayData = await MusicFactory.Music(opt =>
+                CandyMusic candy = CandyList.FirstOrDefault(t => t.SongId == input);
+                var Platform = (PlatformEnum)candy.Platform;
+                if (!candy.IsComplete)
                 {
-                    opt.RequestParam = new Input
+                    var MusicPlayData = await MusicFactory.Music(opt =>
                     {
-                        PlatformType = Platform,
-                        MusicType = MusicEnum.Route,
-                        ImplType = StaticResource.ImplType(),
-                        CacheSpan = CandySoft.Default.Cache,
-                        Play = Platform == PlatformEnum.KuGouMusic ? new MusicPlaySearch
+                        opt.RequestParam = new Input
                         {
-                            Dynamic = input,
-                            KuGouAlbumId = candy.AlbumId,
-                        } : new MusicPlaySearch
+                            PlatformType = Platform,
+                            MusicType = MusicEnum.Route,
+                            ImplType = StaticResource.ImplType(),
+                            CacheSpan = CandySoft.Default.Cache,
+                            Play = Platform == PlatformEnum.KuGouMusic ? new MusicPlaySearch
+                            {
+                                Dynamic = input,
+                                KuGouAlbumId = candy.AlbumId,
+                            } : new MusicPlaySearch
+                            {
+                                Dynamic = input,
+                            }
+                        };
+                    }).RunsAsync();
+                    if (MusicPlayData.PlayResult.CanPlay)
+                    {
+                        var SongFile = $"{candy.SongName}({candy.AlbumName})-{candy.SongArtist}_{Platform}";
+                        if (Platform == PlatformEnum.BiliBiliMusic)
                         {
-                            Dynamic = input,
+                            candy.LocalRoute = StaticResource.Download(MusicPlayData.PlayResult.BilibiliFileBytes, Path.Combine("Music", candy.SongArtist), SongFile, "mp3");
                         }
-                    };
-                }).RunsAsync();
-                if (MusicPlayData.PlayResult.CanPlay)
-                {
-                    var SongFile = $"{candy.SongName}({candy.AlbumName})-{candy.SongArtist}_{Platform}";
-                    if (Platform == PlatformEnum.BiliBiliMusic)
-                    {
-                        candy.LocalRoute = StaticResource.Download(MusicPlayData.PlayResult.BilibiliFileBytes, Path.Combine("Music", candy.SongArtist), SongFile, "mp3");
+                        else
+                        {
+                            var filebytes = IHttpMultiClient.HttpMulti.AddNode(opt => opt.NodePath = MusicPlayData.PlayResult.SongURL).Build().RunBytes().FirstOrDefault();
+                            candy.LocalRoute = StaticResource.Download(filebytes, Path.Combine("Music", candy.SongArtist), SongFile, "mp3");
+                            candy.NetRoute = MusicPlayData.PlayResult.SongURL;
+                        }
+                        await this.CandyMusic.AddOrUpdate(candy);
+                        InitPlayList();
                     }
                     else
-                    {
-                        var filebytes = IHttpMultiClient.HttpMulti.AddNode(opt => opt.NodePath = MusicPlayData.PlayResult.SongURL).Build().RunBytes().FirstOrDefault();
-                        candy.LocalRoute = StaticResource.Download(filebytes, Path.Combine("Music", candy.SongArtist), SongFile, "mp3");
-                        candy.NetRoute = MusicPlayData.PlayResult.SongURL;
-                    }
-                    await this.CandyMusic.AddOrUpdate(candy);
-                    InitPlayList();
+                        Growl.Info("当前歌曲已下架，请切换到其他其他平台搜索");
                 }
-                else
-                    Growl.Info("当前歌曲已下架，请切换到其他其他平台搜索");
-            }
 
-            AudioFactory = AudioFactory.Instance.InitConfig(candy.LocalRoute, (data) =>
+                AudioFactory = AudioFactory.Instance.InitConfig(candy.LocalRoute, (data) =>
+                {
+                    Channel = new ObservableCollection<double>(data.Item1);
+                    CurrentSpan = data.Item2;
+                    CurrentSecond = data.Item3;
+                }).Run(data => Audio = data);
+                InitLyric(candy);
+            }
+            catch (Exception ex)
             {
-                Channel = new ObservableCollection<double>(data.Item1);
-                CurrentSpan = data.Item2;
-                CurrentSecond = data.Item3;
-            }).Run(data => Audio = data);
-            InitLyric(candy);
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }  
         }
         private async void InitLyric(CandyMusic candy)
         {
-            var MusicLyricData = await MusicFactory.Music(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                var MusicLyricData = await MusicFactory.Music(opt =>
                 {
-                    PlatformType = (PlatformEnum)candy.Platform,
-                    MusicType = MusicEnum.Lyric,
-                    ImplType = StaticResource.ImplType(),
-                    CacheSpan = CandySoft.Default.Cache,
-                    Lyric = new MusicLyricSearch
+                    opt.RequestParam = new Input
                     {
-                        Dynamic = candy.SongId
-                    }
-                };
-            }).RunsAsync();
-            LyricResult = new ObservableCollection<MusicLyricElemetResult>(MusicLyricData.LyricResult.Lyrics);
+                        PlatformType = (PlatformEnum)candy.Platform,
+                        MusicType = MusicEnum.Lyric,
+                        ImplType = StaticResource.ImplType(),
+                        CacheSpan = CandySoft.Default.Cache,
+                        Lyric = new MusicLyricSearch
+                        {
+                            Dynamic = candy.SongId
+                        }
+                    };
+                }).RunsAsync();
+                LyricResult = new ObservableCollection<MusicLyricElemetResult>(MusicLyricData.LyricResult.Lyrics);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         #endregion
 

@@ -6,6 +6,7 @@ using Sdk.Component.Comic.sdk.ViewModel;
 using Sdk.Component.Comic.sdk.ViewModel.Enums;
 using Sdk.Component.Comic.sdk.ViewModel.Request;
 using Sdk.Component.Comic.sdk.ViewModel.Response;
+using Serilog;
 using Stylet;
 using StyletIoC;
 using System;
@@ -161,71 +162,95 @@ namespace CandySugar.Controls.ContentViewModel
         #region 方法
         private async void InitSearch()
         {
-            Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var ComicQueryData = await ComicFactory.Comic(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var ComicQueryData = await ComicFactory.Comic(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    ComicType = ComicEnum.Search,
-                    Search = new ComicSearch
+                    opt.RequestParam = new Input
                     {
-                        Page = Page,
-                        Keyword = Keyword
-                    }
-                };
-            }).RunsAsync();
-            Loading = false;
-            this.Total = ComicQueryData.SearchResult.Total;
-            this.Element = new ObservableCollection<ComicSearchElementResult>(ComicQueryData.SearchResult.ElementResults);
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        ComicType = ComicEnum.Search,
+                        Search = new ComicSearch
+                        {
+                            Page = Page,
+                            Keyword = Keyword
+                        }
+                    };
+                }).RunsAsync();
+                Loading = false;
+                this.Total = ComicQueryData.SearchResult.Total;
+                this.Element = new ObservableCollection<ComicSearchElementResult>(ComicQueryData.SearchResult.ElementResults);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitView(string input)
         {
-            Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var ComicViewData = await ComicFactory.Comic(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var ComicViewData = await ComicFactory.Comic(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    ComicType = ComicEnum.View,
-                    View = new ComicView
+                    opt.RequestParam = new Input
                     {
-                        Route = input
-                    }
-                };
-            }).RunsAsync();
-            Loading = false;
-            this.Views = ComicViewData.ViewResult;
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        ComicType = ComicEnum.View,
+                        View = new ComicView
+                        {
+                            Route = input
+                        }
+                    };
+                }).RunsAsync();
+                Loading = false;
+                this.Views = ComicViewData.ViewResult;
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitCategory()
         {
-            Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var ComicCateData = await ComicFactory.Comic(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var ComicCateData = await ComicFactory.Comic(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    ComicType = ComicEnum.Category,
-                    Category = new ComicCategory
+                    opt.RequestParam = new Input
                     {
-                        Page = Page,
-                        Route = CategoryRoute
-                    }
-                };
-            }).RunsAsync();
-            Loading = false;
-            this.Total = ComicCateData.CategoryResult.Total;
-            var Target = ComicCateData.CategoryResult.ElementResults.ToMapest<List<ComicSearchElementResult>>();
-            this.Element = new ObservableCollection<ComicSearchElementResult>(Target);
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        ComicType = ComicEnum.Category,
+                        Category = new ComicCategory
+                        {
+                            Page = Page,
+                            Route = CategoryRoute
+                        }
+                    };
+                }).RunsAsync();
+                Loading = false;
+                this.Total = ComicCateData.CategoryResult.Total;
+                var Target = ComicCateData.CategoryResult.ElementResults.ToMapest<List<ComicSearchElementResult>>();
+                this.Element = new ObservableCollection<ComicSearchElementResult>(Target);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         #endregion
     }

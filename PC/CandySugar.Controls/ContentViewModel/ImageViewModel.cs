@@ -10,6 +10,7 @@ using Sdk.Component.Image.sdk.ViewModel;
 using Sdk.Component.Image.sdk.ViewModel.Enums;
 using Sdk.Component.Image.sdk.ViewModel.Request;
 using Sdk.Component.Image.sdk.ViewModel.Response;
+using Serilog;
 using Stylet;
 using StyletIoC;
 using System;
@@ -145,64 +146,101 @@ namespace CandySugar.Controls.ContentViewModel
         #region 方法
         private async void InitImage()
         {
-            this.Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var ImageInitData = await ImageFactory.Image(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                this.Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var ImageInitData = await ImageFactory.Image(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    ImageType = ImageEnum.Init,
-                    Init = new ImageInit
+                    opt.RequestParam = new Input
                     {
-                        Page = Page,
-                        Limit = Limit,
-                        Tag = StaticResource.ImageModule()
-                    }
-                };
-            }).RunsAsync();
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        ImageType = ImageEnum.Init,
+                        Init = new ImageInit
+                        {
+                            Page = Page,
+                            Limit = Limit,
+                            Tag = StaticResource.ImageModule()
+                        }
+                    };
+                }).RunsAsync();
 
-            Total = ImageInitData.GlobalResult.Total;
-            this.Loading = false;
-            ElementResult = new ObservableCollection<ImageElementResult>(ImageInitData.GlobalResult.Result);
+                Total = ImageInitData.GlobalResult.Total;
+                this.Loading = false;
+                ElementResult = new ObservableCollection<ImageElementResult>(ImageInitData.GlobalResult.Result);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitSearch(string input)
         {
-            Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var ImageQueryData = await ImageFactory.Image(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var ImageQueryData = await ImageFactory.Image(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    ImageType = ImageEnum.Search,
-                    Search = new ImageSearch
+                    opt.RequestParam = new Input
                     {
-                        Page = Page,
-                        Limit = Limit,
-                        KeyWord = $"{input} {StaticResource.ImageModule()}"
-                    }
-                };
-            }).RunsAsync();
-            Total = ImageQueryData.GlobalResult.Total;
-            Loading = false;
-            ElementResult = new ObservableCollection<ImageElementResult>(ImageQueryData.GlobalResult.Result);
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        ImageType = ImageEnum.Search,
+                        Search = new ImageSearch
+                        {
+                            Page = Page,
+                            Limit = Limit,
+                            KeyWord = $"{input} {StaticResource.ImageModule()}"
+                        }
+                    };
+                }).RunsAsync();
+                Total = ImageQueryData.GlobalResult.Total;
+                Loading = false;
+                ElementResult = new ObservableCollection<ImageElementResult>(ImageQueryData.GlobalResult.Result);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitBytes(string input)
         {
-            this.StepOne = false;
-            this.StepTwo = true;
-            this.Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var bytes = await DownBytes(input);
-            this.Loading = false;
-            var width = (int)(CandySoft.Default.ScreenWidth - 200);
-            var height = (int)(CandySoft.Default.ScreenHeight - 30);
-            Bitmap = StaticResource.ToImage(bytes, width, height);
+            try
+            {
+                this.StepOne = false;
+                this.StepTwo = true;
+                this.Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var bytes = await ImageFactory.Image(opt =>
+                {
+                    opt.RequestParam = new Input
+                    {
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        ImageType = ImageEnum.Download,
+                        Download = new ImageDownload
+                        {
+                            Route = input
+                        }
+                    };
+                }).RunsAsync();
+                this.Loading = false;
+                var width = (int)(CandySoft.Default.ScreenWidth - 200);
+                var height = (int)(CandySoft.Default.ScreenHeight - 30);
+                Bitmap = StaticResource.ToImage(bytes.DownResult.Bytes, width, height);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void Logic(ImageElementResult input)
         {
@@ -213,27 +251,6 @@ namespace CandySugar.Controls.ContentViewModel
             });
             if (tmep) Growl.Info("Success");
             else Growl.Warning("已经添加过了！");
-        }
-        #endregion
-
-        #region 工具
-        private async Task<byte[]> DownBytes(string input)
-        {
-            var ImageInitData = await ImageFactory.Image(opt =>
-            {
-                opt.RequestParam = new Input
-                {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    ImageType = ImageEnum.Download,
-                    Download = new ImageDownload
-                    {
-                        Route = input
-                    }
-                };
-            }).RunsAsync();
-            return ImageInitData.DownResult.Bytes;
         }
         #endregion
     }

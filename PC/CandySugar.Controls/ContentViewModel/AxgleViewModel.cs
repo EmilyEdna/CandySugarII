@@ -9,6 +9,7 @@ using Sdk.Component.Axgle.sdk.ViewModel;
 using Sdk.Component.Axgle.sdk.ViewModel.Enums;
 using Sdk.Component.Axgle.sdk.ViewModel.Request;
 using Sdk.Component.Axgle.sdk.ViewModel.Response;
+using Serilog;
 using Stylet;
 using StyletIoC;
 using System;
@@ -150,68 +151,93 @@ namespace CandySugar.Controls.ContentViewModel
         #region 方法
         private async void InitAxgle()
         {
-            this.Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var AxgleInitData = await AxgleFactory.Axgle(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                this.Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var AxgleInitData = await AxgleFactory.Axgle(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    AxgleType = AxgleEnum.Init
-                };
-            }).RunsAsync();
-            this.Loading = false;
-            InitResult = new ObservableCollection<AxgleInitResult>(AxgleInitData.InitResults);
+                    opt.RequestParam = new Input
+                    {
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        AxgleType = AxgleEnum.Init
+                    };
+                }).RunsAsync();
+                this.Loading = false;
+                InitResult = new ObservableCollection<AxgleInitResult>(AxgleInitData.InitResults);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
+           
         }
         private async void InitQuery(string input)
         {
-            this.Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var AxgleQueryData = await AxgleFactory.Axgle(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                this.Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var AxgleQueryData = await AxgleFactory.Axgle(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    AxgleType = AxgleEnum.Search,
-                    Search = new AxgleSearch
+                    opt.RequestParam = new Input
                     {
-                        KeyWord = input,
-                        Page = Page
-                    }
-                };
-            }).RunsAsync();
-            this.Loading = false;
-            this.Total = AxgleQueryData.SearchResult.Total;
-            this.QueryResult = new ObservableCollection<AxgleSearchElementResult>(AxgleQueryData.SearchResult.ElementResult);
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        AxgleType = AxgleEnum.Search,
+                        Search = new AxgleSearch
+                        {
+                            KeyWord = input,
+                            Page = Page
+                        }
+                    };
+                }).RunsAsync();
+                this.Loading = false;
+                this.Total = AxgleQueryData.SearchResult.Total;
+                this.QueryResult = new ObservableCollection<AxgleSearchElementResult>(AxgleQueryData.SearchResult.ElementResult);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void InitCategory(int input)
         {
-            this.Loading = true;
-            await Task.Delay(CandySoft.Default.WaitSpan);
-            var AxgleCateData = await AxgleFactory.Axgle(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                this.Loading = true;
+                await Task.Delay(CandySoft.Default.WaitSpan);
+                var AxgleCateData = await AxgleFactory.Axgle(opt =>
                 {
-                    CacheSpan = CandySoft.Default.Cache,
-                    Proxy = StaticResource.Proxy(),
-                    ImplType = StaticResource.ImplType(),
-                    AxgleType = AxgleEnum.Category,
-                    Category = new AxgleCategory
+                    opt.RequestParam = new Input
                     {
-                        CId = input,
-                        Desc = (AxgleDescEnum)CandySoft.Default.AxModule,
-                        Page = Page
-                    }
-                };
-            }).RunsAsync();
-            this.Loading = false;
-            this.Total = AxgleCateData.CategoryResult.Total;
-            var Target = AxgleCateData.CategoryResult.ElementResult.ToMapest<List<AxgleSearchElementResult>>();
-            this.QueryResult = new ObservableCollection<AxgleSearchElementResult>(Target);
+                        CacheSpan = CandySoft.Default.Cache,
+                        Proxy = StaticResource.Proxy(),
+                        ImplType = StaticResource.ImplType(),
+                        AxgleType = AxgleEnum.Category,
+                        Category = new AxgleCategory
+                        {
+                            CId = input,
+                            Desc = (AxgleDescEnum)CandySoft.Default.AxModule,
+                            Page = Page
+                        }
+                    };
+                }).RunsAsync();
+                this.Loading = false;
+                this.Total = AxgleCateData.CategoryResult.Total;
+                var Target = AxgleCateData.CategoryResult.ElementResult.ToMapest<List<AxgleSearchElementResult>>();
+                this.QueryResult = new ObservableCollection<AxgleSearchElementResult>(Target);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                HandyControl.Controls.Growl.Error("服务异常");
+            }
         }
         private async void Logic(AxgleSearchElementResult input)
         {
