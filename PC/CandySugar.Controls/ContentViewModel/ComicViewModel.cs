@@ -94,12 +94,6 @@ namespace CandySugar.Controls.ContentViewModel
             get => _Search;
             set => SetAndNotify(ref _Search, value);
         }
-        private ObservableCollection<string> _Image;
-        public ObservableCollection<string> Image
-        {
-            get => _Image;
-            set => SetAndNotify(ref _Image, value);
-        }
         #endregion
 
         #region 字段
@@ -147,15 +141,6 @@ namespace CandySugar.Controls.ContentViewModel
             this.StepOne = false;
             this.StepTwo = false;
             this.StepThree = true;
-            Image = new ObservableCollection<string>();
-            Views.Image.ForEach(item =>
-            {
-                var Spit = item.LastIndexOf("/") + 1;
-                var Len = item.Length - Spit;
-                var Hix = item.Substring(Spit, Len).Split(".");
-                var NewName = item.Substring(0, Spit) + Hix.FirstOrDefault().Replace("t", "") + "." + Hix.LastOrDefault();
-                Image.Add(NewName);
-            });
         }
         #endregion
 

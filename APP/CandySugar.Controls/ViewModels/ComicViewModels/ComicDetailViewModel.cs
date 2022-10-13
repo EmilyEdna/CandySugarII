@@ -100,7 +100,7 @@ namespace CandySugar.Controls.ViewModels.ComicViewModels
         }
         async void GoView()
         {
-            await Shell.Current.GoToAsync(nameof(ComicWatchView), new Dictionary<string, object> { { "Key", ViewResult.Image } });
+            await Shell.Current.GoToAsync(nameof(ComicWatchView), new Dictionary<string, object> { { "Key", ViewResult.Realviews } });
         }
         #endregion
     }

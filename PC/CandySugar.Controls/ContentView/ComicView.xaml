@@ -403,7 +403,7 @@
                 Grid.Row="1"
                 Background="Transparent"
                 BorderThickness="0"
-                ItemsSource="{Binding Views.Image}"
+                ItemsSource="{Binding Views.Previews}"
                 Style="{StaticResource StackPanelHorizontalListBox}">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -471,7 +471,7 @@
                 Grid.Row="1"
                 Background="Transparent"
                 BorderThickness="0"
-                ItemsSource="{Binding Image}"
+                ItemsSource="{Binding Views.Realviews}"
                 Style="{StaticResource StackPanelVerticalListBox}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
