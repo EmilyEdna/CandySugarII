@@ -11,23 +11,16 @@
     <ContentPage.BindingContext>
         <vm:ComicWatchViewModel />
     </ContentPage.BindingContext>
-    <CollectionView
-        ItemSizingStrategy="MeasureAllItems"
-        ItemsSource="{Binding Route}"
-        RemainingItemsThreshold="0"
-        RemainingItemsThresholdReachedCommand="{Binding LoadMoreAction}">
-        <CollectionView.ItemsLayout>
-            <LinearItemsLayout ItemSpacing="3" Orientation="Vertical" />
-        </CollectionView.ItemsLayout>
-        <CollectionView.ItemTemplate>
-            <DataTemplate x:DataType="sys:String">
-                <Border
-                    Padding="5"
-                    Stroke="{StaticResource Gray100Brush}"
-                    StrokeThickness="1">
-                    <Image ctrl:ImageDependencyProperty.Source="{Binding .}" Aspect="Fill" />
-                </Border>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+    <Grid>
+        <Image ctrl:ImageDependencyProperty.Source="{Binding Route}" Aspect="AspectFit">
+            <Image.GestureRecognizers>
+                <SwipeGestureRecognizer Command="{Binding NextAction}" Direction="Left" />
+                <SwipeGestureRecognizer Command="{Binding PreAction}" Direction="Right" />
+            </Image.GestureRecognizers>
+        </Image>
+        <ActivityIndicator
+            IsRunning="False"
+            VerticalOptions="Center"
+            Color="{StaticResource Violet}" />
+    </Grid>
 </ContentPage>
