@@ -3,7 +3,6 @@ using CandySugar.Logic.Entity.CandyEntity;
 using CandySugar.Logic.IService;
 using CandySugar.Resource.Properties;
 using HandyControl.Data;
-using HandyControl.Tools.Extension;
 using Sdk.Component.Comic.sdk;
 using Sdk.Component.Comic.sdk.ViewModel;
 using Sdk.Component.Comic.sdk.ViewModel.Enums;
