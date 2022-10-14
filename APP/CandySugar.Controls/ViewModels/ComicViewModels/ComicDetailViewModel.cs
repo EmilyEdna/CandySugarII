@@ -109,9 +109,14 @@ namespace CandySugar.Controls.ViewModels.ComicViewModels
         }
         void Logic(ComicSearchElementResult input, ComicViewResult view)
         {
-            var Model = input.ToMapest<CandyComic>();
-            Model.Route = view.Realviews;
+            CandyComic Model = new CandyComic
+            {
+                Route = view.Realviews,
+                Name=input.Name,
+                Cover=input.Cover
+            };
             CandyService.AddOrAlterComic(Model);
+            StaticResource.PopToast("收藏成功~~");
         }
         #endregion
     }
