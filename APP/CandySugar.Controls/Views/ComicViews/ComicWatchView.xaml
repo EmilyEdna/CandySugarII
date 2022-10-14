@@ -11,7 +11,11 @@
     <ContentPage.BindingContext>
         <vm:ComicWatchViewModel />
     </ContentPage.BindingContext>
-    <CollectionView ItemSizingStrategy="MeasureAllItems" ItemsSource="{Binding Img}">
+    <CollectionView
+        ItemSizingStrategy="MeasureAllItems"
+        ItemsSource="{Binding Route}"
+        RemainingItemsThreshold="0"
+        RemainingItemsThresholdReachedCommand="{Binding LoadMoreAction}">
         <CollectionView.ItemsLayout>
             <LinearItemsLayout ItemSpacing="3" Orientation="Vertical" />
         </CollectionView.ItemsLayout>
