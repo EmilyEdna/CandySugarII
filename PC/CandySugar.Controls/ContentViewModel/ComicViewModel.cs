@@ -1,6 +1,9 @@
 ﻿using CandySugar.Library;
+using CandySugar.Logic.Entity.CandyEntity;
+using CandySugar.Logic.IService;
 using CandySugar.Resource.Properties;
 using HandyControl.Data;
+using HandyControl.Tools.Extension;
 using Sdk.Component.Comic.sdk;
 using Sdk.Component.Comic.sdk.ViewModel;
 using Sdk.Component.Comic.sdk.ViewModel.Enums;
@@ -22,11 +25,13 @@ namespace CandySugar.Controls.ContentViewModel
     public class ComicViewModel : Screen
     {
         public IContainer Container;
+        public ICandyComic CandyComic;
         public IWindowManager WindowManager;
         public ComicViewModel(IContainer Container, IWindowManager WindowManager)
         {
             this.WindowManager = WindowManager;
             this.Container = Container;
+            this.CandyComic = Container.Get<ICandyComic>();
             this.StepOne = true;
             this.StepTwo = false;
             this.StepThree = false;
@@ -109,7 +114,7 @@ namespace CandySugar.Controls.ContentViewModel
             this.StepTwo = true;
             this.StepThree = false;
             if (input != null)
-                InitView(input.Route);
+                InitView(input);
         }
         public void SearchAction(string input)
         {
@@ -176,7 +181,7 @@ namespace CandySugar.Controls.ContentViewModel
                 HandyControl.Controls.Growl.Error("服务异常");
             }
         }
-        private async void InitView(string input)
+        private async void InitView(ComicSearchElementResult input)
         {
             try
             {
@@ -192,12 +197,18 @@ namespace CandySugar.Controls.ContentViewModel
                         ComicType = ComicEnum.View,
                         View = new ComicView
                         {
-                            Route = input
+                            Route = input.Route
                         }
                     };
                 }).RunsAsync();
                 Loading = false;
                 this.Views = ComicViewData.ViewResult;
+                Logic(new CandyComic
+                {
+                    Name = input.Name,
+                    Cover = input.Cover,
+                    Route = input.Route
+                });
             }
             catch (Exception ex)
             {
@@ -236,6 +247,10 @@ namespace CandySugar.Controls.ContentViewModel
                 Log.Logger.Error(ex, "");
                 HandyControl.Controls.Growl.Error("服务异常");
             }
+        }
+        private async void Logic(CandyComic input)
+        {
+            await this.CandyComic.Add(input);
         }
         #endregion
     }

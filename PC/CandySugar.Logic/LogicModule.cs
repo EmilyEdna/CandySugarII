@@ -19,6 +19,7 @@ namespace CandySugar.Logic
     {
         protected override void Load()
         {
+            Bind<ICandyComic>().To<CandyComicImpl>();
             Bind<ICandyMusic>().To<CandyMusicImpl>();
             Bind<ICandyNovel>().To<CandyNovelImpl>();
             Bind<ICandyLovel>().To<CandyLovelImpl>();

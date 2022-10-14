@@ -7,7 +7,6 @@
             var db = DbContext.Candy.Context;
             await db.Insertable(input).CallEntityMethod(t => t.Create()).ExecuteCommandAsync();
         }
-
         public async Task<CandyAnimeRoot> AddOrUpdateRoot(CandyAnimeRoot input)
         {
             var db = DbContext.Candy.Context;
@@ -32,7 +31,6 @@
                 .OrderBy(t => t.Span, OrderByType.Desc)
                 .ToListAsync();
         }
-
         public async Task Remove(CandyAnimeRoot input)
         {
             var db = DbContext.Candy.Context;

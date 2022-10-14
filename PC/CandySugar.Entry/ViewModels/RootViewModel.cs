@@ -10,6 +10,7 @@ using CandySugar.Library.Template;
 using CandySugar.Logic.Entity.CandyEntity;
 using CandySugar.Logic.IService;
 using Sdk.Component.Anime.sdk.ViewModel.Response;
+using Sdk.Component.Comic.sdk.ViewModel.Response;
 using Sdk.Component.Hnime.sdk.ViewModel.Request;
 using Sdk.Component.Hnime.sdk.ViewModel.Response;
 using Sdk.Component.Manga.sdk.ViewModel.Response;
@@ -47,7 +48,7 @@ namespace CandySugar.Entry.ViewModels
             set => SetAndNotify(ref _Ctrl, value);
         }
 
-         #region 命令
+        #region 命令
         /// <summary>
         /// 全局查询
         /// </summary>
@@ -141,10 +142,17 @@ namespace CandySugar.Entry.ViewModels
             if (input is CandyHnime Hnime)
                 Ctrl = StaticResource.CreateControl<HnimeView>(Container.Get<HnimeViewModel>(), new HnimePlayResult
                 {
-                    Title= Hnime.Name,
+                    Title = Hnime.Name,
                     PlayRoute = Hnime.Route,
                     IsPlaying = true
                 }, "PlayAction");
+            if (input is CandyComic Comic)
+                Ctrl = StaticResource.CreateControl<ComicView>(Container.Get<ComicViewModel>(), new ComicSearchElementResult
+                {
+                    Cover = Comic.Cover,
+                    Route = Comic.Route,
+                    Name = Comic.Name
+                }, "ViewAction");
             if (input is CandyMovie Movie)
                 Ctrl = StaticResource.CreateControl<MovieView>(Container.Get<MovieViewModel>(), Movie.Route, "WatchAction");
             if (input is CandyAxgle Axgle)

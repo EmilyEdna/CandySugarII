@@ -33,13 +33,14 @@ namespace CandySugar.Controls.MenuTemplateViewModel
             this.WindowManager = WindowManager;
             this.Container = Container;
             ZF = true;
-            XS = LXS = DM = HDM = MH = BZ = JY = DY = false;
+            XS = LXS = DM = HDM=HMH = MH = BZ = JY = DY = false;
             CandyNovel = Container.Get<ICandyNovel>();
             CandyLovel = Container.Get<ICandyLovel>();
             CandyAnime = Container.Get<ICandyAnime>();
             CandyManga = Container.Get<ICandyManga>();
             CandyImage = Container.Get<ICandyImage>();
             CandyHnime = Container.Get<ICandyHnime>();
+            CandyComic=Container.Get<ICandyComic>();
             CandyAxgle = Container.Get<ICandyAxgle>();
             CandyMovie = Container.Get<ICandyMovie>();
         }
@@ -51,6 +52,7 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         private ICandyManga CandyManga;
         private ICandyImage CandyImage;
         private ICandyHnime CandyHnime;
+        private ICandyComic CandyComic;
         private ICandyAxgle CandyAxgle;
         private ICandyMovie CandyMovie;
         #endregion
@@ -98,6 +100,12 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         {
             get => _HDM;
             set => SetAndNotify(ref _HDM, value);
+        }
+        private bool _HMH;
+        public bool HMH
+        {
+            get => _HMH;
+            set => SetAndNotify(ref _HMH, value);
         }
 
         private bool _MH;
@@ -178,6 +186,13 @@ namespace CandySugar.Controls.MenuTemplateViewModel
             set => SetAndNotify(ref _CandyHnimeResult, value);
         }
 
+        private ObservableCollection<CandyComic> _CandyComicResult;
+        public ObservableCollection<CandyComic> CandyComicResult
+        {
+            get => _CandyComicResult;
+            set => SetAndNotify(ref _CandyComicResult, value);
+        }
+
         private ObservableCollection<CandyMovie> _CandyMovieResult;
         public ObservableCollection<CandyMovie> CandyMovieResult
         {
@@ -200,47 +215,52 @@ namespace CandySugar.Controls.MenuTemplateViewModel
             {
                 case "ZF":
                     ZF = true;
-                    XS = LXS = DM = HDM = MH = BZ = JY = DY = false;
+                    XS = LXS = DM = HDM= HMH = MH = BZ = JY = DY = false;
                     InitBGM();
                     break;
                 case "XS":
                     XS = true;
-                    ZF = LXS = DM = HDM = MH = BZ = JY = DY = false;
+                    ZF = LXS = DM = HDM= HMH = MH = BZ = JY = DY = false;
                     InitNovel();
                     break;
                 case "LXS":
                     LXS = true;
-                    ZF = XS = DM = HDM = MH = BZ = JY = DY = false;
+                    ZF = XS = DM = HDM= HMH = MH = BZ = JY = DY = false;
                     InitLovel();
                     break;
                 case "DM":
                     DM = true;
-                    ZF = XS = LXS = HDM = MH = BZ = JY = DY = false;
+                    ZF = XS = LXS = HDM= HMH = MH = BZ = JY = DY = false;
                     InitAnime();
                     break;
                 case "HDM":
                     HDM = true;
-                    ZF = XS = LXS = DM = MH = BZ = JY = DY = false;
+                    ZF = XS = LXS = DM= HMH = MH = BZ = JY = DY = false;
                     InitHnime();
+                    break;
+                case "HMH":
+                    HMH = true;
+                    ZF = XS = LXS = DM = HDM= MH = BZ = JY = DY = false;
+                    InitComic();
                     break;
                 case "MH":
                     MH = true;
-                    ZF = XS = LXS = DM = HDM = BZ = JY = DY = false;
+                    ZF = XS = LXS = DM = HDM= HMH = BZ = JY = DY = false;
                     InitManga();
                     break;
                 case "BZ":
                     BZ = true;
-                    ZF = MH = XS = LXS = DM = HDM = JY = DY = false;
+                    ZF = MH = XS = LXS = DM = HDM= HMH = JY = DY = false;
                     InitImage();
                     break;
                 case "JY":
                     JY = true;
-                    ZF = XS = LXS = DM = HDM = MH = BZ = DY = false;
+                    ZF = XS = LXS = DM = HDM= HMH = MH = BZ = DY = false;
                     InitAxgle();
                     break;
                 default:
                     DY = true;
-                    ZF = XS = LXS = DM = HDM = MH = BZ = JY = false;
+                    ZF = XS = LXS = DM = HDM = HMH = MH = BZ = JY = false;
                     InitMovie();
                     break;
             }
@@ -259,6 +279,8 @@ namespace CandySugar.Controls.MenuTemplateViewModel
                 DelImage(Image);
             if (input is CandyHnime Hnime)
                 DelHnime(Hnime);
+            if (input is CandyComic Comic)
+                DelComic(Comic);
             if (input is CandyAxgle Axgle)
                 DelAxgle(Axgle);
             if (input is CandyMovie Movie)
@@ -325,6 +347,9 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         {
             CandyHnimeResult = new ObservableCollection<CandyHnime>(await CandyHnime.Get());
         }
+        private async void InitComic() {
+            CandyComicResult = new ObservableCollection<CandyComic>(await CandyComic.Get());
+        }
         private async void InitManga()
         {
             CandyMangaResult = new ObservableCollection<CandyManga>(await CandyManga.Get());
@@ -375,6 +400,11 @@ namespace CandySugar.Controls.MenuTemplateViewModel
         {
             await CandyHnime.Remove(input);
             InitHnime();
+        }
+        private async void DelComic(CandyComic input)
+        {
+            await CandyComic.Remove(input);
+            InitComic();
         }
         private async void DelMovie(CandyMovie movie)
         {
