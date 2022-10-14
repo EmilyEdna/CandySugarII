@@ -3,6 +3,7 @@
     x:Class="CandySugar.Controls.Views.ComicViews.ComicWatchView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ctrl="clr-namespace:CandySugar.Library.PropertyAttach;assembly=CandySugar.Library"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:vm="clr-namespace:CandySugar.Controls.ViewModels.ComicViewModels"
     x:DataType="vm:ComicWatchViewModel"
@@ -20,7 +21,7 @@
                     Padding="5"
                     Stroke="{StaticResource Gray100Brush}"
                     StrokeThickness="1">
-                    <Image Aspect="Fill" Source="{Binding .}" />
+                    <Image ctrl:ImageDependencyProperty.Source="{Binding .}" Aspect="Fill" />
                 </Border>
             </DataTemplate>
         </CollectionView.ItemTemplate>
