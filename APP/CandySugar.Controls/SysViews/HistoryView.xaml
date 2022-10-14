@@ -46,12 +46,18 @@
             CommandParameter="6"
             Order="Secondary"
             Priority="5"
-            Text="电影历史" />
+            Text="Comic" />
         <ToolbarItem
             Command="{Binding HandlerAction}"
             CommandParameter="7"
             Order="Secondary"
             Priority="6"
+            Text="电影历史" />
+        <ToolbarItem
+            Command="{Binding HandlerAction}"
+            CommandParameter="8"
+            Order="Secondary"
+            Priority="7"
             Text="壁纸收藏" />
     </ContentPage.ToolbarItems>
 

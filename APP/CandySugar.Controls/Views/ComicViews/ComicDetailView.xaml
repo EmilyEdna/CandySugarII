@@ -28,15 +28,25 @@
                         Margin="10,0,0,0"
                         Text="{Binding SearchResult.Name}"
                         TextColor="{StaticResource Red}" />
-                    <Label
-                        Margin="10,5,5,0"
-                        HorizontalOptions="End"
-                        Text="浏览"
-                        TextColor="{StaticResource Red}">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding ViewAction, Source={RelativeSource AncestorType={x:Type vm:ComicDetailViewModel}}}" />
-                        </Label.GestureRecognizers>
-                    </Label>
+                    <Grid ColumnDefinitions="*,*">
+                        <ImageButton
+                            Margin="10,5,0,0"
+                            Command="{Binding StarAction, Source={RelativeSource AncestorType={x:Type vm:ComicDetailViewModel}}}"
+                            CommandParameter="{Binding .}"
+                            HorizontalOptions="Start"
+                            Source="{StaticResource Star}" />
+                        <Label
+                            Grid.Column="1"
+                            Margin="10,5,5,0"
+                            HorizontalOptions="End"
+                            Text="浏览"
+                            TextColor="{StaticResource Red}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ViewAction, Source={RelativeSource AncestorType={x:Type vm:ComicDetailViewModel}}}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
+
                 </StackLayout>
             </Grid>
         </Border>

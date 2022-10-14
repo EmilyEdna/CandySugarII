@@ -2,8 +2,10 @@
 using CandySugar.Controls.Views.ComicViews;
 using Microsoft.Maui.Storage;
 using Sdk.Component.Comic.sdk.ViewModel.Response;
+using Sdk.Component.Hnime.sdk.ViewModel.Response;
 using Sdk.Component.Lovel.sdk.ViewModel.Response;
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,11 +16,12 @@ namespace CandySugar.Controls.ViewModels.ComicViewModels
 {
     public class ComicDetailViewModel : BaseViewModel
     {
+        ICandyService CandyService;
         public override void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             SearchResult = query["Key"] as ComicSearchElementResult;
             ViewResult = query["View"] as ComicViewResult;
-
+            CandyService = CandyContainer.Instance.Resolves<ICandyService>();
             Properties = new ObservableCollection<ComicProperty>(ViewResult.Tag.Select(t => new ComicProperty
             {
                 Name = t.Key,
@@ -91,6 +94,8 @@ namespace CandySugar.Controls.ViewModels.ComicViewModels
         #region 命令
         public DelegateCommand<string> CategoryAction => new(input => GoBack(input));
         public DelegateCommand ViewAction => new(() => GoView());
+
+        public DelegateCommand StarAction => new(() => Logic(SearchResult, ViewResult));
         #endregion
 
         #region 方法
@@ -101,6 +106,12 @@ namespace CandySugar.Controls.ViewModels.ComicViewModels
         async void GoView()
         {
             await Shell.Current.GoToAsync(nameof(ComicWatchView), new Dictionary<string, object> { { "Key", ViewResult.Realviews } });
+        }
+        void Logic(ComicSearchElementResult input, ComicViewResult view)
+        {
+            var Model = input.ToMapest<CandyComic>();
+            Model.Route = view.Realviews;
+            CandyService.AddOrAlterComic(Model);
         }
         #endregion
     }
