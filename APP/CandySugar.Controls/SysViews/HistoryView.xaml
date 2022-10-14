@@ -46,7 +46,7 @@
             CommandParameter="6"
             Order="Secondary"
             Priority="5"
-            Text="Comic" />
+            Text="Comic历史" />
         <ToolbarItem
             Command="{Binding HandlerAction}"
             CommandParameter="7"
