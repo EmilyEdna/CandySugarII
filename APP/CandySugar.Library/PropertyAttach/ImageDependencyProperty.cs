@@ -35,7 +35,7 @@ namespace CandySugar.Library.PropertyAttach
         #endregion
 
         #region 方法
-        private async static void OnPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+        private static void OnPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
             try
             {
