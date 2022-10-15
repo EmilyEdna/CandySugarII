@@ -13,6 +13,7 @@ namespace CandySugar.Controls.ViewModels.ComicViewModels
         {
             Data = query.Values.FirstOrDefault() as List<string>;
             this.Page = 0;
+            this.PageIndex = this.Page + 1;
             this.Total = Data.Count;
             Route = Data.FirstOrDefault();
         }
@@ -23,6 +24,12 @@ namespace CandySugar.Controls.ViewModels.ComicViewModels
             get => _Route;
             set => SetProperty(ref _Route, value);
         }
+        int _PageIndex;
+        public int PageIndex
+        {
+            get => _PageIndex;
+            set => SetProperty(ref _PageIndex, value);
+        }
         #endregion
 
         #region 命令
@@ -30,12 +37,14 @@ namespace CandySugar.Controls.ViewModels.ComicViewModels
         {
             this.Page += 1;
             if (this.Page > this.Total - 1) return;
+            this.PageIndex += 1;
             Route = Data[this.Page];
         });
         public DelegateCommand PreAction => new(() =>
         {
             if (this.Page <= 0) return;
             this.Page -= 1;
+            this.PageIndex -= 1;
             Route = Data[this.Page];
         });
         #endregion

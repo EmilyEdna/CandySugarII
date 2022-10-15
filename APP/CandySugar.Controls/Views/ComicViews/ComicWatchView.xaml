@@ -12,15 +12,27 @@
         <vm:ComicWatchViewModel />
     </ContentPage.BindingContext>
     <Grid>
-        <Image ctrl:ImageDependencyProperty.Source="{Binding Route}" Aspect="AspectFit">
-            <Image.GestureRecognizers>
-                <SwipeGestureRecognizer Command="{Binding NextAction}" Direction="Left" />
-                <SwipeGestureRecognizer Command="{Binding PreAction}" Direction="Right" />
-            </Image.GestureRecognizers>
-        </Image>
-        <ActivityIndicator
-            IsRunning="False"
-            VerticalOptions="Center"
-            Color="{StaticResource Violet}" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="730" />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Image ctrl:ImageDependencyProperty.Source="{Binding Route}" Aspect="AspectFit">
+                <Image.GestureRecognizers>
+                    <SwipeGestureRecognizer Command="{Binding NextAction}" Direction="Up" />
+                    <SwipeGestureRecognizer Command="{Binding PreAction}" Direction="Down" />
+                </Image.GestureRecognizers>
+            </Image>
+            <ActivityIndicator
+                IsRunning="False"
+                VerticalOptions="Center"
+                Color="{StaticResource Violet}" />
+        </Grid>
+        <HorizontalStackLayout Grid.Row="1" HorizontalOptions="Center">
+            <Label Text="{Binding PageIndex}" TextColor="{StaticResource Primary}" />
+            <Label Text="/" />
+            <Label Text="{Binding Total}" TextColor="{StaticResource Red}" />
+        </HorizontalStackLayout>
     </Grid>
+
 </ContentPage>

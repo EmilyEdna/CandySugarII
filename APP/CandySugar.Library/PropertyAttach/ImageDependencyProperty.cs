@@ -42,6 +42,7 @@ namespace CandySugar.Library.PropertyAttach
                 var ctrl = (Image)bindable;
                 Indicator = ((ctrl.Parent as Grid).Children.LastOrDefault() as ActivityIndicator);
                 Indicator.IsRunning = true;
+                ctrl.IsVisible = false;
                 new Thread(new ParameterizedThreadStart(DownloadImage))
                 {
                     IsBackground = true
@@ -104,6 +105,7 @@ namespace CandySugar.Library.PropertyAttach
             {
                 image.Source = bit;
                 Indicator.IsRunning = false;
+                image.IsVisible = true;
             }
         }
         #endregion
