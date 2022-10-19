@@ -18,13 +18,13 @@
         /// 消息
         /// </summary>
         public string Info { get; set; }
-        internal static CandyResult<T> Result(T input)
+        internal static CandyResult<T> Result(T input,int Code=200,string Info= "操作成功")
         {
             return new CandyResult<T>
             {
-                Code = 200,
+                Code = Code,
                 Data = input,
-                Info = "操作成功"
+                Info = Info
             };
         }
     }

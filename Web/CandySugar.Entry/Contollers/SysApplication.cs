@@ -44,7 +44,7 @@ namespace CandySugar.Entry.Contollers
                 HttpContext.HttpContext.Response.Headers["x-access-token"] = refreshToken;
                 return CandyResult<bool>.Result(true);
             }
-            else return CandyResult<bool>.Result(false);
+            else return CandyResult<bool>.Result(false,401,"登录失败");
         }
         /// <summary>
         /// 注册
