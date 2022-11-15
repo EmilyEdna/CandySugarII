@@ -29,9 +29,9 @@
 	  <Content Include="favicon.ico" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="HandyControls" Version="3.3.10" />
+		<PackageReference Include="HandyControls" Version="3.4.2" />
 		<PackageReference Include="Stylet" Version="1.3.6" />
-		<PackageReference Include="MaterialDesignThemes" Version="4.5.0-ci168" />
-		<PackageReference Include="XExten.Advance" Version="1.2.4.1-preview" />
+		<PackageReference Include="MaterialDesignThemes" Version="4.6.1" />
+		<PackageReference Include="XExten.Advance" Version="1.2.4.2" />
 	</ItemGroup>
 </Project>
