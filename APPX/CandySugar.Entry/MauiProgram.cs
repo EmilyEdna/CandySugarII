@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CandySugar.Entry.ViewModels;
+using CandySugar.Entry.Views;
+using CommunityToolkit.Maui;
+using Microsoft.Extensions.Logging;
 
 namespace CandySugar.Entry
 {
@@ -8,7 +11,20 @@ namespace CandySugar.Entry
         {
             var builder = MauiApp.CreateBuilder();
             builder
-                .UseMauiApp<App>()
+                .UseMauiApp<App>().UseMauiCommunityToolkit()
+                .UsePrism(prism => prism.ConfigureModuleCatalog(moduleCatalog =>
+                {
+                    //配置模块目录
+                    //moduleCatalog.AddModule<MauiAppModule>();
+                })
+                .RegisterTypes(containerRegistry =>
+                {
+                    containerRegistry.RegisterGlobalNavigationObserver();
+                    containerRegistry.RegisterForNavigation<MainPage>();
+                })
+                .OnAppStart(navigationService => navigationService.CreateBuilder()
+                    .AddSegment<MainPageViewModel>()
+                    .Navigate(HandleNavigationError)))
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -16,10 +32,16 @@ namespace CandySugar.Entry
                 });
 
 #if DEBUG
-		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();
+        }
+
+        private static void HandleNavigationError(Exception ex)
+        {
+            Console.WriteLine(ex);
+            System.Diagnostics.Debugger.Break();
         }
     }
 }
