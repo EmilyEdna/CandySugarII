@@ -19,4 +19,9 @@
 	  <ProjectReference Include="..\CandySugar.Library\CandySugar.Library.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="ViewModels\" />
+	  <Folder Include="Views\" />
+	</ItemGroup>
+
 </Project>

@@ -1,7 +1,8 @@
-﻿using CandySugar.Entry.ViewModels;
-using CandySugar.Entry.Views;
+﻿using CandySugar.Controls;
+using CandySugar.Entry.ViewModels;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using Index = CandySugar.Entry.Views.Index;
 
 namespace CandySugar.Entry
 {
@@ -15,15 +16,15 @@ namespace CandySugar.Entry
                 .UsePrism(prism => prism.ConfigureModuleCatalog(moduleCatalog =>
                 {
                     //配置模块目录
-                    //moduleCatalog.AddModule<MauiAppModule>();
+                    moduleCatalog.AddModule<ControlsModule>();
                 })
                 .RegisterTypes(containerRegistry =>
                 {
                     containerRegistry.RegisterGlobalNavigationObserver();
-                    containerRegistry.RegisterForNavigation<MainPage>();
+                    containerRegistry.RegisterForNavigation<Index>();
                 })
                 .OnAppStart(navigationService => navigationService.CreateBuilder()
-                    .AddSegment<MainPageViewModel>()
+                    .AddSegment<IndexViewModel>()
                     .Navigate(HandleNavigationError)))
                 .ConfigureFonts(fonts =>
                 {
