@@ -1,12 +1,16 @@
-﻿<?xml version = "1.0" encoding = "UTF-8" ?>
-<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:CandySugar.Entry"
-             x:Class="CandySugar.Entry.App">
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Application
+    x:Class="CandySugar.Entry.App"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:UI="clr-namespace:UraniumUI.Resources;assembly=UraniumUI"
+    xmlns:local="clr-namespace:CandySugar.Entry">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <UI:ColorResource />
+                <UI:StyleResource />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

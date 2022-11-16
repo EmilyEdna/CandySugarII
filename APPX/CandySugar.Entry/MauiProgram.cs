@@ -2,6 +2,7 @@
 using CandySugar.Entry.ViewModels;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using UraniumUI;
 using Index = CandySugar.Entry.Views.Index;
 
 namespace CandySugar.Entry
@@ -12,7 +13,7 @@ namespace CandySugar.Entry
         {
             var builder = MauiApp.CreateBuilder();
             builder
-                .UseMauiApp<App>().UseMauiCommunityToolkit()
+                .UseMauiApp<App>().UseMauiCommunityToolkit().UseUraniumUI()
                 .UsePrism(prism => prism.ConfigureModuleCatalog(moduleCatalog =>
                 {
                     //配置模块目录
@@ -28,8 +29,12 @@ namespace CandySugar.Entry
                     .Navigate(HandleNavigationError)))
                 .ConfigureFonts(fonts =>
                 {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("DroidSans.ttf", "Sans");
+                    fonts.AddFont("FontAwesome6Brands.otf", "Brands");
+                    fonts.AddFont("FontAwesome6Regular.otf", "Regular");
+                    fonts.AddFont("FontAwesome6Solid.otf", "Solid");
+                    fonts.AddFont("FontAwesome6Thin.otf", "Thin");
+                    fonts.AddMaterialIconFonts();
                 });
 
 #if DEBUG
