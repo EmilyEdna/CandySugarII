@@ -5,6 +5,7 @@ using CandySugar.Library;
 using CandySugar.Logic;
 using CandySugar.Logic.IService;
 using HandyControl.Controls;
+using RestSharp;
 using Sdk.Core;
 using Serilog;
 using Stylet;
@@ -12,9 +13,11 @@ using StyletIoC;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Net.Http;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
+using XExten.Advance;
 using XExten.Advance.StaticFramework;
 
 namespace CandySugar.Entry
@@ -65,6 +68,15 @@ namespace CandySugar.Entry
                     }
                 }
             }
+
+            HttpEvent.HttpActionEvent = new Action<HttpClient, Exception>((client, ex) =>
+            {
+                Log.Logger.Error(ex, "");
+            });
+            HttpEvent.RestActionEvent=new Action<RestClient, Exception>((client, ex) =>
+            {
+                Log.Logger.Error(ex, "");
+            });
         }
 
         protected override void ConfigureIoC(IStyletIoCBuilder builder)

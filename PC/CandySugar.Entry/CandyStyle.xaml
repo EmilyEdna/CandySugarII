@@ -664,12 +664,14 @@
         </Style.Triggers>
     </Style>
     <!--  分页按钮样式  -->
+
     <Style x:Key="PageinationStyle" TargetType="hc:Pagination">
         <Setter Property="hc:VisualElement.HighlightBorderBrush" Value="{DynamicResource SugarThemeDefault}" />
         <Setter Property="hc:VisualElement.HighlightBackground" Value="{DynamicResource SugarThemeDefault}" />
         <Setter Property="hc:VisualElement.HighlightForeground" Value="{DynamicResource TextIconBrush}" />
         <Setter Property="hc:BorderElement.CornerRadius" Value="{StaticResource DefaultCornerRadius}" />
         <Setter Property="Focusable" Value="False" />
+        <Setter Property="PaginationButtonStyle" Value="{StaticResource PaginationButtonStyle}" />
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="Background" Value="{DynamicResource RegionBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
@@ -706,14 +708,13 @@
                                 Name="PART_MoreLeft"
                                 Margin="-1,0,0,0"
                                 Padding="10,0"
-                                Background="{DynamicResource SecondaryRegionBrush}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="1"
+                                Background="Transparent"
+                                BorderThickness="0"
                                 Cursor="No">
                                 <hc:SimpleText
                                     VerticalAlignment="Center"
                                     FontWeight="Bold"
-                                    Foreground="{DynamicResource SecondaryTextBrush}"
+                                    Foreground="{DynamicResource SugarThemeAlis}"
                                     Text="..." />
                             </Border>
                             <StackPanel Name="PART_PanelMain" Orientation="Horizontal" />
@@ -721,14 +722,13 @@
                                 Name="PART_MoreRight"
                                 Margin="-1,0,0,0"
                                 Padding="10,0"
-                                Background="{DynamicResource SecondaryRegionBrush}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="1"
+                                Background="Transparent"
+                                BorderThickness="0"
                                 Cursor="No">
                                 <hc:SimpleText
                                     VerticalAlignment="Center"
                                     FontWeight="Bold"
-                                    Foreground="{DynamicResource SecondaryTextBrush}"
+                                    Foreground="{DynamicResource SugarThemeAlis}"
                                     Text="..." />
                             </Border>
                             <RadioButton
@@ -770,12 +770,12 @@
     </Style>
     <!--  分页按钮内部样式  -->
     <Style
-        x:Key="PaginatioBtnStyle"
+        x:Key="PaginationButtonStyle"
         BasedOn="{StaticResource BaseStyle}"
         TargetType="RadioButton">
         <Setter Property="GroupName" Value="1" />
         <Setter Property="MinWidth" Value="30" />
-        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Background" Value="{DynamicResource SugarThemeDefault}" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="VerticalAlignment" Value="Center" />

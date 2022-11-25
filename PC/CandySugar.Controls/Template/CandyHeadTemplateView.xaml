@@ -143,7 +143,7 @@
                     <Button
                         Width="25"
                         Height="25"
-                        md:ShadowAssist.ShadowDepth="Depth2"
+                         md:ElevationAssist.Elevation="Dp2"
                         Background="{DynamicResource SugarThemePink}"
                         BorderBrush="Transparent"
                         Command="{s:Action HandleAction}"
@@ -158,7 +158,7 @@
                     <Button
                         Width="25"
                         Height="25"
-                        md:ShadowAssist.ShadowDepth="Depth2"
+                         md:ElevationAssist.Elevation="Dp2"
                         Background="{DynamicResource SugarThemePink}"
                         BorderBrush="Transparent"
                         Click="MineSize_Clicked"
@@ -172,7 +172,7 @@
                     <Button
                         Width="25"
                         Height="25"
-                        md:ShadowAssist.ShadowDepth="Depth2"
+                         md:ElevationAssist.Elevation="Dp2"
                         Background="{DynamicResource SugarThemePink}"
                         BorderBrush="Transparent"
                         Click="MaxSize_Clicked"
@@ -186,7 +186,7 @@
                     <Button
                         Width="25"
                         Height="25"
-                        md:ShadowAssist.ShadowDepth="Depth2"
+                         md:ElevationAssist.Elevation="Dp2"
                         Background="{DynamicResource SugarThemePink}"
                         BorderBrush="Transparent"
                         Click="Close_Clicked"
