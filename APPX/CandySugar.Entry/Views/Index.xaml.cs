@@ -1,8 +1,6 @@
-using UraniumUI.Pages;
-
 namespace CandySugar.Entry.Views;
 
-public partial class Index : UraniumContentPage
+public partial class Index : ContentPage
 {
     public Index()
     {

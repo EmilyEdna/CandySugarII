@@ -1,16 +1,70 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<UI:UraniumContentPage
+<ContentPage
     x:Class="CandySugar.Entry.Views.Index"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Lib="clr-namespace:CandySugar.Library;assembly=CandySugar.Library"
     xmlns:MC="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
-    xmlns:UI="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
-    Title="Index">
-    <VerticalStackLayout>
-        <MC:TextField Text="123" />
-        <Label
-            HorizontalOptions="Center"
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" />
-    </VerticalStackLayout>
-</UI:UraniumContentPage>
+    xmlns:VM="clr-namespace:CandySugar.Entry.ViewModels"
+    Title="Index"
+    x:DataType="VM:IndexViewModel"
+    Background="{AppThemeBinding Dark={StaticResource Gray600},
+                                 Light={StaticResource White}}">
+    <Grid RowSpacing="2">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45" />
+            <RowDefinition Height="80" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <HorizontalStackLayout Background="{AppThemeBinding Light=#85FF9999, Dark={StaticResource Gray900}}">
+            <Button BackgroundColor="{StaticResource Trans}">
+                <Button.ImageSource>
+                    <FontImageSource
+                        FontFamily="Regular"
+                        Glyph="{Static Lib:FontIcon.Bars}"
+                        Color="{AppThemeBinding Light={StaticResource Gray200},
+                                                Dark=White}" />
+                </Button.ImageSource>
+            </Button>
+            <Border
+                HeightRequest="35"
+                Stroke="{StaticResource Gray100}"
+                StrokeShape="RoundRectangle 15"
+                StrokeThickness="1"
+                WidthRequest="250">
+                <SearchBar
+                    IsTextPredictionEnabled="True"
+                    Placeholder="请输入检索内容"
+                    PlaceholderColor="{AppThemeBinding Light=#85FF9999,
+                                                       Dark={StaticResource Gray900}}"
+                    TextColor="{AppThemeBinding Light=#85FF9999,
+                                                Dark={StaticResource Gray900}}" />
+            </Border>
+        </HorizontalStackLayout>
+        <CollectionView
+            Grid.Row="1"
+            ItemsLayout="HorizontalList"
+            ItemsSource="{Binding Menu}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="Lib:MenuModel">
+                    <Grid Padding="0,0,6,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60" />
+                            <RowDefinition Height="20" />
+                        </Grid.RowDefinitions>
+                        <MC:ButtonView
+                            BackgroundColor="{StaticResource Trans}"
+                            HeightRequest="65"
+                            WidthRequest="65">
+                            <Image Aspect="Fill" Source="{Binding Icon}" />
+                        </MC:ButtonView>
+                        <Label
+                            Grid.Row="1"
+                            HorizontalOptions="Center"
+                            Text="{Binding Name}" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>
