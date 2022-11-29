@@ -1,9 +1,16 @@
+using CandySugar.Controls;
+
 namespace CandySugar.Entry.Views;
 
-public partial class Index : ContentPage
+public partial class Index : CandyUIPage
 {
     public Index()
     {
         InitializeComponent();
+    }
+
+    private void PopupLeftEvent(object sender, EventArgs e)
+    {
+        //Test.IsPresented = true;
     }
 }

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
+<Candy:CandyUIPage
     x:Class="CandySugar.Entry.Views.Index"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Candy="http://github.emilyedna.io"
     xmlns:Lib="clr-namespace:CandySugar.Library;assembly=CandySugar.Library"
     xmlns:MC="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
     xmlns:VM="clr-namespace:CandySugar.Entry.ViewModels"
@@ -10,6 +11,42 @@
     x:DataType="VM:IndexViewModel"
     Background="{AppThemeBinding Dark={StaticResource Gray600},
                                  Light={StaticResource White}}">
+    <Candy:CandyUIPage.Attachments>
+        <Candy:LeftView x:Name="Test">
+            <Candy:LeftView.Body>
+                <TableView
+                    Margin="0,0,0,40"
+                    BackgroundColor="Transparent"
+                    Intent="Menu">
+                    <TableRoot>
+                        <TableSection Title="Chapters">
+                            <TextCell Detail="Learn about .NET MAUI and what it provides." Text="1. Introduction to .NET MAUI" />
+                            <TextCell Detail="Learn about the visual elements in .NET MAUI" Text="2. Anatomy of an app" />
+                            <TextCell Detail="Learn about the .NET MAUI controls that display text." Text="3. Text" />
+                            <TextCell Detail="Learn how to size .NET MAUI controls on screen." Text="4. Dealing with sizes" />
+                            <TextCell Detail="Learn more about creating your UI in XAML." Text="5. XAML vs code" />
+                        </TableSection>
+                    </TableRoot>
+                </TableView>
+            </Candy:LeftView.Body>
+        </Candy:LeftView>
+        <!--<Candy:BottomView>
+            <TableView
+                Margin="0,0,0,40"
+                BackgroundColor="Transparent"
+                Intent="Menu">
+                <TableRoot>
+                    <TableSection Title="Chapters">
+                        <TextCell Detail="Learn about .NET MAUI and what it provides." Text="1. Introduction to .NET MAUI" />
+                        <TextCell Detail="Learn about the visual elements in .NET MAUI" Text="2. Anatomy of an app" />
+                        <TextCell Detail="Learn about the .NET MAUI controls that display text." Text="3. Text" />
+                        <TextCell Detail="Learn how to size .NET MAUI controls on screen." Text="4. Dealing with sizes" />
+                        <TextCell Detail="Learn more about creating your UI in XAML." Text="5. XAML vs code" />
+                    </TableSection>
+                </TableRoot>
+            </TableView>
+        </Candy:BottomView>-->
+    </Candy:CandyUIPage.Attachments>
     <Grid RowSpacing="2">
         <Grid.RowDefinitions>
             <RowDefinition Height="45" />
@@ -17,7 +54,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <HorizontalStackLayout Background="{AppThemeBinding Light=#85FF9999, Dark={StaticResource Gray900}}">
-            <Button BackgroundColor="{StaticResource Trans}">
+            <Button BackgroundColor="{StaticResource Trans}" Clicked="PopupLeftEvent">
                 <Button.ImageSource>
                     <FontImageSource
                         FontFamily="Regular"
@@ -67,4 +104,4 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
     </Grid>
-</ContentPage>
+</Candy:CandyUIPage>
