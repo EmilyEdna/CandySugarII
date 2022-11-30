@@ -93,7 +93,11 @@
                             BackgroundColor="{StaticResource Trans}"
                             HeightRequest="65"
                             WidthRequest="65">
-                            <Image Aspect="Fill" Source="{Binding Icon}" />
+                            <Image Aspect="Fill" Source="{Binding Icon}">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Command, Source={RelativeSource AncestorType={x:Type VM:IndexViewModel}}}" CommandParameter="{Binding Name}" />
+                                </Image.GestureRecognizers>
+                            </Image>
                         </MC:ButtonView>
                         <Label
                             Grid.Row="1"
@@ -103,5 +107,8 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        <Grid Grid.Row="2">
+            <ContentView Content="{Binding Content}" />
+        </Grid>
     </Grid>
 </Candy:CandyUIPage>

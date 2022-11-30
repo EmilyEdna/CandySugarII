@@ -23,8 +23,75 @@
 	  <Folder Include="Platforms\Android\" />
 	  <Folder Include="Platforms\iOS\" />
 	  <Folder Include="Platforms\Windows\" />
-	  <Folder Include="ViewModels\" />
-	  <Folder Include="Views\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Views\K.xaml.cs">
+	    <DependentUpon>K.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\J.xaml.cs">
+	    <DependentUpon>J.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\I.xaml.cs">
+	    <DependentUpon>I.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\H.xaml.cs">
+	    <DependentUpon>H.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\G.xaml.cs">
+	    <DependentUpon>G.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\F.xaml.cs">
+	    <DependentUpon>F.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\E.xaml.cs">
+	    <DependentUpon>E.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\D.xaml.cs">
+	    <DependentUpon>D.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\C.xaml.cs">
+	    <DependentUpon>C.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\B.xaml.cs">
+	    <DependentUpon>B.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Views\K.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\J.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\I.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\H.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\G.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\F.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\E.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\D.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\C.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\B.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\A.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>
