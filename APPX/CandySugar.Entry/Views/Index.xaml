@@ -107,8 +107,6 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Grid Grid.Row="2">
-            <ContentView Content="{Binding Content}" />
-        </Grid>
+        <ContentView Grid.Row="2" Content="{Binding Content}" />
     </Grid>
 </Candy:CandyUIPage>

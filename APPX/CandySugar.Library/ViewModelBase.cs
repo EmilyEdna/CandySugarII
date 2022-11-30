@@ -16,12 +16,25 @@ namespace CandySugar.Library
             _navigationService = baseServices.NavigationService;
             _pageDialogs = baseServices.PageDialogs;
             _dialogs = baseServices.Dialogs;
+            this.Activity = false;
+            OnLoad();
         }
         public virtual void Initialize(INavigationParameters parameters) { }
         public virtual void OnAppearing() { }
         public virtual void OnDisappearing() { }
+        public virtual void OnLoad() { }
         public virtual void OnNavigatedFrom(INavigationParameters parameters) { }
         public virtual void OnNavigatedTo(INavigationParameters parameters) { }
+
+        #region Property
+        bool _Activity;
+        public bool Activity
+        {
+            get { return _Activity; }
+            set { SetProperty(ref _Activity, value); }
+        }
+        #endregion
+
     }
     public class BaseServices
     {
