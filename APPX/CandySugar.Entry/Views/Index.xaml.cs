@@ -11,6 +11,6 @@ public partial class Index : CandyUIPage
 
     private void PopupLeftEvent(object sender, EventArgs e)
     {
-        //Test.IsPresented = true;
+        Left.IsPresented = true;
     }
 }

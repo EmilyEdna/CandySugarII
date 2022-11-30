@@ -12,7 +12,7 @@
     Background="{AppThemeBinding Dark={StaticResource Gray600},
                                  Light={StaticResource White}}">
     <Candy:CandyUIPage.Attachments>
-        <Candy:LeftView x:Name="Test">
+        <Candy:LeftView x:Name="Left">
             <Candy:LeftView.Body>
                 <TableView
                     Margin="0,0,0,40"
@@ -30,7 +30,7 @@
                 </TableView>
             </Candy:LeftView.Body>
         </Candy:LeftView>
-        <!--<Candy:BottomView>
+        <Candy:BottomView>
             <TableView
                 Margin="0,0,0,40"
                 BackgroundColor="Transparent"
@@ -45,7 +45,7 @@
                     </TableSection>
                 </TableRoot>
             </TableView>
-        </Candy:BottomView>-->
+        </Candy:BottomView>
     </Candy:CandyUIPage.Attachments>
     <Grid RowSpacing="2">
         <Grid.RowDefinitions>

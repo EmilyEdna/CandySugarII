@@ -44,7 +44,7 @@ namespace CandySugar.Controls
         protected virtual void Init()
         {
             this.Padding = 0;
-            this.WidthRequest = 250;
+            this.WidthRequest = 0;
             this.VerticalOptions = LayoutOptions.CenterAndExpand;
             this.HorizontalOptions = LayoutOptions.StartAndExpand;
             this.StrokeThickness = 0;
@@ -68,6 +68,7 @@ namespace CandySugar.Controls
         {
             if (CloseOnTapOutside)
             {
+                this.WidthRequest = 250;
                 AttachedPage?.ContentBorder?.GestureRecognizers.Add(CloseGestureRecognizer);
             }
         }
@@ -84,34 +85,16 @@ namespace CandySugar.Controls
         {
             if (CloseOnTapOutside)
             {
+                this.WidthRequest = 0;
                 AttachedPage?.ContentBorder?.GestureRecognizers.Remove(CloseGestureRecognizer);
             }
         }
-
         private void AlignLeftSheet(bool animate = true)
         {
-            double x = this.X;
-            if (IsPresented)
-            {
-                x = 0;
-                OnOpened();
-            }
-            else
-            {
-                OnClosed();
-            }
-
-            if (animate)
-            {
-                this.TranslateTo(x, 10, 50);
-
-            }
-            else
-            {
-                this.TranslationY =-Y;
-                this.TranslationX = x;
-            }
-
+            if (IsPresented) OnOpened();
+            else OnClosed();
+            if (animate) this.TranslateTo(0, -Y, 50);
+            else this.TranslationX = this.X;
             UpdateDisabledStateOfPage();
         }
     }
