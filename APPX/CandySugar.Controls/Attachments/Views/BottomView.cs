@@ -54,8 +54,8 @@ namespace CandySugar.Controls
             Padding = 0;
             this.VerticalOptions = LayoutOptions.End;
             this.HorizontalOptions = LayoutOptions.Fill;
-            this.StrokeThickness = 1;
-            this.StrokeShape = new RoundRectangle { CornerRadius = 10 };
+            this.StrokeThickness = 0;
+            this.StrokeShape = new RoundRectangle { CornerRadius = 1 };
             this.Content = new VerticalStackLayout()
             {
                 Children =

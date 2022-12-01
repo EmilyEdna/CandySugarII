@@ -14,7 +14,7 @@ namespace CandySugar.Entry.ViewModels
         private BaseServices BaseServices;
         public IndexViewModel(BaseServices baseServices) : base(baseServices)
         {
-            BaseServices=baseServices;
+            BaseServices = baseServices;
             Menu = new ObservableCollection<MenuModel>(MenuModel.GetMenus());
         }
         public override void OnAppearing()
@@ -52,13 +52,13 @@ namespace CandySugar.Entry.ViewModels
                         BindingContext = new AViewModel(this.BaseServices)
                     };
                     break;
-                case "小说":
+                case "动漫":
                     this.Content = new B
                     {
                         BindingContext = new BViewModel(this.BaseServices)
                     };
                     break;
-                case "文学":
+                case "壁纸":
                     this.Content = new C
                     {
                         BindingContext = new CViewModel(this.BaseServices)
@@ -70,13 +70,13 @@ namespace CandySugar.Entry.ViewModels
                         BindingContext = new DViewModel(this.BaseServices)
                     };
                     break;
-                case "动漫":
+                case "小说":
                     this.Content = new E
                     {
                         BindingContext = new EViewModel(this.BaseServices)
                     };
                     break;
-                case "壁纸":
+                case "文学":
                     this.Content = new F
                     {
                         BindingContext = new FViewModel(this.BaseServices)
@@ -116,6 +116,7 @@ namespace CandySugar.Entry.ViewModels
                     break;
             }
         });
+
         #endregion
     }
 }

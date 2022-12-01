@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using UraniumUI.Material.Controls;
-using UraniumUI.Triggers;
-using UraniumUI;
 using UraniumUI.Resources;
+using UraniumUI.Triggers;
 
 namespace CandySugar.Controls
 {

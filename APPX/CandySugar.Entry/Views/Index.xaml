@@ -30,7 +30,29 @@
                 </TableView>
             </Candy:LeftView.Body>
         </Candy:LeftView>
-        <Candy:BottomView>
+        <Candy:BottomView x:Name="Buttom">
+            <Candy:BottomView.Header>
+                <Grid Background="{AppThemeBinding Light=#85FF9999, Dark={StaticResource Secondary}}" HeightRequest="60">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.Shadow>
+                        <Shadow
+                            Brush="{StaticResource TertiaryBrush}"
+                            Opacity="0.3"
+                            Radius="20" />
+                    </Grid.Shadow>
+                    <Image Source="bottom.png" />
+                    <Label
+                        Grid.Column="1"
+                        FontSize="Medium"
+                        Text="世界那么大我也想去看看！！！"
+                        TextColor="{AppThemeBinding Light={StaticResource White},
+                                                    Dark={StaticResource Violet}}"
+                        VerticalOptions="Center" />
+                </Grid>
+            </Candy:BottomView.Header>
             <TableView
                 Margin="0,0,0,40"
                 BackgroundColor="Transparent"
