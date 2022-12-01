@@ -44,6 +44,12 @@ namespace CandySugar.Entry.ViewModels
         #region Command
         public DelegateCommand<string> Command => new(key =>
         {
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                DataBus.NetErr.OpenToast();
+                return;
+            }
+
             switch (key)
             {
                 case "新番":

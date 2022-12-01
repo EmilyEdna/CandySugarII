@@ -1,24 +1,30 @@
-﻿using System.Collections.ObjectModel;
+﻿using Microsoft.Maui.Controls;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CandySugar.Controls
 {
     [ContentProperty(nameof(Body))]
-    public class CandyUIPage : ContentPage
+    public class CandyUIView:ContentView
     {
         protected Grid _contentGrid;
 
         public View Body { get => ContentBorder.Content; set => ContentBorder.Content = value; }
-        public ObservableCollection<IPageAttachment> Attachments { get; set; } = new();
+        public ObservableCollection<IViewAttachment> Attachments { get; set; } = new();
         public Border ContentBorder { get; set; } = new Border()
         {
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
             StrokeThickness = 0,
-            Padding=0,
-            Margin= 0,
+            Padding = 0,
+            Margin = 0,
         };
-        public CandyUIPage()
+        public CandyUIView()
         {
             ContentBorder.BackgroundColor = this.BackgroundColor;
             Content = _contentGrid = new Grid
@@ -34,7 +40,7 @@ namespace CandySugar.Controls
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                foreach (IPageAttachment attachment in e.NewItems)
+                foreach (IViewAttachment attachment in e.NewItems)
                 {
                     if (attachment.AttachmentPosition == AttachmentLocation.Front)
                     {
@@ -51,7 +57,7 @@ namespace CandySugar.Controls
 
             else if (e.Action == NotifyCollectionChangedAction.Remove)
             {
-                foreach (IPageAttachment attachment in e.OldItems)
+                foreach (IViewAttachment attachment in e.OldItems)
                 {
                     _contentGrid.Remove(attachment);
                 }

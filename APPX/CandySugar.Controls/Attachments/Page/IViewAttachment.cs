@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UraniumUI.Pages;
 
 namespace CandySugar.Controls
 {
-    public interface ICandyAttachment: IView
+    public interface IViewAttachment : IView
     {
-        void OnAttached(CandyUIPage attachedPage);
-
+        void OnAttached(CandyUIView attachedView);
         AttachmentLocation AttachmentPosition { get; }
     }
 }

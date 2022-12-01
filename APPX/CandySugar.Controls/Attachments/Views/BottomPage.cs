@@ -11,29 +11,29 @@ using UraniumUI.Material.Attachments;
 namespace CandySugar.Controls
 {
     [ContentProperty(nameof(Body))]
-    public class BottomView : Border, IViewAttachment
+    public class BottomPage : Border, IPageAttachment
     {
         public bool IsPresented { get => (bool)GetValue(IsPresentedProperty); set => SetValue(IsPresentedProperty, value); }
 
         public static readonly BindableProperty IsPresentedProperty =
-            BindableProperty.Create(nameof(IsPresented), typeof(bool), typeof(BottomView), defaultValue: false,
-                propertyChanged: (bo, ov, nv) => (bo as BottomView).AlignBottomSheet());
+            BindableProperty.Create(nameof(IsPresented), typeof(bool), typeof(BottomPage), defaultValue: false,
+                propertyChanged: (bo, ov, nv) => (bo as BottomPage).AlignBottomSheet());
 
         public bool DisablePageWhenOpened { get => (bool)GetValue(DisablePageWhenOpeneProperty); set => SetValue(DisablePageWhenOpeneProperty, value); }
 
         public static readonly BindableProperty DisablePageWhenOpeneProperty =
             BindableProperty.Create(
                 nameof(DisablePageWhenOpened),
-                typeof(bool), typeof(BottomView), defaultValue: true);
+                typeof(bool), typeof(BottomPage), defaultValue: true);
 
         public bool CloseOnTapOutside { get => (bool)GetValue(CloseOnTapOutsideProperty); set => SetValue(CloseOnTapOutsideProperty, value); }
 
         public static readonly BindableProperty CloseOnTapOutsideProperty =
             BindableProperty.Create(
                 nameof(CloseOnTapOutside),
-                typeof(bool), typeof(BottomView), defaultValue: true);
+                typeof(bool), typeof(BottomPage), defaultValue: true);
 
-        public CandyUIView AttachedView { get; set; }
+        public CandyUIPage AttachedPage { get; set; }
         public AttachmentLocation AttachmentPosition => AttachmentLocation.Front;
         public View Body { get; set; }
 
@@ -41,12 +41,12 @@ namespace CandySugar.Controls
 
         private TapGestureRecognizer CloseGestureRecognizer = new();
 
-        public void OnAttached(CandyUIView view)
+        public void OnAttached(CandyUIPage page)
         {
             Init();
 
-            AttachedView = view;
-            view.SizeChanged += (s, e) => { AlignBottomSheet(false); };
+            AttachedPage = page;
+            page.SizeChanged += (s, e) => { AlignBottomSheet(false); };
         }
         protected virtual void Init()
         {
@@ -95,23 +95,23 @@ namespace CandySugar.Controls
         {
             if (CloseOnTapOutside)
             {
-                AttachedView?.ContentBorder?.GestureRecognizers.Add(CloseGestureRecognizer);
+                AttachedPage?.ContentBorder?.GestureRecognizers.Add(CloseGestureRecognizer);
             }
         }
         protected virtual void OnClosed()
         {
             if (CloseOnTapOutside)
             {
-                AttachedView?.ContentBorder?.GestureRecognizers.Remove(CloseGestureRecognizer);
+                AttachedPage?.ContentBorder?.GestureRecognizers.Remove(CloseGestureRecognizer);
             }
         }
         protected void UpdateDisabledStateOfPage()
         {
-            if (AttachedView?.Body != null && DisablePageWhenOpened)
+            if (AttachedPage?.Body != null && DisablePageWhenOpened)
             {
-                AttachedView.Body.InputTransparent = IsPresented;
+                AttachedPage.Body.InputTransparent = IsPresented;
 
-                AttachedView.Body.FadeTo(IsPresented ? .5 : 1);
+                AttachedPage.Body.FadeTo(IsPresented ? .5 : 1);
             }
         }
         private void AlignBottomSheet(bool animate = true)

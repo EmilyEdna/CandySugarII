@@ -8,6 +8,7 @@ namespace CandySugar.Library
 {
     public class DataBus
     {
+        public const string NetErr = "请检查网络是否通畅";
         public static int Cache { get; set; } = 5;
         public static int QueryModule { get; set; } = 1;
     }

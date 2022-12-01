@@ -12,8 +12,8 @@
     Background="{AppThemeBinding Dark={StaticResource Gray600},
                                  Light={StaticResource White}}">
     <Candy:CandyUIPage.Attachments>
-        <Candy:LeftView x:Name="Left">
-            <Candy:LeftView.Body>
+        <Candy:LeftPage x:Name="Left">
+            <Candy:LeftPage.Body>
                 <TableView
                     Margin="0,0,0,40"
                     BackgroundColor="Transparent"
@@ -28,53 +28,10 @@
                         </TableSection>
                     </TableRoot>
                 </TableView>
-            </Candy:LeftView.Body>
-        </Candy:LeftView>
-        <Candy:BottomView x:Name="Buttom">
-            <Candy:BottomView.Header>
-                <Grid Background="{AppThemeBinding Light=#85FF9999, Dark={StaticResource Secondary}}" HeightRequest="60">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="60" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Grid.Shadow>
-                        <Shadow
-                            Brush="{StaticResource TertiaryBrush}"
-                            Opacity="0.3"
-                            Radius="20" />
-                    </Grid.Shadow>
-                    <Image Source="bottom.png" />
-                    <Label
-                        Grid.Column="1"
-                        FontSize="Medium"
-                        Text="世界那么大我也想去看看！！！"
-                        TextColor="{AppThemeBinding Light={StaticResource White},
-                                                    Dark={StaticResource Violet}}"
-                        VerticalOptions="Center" />
-                </Grid>
-            </Candy:BottomView.Header>
-            <TableView
-                Margin="0,0,0,40"
-                BackgroundColor="Transparent"
-                Intent="Menu">
-                <TableRoot>
-                    <TableSection Title="Chapters">
-                        <TextCell Detail="Learn about .NET MAUI and what it provides." Text="1. Introduction to .NET MAUI" />
-                        <TextCell Detail="Learn about the visual elements in .NET MAUI" Text="2. Anatomy of an app" />
-                        <TextCell Detail="Learn about the .NET MAUI controls that display text." Text="3. Text" />
-                        <TextCell Detail="Learn how to size .NET MAUI controls on screen." Text="4. Dealing with sizes" />
-                        <TextCell Detail="Learn more about creating your UI in XAML." Text="5. XAML vs code" />
-                    </TableSection>
-                </TableRoot>
-            </TableView>
-        </Candy:BottomView>
+            </Candy:LeftPage.Body>
+        </Candy:LeftPage>
     </Candy:CandyUIPage.Attachments>
-    <Grid RowSpacing="2">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="45" />
-            <RowDefinition Height="80" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
+    <Grid RowDefinitions="45,80,*" RowSpacing="2">
         <HorizontalStackLayout Background="{AppThemeBinding Light=#85FF9999, Dark={StaticResource Gray900}}">
             <Button BackgroundColor="{StaticResource Trans}" Clicked="PopupLeftEvent">
                 <Button.ImageSource>
@@ -106,11 +63,7 @@
             ItemsSource="{Binding Menu}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="Lib:MenuModel">
-                    <Grid Padding="0,0,6,0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="60" />
-                            <RowDefinition Height="20" />
-                        </Grid.RowDefinitions>
+                    <Grid Padding="0,0,6,0" RowDefinitions="60,20">
                         <MC:ButtonView
                             BackgroundColor="{StaticResource Trans}"
                             HeightRequest="65"
