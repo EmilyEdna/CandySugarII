@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XExten.Advance.LinqFramework;
 
 namespace CandySugar.Controls
 {
@@ -24,8 +25,8 @@ namespace CandySugar.Controls
         }
 
         #region Property
-        ObservableCollection<BgmInitResult> _Result;
-        public ObservableCollection<BgmInitResult> Result
+        ObservableCollection<TabItem> _Result;
+        public ObservableCollection<TabItem> Result
         {
             get => _Result;
             set => SetProperty(ref _Result, value);
@@ -35,7 +36,6 @@ namespace CandySugar.Controls
         #region Method
         async void Init()
         {
-            this.Activity = true;
             var result = await BgmFactory.Bgm(opt =>
              {
                  opt.RequestParam = new Input
@@ -45,8 +45,63 @@ namespace CandySugar.Controls
                      BgmType = BgmEnum.Calendar,
                  };
              }).RunsAsync();
-            Result = new ObservableCollection<BgmInitResult>(result.InitResults);
-            this.Activity = false;
+            List<TabItem> model = new List<TabItem>();
+            #region 周一到周六
+            result.InitResults.Where(t=>!t.WeekDay.Equals("星期日")).ForEnumerEach(item =>
+            {
+                var layout = new VerticalStackLayout
+                {
+                    HorizontalOptions = LayoutOptions.Fill,
+                };
+                item.Name.ForEach(node =>
+                {
+                    var lbl = new Label
+                    {
+                        Text = node,
+                        Margin = new Thickness(5),
+                        FontSize = 18,
+                    };
+                    lbl.SetAppTheme(Label.TextColorProperty, Color.FromRgb(0, 0, 0), Color.FromRgb(255, 255, 255));
+                    layout.Children.Add(lbl);
+                });
+
+                var tab = new TabItem
+                {
+                    Title = item.WeekDay,
+                    Content = layout
+                };
+
+                model.Add(tab);
+            });
+            #endregion
+            #region 周日
+            var week = result.InitResults.FirstOrDefault();
+
+            var layout = new VerticalStackLayout
+            {
+                HorizontalOptions = LayoutOptions.Fill,
+            };
+            week.Name.ForEach(node =>
+            {
+                var lbl = new Label
+                {
+                    Text = node,
+                    Margin = new Thickness(5),
+                    FontSize = 18,
+                };
+                lbl.SetAppTheme(Label.TextColorProperty, Color.FromRgb(0, 0, 0), Color.FromRgb(255, 255, 255));
+                layout.Children.Add(lbl);
+            });
+
+            var tab = new TabItem
+            {
+                Title = week.WeekDay,
+                Content = layout
+            };
+
+            model.Add(tab);
+            #endregion
+            Result = new ObservableCollection<TabItem>(model);
         }
         #endregion
     }

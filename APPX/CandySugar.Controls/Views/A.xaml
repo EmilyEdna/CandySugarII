@@ -6,23 +6,5 @@
     xmlns:Local="clr-namespace:CandySugar.Controls"
     xmlns:MC="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
     x:DataType="Local:AViewModel">
-    <Grid>
-        <ActivityIndicator
-            HeightRequest="20"
-            HorizontalOptions="Center"
-            IsRunning="{Binding Activity}"
-            IsVisible="{Binding Activity}"
-            VerticalOptions="Start"
-            WidthRequest="20"
-            Color="{StaticResource Violet}" />
-        <MC:TabView>
-            <MC:TabItem Title="星期一">
-                <MC:TabItem.ContentTemplate>
-                    <DataTemplate>
-                        <Label Text="123123" />
-                    </DataTemplate>
-                </MC:TabItem.ContentTemplate>
-            </MC:TabItem>
-        </MC:TabView>
-    </Grid>
+    <Local:TabView Items="{Binding Result}" />
 </ContentView>
