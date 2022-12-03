@@ -40,7 +40,7 @@
                         <DataTemplate>
                             <Button
                                 Margin="0"
-                                Command="{Binding TypeCammand}"
+                                Command="{Binding TypeCammand, Source={RelativeSource AncestorType={x:Type Local:BViewModel}}}"
                                 CommandParameter="{Binding .}"
                                 StyleClass="TextButton"
                                 Text="{Binding .}" />
