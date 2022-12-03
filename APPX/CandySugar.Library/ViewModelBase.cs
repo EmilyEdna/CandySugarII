@@ -17,6 +17,8 @@ namespace CandySugar.Library
             _pageDialogs = baseServices.PageDialogs;
             _dialogs = baseServices.Dialogs;
             this.Activity = false;
+            this.Refresh = false;
+            this.Page = 1;
             OnLoad();
         }
         public virtual void Initialize(INavigationParameters parameters) { }
@@ -27,11 +29,29 @@ namespace CandySugar.Library
         public virtual void OnNavigatedTo(INavigationParameters parameters) { }
 
         #region Property
+        bool _Refresh;
+        public bool Refresh
+        {
+            get { return _Refresh; }
+            set { SetProperty(ref _Refresh, value); }
+        }
         bool _Activity;
         public bool Activity
         {
             get { return _Activity; }
             set { SetProperty(ref _Activity, value); }
+        }
+        int _Page;
+        public int Page
+        {
+            get { return _Page; }
+            set { SetProperty(ref _Page, value); }
+        }
+        int _Total;
+        public int Total
+        {
+            get => _Total;
+            set => SetProperty(ref _Total, value);
         }
         #endregion
 

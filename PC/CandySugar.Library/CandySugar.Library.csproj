@@ -10,7 +10,7 @@
 	<ItemGroup>
 		<PackageReference Include="HandyControls" Version="3.4.4" />
 		<PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
-		<PackageReference Include="JavaScriptEngineSwitcher.Jint" Version="3.19.0-preview" />
+		<PackageReference Include="JavaScriptEngineSwitcher.Jint" Version="3.20.6-preview" />
 		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1418.22" />
 		<PackageReference Include="NAudio" Version="2.1.0" />
 		<PackageReference Include="Serilog" Version="2.12.0" />

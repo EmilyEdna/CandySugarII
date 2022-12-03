@@ -122,7 +122,16 @@ namespace CandySugar.Entry.ViewModels
                     break;
             }
         });
+        public DelegateCommand<string> SearchCommand => new(input =>
+        {
+            if (Content is B view)
+            {
+                var model = (view.BindingContext as BViewModel);
+                model.Key = input;
+                Task.Run(() => model.QueryInit(false));
+            }
 
+        });
         #endregion
     }
 }

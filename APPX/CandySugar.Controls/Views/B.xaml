@@ -32,13 +32,18 @@
                 </Grid>
             </Local:BottomView.Header>
             <Grid
-                HeightRequest="70"
-                RowDefinitions="30,40"
+                HeightRequest="80"
+                RowDefinitions="30,50"
                 RowSpacing="5">
                 <CollectionView ItemsLayout="HorizontalList" ItemsSource="{Binding Words}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Label Margin="5" Text="{Binding .}" />
+                            <Button
+                                Margin="0"
+                                Command="{Binding TypeCammand}"
+                                CommandParameter="{Binding .}"
+                                StyleClass="TextButton"
+                                Text="{Binding .}" />
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
@@ -48,19 +53,68 @@
                     ItemsSource="{Binding InitResult}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="sdk:AnimeWeekDayIndexResult">
-                            <Label Margin="5" Text="{Binding Name}" />
+                            <Button
+                                Margin="0,0,0,15"
+                                Command="{Binding GroupCammand, Source={RelativeSource AncestorType={x:Type Local:BViewModel}}}"
+                                CommandParameter="{Binding Route}"
+                                StyleClass="TextButton"
+                                Text="{Binding Name}" />
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </Grid>
         </Local:BottomView>
     </Local:CandyUIView.Attachments>
-    <ActivityIndicator
-        HeightRequest="20"
-        HorizontalOptions="Center"
-        IsRunning="{Binding Activity}"
-        IsVisible="{Binding Activity}"
-        VerticalOptions="Center"
-        WidthRequest="20"
-        Color="{StaticResource Violet}" />
+    <Grid>
+        <ActivityIndicator
+            HeightRequest="20"
+            HorizontalOptions="Center"
+            IsRunning="{Binding Activity}"
+            IsVisible="{Binding Activity}"
+            VerticalOptions="Center"
+            WidthRequest="20"
+            Color="{StaticResource Violet}" />
+        <RefreshView
+            Command="{Binding RefreshCommand}"
+            IsRefreshing="{Binding Refresh}"
+            RefreshColor="{AppThemeBinding Light={StaticResource Pink},
+                                           Dark={StaticResource Secondary}}">
+            <CollectionView
+                ItemSizingStrategy="MeasureAllItems"
+                ItemsSource="{Binding SearchResult}"
+                RemainingItemsThreshold="0"
+                RemainingItemsThresholdReachedCommand="{Binding MoreCommand}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="3" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="sdk:AnimeSearchElementResult">
+                        <Border Stroke="{StaticResource Gray100Brush}" StrokeThickness="1">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding DetailCommand, Source={RelativeSource AncestorType={x:Type Local:BViewModel}}}" CommandParameter="{Binding .}" />
+                            </Border.GestureRecognizers>
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="0" />
+                            </Border.StrokeShape>
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Border
+                                    HeightRequest="130"
+                                    StrokeShape="RoundRectangle 0"
+                                    WidthRequest="90">
+                                    <Image Aspect="Fill" Source="{Binding Cover}" />
+                                </Border>
+                                <StackLayout Grid.Column="1" VerticalOptions="StartAndExpand">
+                                    <Label
+                                        Margin="10,0,0,0"
+                                        LineBreakMode="CharacterWrap "
+                                        Text="{Binding Name}"
+                                        TextColor="{StaticResource Red}" />
+                                </StackLayout>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
 </Local:CandyUIView>
