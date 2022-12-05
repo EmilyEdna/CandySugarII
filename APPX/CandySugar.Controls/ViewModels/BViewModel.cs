@@ -69,7 +69,7 @@ namespace CandySugar.Controls
         async void TypeInit(bool More)
         {
             Module = 2;
-            Activity = true;
+            if(!More) Activity = true;
             await Task.Delay(100);
             var result = await AnimeFactory.Anime(opt =>
             {
@@ -98,7 +98,7 @@ namespace CandySugar.Controls
         async void GroupInit(bool More)
         {
             Module = 3;
-            Activity = true;
+            if (!More) Activity = true;
             await Task.Delay(100);
             var result = await AnimeFactory.Anime(opt =>
             {
@@ -127,7 +127,7 @@ namespace CandySugar.Controls
         public async void QueryInit(bool More)
         {
             Module = 1;
-            Activity = true;
+            if (!More) Activity = true;
             await Task.Delay(100);
             var result = await AnimeFactory.Anime(opt =>
             {
