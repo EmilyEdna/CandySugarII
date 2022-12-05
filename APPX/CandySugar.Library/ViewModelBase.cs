@@ -8,14 +8,14 @@ namespace CandySugar.Library
 {
     public abstract class ViewModelBase : BindableBase, IInitialize, INavigatedAware, IPageLifecycleAware
     {
-        protected INavigationService _navigationService { get; }
-        protected IPageDialogService _pageDialogs { get; }
-        protected IDialogService _dialogs { get; }
+        protected INavigationService Nav { get; }
+        protected IPageDialogService Plog { get; }
+        protected IDialogService Dlog { get; }
         protected ViewModelBase(BaseServices baseServices)
         {
-            _navigationService = baseServices.NavigationService;
-            _pageDialogs = baseServices.PageDialogs;
-            _dialogs = baseServices.Dialogs;
+            Nav = baseServices.NavigationService;
+            Plog = baseServices.PageDialogs;
+            Dlog = baseServices.Dialogs;
             this.Activity = false;
             this.Refresh = false;
             this.Page = 1;

@@ -12,7 +12,7 @@ namespace CandySugar.Library
     {
         public Task Log(string className, string methodInfo, Exception message)
         {
-            Furion.Logging.Log.CreateLogger("SDK日志").LogError(message.Message, new { ClassName= className,Method= methodInfo });
+            Furion.Logging.Log.CreateLogger<string>().LogError(message.Message, new { ClassName= className,Method= methodInfo });
             return Task.CompletedTask;
         }
     }

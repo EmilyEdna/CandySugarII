@@ -91,7 +91,7 @@
                     <DataTemplate x:DataType="sdk:AnimeSearchElementResult">
                         <Border Stroke="{StaticResource Gray100Brush}" StrokeThickness="1">
                             <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding DetailCommand, Source={RelativeSource AncestorType={x:Type Local:BViewModel}}}" CommandParameter="{Binding .}" />
+                                <TapGestureRecognizer Command="{Binding DetailCommand, Source={RelativeSource AncestorType={x:Type Local:BViewModel}}}" CommandParameter="{Binding Route}" />
                             </Border.GestureRecognizers>
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="0" />

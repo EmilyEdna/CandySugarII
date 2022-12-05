@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="CandySugar.Controls.Views.B1"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Lib="clr-namespace:CandySugar.Library;assembly=CandySugar.Library"
+    xmlns:Local="clr-namespace:CandySugar.Controls"
+    xmlns:sdk="clr-namespace:Sdk.Component.Anime.sdk.ViewModel.Response;assembly=Sdk.Component"
+    x:DataType="Local:B1ViewModel"
+    Background="{AppThemeBinding Dark={StaticResource Gray600},
+                                 Light={StaticResource White}}">
+    <Grid>
+        <ActivityIndicator
+            HeightRequest="20"
+            HorizontalOptions="Center"
+            IsRunning="{Binding Activity}"
+            IsVisible="{Binding Activity}"
+            VerticalOptions="Center"
+            WidthRequest="20"
+            Color="{StaticResource Violet}" />
+        <Grid RowDefinitions="45,*" RowSpacing="2">
+            <HorizontalStackLayout Background="{AppThemeBinding Light=#85FF9999, Dark={StaticResource Gray900}}">
+                <Button BackgroundColor="{StaticResource Trans}" Command="{Binding BackCommand}">
+                    <Button.ImageSource>
+                        <FontImageSource
+                            FontFamily="Solid"
+                            Glyph="{Static Lib:FontIcon.ArrowLeft}"
+                            Color="{AppThemeBinding Light={StaticResource Gray200},
+                                                    Dark=White}" />
+                    </Button.ImageSource>
+                </Button>
+                <VerticalStackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Center">
+                    <Label
+                        FontSize="15"
+                        Text="{Binding Name}"
+                        TextColor="{AppThemeBinding Light=Black,
+                                                    Dark=White}" />
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+            <CollectionView
+                Grid.Row="1"
+                ItemSizingStrategy="MeasureAllItems"
+                ItemsSource="{Binding Result, Mode=TwoWay}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="3" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="sdk:AnimeDetailResult">
+                        <Border
+                            Padding="5"
+                            Stroke="{AppThemeBinding Light={StaticResource Gray100Brush},
+                                                     Dark={StaticResource SecondaryBrush}}"
+                            StrokeShape="RoundRectangle 10"
+                            StrokeThickness="1">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding PlayCommand, Source={RelativeSource AncestorType={x:Type Local:B1ViewModel}}}" CommandParameter="{Binding .}" />
+                            </Border.GestureRecognizers>
+                            <Label
+                                Margin="10,0,0,0"
+                                FontSize="16"
+                                LineBreakMode="WordWrap"
+                                Text="{Binding CollectName}"
+                                TextColor="{AppThemeBinding Light={StaticResource Red},
+                                                            Dark={StaticResource Secondary}}" />
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </Grid>
+</ContentPage>

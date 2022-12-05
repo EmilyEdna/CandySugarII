@@ -1,10 +1,5 @@
-﻿using Prism.Ioc;
+﻿using CandySugar.Controls.Views;
 using Sdk.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CandySugar.Controls
 {
@@ -23,6 +18,7 @@ namespace CandySugar.Controls
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterForNavigation<B1, B1ViewModel>();
         }
     }
 }

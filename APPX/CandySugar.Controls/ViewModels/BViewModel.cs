@@ -2,15 +2,9 @@
 using Sdk.Component.Anime.sdk;
 using Sdk.Component.Anime.sdk.ViewModel;
 using Sdk.Component.Anime.sdk.ViewModel.Enums;
-using Sdk.Component.Anime.sdk.ViewModel.Response;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Sdk.Component.Anime.sdk.ViewModel.Request;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Maui;
+using Sdk.Component.Anime.sdk.ViewModel.Response;
+using System.Collections.ObjectModel;
 
 namespace CandySugar.Controls
 {
@@ -34,27 +28,18 @@ namespace CandySugar.Controls
         #endregion
 
         #region Property
-        /// <summary>
-        /// 字母
-        /// </summary>
         ObservableCollection<string> _Words;
         public ObservableCollection<string> Words
         {
             get => _Words;
             set => SetProperty(ref _Words, value);
         }
-        /// <summary>
-        /// 初始化结果
-        /// </summary>
         ObservableCollection<AnimeWeekDayIndexResult> _InitResult;
         public ObservableCollection<AnimeWeekDayIndexResult> InitResult
         {
             get => _InitResult;
             set => SetProperty(ref _InitResult, value);
         }
-        /// <summary>
-        /// 检索分类结果
-        /// </summary>
         ObservableCollection<AnimeSearchElementResult> _SearchResult;
         public ObservableCollection<AnimeSearchElementResult> SearchResult
         {
@@ -181,7 +166,10 @@ namespace CandySugar.Controls
             this.Group = input;
             Task.Run(() => GroupInit(false));
         });
-        public DelegateCommand<string> DetailCommand => new(input => { });
+        public DelegateCommand<string> DetailCommand => new(input =>
+        {
+            Nav.NavigateAsync(new Uri("B1", UriKind.Relative), new NavigationParameters { { "Route", input } });
+        });
         public DelegateCommand RefreshCommand => new(() =>
         {
             this.Page = 1;
@@ -189,9 +177,10 @@ namespace CandySugar.Controls
             if (Module == 2) TypeInit(false);
             if (Module == 3) GroupInit(false);
         });
-        public DelegateCommand MoreCommand => new(() => { 
-        
-            this.Page+= 1;
+        public DelegateCommand MoreCommand => new(() =>
+        {
+
+            this.Page += 1;
             if (this.Page > this.Total) return;
             if (Module == 1) QueryInit(true);
             if (Module == 2) TypeInit(true);
