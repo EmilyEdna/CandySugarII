@@ -16,13 +16,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\CandySugar.Library\CandySugar.Library.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Platforms\Android\" />
-	  <Folder Include="Platforms\iOS\" />
-	  <Folder Include="Platforms\Windows\" />
+	  <ProjectReference Include="..\CandySugar.Logic\CandySugar.Logic.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -69,6 +63,9 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="Views\BViews\B1.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\BViews\B2.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\K.xaml">

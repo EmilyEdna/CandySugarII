@@ -1,5 +1,7 @@
 ﻿using CandySugar.Controls;
 using CandySugar.Entry.ViewModels;
+using CandySugar.Library;
+using CandySugar.Logic;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using UraniumUI;
@@ -12,12 +14,13 @@ namespace CandySugar.Entry
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
-            builder
-                .UseMauiApp<App>().UseMauiCommunityToolkit().UseUraniumUI()
+            builder.UseMauiApp<App>().UseMauiCommunityToolkit().UseUraniumUI()
                 .UsePrism(prism => prism.ConfigureModuleCatalog(moduleCatalog =>
                 {
                     //配置模块目录
                     moduleCatalog.AddModule<ControlsModule>();
+                    moduleCatalog.AddModule<LibraryModule>();
+                    moduleCatalog.AddModule<LogicModule>();
                 })
                 .RegisterTypes(containerRegistry =>
                 {

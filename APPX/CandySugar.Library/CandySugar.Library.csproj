@@ -16,7 +16,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\CandySugar.Logic\CandySugar.Logic.csproj" />
+		<PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
+		<PackageReference Include="JavaScriptEngineSwitcher.Jint" Version="3.20.6-preview" />
+		<PackageReference Include="Prism.DryIoc.Maui" Version="8.1.273-pre" />
+		<PackageReference Include="Prism.Maui.Rx" Version="8.1.273-pre" />
+		<PackageReference Include="sqlite-net-pcl" Version="1.9.141-beta" />
+		<PackageReference Include="UraniumUI.Icons.MaterialIcons" Version="2.1.0" />
+		<PackageReference Include="UraniumUI.Material" Version="2.1.0" />
+		<PackageReference Include="XExten.Advance" Version="1.2.4.4-preview" />
 	</ItemGroup>
 
 </Project>

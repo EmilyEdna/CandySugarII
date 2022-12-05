@@ -1,4 +1,4 @@
-namespace CandySugar.Controls.Views;
+namespace CandySugar.Controls;
 
 public partial class B1 : ContentPage
 {

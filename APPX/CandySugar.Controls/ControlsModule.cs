@@ -1,5 +1,4 @@
-﻿using CandySugar.Controls.Views;
-using Sdk.Core;
+﻿using Sdk.Core;
 
 namespace CandySugar.Controls
 {
@@ -19,6 +18,7 @@ namespace CandySugar.Controls
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<B1, B1ViewModel>();
+            containerRegistry.RegisterForNavigation<B2, B2ViewModel>();
         }
     }
 }
