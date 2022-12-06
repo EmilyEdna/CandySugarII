@@ -1,12 +1,100 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentView
+<Local:CandyUIView
     x:Class="CandySugar.Controls.C"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-    <VerticalStackLayout>
-        <Label
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Local="clr-namespace:CandySugar.Controls"
+    xmlns:MC="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+    xmlns:sdk="clr-namespace:Sdk.Component.Image.sdk.ViewModel.Response;assembly=Sdk.Component"
+    x:DataType="Local:CViewModel">
+    <Local:CandyUIView.Attachments>
+        <Local:BottomView>
+            <Local:BottomView.Header>
+                <Grid
+                    Background="{AppThemeBinding Light=#85FF9999,
+                                                 Dark={StaticResource Secondary}}"
+                    ColumnDefinitions="60,*"
+                    HeightRequest="60">
+                    <Grid.Shadow>
+                        <Shadow
+                            Brush="{StaticResource TertiaryBrush}"
+                            Opacity="0.3"
+                            Radius="20" />
+                    </Grid.Shadow>
+                    <Image Source="bottom.png" />
+                    <Label
+                        Grid.Column="1"
+                        FontSize="Medium"
+                        Text="世界那么大我也想去看看！！！"
+                        TextColor="{AppThemeBinding Light={StaticResource White},
+                                                    Dark={StaticResource Violet}}"
+                        VerticalOptions="Center" />
+                </Grid>
+            </Local:BottomView.Header>
+            <Grid HeightRequest="80" RowSpacing="5">
+                <CollectionView ItemSizingStrategy="MeasureAllItems" ItemsSource="{Binding Tage}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout
+                            HorizontalItemSpacing="2"
+                            Orientation="Horizontal"
+                            Span="3"
+                            VerticalItemSpacing="2" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Button
+                                Margin="0,0,0,15"
+                                Command="{Binding TypeCammand, Source={RelativeSource AncestorType={x:Type Local:CViewModel}}}"
+                                CommandParameter="{Binding .}"
+                                StyleClass="TextButton"
+                                Text="{Binding .}" />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+        </Local:BottomView>
+    </Local:CandyUIView.Attachments>
+    <Grid>
+        <ActivityIndicator
+            HeightRequest="20"
             HorizontalOptions="Center"
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" />
-    </VerticalStackLayout>
-</ContentView>
+            IsRunning="{Binding Activity}"
+            IsVisible="{Binding Activity}"
+            VerticalOptions="Center"
+            WidthRequest="20"
+            Color="{StaticResource Violet}" />
+        <RefreshView
+            Command="{Binding RefreshCommand}"
+            IsRefreshing="{Binding Refresh}"
+            RefreshColor="{StaticResource Pink}">
+            <CollectionView
+                ItemSizingStrategy="MeasureAllItems"
+                ItemsSource="{Binding Result}"
+                RemainingItemsThreshold="0"
+                RemainingItemsThresholdReachedCommand="{Binding MoreCommand}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout
+                        HorizontalItemSpacing="5"
+                        Orientation="Vertical"
+                        Span="2"
+                        VerticalItemSpacing="5" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="sdk:ImageElementResult">
+                        <Border Stroke="{StaticResource Gray100Brush}" StrokeShape="RoundRectangle 3">
+                            <Grid Padding="2">
+                                <Image
+                                    Local:ImageDep.Source="{Binding Preview}"
+                                    Local:ImageDep.Type="1"
+                                    Aspect="Fill"
+                                    HeightRequest="180"
+                                    WidthRequest="265"
+                                    ZIndex="-1" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</Local:CandyUIView>

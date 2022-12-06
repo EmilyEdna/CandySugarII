@@ -13,6 +13,7 @@ namespace CandySugar.Controls
                 Account = "EmilyEdna",
                 Password = DateTime.Now.ToString("yyyyMMdd")
             });
+            DataCenter.RegistFunc();
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)

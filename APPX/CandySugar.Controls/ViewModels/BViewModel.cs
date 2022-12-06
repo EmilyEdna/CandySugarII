@@ -173,20 +173,19 @@ namespace CandySugar.Controls
         public DelegateCommand RefreshCommand => new(() =>
         {
             this.Page = 1;
-            if (Module == 1) QueryInit(false);
-            if (Module == 2) TypeInit(false);
-            if (Module == 3) GroupInit(false);
+            if (Module == 1) Task.Run(()=> QueryInit(false));
+            if (Module == 2) Task.Run(()=>TypeInit(false));
+            if (Module == 3) Task.Run(() => GroupInit(false));
         });
         public DelegateCommand MoreCommand => new(() =>
         {
 
             this.Page += 1;
             if (this.Page > this.Total) return;
-            if (Module == 1) QueryInit(true);
-            if (Module == 2) TypeInit(true);
-            if (Module == 3) GroupInit(true);
+            if (Module == 1) Task.Run(() => QueryInit(true));
+            if (Module == 2) Task.Run(() => TypeInit(true));
+            if (Module == 3) Task.Run(() => GroupInit(true));
         });
         #endregion
-
     }
 }
