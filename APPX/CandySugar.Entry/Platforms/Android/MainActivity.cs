@@ -21,11 +21,11 @@ namespace CandySugar.Entry
             base.OnCreate(savedInstanceState);
             AndroidEnvironment.UnhandledExceptionRaiser += AndroidException;
         }
-        public override bool OnKeyDown([GeneratedEnum] Keycode keyCode, KeyEvent e)
+        protected override async void OnResume()
         {
-            return base.OnKeyDown(keyCode, e);
+            base.OnResume();
+            await Task.Delay(500);
         }
-
         /// <summary>
         /// 全局异常
         /// </summary>

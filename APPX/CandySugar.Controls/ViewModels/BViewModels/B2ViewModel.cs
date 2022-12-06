@@ -39,5 +39,6 @@ namespace CandySugar.Controls
             ICrossScreen.ScreenState.HiddenStatusBar();
         }
         #endregion
+
     }
 }

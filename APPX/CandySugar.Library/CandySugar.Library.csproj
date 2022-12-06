@@ -18,6 +18,7 @@
 	<ItemGroup>
 		<PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
 		<PackageReference Include="JavaScriptEngineSwitcher.Jint" Version="3.20.6-preview" />
+		<PackageReference Include="Mopups" Version="1.1.0" />
 		<PackageReference Include="Prism.DryIoc.Maui" Version="8.1.273-pre" />
 		<PackageReference Include="Prism.Maui.Rx" Version="8.1.273-pre" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.141-beta" />

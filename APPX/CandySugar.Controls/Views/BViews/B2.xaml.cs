@@ -6,10 +6,6 @@ public partial class B2 : ContentPage
 	public B2()
 	{
 		InitializeComponent();
-		Disappearing += (sender, evnt) =>
-		{
-            ViewModel.Show();
-        };
 		Appearing += (sender, evnt) =>
 		{
             ViewModel = (B2ViewModel)this.BindingContext;
@@ -29,5 +25,10 @@ public partial class B2 : ContentPage
         }
         if (Player.IsLoaded)
             await Player.EvaluateJavaScriptAsync($"Play('{ViewModel.Route}')");
+    }
+
+    private void PinchEvent(object sender, PinchGestureUpdatedEventArgs e)
+    {
+        ViewModel.Show();
     }
 }

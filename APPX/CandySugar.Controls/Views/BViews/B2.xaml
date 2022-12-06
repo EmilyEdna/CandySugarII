@@ -7,5 +7,9 @@
     x:DataType="Local:B2ViewModel"
     Background="{AppThemeBinding Dark={StaticResource Gray600},
                                  Light={StaticResource White}}">
-    <WebView x:Name="Player" />
+    <WebView x:Name="Player">
+        <WebView.GestureRecognizers>
+            <PinchGestureRecognizer PinchUpdated="PinchEvent" />
+        </WebView.GestureRecognizers>
+    </WebView>
 </ContentPage>
