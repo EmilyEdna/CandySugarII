@@ -3,6 +3,7 @@
     x:Class="CandySugar.Controls.C"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Lib="clr-namespace:CandySugar.Library;assembly=CandySugar.Library"
     xmlns:Local="clr-namespace:CandySugar.Controls"
     xmlns:MC="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
     xmlns:sdk="clr-namespace:Sdk.Component.Image.sdk.ViewModel.Response;assembly=Sdk.Component"
@@ -62,11 +63,13 @@
             IsVisible="{Binding Activity}"
             VerticalOptions="Center"
             WidthRequest="20"
-            Color="{StaticResource Violet}" />
+            Color="{AppThemeBinding Light={StaticResource Violet},
+                                    Dark={StaticResource Primary}}" />
         <RefreshView
             Command="{Binding RefreshCommand}"
             IsRefreshing="{Binding Refresh}"
-            RefreshColor="{StaticResource Pink}">
+            RefreshColor="{AppThemeBinding Light={StaticResource Pink},
+                                           Dark={StaticResource Secondary}}">
             <CollectionView
                 ItemSizingStrategy="MeasureAllItems"
                 ItemsSource="{Binding Result}"
@@ -81,15 +84,38 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="sdk:ImageElementResult">
-                        <Border Stroke="{StaticResource Gray100Brush}" StrokeShape="RoundRectangle 3">
+                        <Border Stroke="{StaticResource Gray100Brush}" StrokeShape="RoundRectangle 0">
                             <Grid Padding="2">
+                                <ActivityIndicator
+                                    IsRunning="False"
+                                    VerticalOptions="Center"
+                                    Color="{AppThemeBinding Light={StaticResource Violet},
+                                                            Dark={StaticResource Primary}}" />
                                 <Image
                                     Local:ImageDep.Source="{Binding Preview}"
                                     Local:ImageDep.Type="1"
                                     Aspect="Fill"
                                     HeightRequest="180"
-                                    WidthRequest="265"
-                                    ZIndex="-1" />
+                                    WidthRequest="265">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ViewCommand, Source={RelativeSource AncestorType={x:Type Local:CViewModel}}}" CommandParameter="{Binding .}" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                <ImageButton
+                                    Command="{Binding LikeCommand, Source={RelativeSource AncestorType={x:Type Local:CViewModel}}}"
+                                    CommandParameter="{Binding .}"
+                                    HeightRequest="25"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Start"
+                                    WidthRequest="25">
+                                    <ImageButton.Source>
+                                        <FontImageSource
+                                            FontFamily="Regular"
+                                            Glyph="{Static Lib:FontIcon.Star}"
+                                            Color="{AppThemeBinding Light={StaticResource Pink},
+                                                                    Dark=#FB6FDC}" />
+                                    </ImageButton.Source>
+                                </ImageButton>
                             </Grid>
                         </Border>
                     </DataTemplate>

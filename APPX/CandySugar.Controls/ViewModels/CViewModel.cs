@@ -129,6 +129,10 @@ namespace CandySugar.Controls
             this.Key = input;
             Task.Run(() => QueryInit(false));
         });
+        public DelegateCommand<ImageElementResult> ViewCommand => new(input => {
+            Tage = new ObservableCollection<string>(input.Labels);
+        });
+        public DelegateCommand<ImageElementResult> LikeCommand => new(input => { });
         #endregion
     }
 }

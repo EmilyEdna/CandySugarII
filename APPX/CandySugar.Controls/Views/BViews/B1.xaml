@@ -66,6 +66,7 @@
             IsVisible="{Binding Activity}"
             VerticalOptions="Center"
             WidthRequest="20"
-            Color="{StaticResource Violet}" />
+            Color="{AppThemeBinding Light={StaticResource Violet},
+                                    Dark={StaticResource Primary}}" />
     </Grid>
 </ContentPage>

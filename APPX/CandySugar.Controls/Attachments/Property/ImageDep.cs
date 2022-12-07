@@ -13,7 +13,7 @@ namespace CandySugar.Controls
         public static event ComplateDelegate OnComplate;
         public delegate void ComplateDelegate(Image image, string route, ImageSource bit);
         public static ActivityIndicator Indicator;
-        public static Func<string,int,byte[]> Funcs { get; set; }
+        public static Func<string, int, Task<byte[]>> Funcs { get; set; }
         #endregion
 
         #region Dep
@@ -48,8 +48,9 @@ namespace CandySugar.Controls
             try
             {
                 var ctrl = (Image)bindable;
-                Indicator = ((ctrl.Parent as Grid).Children.LastOrDefault() as ActivityIndicator);
+                Indicator = ((ctrl.Parent as Grid).Children.FirstOrDefault() as ActivityIndicator);
                 Indicator.IsRunning = true;
+                Indicator.IsVisible = true;
                 ctrl.IsVisible = false;
                 new Thread(new ParameterizedThreadStart(DownloadImage))
                 {
@@ -63,17 +64,17 @@ namespace CandySugar.Controls
 
         }
 
-        private static void DownloadImage(object obj)
+        private static  async void DownloadImage(object obj)
         {
             try
             {
                 if (obj is Dictionary<string, Image> input)
                 {
                     var model = input.FirstOrDefault();
-                    var bytes = Funcs?.Invoke(model.Key, GetType(model.Value)); 
-                    if (bytes == null || bytes.Length == 0) return;
+                    var bytes = await Funcs?.Invoke(model.Key, GetType(model.Value)); 
+                    if (bytes == null || bytes.Length == 0) return; 
                     var source = ImageSource.FromStream(() => new MemoryStream(bytes));
-                    input.Values.FirstOrDefault().Dispatcher.DispatchAsync(() =>
+                    input.Values.FirstOrDefault().Dispatcher.Dispatch(() =>
                     {
                         OnComplate(input.Values.FirstOrDefault(), input.Keys.FirstOrDefault(), source);
                     });
@@ -91,6 +92,7 @@ namespace CandySugar.Controls
             {
                 image.Source = bit;
                 Indicator.IsRunning = false;
+                Indicator.IsVisible = false;
                 image.IsVisible = true;
             }
         }

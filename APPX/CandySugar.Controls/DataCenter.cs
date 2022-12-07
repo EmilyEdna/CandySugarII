@@ -1,10 +1,7 @@
 ﻿using CandySugar.Library;
+using XExten.Advance.CacheFramework;
 using Sdk.Component.Plugins;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using XExten.Advance.LinqFramework;
 
 namespace CandySugar.Controls
 {
@@ -36,17 +33,23 @@ namespace CandySugar.Controls
         }
         public static void RegistFunc()
         {
-            ImageDep.Funcs = new((key, type) =>
+            ImageDep.Funcs = new(async (key, type) =>
             {
                 if (type == 1)
                 {
-
+                    var result = Caches.RunTimeCacheGet<byte[]>(key.ToMd5());
+                    if (result != null) return result;
+                    HttpClient client = new();
+                    client.DefaultRequestHeaders.Add("Host", "konachan.com");
+                    var data = await client.GetByteArrayAsync(key);
+                    Caches.RunTimeCacheSet(key.ToMd5(), data, DataBus.Cache);
+                    return data;
                 }
                 if (type == 2)
                 {
-                
+
                 }
-                return new byte[0];
+                return null;
             });
         }
     }
