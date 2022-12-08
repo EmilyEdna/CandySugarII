@@ -1,11 +1,4 @@
-﻿using CandySugar.Controls;
-using CandySugar.Library;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 
 namespace CandySugar.Entry.ViewModels
 {
@@ -124,13 +117,18 @@ namespace CandySugar.Entry.ViewModels
         });
         public DelegateCommand<string> SearchCommand => new(input =>
         {
-            if (Content is B view)
+            if (Content is B BView)
             {
-                var model = (view.BindingContext as BViewModel);
+                var model = (BView.BindingContext as BViewModel);
                 model.Key = input;
                 Task.Run(() => model.QueryInit(false));
             }
-
+            if (Content is C CView)
+            {
+                var model = (CView.BindingContext as CViewModel);
+                model.Key = input;
+                Task.Run(() => model.QueryInit(false));
+            }
         });
         #endregion
     }

@@ -106,4 +106,10 @@
 	  </MauiXaml>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Using Include="CandySugar.Library" />
+	  <Using Include="CandySugar.Logic" />
+	  <Using Include="Mopups.Services" />
+	</ItemGroup>
+
 </Project>

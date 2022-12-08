@@ -72,4 +72,10 @@
 	  </MauiXaml>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Using Include="CandySugar.Controls" />
+	  <Using Include="CandySugar.Library" />
+	  <Using Include="CandySugar.Logic" />
+	</ItemGroup>
+
 </Project>

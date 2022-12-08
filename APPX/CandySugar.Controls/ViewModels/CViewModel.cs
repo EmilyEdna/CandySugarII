@@ -83,7 +83,17 @@ namespace CandySugar.Controls
             }
             SetState();
         }
-        async void QueryInit(bool More)
+        async void Add(ImageElementResult input)
+        {
+            var Entity = new CRootEntity
+            {
+                Original = input.OriginalPng.IsNullOrEmpty() ? input.OriginalPng : input.OriginalJepg,
+                Priview = input.Preview,
+                Tage = input.Labels.Select(t => new CElementEntity { Name = t }).ToList()
+            };
+            if (await Service.CAdd(Entity)) "收藏成功".OpenToast(); else "收藏失败".OpenToast();
+        }
+       public async void QueryInit(bool More)
         {
             Module = 2;
             if (!More) Activity = true;
@@ -112,16 +122,6 @@ namespace CandySugar.Controls
                 else result.GlobalResult.Result.ForEach(Result.Add);
             }
             SetState();
-        }
-        async void Add(ImageElementResult input)
-        {
-            var Entity = new CRootEntity
-            {
-                Original = input.OriginalPng.IsNullOrEmpty() ? input.OriginalPng : input.OriginalJepg,
-                Priview = input.Preview,
-                Tage = input.Labels.Select(t => new CElementEntity { Name = t }).ToList()
-            };
-            if (await Service.CAdd(Entity)) "收藏成功".OpenToast(); else "收藏失败".OpenToast();
         }
         #endregion
 
