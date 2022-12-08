@@ -29,7 +29,8 @@
                         <FontImageSource
                             FontFamily="Thin"
                             Glyph="{Static Lib:FontIcon.Left}"
-                            Color="#C0C0C0" />
+                            Color="{AppThemeBinding Light=#C0C0C0,
+                                                    Dark=#FFFFFF}" />
                     </ImageButton.Source>
                 </ImageButton>
                 <ImageButton
@@ -41,7 +42,8 @@
                         <FontImageSource
                             FontFamily="Thin"
                             Glyph="{Static Lib:FontIcon.Right}"
-                            Color="#C0C0C0" />
+                            Color="{AppThemeBinding Light=#C0C0C0,
+                                                    Dark=#FFFFFF}" />
                     </ImageButton.Source>
                 </ImageButton>
             </Grid>
