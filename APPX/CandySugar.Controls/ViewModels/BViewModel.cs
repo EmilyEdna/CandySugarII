@@ -64,7 +64,7 @@ namespace CandySugar.Controls
             }).RunsAsync();
             this.Words = new ObservableCollection<string>(result.InitResult.Letters.Where(t => !t.Equals("全部")));
             InitResult = new ObservableCollection<AnimeWeekDayIndexResult>(result.InitResult.RecResults);
-            Activity = false;
+            SetState();
         }
         async void TypeInit(bool More)
         {
@@ -93,7 +93,7 @@ namespace CandySugar.Controls
                 });
             else
                 SearchResult = new ObservableCollection<AnimeSearchElementResult>(result.SeachResult.ElementResult);
-            Activity = false;
+            SetState();
         }
         async void GroupInit(bool More)
         {
@@ -122,7 +122,7 @@ namespace CandySugar.Controls
                 });
             else
                 SearchResult = new ObservableCollection<AnimeSearchElementResult>(result.SeachResult.ElementResult);
-            Activity = false;
+            SetState();
         }
         public async void QueryInit(bool More)
         {
@@ -151,7 +151,7 @@ namespace CandySugar.Controls
                 });
             else
                 SearchResult = new ObservableCollection<AnimeSearchElementResult>(result.SeachResult.ElementResult);
-            Activity = false;
+            SetState();
         }
         #endregion
 

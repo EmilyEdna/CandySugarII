@@ -10,13 +10,18 @@ using Sdk.Component.Image.sdk.ViewModel.Enums;
 using Sdk.Component.Image.sdk.ViewModel.Request;
 using Sdk.Component.Image.sdk.ViewModel.Response;
 using System.Collections.ObjectModel;
+using XExten.Advance.LinqFramework;
+using CandySugar.Logic;
+using Prism.Ioc;
 
 namespace CandySugar.Controls
 {
     public class CViewModel : ViewModelBase
     {
+        readonly IService Service;
         public CViewModel(BaseServices baseServices) : base(baseServices)
         {
+            Service = base.Container.Resolve<IService>();
         }
         public override void OnLoad()
         {
@@ -29,6 +34,7 @@ namespace CandySugar.Controls
 
         #region Property
         public string Key { get; set; }
+        public ImageElementResult Element { get; set; }
         #endregion
 
         #region Property
@@ -75,7 +81,7 @@ namespace CandySugar.Controls
                 if (Result == null) Result = new ObservableCollection<ImageElementResult>(result.GlobalResult.Result);
                 else result.GlobalResult.Result.ForEach(Result.Add);
             }
-            Activity = false;
+            SetState();
         }
         async void QueryInit(bool More)
         {
@@ -105,7 +111,17 @@ namespace CandySugar.Controls
                 if (Result == null) Result = new ObservableCollection<ImageElementResult>(result.GlobalResult.Result);
                 else result.GlobalResult.Result.ForEach(Result.Add);
             }
-            Activity = false;
+            SetState();
+        }
+        async void Add(ImageElementResult input)
+        {
+            var Entity = new CRootEntity
+            {
+                Original = input.OriginalPng.IsNullOrEmpty() ? input.OriginalPng : input.OriginalJepg,
+                Priview = input.Preview,
+                Tage = input.Labels.Select(t => new CElementEntity { Name = t }).ToList()
+            };
+            if (await Service.CAdd(Entity)) "收藏成功".OpenToast(); else "收藏失败".OpenToast();
         }
         #endregion
 
@@ -118,7 +134,6 @@ namespace CandySugar.Controls
         });
         public DelegateCommand MoreCommand => new(() =>
         {
-
             this.Page += 1;
             if (this.Page > this.Total) return;
             if (Module == 1) Task.Run(() => Init(true));
@@ -129,10 +144,19 @@ namespace CandySugar.Controls
             this.Key = input;
             Task.Run(() => QueryInit(false));
         });
-        public DelegateCommand<ImageElementResult> ViewCommand => new(input => {
+        public DelegateCommand<ImageElementResult> ViewCommand => new(input =>
+        {
             Tage = new ObservableCollection<string>(input.Labels);
+            Element = input;
         });
-        public DelegateCommand<ImageElementResult> LikeCommand => new(input => { });
+        public DelegateCommand<ImageElementResult> LikeCommand => new(input =>
+        {
+            Task.Run(() => Add(input));
+        });
+        public DelegateCommand ShowCammand => new(() =>
+        {
+            Nav.NavigateAsync(new Uri("C1", UriKind.Relative), new NavigationParameters { { "Route", Element.OriginalPng.IsNullOrEmpty() ? Element.OriginalPng : Element.OriginalJepg } });
+        });
         #endregion
     }
 }

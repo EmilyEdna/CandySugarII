@@ -9,7 +9,7 @@
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.Register<IBService, BService>();
+            containerRegistry.Register<IService, Service>();
         }
     }
 }

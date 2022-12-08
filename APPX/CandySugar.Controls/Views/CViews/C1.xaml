@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="CandySugar.Controls.C1"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Lib="clr-namespace:CandySugar.Library;assembly=CandySugar.Library"
+    xmlns:Local="clr-namespace:CandySugar.Controls"
+    x:DataType="Local:C1ViewModel"
+    Background="{AppThemeBinding Dark={StaticResource Gray600},
+                                 Light={StaticResource White}}">
+    <Local:PinchZoom>
+        <Grid>
+            <ActivityIndicator
+                IsRunning="False"
+                VerticalOptions="Center"
+                Color="{AppThemeBinding Light={StaticResource Violet},
+                                        Dark={StaticResource Primary}}" />
+            <Image
+                Local:ImageDep.Source="{Binding Route}"
+                Local:ImageDep.Type="1"
+                Aspect="AspectFit" />
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="2">
+                <ImageButton
+                    Command="{Binding BackCommand}"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Start">
+                    <ImageButton.Source>
+                        <FontImageSource
+                            FontFamily="Thin"
+                            Glyph="{Static Lib:FontIcon.Left}"
+                            Color="#C0C0C0" />
+                    </ImageButton.Source>
+                </ImageButton>
+                <ImageButton
+                    Grid.Column="1"
+                    Command="{Binding BackCommand}"
+                    HorizontalOptions="End"
+                    VerticalOptions="Start">
+                    <ImageButton.Source>
+                        <FontImageSource
+                            FontFamily="Thin"
+                            Glyph="{Static Lib:FontIcon.Right}"
+                            Color="#C0C0C0" />
+                    </ImageButton.Source>
+                </ImageButton>
+            </Grid>
+        </Grid>
+    </Local:PinchZoom>
+</ContentPage>

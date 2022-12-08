@@ -9,7 +9,7 @@
     xmlns:sdk="clr-namespace:Sdk.Component.Image.sdk.ViewModel.Response;assembly=Sdk.Component"
     x:DataType="Local:CViewModel">
     <Local:CandyUIView.Attachments>
-        <Local:BottomView>
+        <Local:BottomView x:Name="Bottom">
             <Local:BottomView.Header>
                 <Grid
                     Background="{AppThemeBinding Light=#85FF9999,
@@ -32,8 +32,18 @@
                         VerticalOptions="Center" />
                 </Grid>
             </Local:BottomView.Header>
-            <Grid HeightRequest="80" RowSpacing="5">
-                <CollectionView ItemSizingStrategy="MeasureAllItems" ItemsSource="{Binding Tage}">
+            <Grid
+                HeightRequest="100"
+                RowDefinitions="20,80"
+                RowSpacing="5">
+                <Button
+                    Command="{Binding ShowCammand, Source={RelativeSource AncestorType={x:Type Local:CViewModel}}}"
+                    StyleClass="TextButton"
+                    Text="查看大图" />
+                <CollectionView
+                    Grid.Row="1"
+                    ItemSizingStrategy="MeasureAllItems"
+                    ItemsSource="{Binding Tage}">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout
                             HorizontalItemSpacing="2"
@@ -98,7 +108,10 @@
                                     HeightRequest="180"
                                     WidthRequest="265">
                                     <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding ViewCommand, Source={RelativeSource AncestorType={x:Type Local:CViewModel}}}" CommandParameter="{Binding .}" />
+                                        <TapGestureRecognizer
+                                            Command="{Binding ViewCommand, Source={RelativeSource AncestorType={x:Type Local:CViewModel}}}"
+                                            CommandParameter="{Binding .}"
+                                            Tapped="OpenEvnet" />
                                     </Image.GestureRecognizers>
                                 </Image>
                                 <ImageButton

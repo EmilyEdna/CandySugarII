@@ -13,9 +13,9 @@ namespace CandySugar.Controls
 {
     public class B1ViewModel : ViewModelBase
     {
-        readonly IBService Service;
+        readonly IService Service;
 
-        public B1ViewModel(BaseServices baseServices, IBService service) : base(baseServices) { Service = service; }
+        public B1ViewModel(BaseServices baseServices, IService service) : base(baseServices) { Service = service; }
 
         public override void Initialize(INavigationParameters parameters)
         {
@@ -71,7 +71,7 @@ namespace CandySugar.Controls
             Name = Result.FirstOrDefault().Name;
             Cover = Result.FirstOrDefault().Cover;
             Add();
-            Activity = false;
+            SetState();
         }
         async void PlayInit(string Route, string Name)
         {
@@ -93,7 +93,7 @@ namespace CandySugar.Controls
             }).RunsAsync();
             Alter(Route);
             Navigation(result.PlayResult.PlayURL);
-            Activity = false;
+            SetState();
         }
         /// <summary>
         /// 写入数据库
@@ -116,7 +116,7 @@ namespace CandySugar.Controls
                 });
             });
 
-            BRoot = await Service.Add(Root);
+            BRoot = await Service.BAdd(Root);
         }
         /// <summary>
         /// 修改数据库
@@ -124,7 +124,7 @@ namespace CandySugar.Controls
         async void Alter(string Route)
         {
             var Element = BRoot.Collection.FirstOrDefault(t => t.WatchRoute == Route);
-            await Service.Alter(Element);
+            await Service.BAlter(Element);
         }
         void Navigation(string Route)
         {

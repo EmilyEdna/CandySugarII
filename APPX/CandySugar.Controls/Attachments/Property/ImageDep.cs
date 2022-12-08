@@ -57,7 +57,7 @@ namespace CandySugar.Controls
                     IsBackground = true
                 }.Start(new Dictionary<string, Image> { { newValue.ToString(), ctrl } });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 "图片加载失败".OpenToast();
             }
@@ -80,7 +80,7 @@ namespace CandySugar.Controls
                     });
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 "图片加载失败".OpenToast();
             }

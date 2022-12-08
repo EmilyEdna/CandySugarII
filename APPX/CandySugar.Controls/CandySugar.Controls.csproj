@@ -68,6 +68,9 @@
 	  <MauiXaml Update="Views\BViews\B2.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\CViews\C1.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\K.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

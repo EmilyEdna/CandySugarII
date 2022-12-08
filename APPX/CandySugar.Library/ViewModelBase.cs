@@ -10,9 +10,11 @@ namespace CandySugar.Library
     {
         protected INavigationService Nav { get; }
         protected IPageDialogService Plog { get; }
+        protected IContainerProvider Container { get; }
         protected IDialogService Dlog { get; }
         protected ViewModelBase(BaseServices baseServices)
         {
+            Container = baseServices.Container;
             Nav = baseServices.NavigationService;
             Plog = baseServices.PageDialogs;
             Dlog = baseServices.Dialogs;
@@ -21,6 +23,7 @@ namespace CandySugar.Library
             this.Page = 1;
             OnLoad();
         }
+
         public virtual void Initialize(INavigationParameters parameters) { }
         public virtual void OnAppearing() { }
         public virtual void OnDisappearing() { }
@@ -55,17 +58,23 @@ namespace CandySugar.Library
         }
         #endregion
 
+        protected void SetState()
+        {
+            this.Activity = false;
+            this.Refresh = false;
+        }
     }
     public class BaseServices
     {
-        public BaseServices(INavigationService navigationService, IPageDialogService pageDialogs, IDialogService dialogService, IDialogViewRegistry dialogRegistry)
+        public BaseServices(IContainerProvider container, INavigationService navigationService, IPageDialogService pageDialogs, IDialogService dialogService, IDialogViewRegistry dialogRegistry)
         {
             NavigationService = navigationService;
             PageDialogs = pageDialogs;
             Dialogs = dialogService;
             DialogRegistry = dialogRegistry;
+            Container = container;
         }
-
+        public IContainerProvider Container { get; }
         public INavigationService NavigationService { get; }
         public IPageDialogService PageDialogs { get; }
         public IDialogService Dialogs { get; }
