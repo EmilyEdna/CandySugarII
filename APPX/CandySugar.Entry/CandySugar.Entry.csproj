@@ -30,6 +30,43 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android|AnyCPU'">
 	  <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+	  <ApplicationTitle>Candy</ApplicationTitle>
+	  <ApplicationId>github.emilyedna.candysugar</ApplicationId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0|AnyCPU'">
+	  <ApplicationTitle>Candy</ApplicationTitle>
+	  <ApplicationId>github.emilyedna.candysugar</ApplicationId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0|AnyCPU'">
+	  <ApplicationTitle>Candy</ApplicationTitle>
+	  <ApplicationId>github.emilyedna.candysugar</ApplicationId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android|AnyCPU'">
+	  <ApplicationTitle>Candy</ApplicationTitle>
+	  <ApplicationId>github.emilyedna.candysugar</ApplicationId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
+	  <ApplicationTitle>Candy</ApplicationTitle>
+	  <ApplicationId>github.emilyedna.candysugar</ApplicationId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
+	  <ApplicationTitle>Candy</ApplicationTitle>
+	  <ApplicationId>github.emilyedna.candysugar</ApplicationId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|AnyCPU'">
+	  <ApplicationTitle>Candy</ApplicationTitle>
+	  <ApplicationId>github.emilyedna.candysugar</ApplicationId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|AnyCPU'">
+	  <ApplicationTitle>Candy</ApplicationTitle>
+	  <ApplicationId>github.emilyedna.candysugar</ApplicationId>
 	</PropertyGroup>
 
 	<ItemGroup>

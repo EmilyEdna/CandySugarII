@@ -7,7 +7,7 @@
 				 android:supportsRtl="true"
 				 android:usesCleartextTraffic="true">
 		<provider  android:name="androidx.core.content.FileProvider"
-		   android:authorities="com.emilyedna.newmaui.fileprovider"
+		   android:authorities="github.emilyedna.fileprovider"
 		   android:exported="false"
 		   android:grantUriPermissions="true">
 			<meta-data android:name="android.support.FILE_PROVIDER_PATHS"
