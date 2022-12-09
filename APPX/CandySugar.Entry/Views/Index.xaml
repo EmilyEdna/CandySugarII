@@ -9,14 +9,14 @@
     xmlns:VM="clr-namespace:CandySugar.Entry.ViewModels"
     Title="Index"
     x:DataType="VM:IndexViewModel"
-    Background="{AppThemeBinding Dark={StaticResource Gray600},
-                                 Light={StaticResource White}}">
+    Background="{AppThemeBinding Dark={StaticResource BasicDrak},
+                                 Light={StaticResource Basic}}">
     <Candy:CandyUIPage.Attachments>
         <Candy:LeftPage x:Name="Left">
             <Candy:LeftPage.Body>
                 <TableView
                     Margin="0,0,0,40"
-                    BackgroundColor="Transparent"
+                    BackgroundColor="{StaticResource Platform}"
                     Intent="Menu">
                     <TableRoot>
                         <TableSection Title="Chapters">
@@ -32,31 +32,31 @@
         </Candy:LeftPage>
     </Candy:CandyUIPage.Attachments>
     <Grid RowDefinitions="45,80,*" RowSpacing="2">
-        <HorizontalStackLayout Background="{AppThemeBinding Light=#85FF9999, Dark={StaticResource Gray900}}">
+        <HorizontalStackLayout Background="{AppThemeBinding Light={StaticResource BasicContainer}, Dark={StaticResource BasicBrushContainerDrak}}">
             <Button BackgroundColor="{StaticResource Trans}" Clicked="PopupLeftEvent">
                 <Button.ImageSource>
                     <FontImageSource
                         FontFamily="Regular"
                         Glyph="{Static Lib:FontIcon.Bars}"
-                        Color="{AppThemeBinding Light={StaticResource Gray200},
-                                                Dark=White}" />
+                        Color="{AppThemeBinding Light={StaticResource BasicPrimary},
+                                                Dark={StaticResource BasicPrimaryDrak}}" />
                 </Button.ImageSource>
             </Button>
             <Border
                 HeightRequest="35"
-                Stroke="{StaticResource Gray100}"
+                Stroke="{StaticResource SurfaceSafe}"
                 StrokeShape="RoundRectangle 15"
                 StrokeThickness="1"
                 WidthRequest="250">
                 <SearchBar
                     IsTextPredictionEnabled="True"
                     Placeholder="请输入检索内容"
-                    PlaceholderColor="{AppThemeBinding Light=#85FF9999,
-                                                       Dark={StaticResource Gray900}}"
+                    PlaceholderColor="{AppThemeBinding Light={StaticResource BasicDrak},
+                                                       Dark={StaticResource BasicContainer}}"
                     SearchCommand="{Binding SearchCommand}"
                     SearchCommandParameter="{Binding Text, Source={RelativeSource Self}}"
-                    TextColor="{AppThemeBinding Light=#85FF9999,
-                                                Dark={StaticResource Gray900}}" />
+                    TextColor="{AppThemeBinding Light={StaticResource BasicDrak},
+                                                Dark={StaticResource BasicContainer}}" />
             </Border>
         </HorizontalStackLayout>
         <CollectionView
@@ -67,7 +67,7 @@
                 <DataTemplate x:DataType="Lib:MenuModel">
                     <Grid Padding="0,0,6,0" RowDefinitions="60,20">
                         <MC:ButtonView
-                            BackgroundColor="{StaticResource Trans}"
+                            BackgroundColor="{StaticResource Platform}"
                             HeightRequest="65"
                             WidthRequest="65">
                             <Image Aspect="Fill" Source="{Binding Icon}">

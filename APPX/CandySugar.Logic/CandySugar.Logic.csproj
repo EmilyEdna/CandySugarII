@@ -21,6 +21,8 @@
 
 	<ItemGroup>
 	  <Using Include="CandySugar.Library" />
+	  <Using Include="XExten.Advance.LinqFramework" />
+	  <Using Include="XExten.Advance.StaticFramework" />
 	</ItemGroup>
 
 </Project>

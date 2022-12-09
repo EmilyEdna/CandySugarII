@@ -71,6 +71,9 @@
 	  <MauiXaml Update="Views\CViews\C1.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\DViews\D1.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\K.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -110,6 +113,9 @@
 	  <Using Include="CandySugar.Library" />
 	  <Using Include="CandySugar.Logic" />
 	  <Using Include="Mopups.Services" />
+	  <Using Include="XExten.Advance" />
+	  <Using Include="XExten.Advance.LinqFramework" />
+	  <Using Include="XExten.Advance.StaticFramework" />
 	</ItemGroup>
 
 </Project>

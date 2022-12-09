@@ -7,26 +7,26 @@
     xmlns:Local="clr-namespace:CandySugar.Controls"
     xmlns:sdk="clr-namespace:Sdk.Component.Anime.sdk.ViewModel.Response;assembly=Sdk.Component"
     x:DataType="Local:B1ViewModel"
-    Background="{AppThemeBinding Dark={StaticResource Gray600},
-                                 Light={StaticResource White}}">
+    Background="{AppThemeBinding Dark={StaticResource BasicDrak},
+                                 Light={StaticResource Basic}}">
     <Grid>
         <Grid RowDefinitions="45,*" RowSpacing="2">
-            <HorizontalStackLayout Background="{AppThemeBinding Light=#85FF9999, Dark={StaticResource Gray900}}">
-                <Button BackgroundColor="{StaticResource Trans}" Command="{Binding BackCommand}">
+            <HorizontalStackLayout Background="{AppThemeBinding Light={StaticResource BasicContainer}, Dark={StaticResource BasicBrushContainerDrak}}">
+                <Button BackgroundColor="{StaticResource Platform}" Command="{Binding BackCommand}">
                     <Button.ImageSource>
                         <FontImageSource
                             FontFamily="Solid"
                             Glyph="{Static Lib:FontIcon.ArrowLeft}"
-                            Color="{AppThemeBinding Light={StaticResource Gray200},
-                                                    Dark=White}" />
+                            Color="{AppThemeBinding Light={StaticResource BasicPrimary},
+                                                    Dark={StaticResource BasicPrimaryDrak}}" />
                     </Button.ImageSource>
                 </Button>
                 <VerticalStackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Center">
                     <Label
                         FontSize="15"
                         Text="{Binding Name}"
-                        TextColor="{AppThemeBinding Light=Black,
-                                                    Dark=White}" />
+                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                    Light={StaticResource BasicDrak}}" />
                 </VerticalStackLayout>
             </HorizontalStackLayout>
             <CollectionView
@@ -40,8 +40,8 @@
                     <DataTemplate x:DataType="sdk:AnimeDetailResult">
                         <Border
                             Padding="5"
-                            Stroke="{AppThemeBinding Light={StaticResource Gray100Brush},
-                                                     Dark={StaticResource SecondaryBrush}}"
+                            Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
+                                                     Dark={StaticResource PotoBrushSafeDark}}"
                             StrokeShape="RoundRectangle 10"
                             StrokeThickness="1">
                             <Border.GestureRecognizers>
@@ -52,8 +52,8 @@
                                 FontSize="16"
                                 LineBreakMode="WordWrap"
                                 Text="{Binding CollectName}"
-                                TextColor="{AppThemeBinding Light={StaticResource Red},
-                                                            Dark={StaticResource Secondary}}" />
+                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                            Light={StaticResource BasicDrak}}" />
                         </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -66,7 +66,7 @@
             IsVisible="{Binding Activity}"
             VerticalOptions="Center"
             WidthRequest="20"
-            Color="{AppThemeBinding Light={StaticResource Violet},
-                                    Dark={StaticResource Primary}}" />
+            Color="{AppThemeBinding Light={StaticResource SurfaceContainer},
+                                    Dark={StaticResource SurfaceContainerDark}}" />
     </Grid>
 </ContentPage>

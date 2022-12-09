@@ -27,6 +27,7 @@ namespace CandySugar.Controls
         {
             Task.Run(() => Init(false));
         }
+
         /// <summary>
         /// 1 初始化 2 查询
         /// </summary>
@@ -93,7 +94,7 @@ namespace CandySugar.Controls
             };
             if (await Service.CAdd(Entity)) "收藏成功".OpenToast(); else "收藏失败".OpenToast();
         }
-       public async void QueryInit(bool More)
+        public async void QueryInit(bool More)
         {
             Module = 2;
             if (!More) Activity = true;

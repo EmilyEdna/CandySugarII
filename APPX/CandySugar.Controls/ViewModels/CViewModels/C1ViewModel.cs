@@ -1,14 +1,6 @@
-﻿using CandySugar.Library;
-using CandySugar.Library.Common;
+﻿using CandySugar.Library.Common;
 using CandySugar.Library.Common.Device;
 using CandySugar.Library.Common.Screen;
-using CandySugar.Logic;
-using Sdk.Component.Anime.sdk;
-using Sdk.Component.Anime.sdk.ViewModel;
-using Sdk.Component.Anime.sdk.ViewModel.Enums;
-using Sdk.Component.Anime.sdk.ViewModel.Request;
-using Sdk.Component.Anime.sdk.ViewModel.Response;
-using System.Collections.ObjectModel;
 
 namespace CandySugar.Controls
 {

@@ -113,6 +113,8 @@
 	  <Using Include="CandySugar.Controls" />
 	  <Using Include="CandySugar.Library" />
 	  <Using Include="CandySugar.Logic" />
+	  <Using Include="XExten.Advance.LinqFramework" />
+	  <Using Include="XExten.Advance.StaticFramework" />
 	</ItemGroup>
 
 </Project>

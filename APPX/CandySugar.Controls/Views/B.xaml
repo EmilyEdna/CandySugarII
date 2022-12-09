@@ -11,13 +11,14 @@
         <Local:BottomView>
             <Local:BottomView.Header>
                 <Grid
-                    Background="{AppThemeBinding Light=#85FF9999,
-                                                 Dark={StaticResource Secondary}}"
+                    Background="{AppThemeBinding Light={StaticResource Surface},
+                                                 Dark={StaticResource SurfaceDrak}}"
                     ColumnDefinitions="60,*"
                     HeightRequest="60">
                     <Grid.Shadow>
                         <Shadow
-                            Brush="{StaticResource TertiaryBrush}"
+                            Brush="{AppThemeBinding Light={StaticResource PotoBrush},
+                                                    Dark={StaticResource PotoBrushDrak}}"
                             Opacity="0.3"
                             Radius="20" />
                     </Grid.Shadow>
@@ -26,8 +27,8 @@
                         Grid.Column="1"
                         FontSize="Medium"
                         Text="世界那么大我也想去看看！！！"
-                        TextColor="{AppThemeBinding Light={StaticResource White},
-                                                    Dark={StaticResource Violet}}"
+                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                    Light={StaticResource BasicDrak}}"
                         VerticalOptions="Center" />
                 </Grid>
             </Local:BottomView.Header>
@@ -43,7 +44,9 @@
                                 Command="{Binding TypeCammand, Source={RelativeSource AncestorType={x:Type Local:BViewModel}}}"
                                 CommandParameter="{Binding .}"
                                 StyleClass="TextButton"
-                                Text="{Binding .}" />
+                                Text="{Binding .}"
+                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                            Light={StaticResource BasicDrak}}" />
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
@@ -58,7 +61,9 @@
                                 Command="{Binding GroupCammand, Source={RelativeSource AncestorType={x:Type Local:BViewModel}}}"
                                 CommandParameter="{Binding Route}"
                                 StyleClass="TextButton"
-                                Text="{Binding Name}" />
+                                Text="{Binding Name}"
+                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                            Light={StaticResource BasicDrak}}" />
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
@@ -73,13 +78,13 @@
             IsVisible="{Binding Activity}"
             VerticalOptions="Center"
             WidthRequest="20"
-            Color="{AppThemeBinding Light={StaticResource Violet},
-                                    Dark={StaticResource Primary}}" />
+            Color="{AppThemeBinding Light={StaticResource SurfaceContainer},
+                                    Dark={StaticResource SurfaceContainerDark}}" />
         <RefreshView
             Command="{Binding RefreshCommand}"
             IsRefreshing="{Binding Refresh}"
-            RefreshColor="{AppThemeBinding Light={StaticResource Pink},
-                                           Dark={StaticResource Secondary}}">
+            RefreshColor="{AppThemeBinding Light={StaticResource SurfaceContainer},
+                                           Dark={StaticResource SurfaceContainerDark}}">
             <CollectionView
                 ItemSizingStrategy="MeasureAllItems"
                 ItemsSource="{Binding SearchResult}"
@@ -90,7 +95,7 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="sdk:AnimeSearchElementResult">
-                        <Border Stroke="{StaticResource Gray100Brush}" StrokeThickness="1">
+                        <Border Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe}, Dark={StaticResource PotoBrushSafeDark}}" StrokeThickness="1">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding DetailCommand, Source={RelativeSource AncestorType={x:Type Local:BViewModel}}}" CommandParameter="{Binding Route}" />
                             </Border.GestureRecognizers>
@@ -109,7 +114,8 @@
                                         Margin="10,0,0,0"
                                         LineBreakMode="CharacterWrap "
                                         Text="{Binding Name}"
-                                        TextColor="{StaticResource Red}" />
+                                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                                    Light={StaticResource BasicDrak}}" />
                                 </StackLayout>
                             </Grid>
                         </Border>

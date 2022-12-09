@@ -1,4 +1,5 @@
-﻿using Sdk.Core;
+﻿using RestSharp;
+using Sdk.Core;
 
 namespace CandySugar.Controls
 {
@@ -14,6 +15,14 @@ namespace CandySugar.Controls
                 Password = DateTime.Now.ToString("yyyyMMdd")
             });
             DataCenter.RegistFunc();
+            HttpEvent.HttpActionEvent = new Action<HttpClient, Exception>((client, ex) =>
+            {
+                
+            });
+            HttpEvent.RestActionEvent = new Action<RestClient, Exception>((client, ex) =>
+            {
+                
+            });
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
@@ -22,6 +31,8 @@ namespace CandySugar.Controls
             containerRegistry.RegisterForNavigation<B2, B2ViewModel>();
 
             containerRegistry.RegisterForNavigation<C1, C1ViewModel>();
+
+            containerRegistry.RegisterForNavigation<D1, D1ViewModel>();
         }
     }
 }

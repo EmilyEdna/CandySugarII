@@ -1,8 +1,8 @@
 namespace CandySugar.Controls;
 
-public partial class D : CandyUIView
+public partial class D1 : ContentPage
 {
-	public D()
+	public D1()
 	{
 		InitializeComponent();
 	}

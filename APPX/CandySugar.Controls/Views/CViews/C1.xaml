@@ -6,15 +6,15 @@
     xmlns:Lib="clr-namespace:CandySugar.Library;assembly=CandySugar.Library"
     xmlns:Local="clr-namespace:CandySugar.Controls"
     x:DataType="Local:C1ViewModel"
-    Background="{AppThemeBinding Dark={StaticResource Gray600},
-                                 Light={StaticResource White}}">
+    Background="{AppThemeBinding Dark={StaticResource BasicDrak},
+                                 Light={StaticResource Basic}}">
     <Local:PinchZoom>
         <Grid>
             <ActivityIndicator
                 IsRunning="False"
                 VerticalOptions="Center"
-                Color="{AppThemeBinding Light={StaticResource Violet},
-                                        Dark={StaticResource Primary}}" />
+                Color="{AppThemeBinding Light={StaticResource SurfaceContainer},
+                                        Dark={StaticResource SurfaceContainerDark}}" />
             <Image
                 Local:ImageDep.Source="{Binding Route}"
                 Local:ImageDep.Type="1"
@@ -29,8 +29,8 @@
                         <FontImageSource
                             FontFamily="Thin"
                             Glyph="{Static Lib:FontIcon.Left}"
-                            Color="{AppThemeBinding Light=#C0C0C0,
-                                                    Dark=#FFFFFF}" />
+                            Color="{AppThemeBinding Light={StaticResource BasicContainer},
+                                                    Dark={StaticResource PotoSafeDark}}" />
                     </ImageButton.Source>
                 </ImageButton>
                 <ImageButton
@@ -42,8 +42,8 @@
                         <FontImageSource
                             FontFamily="Thin"
                             Glyph="{Static Lib:FontIcon.Right}"
-                            Color="{AppThemeBinding Light=#C0C0C0,
-                                                    Dark=#FFFFFF}" />
+                            Color="{AppThemeBinding Light={StaticResource BasicContainer},
+                                                    Dark={StaticResource PotoSafeDark}}" />
                     </ImageButton.Source>
                 </ImageButton>
             </Grid>

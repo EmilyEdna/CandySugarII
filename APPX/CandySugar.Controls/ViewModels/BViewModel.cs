@@ -16,6 +16,7 @@ namespace CandySugar.Controls
         {
             Task.Run(() => Init());
         }
+
         /// <summary>
         /// 1 查询 2 字母分类 3类被分类
         /// </summary>
@@ -51,6 +52,7 @@ namespace CandySugar.Controls
         #region Method
         async void Init()
         {
+            Module = 0;
             Activity = true;
             await Task.Delay(100);
             var result = await AnimeFactory.Anime(opt =>

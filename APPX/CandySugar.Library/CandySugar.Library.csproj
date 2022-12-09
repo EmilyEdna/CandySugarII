@@ -27,4 +27,9 @@
 		<PackageReference Include="XExten.Advance" Version="1.2.4.4-preview" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Using Include="XExten.Advance.LinqFramework" />
+	  <Using Include="XExten.Advance.StaticFramework" />
+	</ItemGroup>
+
 </Project>
