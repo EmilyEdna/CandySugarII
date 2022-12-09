@@ -33,7 +33,7 @@
     </Candy:CandyUIPage.Attachments>
     <Grid RowDefinitions="45,80,*" RowSpacing="2">
         <HorizontalStackLayout Background="{AppThemeBinding Light={StaticResource BasicContainer}, Dark={StaticResource BasicBrushContainerDrak}}">
-            <Button BackgroundColor="{StaticResource Trans}" Clicked="PopupLeftEvent">
+            <Button BackgroundColor="{StaticResource Platform}" Clicked="PopupLeftEvent">
                 <Button.ImageSource>
                     <FontImageSource
                         FontFamily="Regular"
@@ -49,6 +49,7 @@
                 StrokeThickness="1"
                 WidthRequest="250">
                 <SearchBar
+                    FontFamily="Sans"
                     IsTextPredictionEnabled="True"
                     Placeholder="请输入检索内容"
                     PlaceholderColor="{AppThemeBinding Light={StaticResource BasicDrak},

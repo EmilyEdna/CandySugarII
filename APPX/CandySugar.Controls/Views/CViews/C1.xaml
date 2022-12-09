@@ -13,7 +13,7 @@
             <ActivityIndicator
                 IsRunning="False"
                 VerticalOptions="Center"
-                Color="{AppThemeBinding Light={StaticResource SurfaceContainer},
+                Color="{AppThemeBinding Light={StaticResource SurfacePrimaryDrak},
                                         Dark={StaticResource SurfaceContainerDark}}" />
             <Image
                 Local:ImageDep.Source="{Binding Route}"

@@ -39,6 +39,7 @@
                             Margin="0,0,0,15"
                             Command="{Binding GroupCammand, Source={RelativeSource AncestorType={x:Type Local:DViewModel}}}"
                             CommandParameter="{Binding Route}"
+                            FontFamily="Sans"
                             StyleClass="TextButton"
                             Text="{Binding Type}"
                             TextColor="{AppThemeBinding Dark={StaticResource Basic},
@@ -56,7 +57,7 @@
             IsVisible="{Binding Activity}"
             VerticalOptions="Center"
             WidthRequest="20"
-            Color="{AppThemeBinding Light={StaticResource SurfaceContainer},
+            Color="{AppThemeBinding Light={StaticResource SurfacePrimaryDrak},
                                     Dark={StaticResource SurfaceContainerDark}}" />
         <RefreshView
             Command="{Binding RefreshCommand}"
