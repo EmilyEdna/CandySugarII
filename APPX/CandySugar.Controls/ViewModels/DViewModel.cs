@@ -10,8 +10,10 @@ namespace CandySugar.Controls
 {
     public class DViewModel : ViewModelBase
     {
+        readonly IService Service;
         public DViewModel(BaseServices baseServices) : base(baseServices)
         {
+            Service = this.Container.Resolve<IService>();
         }
 
         public override void OnLoad()
@@ -47,72 +49,96 @@ namespace CandySugar.Controls
         #region Method
         async void Init()
         {
-            Module = 0;
-            Activity = true;
-            await Task.Delay(100);
-            var result = await MangaFactory.Manga(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Module = 0;
+                Activity = true;
+                await Task.Delay(100);
+                var result = await MangaFactory.Manga(opt =>
                 {
-                    CacheSpan = DataBus.Cache,
-                    ImplType = DataCenter.ImplType(),
-                    MangaType = MangaEnum.Init,
-                };
-            }).RunsAsync();
-            InitResult = new ObservableCollection<MangaInitCategoryResult>(result.CateInitResults);
-            SetState();
+                    opt.RequestParam = new Input
+                    {
+                        CacheSpan = DataBus.Cache,
+                        ImplType = DataCenter.ImplType(),
+                        MangaType = MangaEnum.Init,
+                    };
+                }).RunsAsync();
+                InitResult = new ObservableCollection<MangaInitCategoryResult>(result.CateInitResults);
+                SetState();
+            }
+            catch (Exception ex)
+            {
+                await Service.AddLog("DInit异常", ex);
+                "DInit异常".OpenToast();
+            }
         }
         async void GroupInit(bool More)
         {
-            Module = 1;
-            if (!More) Activity = true;
-            await Task.Delay(100);
-            var result = await MangaFactory.Manga(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Module = 1;
+                if (!More) Activity = true;
+                await Task.Delay(100);
+                var result = await MangaFactory.Manga(opt =>
                 {
-                    CacheSpan = DataBus.Cache,
-                    ImplType = DataCenter.ImplType(),
-                    MangaType = MangaEnum.Category,
-                    Category = new MangaCategory
+                    opt.RequestParam = new Input
                     {
-                        Page = Page,
-                        Route = Group
-                    }
-                };
-            }).RunsAsync();
-            Total = result.CategoryResult.Total;
-            if (More)
-                result.CategoryResult.ElementResults.ForEach(GroupResult.Add);
-            else
-                GroupResult = new ObservableCollection<MangaCategoryElementResult>(result.CategoryResult.ElementResults);
-            SetState();
+                        CacheSpan = DataBus.Cache,
+                        ImplType = DataCenter.ImplType(),
+                        MangaType = MangaEnum.Category,
+                        Category = new MangaCategory
+                        {
+                            Page = Page,
+                            Route = Group
+                        }
+                    };
+                }).RunsAsync();
+                Total = result.CategoryResult.Total;
+                if (More)
+                    result.CategoryResult.ElementResults.ForEach(GroupResult.Add);
+                else
+                    GroupResult = new ObservableCollection<MangaCategoryElementResult>(result.CategoryResult.ElementResults);
+                SetState();
+            }
+            catch (Exception ex)
+            {
+                await Service.AddLog("DGroupInit异常", ex);
+                "DGroupInit异常".OpenToast();
+            }
         }
         public async void QueryInit(bool More)
         {
-            Module = 2;
-            if (!More) Activity = true;
-            await Task.Delay(100);
-            var result = await MangaFactory.Manga(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Module = 2;
+                if (!More) Activity = true;
+                await Task.Delay(100);
+                var result = await MangaFactory.Manga(opt =>
                 {
-                    CacheSpan = DataBus.Cache,
-                    ImplType = DataCenter.ImplType(),
-                    MangaType = MangaEnum.Search,
-                    Search = new MangaSearch
+                    opt.RequestParam = new Input
                     {
-                        Page = Page,
-                        KeyWord = Key
-                    }
-                };
-            }).RunsAsync();
-            Total = result.SearchResult.Total;
-            if (More)
-                result.SearchResult.ElementResults.ToMapper<List<MangaCategoryElementResult>>().ForEach(GroupResult.Add);
-            else
-                GroupResult = new ObservableCollection<MangaCategoryElementResult>(result.SearchResult.ElementResults.ToMapper<List<MangaCategoryElementResult>>());
-            SetState();
+                        CacheSpan = DataBus.Cache,
+                        ImplType = DataCenter.ImplType(),
+                        MangaType = MangaEnum.Search,
+                        Search = new MangaSearch
+                        {
+                            Page = Page,
+                            KeyWord = Key
+                        }
+                    };
+                }).RunsAsync();
+                Total = result.SearchResult.Total;
+                if (More)
+                    result.SearchResult.ElementResults.ToMapper<List<MangaCategoryElementResult>>().ForEach(GroupResult.Add);
+                else
+                    GroupResult = new ObservableCollection<MangaCategoryElementResult>(result.SearchResult.ElementResults.ToMapper<List<MangaCategoryElementResult>>());
+                SetState();
+            }
+            catch (Exception ex)
+            {
+                await Service.AddLog("DQueryInit异常", ex);
+                "DQueryInit异常".OpenToast();
+            }
         }
         #endregion
 

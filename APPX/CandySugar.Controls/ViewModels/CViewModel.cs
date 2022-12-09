@@ -56,33 +56,41 @@ namespace CandySugar.Controls
         #region Method
         async void Init(bool More)
         {
-            Module = 1;
-            if (!More) Activity = true;
-            await Task.Delay(100);
-            var result = await ImageFactory.Image(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Module = 1;
+                if (!More) Activity = true;
+                await Task.Delay(100);
+                var result = await ImageFactory.Image(opt =>
                 {
-                    CacheSpan = DataBus.Cache,
-                    ImplType = DataCenter.ImplType(),
-                    ImageType = ImageEnum.Init,
-                    Init = new ImageInit
+                    opt.RequestParam = new Input
                     {
-                        Page = Page,
-                        Limit = 10,
-                        Tag = DataCenter.ImageType()
-                    }
-                };
-            }).RunsAsync();
-            Total = result.GlobalResult.Total;
-            if (!More)
-                Result = new ObservableCollection<ImageElementResult>(result.GlobalResult.Result);
-            else
-            {
-                if (Result == null) Result = new ObservableCollection<ImageElementResult>(result.GlobalResult.Result);
-                else result.GlobalResult.Result.ForEach(Result.Add);
+                        CacheSpan = DataBus.Cache,
+                        ImplType = DataCenter.ImplType(),
+                        ImageType = ImageEnum.Init,
+                        Init = new ImageInit
+                        {
+                            Page = Page,
+                            Limit = 10,
+                            Tag = DataCenter.ImageType()
+                        }
+                    };
+                }).RunsAsync();
+                Total = result.GlobalResult.Total;
+                if (!More)
+                    Result = new ObservableCollection<ImageElementResult>(result.GlobalResult.Result);
+                else
+                {
+                    if (Result == null) Result = new ObservableCollection<ImageElementResult>(result.GlobalResult.Result);
+                    else result.GlobalResult.Result.ForEach(Result.Add);
+                }
+                SetState();
             }
-            SetState();
+            catch (Exception ex)
+            {
+                await Service.AddLog("CInit异常", ex);
+                "CInit异常".OpenToast();
+            }
         }
         async void Add(ImageElementResult input)
         {
@@ -96,33 +104,41 @@ namespace CandySugar.Controls
         }
         public async void QueryInit(bool More)
         {
-            Module = 2;
-            if (!More) Activity = true;
-            await Task.Delay(100);
-            var result = await ImageFactory.Image(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Module = 2;
+                if (!More) Activity = true;
+                await Task.Delay(100);
+                var result = await ImageFactory.Image(opt =>
                 {
-                    CacheSpan = DataBus.Cache,
-                    ImplType = DataCenter.ImplType(),
-                    ImageType = ImageEnum.Search,
-                    Search = new ImageSearch
+                    opt.RequestParam = new Input
                     {
-                        Page = Page,
-                        Limit = 10,
-                        KeyWord = $"{Key} {DataCenter.ImageType()}"
-                    }
-                };
-            }).RunsAsync();
-            Total = result.GlobalResult.Total;
-            if (!More)
-                Result = new ObservableCollection<ImageElementResult>(result.GlobalResult.Result);
-            else
-            {
-                if (Result == null) Result = new ObservableCollection<ImageElementResult>(result.GlobalResult.Result);
-                else result.GlobalResult.Result.ForEach(Result.Add);
+                        CacheSpan = DataBus.Cache,
+                        ImplType = DataCenter.ImplType(),
+                        ImageType = ImageEnum.Search,
+                        Search = new ImageSearch
+                        {
+                            Page = Page,
+                            Limit = 10,
+                            KeyWord = $"{Key} {DataCenter.ImageType()}"
+                        }
+                    };
+                }).RunsAsync();
+                Total = result.GlobalResult.Total;
+                if (!More)
+                    Result = new ObservableCollection<ImageElementResult>(result.GlobalResult.Result);
+                else
+                {
+                    if (Result == null) Result = new ObservableCollection<ImageElementResult>(result.GlobalResult.Result);
+                    else result.GlobalResult.Result.ForEach(Result.Add);
+                }
+                SetState();
             }
-            SetState();
+            catch (Exception ex)
+            {
+                await Service.AddLog("CQueryInit异常", ex);
+                "CQueryInit异常".OpenToast();
+            }
         }
         #endregion
 

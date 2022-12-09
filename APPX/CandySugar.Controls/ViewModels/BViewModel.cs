@@ -10,7 +10,11 @@ namespace CandySugar.Controls
 {
     public class BViewModel : ViewModelBase
     {
-        public BViewModel(BaseServices baseServices) : base(baseServices) { }
+        readonly IService Service;
+        public BViewModel(BaseServices baseServices) : base(baseServices)
+        {
+            Service = this.Container.Resolve<IService>();
+        }
 
         public override void OnLoad()
         {
@@ -52,108 +56,140 @@ namespace CandySugar.Controls
         #region Method
         async void Init()
         {
-            Module = 0;
-            Activity = true;
-            await Task.Delay(100);
-            var result = await AnimeFactory.Anime(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Module = 0;
+                Activity = true;
+                await Task.Delay(100);
+                var result = await AnimeFactory.Anime(opt =>
                 {
-                    CacheSpan = DataBus.Cache,
-                    ImplType = DataCenter.ImplType(),
-                    AnimeType = AnimeEnum.Init
-                };
-            }).RunsAsync();
-            this.Words = new ObservableCollection<string>(result.InitResult.Letters.Where(t => !t.Equals("全部")));
-            InitResult = new ObservableCollection<AnimeWeekDayIndexResult>(result.InitResult.RecResults);
-            SetState();
+                    opt.RequestParam = new Input
+                    {
+                        CacheSpan = DataBus.Cache,
+                        ImplType = DataCenter.ImplType(),
+                        AnimeType = AnimeEnum.Init
+                    };
+                }).RunsAsync();
+                this.Words = new ObservableCollection<string>(result.InitResult.Letters.Where(t => !t.Equals("全部")));
+                InitResult = new ObservableCollection<AnimeWeekDayIndexResult>(result.InitResult.RecResults);
+                SetState();
+            }
+            catch (Exception ex)
+            {
+                await Service.AddLog("BInit异常", ex);
+                "BInit异常".OpenToast();
+            }
         }
         async void TypeInit(bool More)
         {
-            Module = 2;
-            if(!More) Activity = true;
-            await Task.Delay(100);
-            var result = await AnimeFactory.Anime(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Module = 2;
+                if (!More) Activity = true;
+                await Task.Delay(100);
+                var result = await AnimeFactory.Anime(opt =>
                 {
-                    CacheSpan = DataBus.Cache,
-                    ImplType = DataCenter.ImplType(),
-                    AnimeType = AnimeEnum.Category,
-                    Category = new AnimeCategory
+                    opt.RequestParam = new Input
                     {
-                        LetterType = Enum.Parse<AnimeLetterEnum>(Type),
-                        Page = this.Page
-                    }
-                };
-            }).RunsAsync();
-            Total = result.SeachResult.Total;
-            if (More)
-                result.SeachResult.ElementResult.ForEach(item =>
-                {
-                    SearchResult.Add(item);
-                });
-            else
-                SearchResult = new ObservableCollection<AnimeSearchElementResult>(result.SeachResult.ElementResult);
-            SetState();
+                        CacheSpan = DataBus.Cache,
+                        ImplType = DataCenter.ImplType(),
+                        AnimeType = AnimeEnum.Category,
+                        Category = new AnimeCategory
+                        {
+                            LetterType = Enum.Parse<AnimeLetterEnum>(Type),
+                            Page = this.Page
+                        }
+                    };
+                }).RunsAsync();
+                Total = result.SeachResult.Total;
+                if (More)
+                    result.SeachResult.ElementResult.ForEach(item =>
+                    {
+                        SearchResult.Add(item);
+                    });
+                else
+                    SearchResult = new ObservableCollection<AnimeSearchElementResult>(result.SeachResult.ElementResult);
+                SetState();
+            }
+            catch (Exception ex)
+            {
+                await Service.AddLog("BTypeInit异常", ex);
+                "BTypeInit异常".OpenToast();
+            }
         }
         async void GroupInit(bool More)
         {
-            Module = 3;
-            if (!More) Activity = true;
-            await Task.Delay(100);
-            var result = await AnimeFactory.Anime(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Module = 3;
+                if (!More) Activity = true;
+                await Task.Delay(100);
+                var result = await AnimeFactory.Anime(opt =>
                 {
-                    CacheSpan = DataBus.Cache,
-                    ImplType = DataCenter.ImplType(),
-                    AnimeType = AnimeEnum.CategoryType,
-                    Category = new AnimeCategory
+                    opt.RequestParam = new Input
                     {
-                        Route = Group,
-                        Page = this.Page
-                    }
-                };
-            }).RunsAsync();
-            Total = result.SeachResult.Total;
-            if (More)
-                result.SeachResult.ElementResult.ForEach(item =>
-                {
-                    SearchResult.Add(item);
-                });
-            else
-                SearchResult = new ObservableCollection<AnimeSearchElementResult>(result.SeachResult.ElementResult);
-            SetState();
+                        CacheSpan = DataBus.Cache,
+                        ImplType = DataCenter.ImplType(),
+                        AnimeType = AnimeEnum.CategoryType,
+                        Category = new AnimeCategory
+                        {
+                            Route = Group,
+                            Page = this.Page
+                        }
+                    };
+                }).RunsAsync();
+                Total = result.SeachResult.Total;
+                if (More)
+                    result.SeachResult.ElementResult.ForEach(item =>
+                    {
+                        SearchResult.Add(item);
+                    });
+                else
+                    SearchResult = new ObservableCollection<AnimeSearchElementResult>(result.SeachResult.ElementResult);
+                SetState();
+            }
+            catch (Exception ex)
+            {
+                await Service.AddLog("BGroupInit异常", ex);
+                "BGroupInit异常".OpenToast();
+            }
         }
         public async void QueryInit(bool More)
         {
-            Module = 1;
-            if (!More) Activity = true;
-            await Task.Delay(100);
-            var result = await AnimeFactory.Anime(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Module = 1;
+                if (!More) Activity = true;
+                await Task.Delay(100);
+                var result = await AnimeFactory.Anime(opt =>
                 {
-                    CacheSpan = DataBus.Cache,
-                    ImplType = DataCenter.ImplType(),
-                    AnimeType = AnimeEnum.Search,
-                    Search = new AnimeSearch
+                    opt.RequestParam = new Input
                     {
-                        KeyWord = Key,
-                        Page = this.Page
-                    }
-                };
-            }).RunsAsync();
-            Total = result.SeachResult.Total;
-            if (More)
-                result.SeachResult.ElementResult.ForEach(item =>
-                {
-                    SearchResult.Add(item);
-                });
-            else
-                SearchResult = new ObservableCollection<AnimeSearchElementResult>(result.SeachResult.ElementResult);
-            SetState();
+                        CacheSpan = DataBus.Cache,
+                        ImplType = DataCenter.ImplType(),
+                        AnimeType = AnimeEnum.Search,
+                        Search = new AnimeSearch
+                        {
+                            KeyWord = Key,
+                            Page = this.Page
+                        }
+                    };
+                }).RunsAsync();
+                Total = result.SeachResult.Total;
+                if (More)
+                    result.SeachResult.ElementResult.ForEach(item =>
+                    {
+                        SearchResult.Add(item);
+                    });
+                else
+                    SearchResult = new ObservableCollection<AnimeSearchElementResult>(result.SeachResult.ElementResult);
+                SetState();
+            }
+            catch (Exception ex)
+            {
+                await Service.AddLog("BQueryInit异常", ex);
+                "BQueryInit异常".OpenToast();
+            }
         }
         #endregion
 
@@ -175,8 +211,8 @@ namespace CandySugar.Controls
         public DelegateCommand RefreshCommand => new(() =>
         {
             this.Page = 1;
-            if (Module == 1) Task.Run(()=> QueryInit(false));
-            if (Module == 2) Task.Run(()=>TypeInit(false));
+            if (Module == 1) Task.Run(() => QueryInit(false));
+            if (Module == 2) Task.Run(() => TypeInit(false));
             if (Module == 3) Task.Run(() => GroupInit(false));
         });
         public DelegateCommand MoreCommand => new(() =>

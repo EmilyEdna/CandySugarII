@@ -11,6 +11,30 @@ namespace CandySugar.Logic
 {
     public class Service : IService
     {
+        #region Log
+        public async Task AddLog(string Info,Exception Stack)
+        {
+            LogEntity input = new LogEntity
+            {
+                Info = Info,
+                Stack = Stack.StackTrace
+            };
+            var Lite = DbContext.Lite;
+            input.InitProperty();
+            await Lite.InsertAsync(input);
+        }
+        public async Task ClearLog()
+        {
+            var Lite = DbContext.Lite;
+            await Lite.Table<LogEntity>().DeleteAsync();
+        }
+        public async Task<List<LogEntity>> QueryLog()
+        {
+            var Lite = DbContext.Lite;
+            return await Lite.Table<LogEntity>().ToListAsync();
+        }
+        #endregion
+
         #region B
         public async Task<BRootEntity> BAdd(BRootEntity root)
         {

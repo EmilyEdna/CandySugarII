@@ -10,7 +10,6 @@ namespace CandySugar.Controls
     public class D1ViewModel : ViewModelBase
     {
         readonly IService Service;
-
         public D1ViewModel(BaseServices baseServices) : base(baseServices)
         {
             Service = this.Container.Resolve<IService>();
@@ -45,23 +44,31 @@ namespace CandySugar.Controls
         #region Method
         async void InitDetail()
         {
-            Activity = true;
-            await Task.Delay(100);
-            var result = await MangaFactory.Manga(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Activity = true;
+                await Task.Delay(100);
+                var result = await MangaFactory.Manga(opt =>
                 {
-                    CacheSpan = DataBus.Cache,
-                    ImplType = DataCenter.ImplType(),
-                    MangaType = MangaEnum.Detail,
-                    Detail = new MangaDetail
+                    opt.RequestParam = new Input
                     {
-                        Route = Route
-                    }
-                };
-            }).RunsAsync();
-            Result = new ObservableCollection<MangaChapterDetailResult>(result.ChapterResults);
-            SetState();
+                        CacheSpan = DataBus.Cache,
+                        ImplType = DataCenter.ImplType(),
+                        MangaType = MangaEnum.Detail,
+                        Detail = new MangaDetail
+                        {
+                            Route = Route
+                        }
+                    };
+                }).RunsAsync();
+                Result = new ObservableCollection<MangaChapterDetailResult>(result.ChapterResults);
+                SetState();
+            }
+            catch (Exception ex)
+            {
+                await Service.AddLog("D1DetailInit异常", ex);
+                "D1DetailInit异常".OpenToast();
+            }
         }
         async void Add()
         {

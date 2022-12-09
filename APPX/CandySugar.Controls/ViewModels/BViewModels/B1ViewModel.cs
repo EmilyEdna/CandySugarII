@@ -15,7 +15,10 @@ namespace CandySugar.Controls
     {
         readonly IService Service;
 
-        public B1ViewModel(BaseServices baseServices, IService service) : base(baseServices) { Service = service; }
+        public B1ViewModel(BaseServices baseServices) : base(baseServices)
+        {
+            Service = this.Container.Resolve<IService>();
+        }
 
         public override void Initialize(INavigationParameters parameters)
         {
@@ -52,48 +55,64 @@ namespace CandySugar.Controls
         #region Method
         async void DetailInit()
         {
-            Activity = true;
-            await Task.Delay(100);
-            var result = await AnimeFactory.Anime(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Activity = true;
+                await Task.Delay(100);
+                var result = await AnimeFactory.Anime(opt =>
                 {
-                    CacheSpan = DataBus.Cache,
-                    ImplType = DataCenter.ImplType(),
-                    AnimeType = AnimeEnum.Detail,
-                    Detail = new AnimeDetail
+                    opt.RequestParam = new Input
                     {
-                        Route = Route
-                    }
-                };
-            }).RunsAsync();
-            Result = new ObservableCollection<AnimeDetailResult>(result.DetailResults.Where(t => t.IsDownURL == false));
-            Name = Result.FirstOrDefault().Name;
-            Cover = Result.FirstOrDefault().Cover;
-            Add();
-            SetState();
+                        CacheSpan = DataBus.Cache,
+                        ImplType = DataCenter.ImplType(),
+                        AnimeType = AnimeEnum.Detail,
+                        Detail = new AnimeDetail
+                        {
+                            Route = Route
+                        }
+                    };
+                }).RunsAsync();
+                Result = new ObservableCollection<AnimeDetailResult>(result.DetailResults.Where(t => t.IsDownURL == false));
+                Name = Result.FirstOrDefault().Name;
+                Cover = Result.FirstOrDefault().Cover;
+                Add();
+                SetState();
+            }
+            catch (Exception ex)
+            {
+                await Service.AddLog("B1DetailInit异常", ex);
+                "B1DetailInit异常".OpenToast();
+            }
         }
         async void PlayInit(string Route, string Name)
         {
-            Activity = true;
-            await Task.Delay(100);
-            var result = await AnimeFactory.Anime(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Activity = true;
+                await Task.Delay(100);
+                var result = await AnimeFactory.Anime(opt =>
                 {
-                    CacheSpan = DataBus.Cache,
-                    ImplType = DataCenter.ImplType(),
-                    AnimeType = AnimeEnum.Watch,
-                    WatchPlay = new AnimeWatch
+                    opt.RequestParam = new Input
                     {
-                        Route = Route,
-                        CollectName = Name,
-                    }
-                };
-            }).RunsAsync();
-            Alter(Route);
-            Navigation(result.PlayResult.PlayURL);
-            SetState();
+                        CacheSpan = DataBus.Cache,
+                        ImplType = DataCenter.ImplType(),
+                        AnimeType = AnimeEnum.Watch,
+                        WatchPlay = new AnimeWatch
+                        {
+                            Route = Route,
+                            CollectName = Name,
+                        }
+                    };
+                }).RunsAsync();
+                Alter(Route);
+                Navigation(result.PlayResult.PlayURL);
+                SetState();
+            }
+            catch (Exception ex)
+            {
+                await Service.AddLog("B1PlayInit异常", ex);
+                "B1PlayInit异常".OpenToast();
+            }
         }
         /// <summary>
         /// 写入数据库

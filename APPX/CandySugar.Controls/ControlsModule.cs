@@ -8,7 +8,7 @@ namespace CandySugar.Controls
         public void OnInitialized(IContainerProvider containerProvider)
         {
             SdkOption.EnableLog = true;
-            SdkOption.UseRealRoute= true;
+            SdkOption.UseRealRoute = true;
             SdkLicense.Register(new SdkLicenseModel
             {
                 Account = "EmilyEdna",
@@ -17,11 +17,11 @@ namespace CandySugar.Controls
             DataCenter.RegistFunc();
             HttpEvent.HttpActionEvent = new Action<HttpClient, Exception>((client, ex) =>
             {
-                
+                containerProvider.Resolve<IService>().AddLog("HttpClient请求异常",ex);
             });
             HttpEvent.RestActionEvent = new Action<RestClient, Exception>((client, ex) =>
             {
-                
+                containerProvider.Resolve<IService>().AddLog("RestClient请求异常", ex);
             });
         }
 

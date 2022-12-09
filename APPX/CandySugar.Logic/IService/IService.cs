@@ -9,6 +9,12 @@ namespace CandySugar.Logic
 {
     public interface IService
     {
+        #region Log
+        Task AddLog(string Info, Exception Stack);
+        Task ClearLog();
+        Task<List<LogEntity>> QueryLog();
+        #endregion
+
         #region B
         Task<BRootEntity> BAdd(BRootEntity root);
         Task BRemove(Guid root);

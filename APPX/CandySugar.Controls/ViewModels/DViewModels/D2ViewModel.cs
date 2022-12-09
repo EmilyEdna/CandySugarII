@@ -8,15 +8,17 @@ namespace CandySugar.Controls
 {
     public class D2ViewModel : ViewModelBase
     {
+        readonly IService Service;
         public D2ViewModel(BaseServices baseServices) : base(baseServices)
         {
+            Service = this.Container.Resolve<IService>();
         }
 
         public override void Initialize(INavigationParameters parameters)
         {
             Route= parameters.GetValue<string>("Route");
             Title = parameters.GetValue<string>("Title");
-            Task.Run(InitContent);
+            Task.Run(ContentInit);
         }
 
         #region Property
@@ -41,43 +43,51 @@ namespace CandySugar.Controls
         #endregion
 
         #region Method
-        async void InitContent()
+        async void ContentInit()
         {
-            Activity = true;
-            await Task.Delay(100);
-            var result = await MangaFactory.Manga(opt =>
+            try
             {
-                opt.RequestParam = new Input
+                Activity = true;
+                await Task.Delay(100);
+                var result = await MangaFactory.Manga(opt =>
                 {
-                    CacheSpan = DataBus.Cache,
-                    ImplType = DataCenter.ImplType(),
-                    MangaType = MangaEnum.Content,
-                    Content = new MangaContent
+                    opt.RequestParam = new Input
                     {
-                        Route = Route
-                    }
-                };
-            }).RunsAsync();
-            var bytes = await MangaFactory.Manga(opt =>
-            {
-                opt.RequestParam = new Input
+                        CacheSpan = DataBus.Cache,
+                        ImplType = DataCenter.ImplType(),
+                        MangaType = MangaEnum.Content,
+                        Content = new MangaContent
+                        {
+                            Route = Route
+                        }
+                    };
+                }).RunsAsync();
+                var bytes = await MangaFactory.Manga(opt =>
                 {
-                    CacheSpan = DataBus.Cache,
-                    ImplType = DataCenter.ImplType(),
-                    MangaType = MangaEnum.Download,
-                    Down = new MangaBytes
+                    opt.RequestParam = new Input
                     {
-                        Route = result.ContentResult.Route,
-                        CacheKey = result.ContentResult.CacheKey
-                    }
-                };
-            }).RunsAsync();
-            Source = new ObservableCollection<ImageSource>();
-            bytes.DwonResult.Bytes.ForEach(item =>
+                        CacheSpan = DataBus.Cache,
+                        ImplType = DataCenter.ImplType(),
+                        MangaType = MangaEnum.Download,
+                        Down = new MangaBytes
+                        {
+                            Route = result.ContentResult.Route,
+                            CacheKey = result.ContentResult.CacheKey
+                        }
+                    };
+                }).RunsAsync();
+                Source = new ObservableCollection<ImageSource>();
+                bytes.DwonResult.Bytes.ForEach(item =>
+                {
+                    Source.Add(ImageSource.FromStream(() => new MemoryStream(item)));
+                });
+                SetState();
+            }
+            catch (Exception ex)
             {
-                Source.Add(ImageSource.FromStream(() => new MemoryStream(item)));
-            });
-            SetState();
+                await Service.AddLog("D2ContentInit异常", ex);
+                "D2ContentInit异常".OpenToast();
+            }
         }
         #endregion
 
