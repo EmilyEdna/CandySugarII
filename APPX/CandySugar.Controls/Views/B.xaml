@@ -97,13 +97,10 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="sdk:AnimeSearchElementResult">
-                        <Border Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe}, Dark={StaticResource PotoBrushSafeDark}}" StrokeThickness="1">
+                        <Border Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe}, Dark={StaticResource PotoBrushSafeDark}}">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding DetailCommand, Source={RelativeSource AncestorType={x:Type Local:BViewModel}}}" CommandParameter="{Binding Route}" />
                             </Border.GestureRecognizers>
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="0" />
-                            </Border.StrokeShape>
                             <Grid ColumnDefinitions="Auto,*">
                                 <Border
                                     HeightRequest="130"

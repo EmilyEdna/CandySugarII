@@ -14,6 +14,13 @@ namespace CandySugar.Logic
         #region B
         public async Task<BRootEntity> BAdd(BRootEntity root)
         {
+            var Lite = DbContext.Lite;
+            var Parent = await Lite.Table<BRootEntity>().FirstOrDefaultAsync(t => t.Name == root.Name);
+            if (Parent != null)
+            {
+                Parent.Collection = await Lite.Table<BElementEntity>().Where(t => t.BRootId == Parent.Id).ToListAsync();
+                return Parent;
+            }
             root.InitProperty();
             root.Collection.ForEach(t =>
             {
@@ -21,7 +28,7 @@ namespace CandySugar.Logic
                 t.BRootId = root.Id;
                 t.IsWatching = false;
             });
-            var Lite = DbContext.Lite;
+
             await Lite.InsertAsync(root);
             await Lite.InsertAllAsync(root.Collection, false);
             return root;
@@ -68,13 +75,16 @@ namespace CandySugar.Logic
         #region C
         public async Task<bool> CAdd(CRootEntity root)
         {
+            var Lite = DbContext.Lite;
+            var Parent = await Lite.Table<CRootEntity>().FirstOrDefaultAsync(t => t.Priview == root.Priview);
+            if (Parent != null) return true;
             root.InitProperty();
             root.Tage.ForEach(t =>
             {
                 t.InitProperty();
                 t.CRootId = root.Id;
             });
-            var Lite = DbContext.Lite;
+
             var res = await Lite.InsertAsync(root) > 0 && await Lite.InsertAllAsync(root.Tage, false) > 0;
             return res;
         }
@@ -92,6 +102,43 @@ namespace CandySugar.Logic
             roots.ForEach(item =>
             {
                 item.Tage = elements.Where(t => t.CRootId == item.Id).ToList();
+            });
+            return roots;
+        }
+        #endregion
+
+        #region D
+        public async Task<bool> DAdd(DRootEntity root)
+        {
+            var Lite = DbContext.Lite;
+
+            var Parent = await Lite.Table<DRootEntity>().FirstOrDefaultAsync(t => t.Name == root.Name);
+            if (Parent != null)
+            {
+                return true;
+            }
+            root.InitProperty();
+            root.Chapter.ForEach(t =>
+            {
+                t.InitProperty();
+                t.DRootId = root.Id;
+            });
+            return await Lite.InsertAsync(root) > 0 && await Lite.InsertAllAsync(root.Chapter, false) > 0;
+        }
+        public async Task DRemove(Guid root)
+        {
+            var Lite = DbContext.Lite;
+            await Lite.Table<DRootEntity>().DeleteAsync(t => t.Id == root);
+            await Lite.Table<DElementEntity>().DeleteAsync(t => t.DRootId == root);
+        }
+        public async Task<List<DRootEntity>> DQuery()
+        {
+            var Lite = DbContext.Lite;
+            var roots = await Lite.Table<DRootEntity>().ToListAsync();
+            var elements = await Lite.Table<DElementEntity>().ToListAsync();
+            roots.ForEach(item =>
+            {
+                item.Chapter = elements.Where(t => t.DRootId == item.Id).ToList();
             });
             return roots;
         }

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="CandySugar.Controls.D1"
+    x:Class="CandySugar.Controls.D2"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:Lib="clr-namespace:CandySugar.Library;assembly=CandySugar.Library"
     xmlns:Local="clr-namespace:CandySugar.Controls"
-    xmlns:sdk="clr-namespace:Sdk.Component.Manga.sdk.ViewModel.Response;assembly=Sdk.Component"
-    x:DataType="Local:D1ViewModel"
+    x:DataType="Local:D2ViewModel"
     Background="{AppThemeBinding Dark={StaticResource BasicDrak},
                                  Light={StaticResource Basic}}">
     <Grid>
@@ -24,7 +23,7 @@
                 <VerticalStackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Center">
                     <Label
                         FontSize="15"
-                        Text="{Binding Result[0].Name}"
+                        Text="{Binding Title}"
                         TextColor="{AppThemeBinding Dark={StaticResource Basic},
                                                     Light={StaticResource BasicDrak}}" />
                 </VerticalStackLayout>
@@ -32,28 +31,16 @@
             <CollectionView
                 Grid.Row="1"
                 ItemSizingStrategy="MeasureAllItems"
-                ItemsSource="{Binding Result, Mode=TwoWay}">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout ItemSpacing="3" Orientation="Vertical" />
-                </CollectionView.ItemsLayout>
+                ItemsSource="{Binding Source}">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="sdk:MangaChapterDetailResult">
+                    <DataTemplate>
                         <Border
-                            Padding="5"
+                            Margin="0,0,0,1"
                             Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
                                                      Dark={StaticResource PotoBrushSafeDark}}"
-                            StrokeShape="RoundRectangle 10"
+                            StrokeShape="RoundRectangle 0"
                             StrokeThickness="1">
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding WatchCommand, Source={RelativeSource AncestorType={x:Type Local:D1ViewModel}}}" CommandParameter="{Binding .}" />
-                            </Border.GestureRecognizers>
-                            <Label
-                                Margin="10,0,0,0"
-                                FontSize="16"
-                                LineBreakMode="WordWrap"
-                                Text="{Binding Title}"
-                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                            Light={StaticResource BasicDrak}}" />
+                            <Image Aspect="Fill" Source="{Binding .}" />
                         </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

@@ -134,9 +134,9 @@ namespace CandySugar.Controls
             if (this.Page > this.Total) return;
             Task.Run(() => GroupInit(true));
         });
-        public DelegateCommand<string> DetailCommand => new(input =>
+        public DelegateCommand<MangaCategoryElementResult> DetailCommand => new(input =>
         {
-            Nav.NavigateAsync(new Uri("D1", UriKind.Relative), new NavigationParameters { { "Route", input } });
+            Nav.NavigateAsync(new Uri("D1", UriKind.Relative), new NavigationParameters { { "Route", input.Route },{ "Cover", input.Cover } });
         });
         #endregion
     }

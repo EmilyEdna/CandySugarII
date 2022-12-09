@@ -10,7 +10,7 @@ namespace CandySugar.Library
     {
         public const string NetErr = "请检查网络是否通畅";
         public static int Cache { get; set; } = 5;
-        public static int QueryModule { get; set; } = 1;
+        public static int QueryModule { get; set; } = 2;
         public static int Module { get; set; } = 1;
     }
 }

@@ -32,21 +32,29 @@
                         VerticalOptions="Center" />
                 </Grid>
             </Local:BottomView.Header>
-            <CollectionView ItemsLayout="HorizontalList" ItemsSource="{Binding InitResult}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="sdk:MangaInitCategoryResult">
-                        <Button
-                            Margin="0,0,0,15"
-                            Command="{Binding GroupCammand, Source={RelativeSource AncestorType={x:Type Local:DViewModel}}}"
-                            CommandParameter="{Binding Route}"
-                            FontFamily="Sans"
-                            StyleClass="TextButton"
-                            Text="{Binding Type}"
-                            TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                        Light={StaticResource BasicDrak}}" />
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+            <Grid
+                HeightRequest="60"
+                RowDefinitions="15,*"
+                RowSpacing="3">
+                <CollectionView
+                    Grid.Row="1"
+                    ItemsLayout="HorizontalList"
+                    ItemsSource="{Binding InitResult}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="sdk:MangaInitCategoryResult">
+                            <Button
+                                Margin="0,0,0,15"
+                                Command="{Binding GroupCammand, Source={RelativeSource AncestorType={x:Type Local:DViewModel}}}"
+                                CommandParameter="{Binding Route}"
+                                FontFamily="Sans"
+                                StyleClass="TextButton"
+                                Text="{Binding Type}"
+                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                            Light={StaticResource BasicDrak}}" />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
         </Local:BottomView>
     </Local:CandyUIView.Attachments>
     <Grid>
@@ -75,22 +83,24 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="sdk:MangaCategoryElementResult">
                         <Border Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe}, Dark={StaticResource PotoBrushSafeDark}}" StrokeShape="RoundRectangle 1">
-                            <Grid Padding="2" RowDefinitions="Auto,*">
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding DetailCommand, Source={RelativeSource AncestorType={x:Type Local:DViewModel}}}" CommandParameter="{Binding Route}" />
-                                </Grid.GestureRecognizers>
-                                <Image
-                                    Aspect="AspectFill"
-                                    HeightRequest="180"
-                                    Source="{Binding Cover}"
-                                    WidthRequest="265" />
-                                <Label
-                                    Grid.Row="1"
-                                    FontSize="15"
-                                    LineBreakMode="WordWrap"
-                                    Text="{Binding Name}"
-                                    TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                                Light={StaticResource BasicDrak}}" />
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding DetailCommand, Source={RelativeSource AncestorType={x:Type Local:DViewModel}}}" CommandParameter="{Binding .}" />
+                            </Border.GestureRecognizers>
+                            <Grid Padding="2" ColumnDefinitions="Auto,*">
+                                <Border
+                                    HeightRequest="130"
+                                    StrokeShape="RoundRectangle 0"
+                                    WidthRequest="90">
+                                    <Image Aspect="Fill" Source="{Binding Cover}" />
+                                </Border>
+                                <StackLayout Grid.Column="1" VerticalOptions="StartAndExpand">
+                                    <Label
+                                        Margin="10,0,0,0"
+                                        LineBreakMode="CharacterWrap "
+                                        Text="{Binding Name}"
+                                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                                    Light={StaticResource BasicDrak}}" />
+                                </StackLayout>
                             </Grid>
                         </Border>
                     </DataTemplate>

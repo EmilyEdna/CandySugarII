@@ -21,5 +21,11 @@ namespace CandySugar.Logic
         Task CRemove(Guid root);
         Task<List<CRootEntity>> CQuery();
         #endregion
+
+        #region D
+        Task<bool> DAdd(DRootEntity root);
+        Task DRemove(Guid root);
+        Task<List<DRootEntity>> DQuery();
+        #endregion
     }
 }

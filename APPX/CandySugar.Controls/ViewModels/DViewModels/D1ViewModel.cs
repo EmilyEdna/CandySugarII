@@ -1,4 +1,11 @@
-﻿namespace CandySugar.Controls
+﻿using Sdk.Component.Manga.sdk;
+using Sdk.Component.Manga.sdk.ViewModel;
+using Sdk.Component.Manga.sdk.ViewModel.Enums;
+using Sdk.Component.Manga.sdk.ViewModel.Request;
+using Sdk.Component.Manga.sdk.ViewModel.Response;
+using System.Collections.ObjectModel;
+
+namespace CandySugar.Controls
 {
     public class D1ViewModel : ViewModelBase
     {
@@ -12,8 +19,13 @@
         public override void Initialize(INavigationParameters parameters)
         {
             Route = parameters.GetValue<string>("Route");
-
+            Cover = parameters.GetValue<string>("Cover");
+            Task.Run(InitDetail);
         }
+
+        #region Property
+        public string Cover { get; set; }
+        #endregion
 
         #region Property
         string _Route;
@@ -22,16 +34,60 @@
             get => _Route;
             set => SetProperty(ref _Route, value);
         }
+        ObservableCollection<MangaChapterDetailResult> _Result;
+        public ObservableCollection<MangaChapterDetailResult> Result
+        {
+            get => _Result;
+            set => SetProperty(ref _Result, value);
+        }
         #endregion
 
         #region Method
-
+        async void InitDetail()
+        {
+            Activity = true;
+            await Task.Delay(100);
+            var result = await MangaFactory.Manga(opt =>
+            {
+                opt.RequestParam = new Input
+                {
+                    CacheSpan = DataBus.Cache,
+                    ImplType = DataCenter.ImplType(),
+                    MangaType = MangaEnum.Detail,
+                    Detail = new MangaDetail
+                    {
+                        Route = Route
+                    }
+                };
+            }).RunsAsync();
+            Result = new ObservableCollection<MangaChapterDetailResult>(result.ChapterResults);
+            SetState();
+        }
+        async void Add()
+        {
+            var Root = new DRootEntity
+            {
+                Cover = Cover,
+                Name = Result.FirstOrDefault().Name,
+            };
+            Root.Chapter = Result.Select(t => new DElementEntity
+            {
+                Route = t.Route,
+                Title = t.Title
+            }).ToList();
+            await Service.DAdd(Root);
+        }
         #endregion
 
         #region Command
         public DelegateCommand BackCommand => new(() =>
         {
-
+            Nav.GoBackAsync();
+        });
+        public DelegateCommand<MangaChapterDetailResult> WatchCommand => new(input =>
+        {
+            Add();
+            Nav.NavigateAsync(new Uri("D2", UriKind.Relative), new NavigationParameters { { "Route", input.Route }, { "Title", input.Title } });
         });
         #endregion
     }
