@@ -40,5 +40,12 @@ namespace CandySugar.Controls
         }
         #endregion
 
+
+        #region Command
+        public DelegateCommand BackCommand => new(() =>
+        {
+            Show();
+        });
+        #endregion
     }
 }

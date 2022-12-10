@@ -26,9 +26,4 @@ public partial class B2 : ContentPage
         if (Player.IsLoaded)
             await Player.EvaluateJavaScriptAsync($"Play('{ViewModel.Route}')");
     }
-
-    private void PinchEvent(object sender, PinchGestureUpdatedEventArgs e)
-    {
-        ViewModel.Show();
-    }
 }

@@ -68,7 +68,7 @@ namespace CandySugar.Controls
         {
             if (CloseOnTapOutside)
             {
-                this.WidthRequest = 250;
+                this.WidthRequest = 150;
                 AttachedPage?.ContentBorder?.GestureRecognizers.Add(CloseGestureRecognizer);
             }
         }

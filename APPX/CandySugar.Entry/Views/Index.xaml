@@ -7,27 +7,38 @@
     xmlns:Lib="clr-namespace:CandySugar.Library;assembly=CandySugar.Library"
     xmlns:MC="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
     xmlns:VM="clr-namespace:CandySugar.Entry.ViewModels"
-    Title="Index"
     x:DataType="VM:IndexViewModel"
     Background="{AppThemeBinding Dark={StaticResource BasicDrak},
                                  Light={StaticResource Basic}}">
     <Candy:CandyUIPage.Attachments>
         <Candy:LeftPage x:Name="Left">
             <Candy:LeftPage.Body>
-                <TableView
-                    Margin="0,0,0,40"
-                    BackgroundColor="{StaticResource Platform}"
-                    Intent="Menu">
-                    <TableRoot>
-                        <TableSection Title="Chapters">
-                            <TextCell Detail="Learn about .NET MAUI and what it provides." Text="1. Introduction to .NET MAUI" />
-                            <TextCell Detail="Learn about the visual elements in .NET MAUI" Text="2. Anatomy of an app" />
-                            <TextCell Detail="Learn about the .NET MAUI controls that display text." Text="3. Text" />
-                            <TextCell Detail="Learn how to size .NET MAUI controls on screen." Text="4. Dealing with sizes" />
-                            <TextCell Detail="Learn more about creating your UI in XAML." Text="5. XAML vs code" />
-                        </TableSection>
-                    </TableRoot>
-                </TableView>
+                <VerticalStackLayout Grid.Row="1" HorizontalOptions="Start">
+                    <Button
+                        Margin="10,5,5,5"
+                        BackgroundColor="{StaticResource Platform}"
+                        Clicked="CloseLeftEvent">
+                        <Button.ImageSource>
+                            <FontImageSource
+                                FontFamily="Solid"
+                                Glyph="{Static Lib:FontIcon.ArrowLeft}"
+                                Color="{AppThemeBinding Light={StaticResource BasicPrimary},
+                                                        Dark={StaticResource BasicPrimaryDrak}}" />
+                        </Button.ImageSource>
+                    </Button>
+                    <Label
+                        Margin="20,5,5,5"
+                        FontSize="18"
+                        Text="设置" />
+                    <Label
+                        Margin="20,5,5,5"
+                        FontSize="18"
+                        Text="历史" />
+                    <Label
+                        Margin="20,5,5,5"
+                        FontSize="18"
+                        Text="日志" />
+                </VerticalStackLayout>
             </Candy:LeftPage.Body>
         </Candy:LeftPage>
     </Candy:CandyUIPage.Attachments>

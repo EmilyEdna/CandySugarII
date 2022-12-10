@@ -14,4 +14,9 @@ public partial class Index : CandyUIPage
     {
         Left.IsPresented = true;
     }
+
+    private void CloseLeftEvent(object sender, EventArgs e)
+    {
+        Left.IsPresented = false;
+    }
 }
