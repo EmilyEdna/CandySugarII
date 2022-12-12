@@ -98,7 +98,7 @@ namespace CandySugar.Controls
             {
                 Original = input.OriginalPng.IsNullOrEmpty() ? input.OriginalPng : input.OriginalJepg,
                 Priview = input.Preview,
-                Tage = input.Labels.Select(t => new CElementEntity { Name = t }).ToList()
+                Children = input.Labels.Select(t => new CElementEntity { Name = t }).ToList()
             };
             if (await Service.CAdd(Entity)) "收藏成功".OpenToast(); else "收藏失败".OpenToast();
         }

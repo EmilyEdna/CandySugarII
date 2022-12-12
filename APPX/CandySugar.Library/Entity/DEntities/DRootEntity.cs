@@ -12,6 +12,6 @@ namespace CandySugar.Library
         public string Cover { get; set; }
         public string Name { get; set; }
         [Ignore]
-        public List<DElementEntity> Chapter { get; set; }
+        public List<DElementEntity> Children { get; set; }
     }
 }

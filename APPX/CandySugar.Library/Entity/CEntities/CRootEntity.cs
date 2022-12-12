@@ -12,6 +12,6 @@ namespace CandySugar.Library
         public string Priview { get; set; }
         public string Original { get; set; }
         [Ignore]
-        public List<CElementEntity> Tage { get; set; }
+        public List<CElementEntity> Children { get; set; }
     }
 }

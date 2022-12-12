@@ -42,11 +42,11 @@ namespace CandySugar.Logic
             var Parent = await Lite.Table<BRootEntity>().FirstOrDefaultAsync(t => t.Name == root.Name);
             if (Parent != null)
             {
-                Parent.Collection = await Lite.Table<BElementEntity>().Where(t => t.BRootId == Parent.Id).ToListAsync();
+                Parent.Children = await Lite.Table<BElementEntity>().Where(t => t.BRootId == Parent.Id).ToListAsync();
                 return Parent;
             }
             root.InitProperty();
-            root.Collection.ForEach(t =>
+            root.Children.ForEach(t =>
             {
                 t.InitProperty();
                 t.BRootId = root.Id;
@@ -54,7 +54,7 @@ namespace CandySugar.Logic
             });
 
             await Lite.InsertAsync(root);
-            await Lite.InsertAllAsync(root.Collection, false);
+            await Lite.InsertAllAsync(root.Children, false);
             return root;
         }
         public async Task BRemove(Guid root)
@@ -88,7 +88,7 @@ namespace CandySugar.Logic
 
             roots.ForEach(item =>
             {
-                item.Collection = elements.Where(t => t.BRootId == item.Id).ToList();
+                item.Children = elements.Where(t => t.BRootId == item.Id).ToList();
             });
 
             return roots;
@@ -103,13 +103,13 @@ namespace CandySugar.Logic
             var Parent = await Lite.Table<CRootEntity>().FirstOrDefaultAsync(t => t.Priview == root.Priview);
             if (Parent != null) return true;
             root.InitProperty();
-            root.Tage.ForEach(t =>
+            root.Children.ForEach(t =>
             {
                 t.InitProperty();
                 t.CRootId = root.Id;
             });
 
-            var res = await Lite.InsertAsync(root) > 0 && await Lite.InsertAllAsync(root.Tage, false) > 0;
+            var res = await Lite.InsertAsync(root) > 0 && await Lite.InsertAllAsync(root.Children, false) > 0;
             return res;
         }
         public async Task CRemove(Guid root)
@@ -125,7 +125,7 @@ namespace CandySugar.Logic
             var elements = await Lite.Table<CElementEntity>().ToListAsync();
             roots.ForEach(item =>
             {
-                item.Tage = elements.Where(t => t.CRootId == item.Id).ToList();
+                item.Children = elements.Where(t => t.CRootId == item.Id).ToList();
             });
             return roots;
         }
@@ -135,19 +135,18 @@ namespace CandySugar.Logic
         public async Task<bool> DAdd(DRootEntity root)
         {
             var Lite = DbContext.Lite;
-
             var Parent = await Lite.Table<DRootEntity>().FirstOrDefaultAsync(t => t.Name == root.Name);
             if (Parent != null)
             {
                 return true;
             }
             root.InitProperty();
-            root.Chapter.ForEach(t =>
+            root.Children.ForEach(t =>
             {
                 t.InitProperty();
                 t.DRootId = root.Id;
             });
-            return await Lite.InsertAsync(root) > 0 && await Lite.InsertAllAsync(root.Chapter, false) > 0;
+            return await Lite.InsertAsync(root) > 0 && await Lite.InsertAllAsync(root.Children, false) > 0;
         }
         public async Task DRemove(Guid root)
         {
@@ -162,7 +161,46 @@ namespace CandySugar.Logic
             var elements = await Lite.Table<DElementEntity>().ToListAsync();
             roots.ForEach(item =>
             {
-                item.Chapter = elements.Where(t => t.DRootId == item.Id).ToList();
+                item.Children = elements.Where(t => t.DRootId == item.Id).ToList();
+            });
+            return roots;
+        }
+        #endregion
+
+        #region E
+        #endregion
+
+        #region F
+        public async Task<bool> FAdd(FRootEntity root)
+        {
+            var Lite = DbContext.Lite;
+            var Parent = await Lite.Table<FRootEntity>().FirstOrDefaultAsync(t => t.Name == root.Name);
+            if (Parent != null)
+            {
+                return true;
+            }
+            root.InitProperty();
+            root.Children.ForEach(t =>
+            {
+                t.InitProperty();
+                t.FRootId = root.Id;
+            });
+            return await Lite.InsertAsync(root) > 0 && await Lite.InsertAllAsync(root.Children, false) > 0;
+        }
+        public async Task FRemove(Guid root)
+        {
+            var Lite = DbContext.Lite;
+            await Lite.Table<FRootEntity>().DeleteAsync(t => t.Id == root);
+            await Lite.Table<FElementEntity>().DeleteAsync(t => t.FRootId == root);
+        }
+        public async Task<List<FRootEntity>> FQuery()
+        {
+            var Lite = DbContext.Lite;
+            var roots = await Lite.Table<FRootEntity>().ToListAsync();
+            var elements = await Lite.Table<FElementEntity>().ToListAsync();
+            roots.ForEach(item =>
+            {
+                item.Children = elements.Where(t => t.FRootId == item.Id).ToList();
             });
             return roots;
         }

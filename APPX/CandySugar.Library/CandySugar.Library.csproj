@@ -32,4 +32,8 @@
 	  <Using Include="XExten.Advance.StaticFramework" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Entity\EEntites\" />
+	</ItemGroup>
+
 </Project>

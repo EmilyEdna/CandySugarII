@@ -123,12 +123,12 @@ namespace CandySugar.Controls
             {
                 Cover = Cover,
                 Name = Name,
-                Collection = new List<BElementEntity>()
+                Children = new List<BElementEntity>()
             };
 
             Result.ToList().ForEach(item =>
             {
-                Root.Collection.Add(new BElementEntity
+                Root.Children.Add(new BElementEntity
                 {
                     CollectName = item.CollectName,
                     WatchRoute = item.WatchRoute,
@@ -142,7 +142,7 @@ namespace CandySugar.Controls
         /// </summary>
         async void Alter(string Route)
         {
-            var Element = BRoot.Collection.FirstOrDefault(t => t.WatchRoute == Route);
+            var Element = BRoot.Children.FirstOrDefault(t => t.WatchRoute == Route);
             await Service.BAlter(Element);
         }
         void Navigation(string Route)

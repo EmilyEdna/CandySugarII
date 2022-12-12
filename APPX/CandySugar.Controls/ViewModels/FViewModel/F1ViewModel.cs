@@ -100,13 +100,31 @@ internal class F1ViewModel : ViewModelBase
         if (!WriteResult.IsNullOrEmpty())
             "下载完成".OpenToast();
     }
+    async void Add()
+    {
+        await Service.FAdd(new FRootEntity
+        {
+            Cover = Cover,
+            Name = Result.FirstOrDefault().BookName,
+            Children = Result.Select(t => new FElementEntity
+            {
+                Name = t.ChapterName,
+                IsDown = t.IsDown,
+                Route = t.ChapterRoute
+            }).ToList()
+        });
+    }
     #endregion
 
     #region Command
     public DelegateCommand<LovelViewResult> WatchCommand => new(input =>
     {
         if (input.IsDown) Task.Run(() => InitDown(input));
-        else Nav.NavigateAsync(new Uri("F2", UriKind.Relative), new NavigationParameters { { "Title", input.ChapterName }, { "Route", input.ChapterRoute } });
+        else
+        {
+            Add();
+            Nav.NavigateAsync(new Uri("F2", UriKind.Relative), new NavigationParameters { { "Title", input.ChapterName }, { "Route", input.ChapterRoute } });
+        }
     });
     public DelegateCommand BackCommand => new(() =>
     {
