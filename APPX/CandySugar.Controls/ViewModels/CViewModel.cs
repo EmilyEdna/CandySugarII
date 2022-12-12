@@ -59,7 +59,7 @@ namespace CandySugar.Controls
             try
             {
                 Module = 1;
-                if (!More) Activity = true;
+                SetState(More);
                 await Task.Delay(100);
                 var result = await ImageFactory.Image(opt =>
                 {
@@ -77,13 +77,13 @@ namespace CandySugar.Controls
                     };
                 }).RunsAsync();
                 Total = result.GlobalResult.Total;
-                if (!More)
-                    Result = new ObservableCollection<ImageElementResult>(result.GlobalResult.Result);
-                else
+                if (More)
                 {
                     if (Result == null) Result = new ObservableCollection<ImageElementResult>(result.GlobalResult.Result);
                     else result.GlobalResult.Result.ForEach(Result.Add);
                 }
+                else
+                    Result = new ObservableCollection<ImageElementResult>(result.GlobalResult.Result);
                 SetState();
             }
             catch (Exception ex)
@@ -107,7 +107,7 @@ namespace CandySugar.Controls
             try
             {
                 Module = 2;
-                if (!More) Activity = true;
+                SetState(More);
                 await Task.Delay(100);
                 var result = await ImageFactory.Image(opt =>
                 {
@@ -125,13 +125,13 @@ namespace CandySugar.Controls
                     };
                 }).RunsAsync();
                 Total = result.GlobalResult.Total;
-                if (!More)
-                    Result = new ObservableCollection<ImageElementResult>(result.GlobalResult.Result);
-                else
+                if (More)
                 {
                     if (Result == null) Result = new ObservableCollection<ImageElementResult>(result.GlobalResult.Result);
                     else result.GlobalResult.Result.ForEach(Result.Add);
                 }
+                else
+                    Result = new ObservableCollection<ImageElementResult>(result.GlobalResult.Result);
                 SetState();
             }
             catch (Exception ex)

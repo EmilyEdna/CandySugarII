@@ -17,7 +17,8 @@
                     <Button
                         Margin="10,5,5,5"
                         BackgroundColor="{StaticResource Platform}"
-                        Clicked="CloseLeftEvent">
+                        Clicked="CloseLeftEvent"
+                        HorizontalOptions="Start">
                         <Button.ImageSource>
                             <FontImageSource
                                 FontFamily="Solid"
@@ -26,14 +27,17 @@
                                                         Dark={StaticResource BasicPrimaryDrak}}" />
                         </Button.ImageSource>
                     </Button>
+                    <BoxView StyleClass="Divider" />
                     <Label
                         Margin="20,5,5,5"
                         FontSize="18"
                         Text="设置" />
+                    <BoxView StyleClass="Divider" />
                     <Label
                         Margin="20,5,5,5"
                         FontSize="18"
                         Text="历史" />
+                    <BoxView StyleClass="Divider" />
                     <Label
                         Margin="20,5,5,5"
                         FontSize="18"

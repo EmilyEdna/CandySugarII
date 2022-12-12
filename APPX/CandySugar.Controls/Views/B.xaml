@@ -111,7 +111,7 @@
                                 <StackLayout Grid.Column="1" VerticalOptions="StartAndExpand">
                                     <Label
                                         Margin="10,0,0,0"
-                                        LineBreakMode="CharacterWrap "
+                                        LineBreakMode="WordWrap"
                                         Text="{Binding Name}"
                                         TextColor="{AppThemeBinding Dark={StaticResource Basic},
                                                                     Light={StaticResource BasicDrak}}" />

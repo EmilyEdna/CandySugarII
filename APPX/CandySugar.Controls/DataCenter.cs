@@ -49,6 +49,15 @@ namespace CandySugar.Controls
                 {
 
                 }
+                if (type == 3)
+                {
+                    var result = Caches.RunTimeCacheGet<byte[]>(key.ToMd5());
+                    if (result != null) return result;
+                    HttpClient client = new();
+                    var data = await client.GetByteArrayAsync(key);
+                    Caches.RunTimeCacheSet(key.ToMd5(), data, DataBus.Cache);
+                    return data;
+                }
                 return null;
             });
         }

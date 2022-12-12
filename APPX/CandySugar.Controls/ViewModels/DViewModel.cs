@@ -77,7 +77,7 @@ namespace CandySugar.Controls
             try
             {
                 Module = 1;
-                if (!More) Activity = true;
+                SetState(More);
                 await Task.Delay(100);
                 var result = await MangaFactory.Manga(opt =>
                 {
@@ -111,7 +111,7 @@ namespace CandySugar.Controls
             try
             {
                 Module = 2;
-                if (!More) Activity = true;
+                SetState(More);
                 await Task.Delay(100);
                 var result = await MangaFactory.Manga(opt =>
                 {
@@ -146,19 +146,23 @@ namespace CandySugar.Controls
         public DelegateCommand<string> GroupCammand => new(input =>
         {
             this.Group = input;
-            Task.Run(() => GroupInit(false));
+            if (Module == 1) Task.Run(() => GroupInit(false));
+            if (Module == 2) Task.Run(() => QueryInit(false));
+       
         });
         public DelegateCommand RefreshCommand => new(() =>
         {
             this.Page = 1;
-            Task.Run(() => GroupInit(false));
+            if (Module == 1) Task.Run(() => GroupInit(false));
+            if (Module == 2) Task.Run(() => QueryInit(false));
         });
         public DelegateCommand MoreCommand => new(() =>
         {
 
             this.Page += 1;
             if (this.Page > this.Total) return;
-            Task.Run(() => GroupInit(true));
+            if (Module == 1) Task.Run(() => GroupInit(true));
+            if (Module == 2) Task.Run(() => QueryInit(true));
         });
         public DelegateCommand<MangaCategoryElementResult> DetailCommand => new(input =>
         {

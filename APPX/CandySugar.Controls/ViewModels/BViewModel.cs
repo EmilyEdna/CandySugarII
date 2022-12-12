@@ -85,7 +85,7 @@ namespace CandySugar.Controls
             try
             {
                 Module = 2;
-                if (!More) Activity = true;
+                SetState(More);
                 await Task.Delay(100);
                 var result = await AnimeFactory.Anime(opt =>
                 {
@@ -122,7 +122,7 @@ namespace CandySugar.Controls
             try
             {
                 Module = 3;
-                if (!More) Activity = true;
+                SetState(More);
                 await Task.Delay(100);
                 var result = await AnimeFactory.Anime(opt =>
                 {
@@ -159,7 +159,7 @@ namespace CandySugar.Controls
             try
             {
                 Module = 1;
-                if (!More) Activity = true;
+                SetState(More);
                 await Task.Delay(100);
                 var result = await AnimeFactory.Anime(opt =>
                 {
