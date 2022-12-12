@@ -30,6 +30,7 @@ namespace CandySugar.Controls
         {
             Task.Run(Init);
         }
+
         #region Property
         public string Route { get; set; }
         public string Key { get; set; }
@@ -64,7 +65,7 @@ namespace CandySugar.Controls
             {
                 Module = 0;
                 Activity = true;
-                await Task.Delay(100);
+                await Task.Delay(DataBus.Delay);
                 var result = await LovelFactory.Lovel(opt =>
                   {
                       opt.RequestParam = new Input
@@ -90,7 +91,7 @@ namespace CandySugar.Controls
             {
                 Module = 1;
                 SetState(More);
-                await Task.Delay(100);
+                await Task.Delay(DataBus.Delay);
                 var result = await LovelFactory.Lovel(opt =>
                 {
                     opt.RequestParam = new Input
@@ -124,7 +125,7 @@ namespace CandySugar.Controls
             {
                 Module = 2;
                 SetState(More);
-                await Task.Delay(100);
+                await Task.Delay(DataBus.Delay);
                 var result = await LovelFactory.Lovel(opt =>
                 {
                     opt.RequestParam = new Input
@@ -172,7 +173,6 @@ namespace CandySugar.Controls
         {
             this.Page += 1;
             if (this.Page > this.Total) return;
-            this.Refresh = true;
             if (Module == 1) Task.Run(() => GroupInit(true));
             if (Module == 2) Task.Run(() => QeuryInit(true));
         });

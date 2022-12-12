@@ -47,7 +47,7 @@ namespace CandySugar.Controls
             try
             {
                 Activity = true;
-                await Task.Delay(100);
+                await Task.Delay(DataBus.Delay);
                 var result = await MangaFactory.Manga(opt =>
                 {
                     opt.RequestParam = new Input

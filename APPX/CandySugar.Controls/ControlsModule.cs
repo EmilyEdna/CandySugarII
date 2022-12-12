@@ -35,6 +35,8 @@ namespace CandySugar.Controls
             containerRegistry.RegisterForNavigation<D1, D1ViewModel>();
             containerRegistry.RegisterForNavigation<D2, D2ViewModel>();
 
+            containerRegistry.RegisterForNavigation<E1, E1ViewModel>();
+
             containerRegistry.RegisterForNavigation<F1, F1ViewModel>();
             containerRegistry.RegisterForNavigation<F2, F2ViewModel>();
         }

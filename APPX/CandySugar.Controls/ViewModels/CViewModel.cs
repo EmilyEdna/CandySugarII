@@ -60,7 +60,7 @@ namespace CandySugar.Controls
             {
                 Module = 1;
                 SetState(More);
-                await Task.Delay(100);
+                await Task.Delay(DataBus.Delay);
                 var result = await ImageFactory.Image(opt =>
                 {
                     opt.RequestParam = new Input
@@ -108,7 +108,7 @@ namespace CandySugar.Controls
             {
                 Module = 2;
                 SetState(More);
-                await Task.Delay(100);
+                await Task.Delay(DataBus.Delay);
                 var result = await ImageFactory.Image(opt =>
                 {
                     opt.RequestParam = new Input

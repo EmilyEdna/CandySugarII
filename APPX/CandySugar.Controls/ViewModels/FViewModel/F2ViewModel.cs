@@ -65,7 +65,7 @@ internal class F2ViewModel : ViewModelBase
         try
         {
             Activity = true;
-            await Task.Delay(100);
+            await Task.Delay(DataBus.Delay);
             var result = await LovelFactory.Lovel(opt =>
             {
                 opt.RequestParam = new Input

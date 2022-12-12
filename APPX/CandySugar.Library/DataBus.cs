@@ -12,5 +12,6 @@ namespace CandySugar.Library
         public static int Cache { get; set; } = 5;
         public static int QueryModule { get; set; } = 2;
         public static int Module { get; set; } = 1;
+        public static int Delay { get; set; } = 200;
     }
 }

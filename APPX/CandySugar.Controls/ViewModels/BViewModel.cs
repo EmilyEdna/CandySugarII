@@ -60,7 +60,7 @@ namespace CandySugar.Controls
             {
                 Module = 0;
                 Activity = true;
-                await Task.Delay(100);
+                await Task.Delay(DataBus.Delay);
                 var result = await AnimeFactory.Anime(opt =>
                 {
                     opt.RequestParam = new Input
@@ -86,7 +86,7 @@ namespace CandySugar.Controls
             {
                 Module = 2;
                 SetState(More);
-                await Task.Delay(100);
+                await Task.Delay(DataBus.Delay);
                 var result = await AnimeFactory.Anime(opt =>
                 {
                     opt.RequestParam = new Input
@@ -123,7 +123,7 @@ namespace CandySugar.Controls
             {
                 Module = 3;
                 SetState(More);
-                await Task.Delay(100);
+                await Task.Delay(DataBus.Delay);
                 var result = await AnimeFactory.Anime(opt =>
                 {
                     opt.RequestParam = new Input
@@ -160,7 +160,7 @@ namespace CandySugar.Controls
             {
                 Module = 1;
                 SetState(More);
-                await Task.Delay(100);
+                await Task.Delay(DataBus.Delay);
                 var result = await AnimeFactory.Anime(opt =>
                 {
                     opt.RequestParam = new Input

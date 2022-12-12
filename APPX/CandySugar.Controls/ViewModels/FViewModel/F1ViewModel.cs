@@ -42,7 +42,7 @@ internal class F1ViewModel : ViewModelBase
         try
         {
             Activity = true;
-            await Task.Delay(100);
+            await Task.Delay(DataBus.Delay);
             var detail = await LovelFactory.Lovel(opt =>
             {
                 opt.RequestParam = new Input
