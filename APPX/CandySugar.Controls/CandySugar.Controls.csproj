@@ -80,6 +80,9 @@
 	  <MauiXaml Update="Views\EViews\E1.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\EViews\E2.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\FViews\F1.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -35,6 +35,9 @@ namespace CandySugar.Logic
         #endregion
 
         #region E
+        Task<bool> EAdd(ERootEntity root);
+        Task ERemove(Guid root);
+        Task<List<ERootEntity>> EQuery();
         #endregion
 
         #region F

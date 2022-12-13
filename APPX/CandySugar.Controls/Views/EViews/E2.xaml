@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="CandySugar.Controls.E2"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Lib="clr-namespace:CandySugar.Library;assembly=CandySugar.Library"
+    xmlns:Local="clr-namespace:CandySugar.Controls"
+    x:DataType="Local:E2ViewModel"
+    Background="{AppThemeBinding Dark={StaticResource BasicDrak},
+                                 Light={StaticResource Basic}}">
+    <Grid>
+        <Grid RowDefinitions="45,*" RowSpacing="2">
+            <HorizontalStackLayout Background="{AppThemeBinding Light={StaticResource BasicContainer}, Dark={StaticResource BasicBrushContainerDrak}}">
+                <Button BackgroundColor="{StaticResource Platform}" Command="{Binding BackCommand}">
+                    <Button.ImageSource>
+                        <FontImageSource
+                            FontFamily="Solid"
+                            Glyph="{Static Lib:FontIcon.ArrowLeft}"
+                            Color="{AppThemeBinding Light={StaticResource BasicPrimary},
+                                                    Dark={StaticResource BasicPrimaryDrak}}" />
+                    </Button.ImageSource>
+                </Button>
+                <VerticalStackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Center">
+                    <Label
+                        FontSize="15"
+                        Text="{Binding Title}"
+                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                    Light={StaticResource BasicDrak}}" />
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+            <CollectionView
+                Grid.Row="1"
+                ItemSizingStrategy="MeasureAllItems"
+                ItemsSource="{Binding Content}"
+                RemainingItemsThreshold="0"
+                RemainingItemsThresholdReachedCommand="{Binding MoreCommand}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Label
+                            FontSize="18"
+                            Text="{Binding .}"
+                            TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                        Light={StaticResource BasicDrak}}" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+        <ActivityIndicator
+            HeightRequest="20"
+            HorizontalOptions="Center"
+            IsRunning="{Binding Activity}"
+            IsVisible="{Binding Activity}"
+            VerticalOptions="Center"
+            WidthRequest="20"
+            Color="{AppThemeBinding Light={StaticResource SurfacePrimaryDrak},
+                                    Dark={StaticResource SurfaceContainerDark}}" />
+    </Grid>
+</ContentPage>

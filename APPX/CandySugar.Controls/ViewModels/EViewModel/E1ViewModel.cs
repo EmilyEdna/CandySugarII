@@ -61,7 +61,7 @@ namespace CandySugar.Controls
                         NovelType = NovelEnum.Detail,
                         Detail = new NovelDetail
                         {
-                            Page= Sort?this.Total:this.Page,
+                            Page = Sort ? this.Total : this.Page,
                             DetailRoute = this.Route,
                         }
                     };
@@ -73,6 +73,7 @@ namespace CandySugar.Controls
                     result.DetailResult.ElementResults.ForEach(ElementResult.Add);
                 else
                     ElementResult = new ObservableCollection<NovelDetailElementResult>(result.DetailResult.ElementResults);
+                Add();
                 SetState();
             }
             catch (Exception ex)
@@ -80,6 +81,15 @@ namespace CandySugar.Controls
                 await Service.AddLog("E1InitDetail异常", ex);
                 "E1InitDetail异常".OpenToast();
             }
+        }
+        async void Add()
+        {
+            await Service.EAdd(new ERootEntity
+            {
+                Author = Result.Author,
+                Name = Result.BookName,
+                Route = Route
+            });
         }
         #endregion
 
@@ -96,22 +106,22 @@ namespace CandySugar.Controls
         });
         public DelegateCommand<NovelDetailElementResult> WatchCommand => new(input =>
         {
-
+            Nav.NavigateAsync(new Uri("E2", UriKind.Relative), new NavigationParameters { { "Route", input.ChapterRoute } });
         });
-        public DelegateCommand MoreCommand => new(() => {
+        public DelegateCommand MoreCommand => new(() =>
+        {
             if (Sort)
-            {
-                this.Page += 1;
-                if (this.Page > Result.Total) return;
-                Task.Run(() => InitDetail(true));
-            }
-            else
             {
                 Total -= 1;
                 if (this.Total >= 1)
                     Task.Run(() => InitDetail(true));
             }
-         
+            else
+            {
+                this.Page += 1;
+                if (this.Page > Result.Total) return;
+                Task.Run(() => InitDetail(true));
+            }
         });
         #endregion
     }

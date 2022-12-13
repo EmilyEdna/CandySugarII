@@ -12,7 +12,7 @@ namespace CandySugar.Logic
     public class Service : IService
     {
         #region Log
-        public async Task AddLog(string Info,Exception Stack)
+        public async Task AddLog(string Info, Exception Stack)
         {
             LogEntity input = new LogEntity
             {
@@ -168,6 +168,28 @@ namespace CandySugar.Logic
         #endregion
 
         #region E
+        public async Task<bool> EAdd(ERootEntity root)
+        {
+            var Lite = DbContext.Lite;
+            var Parent = await Lite.Table<ERootEntity>().FirstOrDefaultAsync(t => t.Name == root.Name&&t.Author==root.Author);
+            if (Parent != null)
+            {
+                return true;
+            }
+            root.InitProperty();
+            return await Lite.InsertAsync(root) > 0;
+        }
+        public async Task ERemove(Guid root)
+        {
+            var Lite = DbContext.Lite;
+            await Lite.Table<ERootEntity>().DeleteAsync(t => t.Id == root);
+        }
+        public async Task<List<ERootEntity>> EQuery()
+        {
+            var Lite = DbContext.Lite;
+            var roots = await Lite.Table<ERootEntity>().ToListAsync();
+            return roots;
+        }
         #endregion
 
         #region F
