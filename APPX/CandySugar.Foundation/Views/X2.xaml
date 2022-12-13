@@ -3,6 +3,7 @@
     x:Class="CandySugar.Foundation.X2"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:CS="clr-namespace:CandySugar.Controls;assembly=CandySugar.Controls"
     xmlns:Lib="clr-namespace:CandySugar.Library;assembly=CandySugar.Library"
     xmlns:Local="clr-namespace:CandySugar.Foundation"
     x:DataType="Local:X2ViewModel"
@@ -27,5 +28,193 @@
                                                 Light={StaticResource BasicDrak}}" />
             </VerticalStackLayout>
         </HorizontalStackLayout>
+        <CS:TabView Grid.Row="1">
+            <CS:TabItem>
+                <CS:TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <Border
+                            Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
+                                                     Dark={StaticResource PotoBrushSafeDark}}"
+                            StrokeShape="RoundRectangle 0"
+                            StrokeThickness="1">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding WatchCommand}" CommandParameter="1" />
+                            </Border.GestureRecognizers>
+                            <Label
+                                Margin="13,10,13,10"
+                                FontSize="16"
+                                HorizontalOptions="Center"
+                                Text="动漫"
+                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                            Light={StaticResource BasicDrak}}"
+                                VerticalOptions="Center" />
+                        </Border>
+                    </DataTemplate>
+                </CS:TabItem.HeaderTemplate>
+                <CS:TabItem.Content>
+                    <Label />
+                </CS:TabItem.Content>
+            </CS:TabItem>
+            <CS:TabItem>
+                <CS:TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <Border
+                            Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
+                                                     Dark={StaticResource PotoBrushSafeDark}}"
+                            StrokeShape="RoundRectangle 0"
+                            StrokeThickness="1">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding WatchCommand}" CommandParameter="2" />
+                            </Border.GestureRecognizers>
+                            <Label
+                                Margin="13,10,13,10"
+                                FontSize="16"
+                                HorizontalOptions="Center"
+                                Text="壁纸"
+                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                            Light={StaticResource BasicDrak}}"
+                                VerticalOptions="Center" />
+                        </Border>
+                    </DataTemplate>
+                </CS:TabItem.HeaderTemplate>
+                <CS:TabItem.Content>
+                    <Label
+                        FontSize="13,10,13,10"
+                        HorizontalOptions="Center"
+                        Text="壁纸"
+                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                    Light={StaticResource BasicDrak}}"
+                        VerticalOptions="Center" />
+                </CS:TabItem.Content>
+            </CS:TabItem>
+            <CS:TabItem>
+                <CS:TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <Border
+                            Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
+                                                     Dark={StaticResource PotoBrushSafeDark}}"
+                            StrokeShape="RoundRectangle 0"
+                            StrokeThickness="1">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding WatchCommand}" CommandParameter="3" />
+                            </Border.GestureRecognizers>
+                            <Label
+                                Margin="13,10,13,10"
+                                FontSize="16"
+                                HorizontalOptions="Center"
+                                Text="漫画"
+                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                            Light={StaticResource BasicDrak}}"
+                                VerticalOptions="Center" />
+                        </Border>
+                    </DataTemplate>
+                </CS:TabItem.HeaderTemplate>
+                <CS:TabItem.Content>
+                    <Label
+                        FontSize="16"
+                        HorizontalOptions="Center"
+                        Text="漫画"
+                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                    Light={StaticResource BasicDrak}}"
+                        VerticalOptions="Center" />
+                </CS:TabItem.Content>
+            </CS:TabItem>
+            <CS:TabItem>
+                <CS:TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <Border
+                            Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
+                                                     Dark={StaticResource PotoBrushSafeDark}}"
+                            StrokeShape="RoundRectangle 0"
+                            StrokeThickness="1">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding WatchCommand}" CommandParameter="4" />
+                            </Border.GestureRecognizers>
+                            <Label
+                                Margin="13,10,13,10"
+                                FontSize="16"
+                                HorizontalOptions="Center"
+                                Text="小说"
+                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                            Light={StaticResource BasicDrak}}"
+                                VerticalOptions="Center" />
+                        </Border>
+                    </DataTemplate>
+                </CS:TabItem.HeaderTemplate>
+                <CS:TabItem.Content>
+                    <Label
+                        FontSize="16"
+                        HorizontalOptions="Center"
+                        Text="小说"
+                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                    Light={StaticResource BasicDrak}}"
+                        VerticalOptions="Center" />
+                </CS:TabItem.Content>
+            </CS:TabItem>
+            <CS:TabItem>
+                <CS:TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <Border
+                            Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
+                                                     Dark={StaticResource PotoBrushSafeDark}}"
+                            StrokeShape="RoundRectangle 0"
+                            StrokeThickness="1">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding WatchCommand}" CommandParameter="5" />
+                            </Border.GestureRecognizers>
+                            <Label
+                                Margin="13,10,13,10"
+                                FontSize="16"
+                                HorizontalOptions="Center"
+                                Text="文学"
+                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                            Light={StaticResource BasicDrak}}"
+                                VerticalOptions="Center" />
+                        </Border>
+                    </DataTemplate>
+                </CS:TabItem.HeaderTemplate>
+                <CS:TabItem.Content>
+                    <Label
+                        FontSize="16"
+                        HorizontalOptions="Center"
+                        Text="文学"
+                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                    Light={StaticResource BasicDrak}}"
+                        VerticalOptions="Center" />
+                </CS:TabItem.Content>
+            </CS:TabItem>
+            <CS:TabItem>
+                <CS:TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <Border
+                            Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
+                                                     Dark={StaticResource PotoBrushSafeDark}}"
+                            StrokeShape="RoundRectangle 0"
+                            StrokeThickness="1">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding WatchCommand}" CommandParameter="6" />
+                            </Border.GestureRecognizers>
+                            <Label
+                                Margin="13,10,13,10"
+                                FontSize="16"
+                                HorizontalOptions="Center"
+                                Text="电影"
+                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                            Light={StaticResource BasicDrak}}"
+                                VerticalOptions="Center" />
+                        </Border>
+                    </DataTemplate>
+                </CS:TabItem.HeaderTemplate>
+                <CS:TabItem.Content>
+                    <Label
+                        FontSize="16"
+                        HorizontalOptions="Center"
+                        Text="文学"
+                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                    Light={StaticResource BasicDrak}}"
+                        VerticalOptions="Center" />
+                </CS:TabItem.Content>
+            </CS:TabItem>
+        </CS:TabView>
     </Grid>
 </ContentPage>

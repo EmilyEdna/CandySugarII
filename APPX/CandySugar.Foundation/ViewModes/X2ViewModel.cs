@@ -15,6 +15,10 @@ namespace CandySugar.Foundation
         {
             Nav.GoBackAsync();
         });
+        public DelegateCommand<string> WatchCommand => new(input => { 
+        
+        
+        });
         #endregion
     }
 }
