@@ -31,17 +31,29 @@
                     <Label
                         Margin="20,5,5,5"
                         FontSize="18"
-                        Text="设置" />
+                        Text="设置">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavCommand}" CommandParameter="1" />
+                        </Label.GestureRecognizers>
+                    </Label>
                     <BoxView StyleClass="Divider" />
                     <Label
                         Margin="20,5,5,5"
                         FontSize="18"
-                        Text="历史" />
+                        Text="历史">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavCommand}" CommandParameter="2" />
+                        </Label.GestureRecognizers>
+                    </Label>
                     <BoxView StyleClass="Divider" />
                     <Label
                         Margin="20,5,5,5"
                         FontSize="18"
-                        Text="日志" />
+                        Text="日志">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavCommand}" CommandParameter="3" />
+                        </Label.GestureRecognizers>
+                    </Label>
                 </VerticalStackLayout>
             </Candy:LeftPage.Body>
         </Candy:LeftPage>

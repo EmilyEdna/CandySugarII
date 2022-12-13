@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="CandySugar.Foundation.X2"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Lib="clr-namespace:CandySugar.Library;assembly=CandySugar.Library"
+    xmlns:Local="clr-namespace:CandySugar.Foundation"
+    x:DataType="Local:X2ViewModel"
+    Background="{AppThemeBinding Dark={StaticResource BasicDrak},
+                                 Light={StaticResource Basic}}">
+    <Grid RowDefinitions="45,*" RowSpacing="2">
+        <HorizontalStackLayout Background="{AppThemeBinding Light={StaticResource BasicContainer}, Dark={StaticResource BasicBrushContainerDrak}}">
+            <Button BackgroundColor="{StaticResource Platform}" Command="{Binding BackCommand}">
+                <Button.ImageSource>
+                    <FontImageSource
+                        FontFamily="Solid"
+                        Glyph="{Static Lib:FontIcon.ArrowLeft}"
+                        Color="{AppThemeBinding Light={StaticResource BasicPrimary},
+                                                Dark={StaticResource BasicPrimaryDrak}}" />
+                </Button.ImageSource>
+            </Button>
+            <VerticalStackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Center">
+                <Label
+                    FontSize="15"
+                    Text="历史"
+                    TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                Light={StaticResource BasicDrak}}" />
+            </VerticalStackLayout>
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>

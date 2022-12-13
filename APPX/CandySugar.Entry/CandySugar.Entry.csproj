@@ -91,7 +91,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\CandySugar.Controls\CandySugar.Controls.csproj" />
+	  <ProjectReference Include="..\CandySugar.Foundation\CandySugar.Foundation.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -61,11 +61,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "启动项", "启动项", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CandySugar.Entry", "APPX\CandySugar.Entry\CandySugar.Entry.csproj", "{1853E70D-5F75-498D-A3AA-12AE97FBD205}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CandySugar.Logic", "APPX\CandySugar.Logic\CandySugar.Logic.csproj", "{96522547-1349-4FC9-8091-3438F91B092B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CandySugar.Logic", "APPX\CandySugar.Logic\CandySugar.Logic.csproj", "{96522547-1349-4FC9-8091-3438F91B092B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CandySugar.Library", "APPX\CandySugar.Library\CandySugar.Library.csproj", "{6E487C43-BC4E-4359-9CD8-2FECB32BFB04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CandySugar.Library", "APPX\CandySugar.Library\CandySugar.Library.csproj", "{6E487C43-BC4E-4359-9CD8-2FECB32BFB04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CandySugar.Controls", "APPX\CandySugar.Controls\CandySugar.Controls.csproj", "{FB84C2B6-6059-4E18-8070-24711E077F50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CandySugar.Controls", "APPX\CandySugar.Controls\CandySugar.Controls.csproj", "{FB84C2B6-6059-4E18-8070-24711E077F50}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CandySugar.Foundation", "APPX\CandySugar.Foundation\CandySugar.Foundation.csproj", "{88415475-1B0F-406B-887F-93E3D30F230D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -147,6 +149,10 @@ Global
 		{FB84C2B6-6059-4E18-8070-24711E077F50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB84C2B6-6059-4E18-8070-24711E077F50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB84C2B6-6059-4E18-8070-24711E077F50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88415475-1B0F-406B-887F-93E3D30F230D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88415475-1B0F-406B-887F-93E3D30F230D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88415475-1B0F-406B-887F-93E3D30F230D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88415475-1B0F-406B-887F-93E3D30F230D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -180,6 +186,7 @@ Global
 		{96522547-1349-4FC9-8091-3438F91B092B} = {844CC809-7AA8-4A48-8DF4-388E63EA6E03}
 		{6E487C43-BC4E-4359-9CD8-2FECB32BFB04} = {844CC809-7AA8-4A48-8DF4-388E63EA6E03}
 		{FB84C2B6-6059-4E18-8070-24711E077F50} = {BB58D1B4-CE4D-4A3D-9475-988C91C9042B}
+		{88415475-1B0F-406B-887F-93E3D30F230D} = {BB58D1B4-CE4D-4A3D-9475-988C91C9042B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F97AB604-6A74-4B7E-9792-59D62C7D490B}

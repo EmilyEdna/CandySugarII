@@ -31,7 +31,7 @@ namespace CandySugar.Logic
         public async Task<List<LogEntity>> QueryLog()
         {
             var Lite = DbContext.Lite;
-            return await Lite.Table<LogEntity>().ToListAsync();
+            return await Lite.Table<LogEntity>().OrderByDescending(t=>t.Span).ToListAsync();
         }
         #endregion
 
@@ -82,7 +82,7 @@ namespace CandySugar.Logic
             var query = Lite.Table<BRootEntity>();
             if (!key.IsNullOrEmpty()) query = query.Where(t => t.Name.Contains(key));
 
-            var roots = await query.ToListAsync();
+            var roots = await query.OrderByDescending(t => t.Span).ToListAsync();
 
             var elements = await Lite.Table<BElementEntity>().ToListAsync();
 
@@ -121,7 +121,7 @@ namespace CandySugar.Logic
         public async Task<List<CRootEntity>> CQuery()
         {
             var Lite = DbContext.Lite;
-            var roots = await Lite.Table<CRootEntity>().ToListAsync();
+            var roots = await Lite.Table<CRootEntity>().OrderByDescending(t => t.Span).ToListAsync();
             var elements = await Lite.Table<CElementEntity>().ToListAsync();
             roots.ForEach(item =>
             {
@@ -157,7 +157,7 @@ namespace CandySugar.Logic
         public async Task<List<DRootEntity>> DQuery()
         {
             var Lite = DbContext.Lite;
-            var roots = await Lite.Table<DRootEntity>().ToListAsync();
+            var roots = await Lite.Table<DRootEntity>().OrderByDescending(t => t.Span).ToListAsync();
             var elements = await Lite.Table<DElementEntity>().ToListAsync();
             roots.ForEach(item =>
             {
@@ -187,7 +187,7 @@ namespace CandySugar.Logic
         public async Task<List<ERootEntity>> EQuery()
         {
             var Lite = DbContext.Lite;
-            var roots = await Lite.Table<ERootEntity>().ToListAsync();
+            var roots = await Lite.Table<ERootEntity>().OrderByDescending(t => t.Span).ToListAsync();
             return roots;
         }
         #endregion
@@ -218,7 +218,7 @@ namespace CandySugar.Logic
         public async Task<List<FRootEntity>> FQuery()
         {
             var Lite = DbContext.Lite;
-            var roots = await Lite.Table<FRootEntity>().ToListAsync();
+            var roots = await Lite.Table<FRootEntity>().OrderByDescending(t => t.Span).ToListAsync();
             var elements = await Lite.Table<FElementEntity>().ToListAsync();
             roots.ForEach(item =>
             {

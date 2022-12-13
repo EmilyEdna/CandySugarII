@@ -1,7 +1,5 @@
-﻿using CandySugar.Controls;
-using CandySugar.Entry.ViewModels;
-using CandySugar.Library;
-using CandySugar.Logic;
+﻿using CandySugar.Entry.ViewModels;
+using CandySugar.Foundation;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using UraniumUI;
@@ -18,6 +16,7 @@ namespace CandySugar.Entry
                 .UsePrism(prism => prism.ConfigureModuleCatalog(moduleCatalog =>
                 {
                     //配置模块目录
+                    moduleCatalog.AddModule<BasicModule>();
                     moduleCatalog.AddModule<ControlsModule>();
                     moduleCatalog.AddModule<LibraryModule>();
                     moduleCatalog.AddModule<LogicModule>();

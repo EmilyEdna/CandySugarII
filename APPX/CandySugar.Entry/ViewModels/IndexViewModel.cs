@@ -4,7 +4,7 @@ namespace CandySugar.Entry.ViewModels
 {
     public class IndexViewModel : ViewModelBase
     {
-        private BaseServices BaseServices;
+        BaseServices BaseServices;
         public IndexViewModel(BaseServices baseServices) : base(baseServices)
         {
             BaseServices = baseServices;
@@ -12,6 +12,7 @@ namespace CandySugar.Entry.ViewModels
         }
         public override void OnAppearing()
         {
+            BaseServices.Container.Resolve<IService>().ClearLog();
         }
 
         public override void OnDisappearing()
@@ -146,6 +147,23 @@ namespace CandySugar.Entry.ViewModels
                 var model = (FView.BindingContext as DViewModel);
                 model.Key = input;
                 Task.Run(() => model.QueryInit(false));
+            }
+        });
+        public DelegateCommand<string> NavCommand => new(input =>
+        {
+            switch (input)
+            {
+                case "1":
+                    Nav.NavigateAsync(new Uri("X1", UriKind.Relative));
+                    break;
+                case "2":
+                    Nav.NavigateAsync(new Uri("X2", UriKind.Relative));
+                    break;
+                case "3":
+                    Nav.NavigateAsync(new Uri("X3", UriKind.Relative));
+                    break;
+                default:
+                    break;
             }
         });
         #endregion
