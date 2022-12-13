@@ -15,16 +15,15 @@ namespace CandySugar.Controls
         {
             Service = this.Container.Resolve<IService>();
         }
+        /// <summary>
+        /// 1 查询 2 字母分类 3类别分类
+        /// </summary>
+        public static int Module = 0;
 
         public override void OnLoad()
         {
             Task.Run(() => Init());
         }
-
-        /// <summary>
-        /// 1 查询 2 字母分类 3类被分类
-        /// </summary>
-        public static int Module = 0;
 
         #region Property
         public string Type { get; set; }

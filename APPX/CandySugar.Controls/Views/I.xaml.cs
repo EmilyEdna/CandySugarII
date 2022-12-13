@@ -1,6 +1,6 @@
 namespace CandySugar.Controls;
 
-public partial class I : ContentView
+public partial class I : CandyUIView
 {
 	public I()
 	{

@@ -26,7 +26,7 @@ namespace CandySugar.Logic
         public async Task ClearLog()
         {
             var Lite = DbContext.Lite;
-            await Lite.Table<LogEntity>().DeleteAsync();
+            await Lite.Table<LogEntity>().DeleteAsync(t=>t.Id!=Guid.Empty);
         }
         public async Task<List<LogEntity>> QueryLog()
         {
