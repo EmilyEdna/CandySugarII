@@ -119,7 +119,7 @@ namespace CandySugar.Controls
                 "FGroupInit异常".OpenToast();
             }
         }
-        public async void QeuryInit(bool More)
+        public async void QueryInit(bool More)
         {
             try
             {
@@ -167,14 +167,14 @@ namespace CandySugar.Controls
         {
             this.Page = 1;
             if (Module == 1) Task.Run(() => GroupInit(false));
-            if (Module == 2) Task.Run(() => QeuryInit(false));
+            if (Module == 2) Task.Run(() => QueryInit(false));
         });
         public DelegateCommand MoreCommand => new(() =>
         {
             this.Page += 1;
             if (this.Page > this.Total) return;
             if (Module == 1) Task.Run(() => GroupInit(true));
-            if (Module == 2) Task.Run(() => QeuryInit(true));
+            if (Module == 2) Task.Run(() => QueryInit(true));
         });
         public DelegateCommand<LovelCategoryElementResult> DetailCommand => new(input =>
         {

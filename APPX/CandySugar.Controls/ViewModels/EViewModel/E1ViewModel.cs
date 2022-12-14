@@ -22,7 +22,7 @@ namespace CandySugar.Controls
         public override void Initialize(INavigationParameters parameters)
         {
             Route = parameters.GetValue<string>("Route");
-            Task.Run(() => InitDetail(false));
+            Task.Run(() => DetailInit(false));
         }
 
         #region Property
@@ -46,7 +46,7 @@ namespace CandySugar.Controls
         #endregion
 
         #region Method
-        async void InitDetail(bool More)
+        async void DetailInit(bool More)
         {
             try
             {
@@ -78,8 +78,8 @@ namespace CandySugar.Controls
             }
             catch (Exception ex)
             {
-                await Service.AddLog("E1InitDetail异常", ex);
-                "E1InitDetail异常".OpenToast();
+                await Service.AddLog("E1DetailInit异常", ex);
+                "E1DetailInit异常".OpenToast();
             }
         }
         async void Add()
@@ -102,7 +102,7 @@ namespace CandySugar.Controls
         {
             if (Sort) Sort = false; else Sort = true;
             this.Total = Result.Total;
-            Task.Run(() => InitDetail(false));
+            Task.Run(() => DetailInit(false));
         });
         public DelegateCommand<NovelDetailElementResult> WatchCommand => new(input =>
         {
@@ -114,13 +114,13 @@ namespace CandySugar.Controls
             {
                 Total -= 1;
                 if (this.Total >= 1)
-                    Task.Run(() => InitDetail(true));
+                    Task.Run(() => DetailInit(true));
             }
             else
             {
                 this.Page += 1;
                 if (this.Page > Result.Total) return;
-                Task.Run(() => InitDetail(true));
+                Task.Run(() => DetailInit(true));
             }
         });
         #endregion

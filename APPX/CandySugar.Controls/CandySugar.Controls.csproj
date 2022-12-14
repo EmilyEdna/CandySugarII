@@ -29,6 +29,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\GViews\G2.xaml.cs">
+	    <DependentUpon>G2.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\K.xaml.cs">
 	    <DependentUpon>K.xaml</DependentUpon>
 	  </Compile>
@@ -87,6 +90,12 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\FViews\F2.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\GViews\G2.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\GViews\G1.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\K.xaml">

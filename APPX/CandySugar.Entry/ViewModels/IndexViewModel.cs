@@ -144,7 +144,13 @@ namespace CandySugar.Entry.ViewModels
             }
             if (Content is F FView)
             {
-                var model = (FView.BindingContext as DViewModel);
+                var model = (FView.BindingContext as FViewModel);
+                model.Key = input;
+                Task.Run(() => model.QueryInit(false));
+            }
+            if (Content is G GView)
+            {
+                var model = (GView.BindingContext as GViewModel);
                 model.Key = input;
                 Task.Run(() => model.QueryInit(false));
             }

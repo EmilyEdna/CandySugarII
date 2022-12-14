@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="CandySugar.Controls.G1"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Lib="clr-namespace:CandySugar.Library;assembly=CandySugar.Library"
+    xmlns:Local="clr-namespace:CandySugar.Controls"
+    xmlns:sdk="clr-namespace:Sdk.Component.Movie.sdk.ViewModel.Response;assembly=Sdk.Component"
+    x:DataType="Local:G1ViewModel"
+    Background="{AppThemeBinding Dark={StaticResource BasicDrak},
+                                 Light={StaticResource Basic}}">
+    <Grid>
+        <Grid RowDefinitions="45,*" RowSpacing="2">
+            <HorizontalStackLayout Background="{AppThemeBinding Light={StaticResource BasicContainer}, Dark={StaticResource BasicBrushContainerDrak}}">
+                <Button BackgroundColor="{StaticResource Platform}" Command="{Binding BackCommand}">
+                    <Button.ImageSource>
+                        <FontImageSource
+                            FontFamily="Solid"
+                            Glyph="{Static Lib:FontIcon.ArrowLeft}"
+                            Color="{AppThemeBinding Light={StaticResource BasicPrimary},
+                                                    Dark={StaticResource BasicPrimaryDrak}}" />
+                    </Button.ImageSource>
+                </Button>
+                <VerticalStackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Center">
+                    <Label
+                        FontSize="15"
+                        Text="{Binding Element.Title}"
+                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                    Light={StaticResource BasicDrak}}" />
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+            <CollectionView
+                Grid.Row="1"
+                ItemSizingStrategy="MeasureAllItems"
+                ItemsSource="{Binding Result, Mode=TwoWay}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="3" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="sdk:MovieDetailResult">
+                        <Border
+                            Padding="5"
+                            Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
+                                                     Dark={StaticResource PotoBrushSafeDark}}"
+                            StrokeShape="RoundRectangle 10"
+                            StrokeThickness="1">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding PlayCommand, Source={RelativeSource AncestorType={x:Type Local:G1ViewModel}}}" CommandParameter="{Binding Route}" />
+                            </Border.GestureRecognizers>
+                            <Label
+                                Margin="10,0,0,0"
+                                FontSize="16"
+                                LineBreakMode="WordWrap"
+                                Text="{Binding Name}"
+                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                            Light={StaticResource BasicDrak}}" />
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+        <ActivityIndicator
+            HeightRequest="20"
+            HorizontalOptions="Center"
+            IsRunning="{Binding Activity}"
+            IsVisible="{Binding Activity}"
+            VerticalOptions="Center"
+            WidthRequest="20"
+            Color="{AppThemeBinding Light={StaticResource SurfacePrimaryDrak},
+                                    Dark={StaticResource SurfaceContainerDark}}" />
+    </Grid>
+</ContentPage>

@@ -20,8 +20,9 @@ internal class F1ViewModel : ViewModelBase
     {
         Route = parameters.GetValue<string>("Route");
         Cover = parameters.GetValue<string>("Cover");
-        Task.Run(InitDetail);
+        Task.Run(DetailInit);
     }
+
     #region Property
     public string Route { get; set; }
     public string Cover { get; set; }
@@ -37,7 +38,7 @@ internal class F1ViewModel : ViewModelBase
     #endregion
 
     #region Method
-    async void InitDetail()
+    async void DetailInit()
     {
         try
         {

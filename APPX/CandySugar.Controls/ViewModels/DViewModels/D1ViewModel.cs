@@ -19,7 +19,7 @@ namespace CandySugar.Controls
         {
             Route = parameters.GetValue<string>("Route");
             Cover = parameters.GetValue<string>("Cover");
-            Task.Run(InitDetail);
+            Task.Run(DetailInit);
         }
 
         #region Property
@@ -42,7 +42,7 @@ namespace CandySugar.Controls
         #endregion
 
         #region Method
-        async void InitDetail()
+        async void DetailInit()
         {
             try
             {

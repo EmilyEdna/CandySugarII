@@ -206,5 +206,31 @@ namespace CandySugar.Logic
             return roots;
         }
         #endregion
+
+        #region G
+        public async Task<bool> GAdd(GRootEntity root)
+        {
+            var Lite = DbContext.Lite;
+            var Parent = await Lite.Table<GRootEntity>().FirstOrDefaultAsync(t => t.Name == root.Name&&t.Route==root.Route);
+            if (Parent != null)
+            {
+                return true;
+            }
+            root.InitProperty();
+         
+            return await Lite.InsertAsync(root) > 0;
+        }
+        public async Task GRemove(Guid root)
+        {
+            var Lite = DbContext.Lite;
+            await Lite.Table<GRootEntity>().DeleteAsync(t => t.Id == root);
+        }
+        public async Task<List<GRootEntity>> GQuery()
+        {
+            var Lite = DbContext.Lite;
+            var roots = await Lite.Table<GRootEntity>().OrderByDescending(t => t.Span).ToListAsync();
+            return roots;
+        }
+        #endregion
     }
 }
