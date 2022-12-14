@@ -211,7 +211,7 @@ namespace CandySugar.Logic
         public async Task<bool> GAdd(GRootEntity root)
         {
             var Lite = DbContext.Lite;
-            var Parent = await Lite.Table<GRootEntity>().FirstOrDefaultAsync(t => t.Name == root.Name&&t.Route==root.Route);
+            var Parent = await Lite.Table<GRootEntity>().FirstOrDefaultAsync(t => t.Title == root.Title && t.Route==root.Route);
             if (Parent != null)
             {
                 return true;

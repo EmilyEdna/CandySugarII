@@ -29,6 +29,8 @@ namespace CandySugar.Foundation
         public ObservableCollection<ERootEntity> EResult { get => _EResult; set => SetProperty(ref _EResult, value); }
         ObservableCollection<FRootEntity> _FResult;
         public ObservableCollection<FRootEntity> FResult { get => _FResult; set => SetProperty(ref _FResult, value); }
+        ObservableCollection<GRootEntity> _GResult;
+        public ObservableCollection<GRootEntity> GResult { get => _GResult; set => SetProperty(ref _GResult, value); }
         #endregion
 
         #region Method
@@ -64,12 +66,12 @@ namespace CandySugar.Foundation
                     await Service.FRemove(Root);
                 FResult = new ObservableCollection<FRootEntity>(await Service.FQuery());
             }
-            //if (Type == 3)
-            //{
-            //    if (Refresh)
-            //        await Service.GRemove(Root);
-            //    DResult = new ObservableCollection<DRootEntity>(await Service.DQuery());
-            //}
+            if (Type == 6)
+            {
+                if (Refresh)
+                    await Service.GRemove(Root);
+                GResult = new ObservableCollection<GRootEntity>(await Service.GQuery());
+            }
         }
         #endregion
 
@@ -108,6 +110,10 @@ namespace CandySugar.Foundation
         public DelegateCommand<FRootEntity> FCommand => new(input =>
         {
             Nav.NavigateAsync(new Uri("F1", UriKind.Relative), new NavigationParameters { { "Route", input.Route }, { "Cover", input.Cover } });
+        });
+        public DelegateCommand<GRootEntity> GCommand => new(input =>
+        {
+            Nav.NavigateAsync(new Uri("G1", UriKind.Relative), new NavigationParameters { { "Data", input }});
         });
         #endregion
     }

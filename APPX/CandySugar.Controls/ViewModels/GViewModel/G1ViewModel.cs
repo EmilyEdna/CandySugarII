@@ -18,7 +18,7 @@ internal class G1ViewModel : ViewModelBase
 
     public override void Initialize(INavigationParameters parameters)
     {
-        Element = parameters.GetValue<MovieElementResult>("Data");
+        Element = parameters.GetValue<GRootEntity>("Data");
         Task.Run(DetailInit);
     }
 
@@ -28,8 +28,8 @@ internal class G1ViewModel : ViewModelBase
     #endregion
 
     #region Property
-    MovieElementResult _Element;
-    public MovieElementResult Element
+    GRootEntity _Element;
+    public GRootEntity Element
     {
         get => _Element;
         set => SetProperty(ref _Element, value);
@@ -113,13 +113,7 @@ internal class G1ViewModel : ViewModelBase
     }
     async void Add()
     {
-        await Service.GAdd(new GRootEntity
-        {
-            Cover = Element.Cover,
-            Name = Element.Title,
-            Route = Element.Route,
-            Time = Element.ReleaseTime
-        });
+        await Service.GAdd(Element);
     }
     #endregion
 

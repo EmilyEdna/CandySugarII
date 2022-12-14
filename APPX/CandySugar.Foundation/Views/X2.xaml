@@ -450,13 +450,52 @@
                     </DataTemplate>
                 </CS:TabItem.HeaderTemplate>
                 <CS:TabItem.Content>
-                    <Label
-                        FontSize="16"
-                        HorizontalOptions="Center"
-                        Text="文学"
-                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                    Light={StaticResource BasicDrak}}"
-                        VerticalOptions="Center" />
+                    <CollectionView ItemSizingStrategy="MeasureAllItems" ItemsSource="{Binding GResult, Mode=TwoWay}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout ItemSpacing="3" Orientation="Vertical" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="Lib:GRootEntity">
+                                <SwipeView>
+                                    <SwipeView.LeftItems>
+                                        <SwipeItems>
+                                            <SwipeItem
+                                                Command="{Binding DelCommand, Source={RelativeSource AncestorType={x:Type Local:X2ViewModel}}}"
+                                                CommandParameter="{Binding Id}"
+                                                Text="删除" />
+                                        </SwipeItems>
+                                    </SwipeView.LeftItems>
+                                    <Border Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe}, Dark={StaticResource PotoBrushSafeDark}}">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding GCommand, Source={RelativeSource AncestorType={x:Type Local:X2ViewModel}}}" CommandParameter="{Binding .}" />
+                                        </Border.GestureRecognizers>
+                                        <Grid ColumnDefinitions="Auto,*">
+                                            <Border
+                                                HeightRequest="130"
+                                                StrokeShape="RoundRectangle 0"
+                                                WidthRequest="90">
+                                                <Image Aspect="Fill" Source="{Binding Cover}" />
+                                            </Border>
+                                            <StackLayout Grid.Column="1" VerticalOptions="StartAndExpand">
+                                                <Label
+                                                    Margin="10,0,0,0"
+                                                    LineBreakMode="WordWrap"
+                                                    Text="{Binding Title}"
+                                                    TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                                                Light={StaticResource BasicDrak}}" />
+                                                <Label
+                                                    Margin="10,0,0,0"
+                                                    LineBreakMode="WordWrap"
+                                                    Text="{Binding ReleaseTime}"
+                                                    TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                                                Light={StaticResource BasicDrak}}" />
+                                            </StackLayout>
+                                        </Grid>
+                                    </Border>
+                                </SwipeView>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
                 </CS:TabItem.Content>
             </CS:TabItem>
         </CS:TabView>

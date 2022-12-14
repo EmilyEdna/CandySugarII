@@ -164,7 +164,7 @@ namespace CandySugar.Controls
         });
         public DelegateCommand<MovieElementResult> DetailCommand => new(input =>
         {
-            Nav.NavigateAsync(new Uri("G1", UriKind.Relative), new NavigationParameters { { "Data", input } });
+            Nav.NavigateAsync(new Uri("G1", UriKind.Relative), new NavigationParameters { { "Data", input.ToMapest<GRootEntity>() } });
         });
         #endregion
     }
