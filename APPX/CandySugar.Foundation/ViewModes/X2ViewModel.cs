@@ -25,6 +25,10 @@ namespace CandySugar.Foundation
         public ObservableCollection<CRootEntity> CResult { get => _CResult; set => SetProperty(ref _CResult, value); }
         ObservableCollection<DRootEntity> _DResult;
         public ObservableCollection<DRootEntity> DResult { get => _DResult; set => SetProperty(ref _DResult, value); }
+        ObservableCollection<ERootEntity> _EResult;
+        public ObservableCollection<ERootEntity> EResult { get => _EResult; set => SetProperty(ref _EResult, value); }
+        ObservableCollection<FRootEntity> _FResult;
+        public ObservableCollection<FRootEntity> FResult { get => _FResult; set => SetProperty(ref _FResult, value); }
         #endregion
 
         #region Method
@@ -48,6 +52,24 @@ namespace CandySugar.Foundation
                     await Service.DRemove(Root);
                 DResult = new ObservableCollection<DRootEntity>(await Service.DQuery());
             }
+            if (Type == 4)
+            {
+                if (Refresh)
+                    await Service.ERemove(Root);
+                EResult = new ObservableCollection<ERootEntity>(await Service.EQuery());
+            }
+            if (Type == 5)
+            {
+                if (Refresh)
+                    await Service.FRemove(Root);
+                FResult = new ObservableCollection<FRootEntity>(await Service.FQuery());
+            }
+            //if (Type == 3)
+            //{
+            //    if (Refresh)
+            //        await Service.GRemove(Root);
+            //    DResult = new ObservableCollection<DRootEntity>(await Service.DQuery());
+            //}
         }
         #endregion
 
@@ -78,6 +100,14 @@ namespace CandySugar.Foundation
         public DelegateCommand<DRootEntity> DCommand => new(input =>
         {
             Nav.NavigateAsync(new Uri("D1", UriKind.Relative), new NavigationParameters { { "Route", input.Route }, { "Cover", input.Cover } });
+        });
+        public DelegateCommand<string> ECommand => new(input =>
+        {
+            Nav.NavigateAsync(new Uri("E1", UriKind.Relative), new NavigationParameters { { "Route", input } });
+        });
+        public DelegateCommand<FRootEntity> FCommand => new(input =>
+        {
+            Nav.NavigateAsync(new Uri("F1", UriKind.Relative), new NavigationParameters { { "Route", input.Route }, { "Cover", input.Cover } });
         });
         #endregion
     }

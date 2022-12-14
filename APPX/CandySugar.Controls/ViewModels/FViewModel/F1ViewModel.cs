@@ -106,6 +106,7 @@ internal class F1ViewModel : ViewModelBase
         {
             Cover = Cover,
             Name = Result.FirstOrDefault().BookName,
+            Route=Route,
             Children = Result.Select(t => new FElementEntity
             {
                 Name = t.ChapterName,
