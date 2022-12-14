@@ -8,6 +8,11 @@
     x:DataType="Local:D2ViewModel"
     Background="{AppThemeBinding Dark={StaticResource BasicDrak},
                                  Light={StaticResource Basic}}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Lib:Byte2Img x:Key="Byte2Img" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <Grid>
         <Grid RowDefinitions="45,*" RowSpacing="2">
             <HorizontalStackLayout Background="{AppThemeBinding Light={StaticResource BasicContainer}, Dark={StaticResource BasicBrushContainerDrak}}">
@@ -31,7 +36,7 @@
             <CollectionView
                 Grid.Row="1"
                 ItemSizingStrategy="MeasureAllItems"
-                ItemsSource="{Binding Source}">
+                ItemsSource="{Binding Result}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Border
@@ -40,7 +45,7 @@
                                                      Dark={StaticResource PotoBrushSafeDark}}"
                             StrokeShape="RoundRectangle 0"
                             StrokeThickness="1">
-                            <Image Aspect="Fill" Source="{Binding .}" />
+                            <Image Aspect="Fill" Source="{Binding ., Converter={StaticResource Byte2Img}}" />
                         </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

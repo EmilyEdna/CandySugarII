@@ -76,6 +76,7 @@ namespace CandySugar.Controls
             {
                 Cover = Cover,
                 Name = Result.FirstOrDefault().Name,
+                Route= Route,
             };
             Root.Children = Result.Select(t => new DElementEntity
             {

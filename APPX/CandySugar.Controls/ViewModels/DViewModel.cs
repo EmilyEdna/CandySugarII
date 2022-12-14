@@ -146,9 +146,7 @@ namespace CandySugar.Controls
         public DelegateCommand<string> GroupCammand => new(input =>
         {
             this.Group = input;
-            if (Module == 1) Task.Run(() => GroupInit(false));
-            if (Module == 2) Task.Run(() => QueryInit(false));
-       
+            Task.Run(() => GroupInit(false));
         });
         public DelegateCommand RefreshCommand => new(() =>
         {

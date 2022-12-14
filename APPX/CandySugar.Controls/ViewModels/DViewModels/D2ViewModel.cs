@@ -34,11 +34,11 @@ namespace CandySugar.Controls
             get => _Route;
             set => SetProperty(ref _Route, value);
         }
-        ObservableCollection<ImageSource> _Source;
-        public ObservableCollection<ImageSource> Source
+        ObservableCollection<byte[]> _Result;
+        public ObservableCollection<byte[]> Result
         {
-            get => _Source;
-            set => SetProperty(ref _Source, value);
+            get => _Result;
+            set => SetProperty(ref _Result, value);
         }
         #endregion
 
@@ -76,11 +76,7 @@ namespace CandySugar.Controls
                         }
                     };
                 }).RunsAsync();
-                Source = new ObservableCollection<ImageSource>();
-                bytes.DwonResult.Bytes.ForEach(item =>
-                {
-                    Source.Add(ImageSource.FromStream(() => new MemoryStream(item)));
-                });
+                Result = new ObservableCollection<byte[]>(bytes.DwonResult.Bytes);
                 SetState();
             }
             catch (Exception ex)

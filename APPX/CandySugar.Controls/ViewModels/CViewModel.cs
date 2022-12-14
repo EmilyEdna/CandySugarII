@@ -97,7 +97,7 @@ namespace CandySugar.Controls
             var Entity = new CRootEntity
             {
                 Original = input.OriginalPng.IsNullOrEmpty() ? input.OriginalPng : input.OriginalJepg,
-                Priview = input.Preview,
+                Preview = input.Preview,
                 Children = input.Labels.Select(t => new CElementEntity { Name = t }).ToList()
             };
             if (await Service.CAdd(Entity)) "收藏成功".OpenToast(); else "收藏失败".OpenToast();

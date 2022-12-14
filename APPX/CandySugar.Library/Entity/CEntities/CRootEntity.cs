@@ -9,7 +9,7 @@ namespace CandySugar.Library
 {
     public class CRootEntity: BasicEntity
     {
-        public string Priview { get; set; }
+        public string Preview { get; set; }
         public string Original { get; set; }
         [Ignore]
         public List<CElementEntity> Children { get; set; }

@@ -62,24 +62,16 @@ namespace CandySugar.Logic
             await Lite.Table<BRootEntity>().DeleteAsync(t => t.Id == root);
             await Lite.Table<BElementEntity>().DeleteAsync(t => t.BRootId == root);
         }
-        public async Task<List<BRootEntity>> BQuery(string key)
+        public async Task<List<BRootEntity>> BQuery()
         {
             var Lite = DbContext.Lite;
-
-            var query = Lite.Table<BRootEntity>();
-            if (!key.IsNullOrEmpty()) query = query.Where(t => t.Name.Contains(key));
-
-            var roots = await query.OrderByDescending(t => t.Span).ToListAsync();
-
+            var roots = await Lite.Table<BRootEntity>().OrderByDescending(t => t.Span).ToListAsync();
             var elements = await Lite.Table<BElementEntity>().ToListAsync();
-
             roots.ForEach(item =>
             {
                 item.Children = elements.Where(t => t.BRootId == item.Id).ToList();
             });
-
             return roots;
-
         }
         #endregion
 
@@ -87,7 +79,7 @@ namespace CandySugar.Logic
         public async Task<bool> CAdd(CRootEntity root)
         {
             var Lite = DbContext.Lite;
-            var Parent = await Lite.Table<CRootEntity>().FirstOrDefaultAsync(t => t.Priview == root.Priview);
+            var Parent = await Lite.Table<CRootEntity>().FirstOrDefaultAsync(t => t.Preview == root.Preview);
             if (Parent != null) return true;
             root.InitProperty();
             root.Children.ForEach(t =>

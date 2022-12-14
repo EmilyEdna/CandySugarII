@@ -11,6 +11,7 @@ namespace CandySugar.Library
     {
         public string Cover { get; set; }
         public string Name { get; set; }
+        public string Route { get; set; }
         [Ignore]
         public List<DElementEntity> Children { get; set; }
     }
