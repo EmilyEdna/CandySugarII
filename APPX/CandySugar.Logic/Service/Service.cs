@@ -1,13 +1,4 @@
-﻿using CandySugar.Library;
-using Microsoft.Maui.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using XExten.Advance.LinqFramework;
-
-namespace CandySugar.Logic
+﻿namespace CandySugar.Logic
 {
     public class Service : IService
     {
@@ -34,6 +25,12 @@ namespace CandySugar.Logic
             return await Lite.Table<LogEntity>().OrderByDescending(t=>t.Span).ToListAsync();
         }
         #endregion
+
+       // #region Opt
+       //public async Task OptAdd(OptEntity root);
+       //public async Task OptAlter(OptEntity root);
+       // public async Task<OptEntity> OptFirst();
+       // #endregion
 
         #region B
         public async Task<BRootEntity> BAdd(BRootEntity root)

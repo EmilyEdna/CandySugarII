@@ -1,11 +1,4 @@
-﻿using CandySugar.Library;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CandySugar.Logic
+﻿namespace CandySugar.Logic
 {
     public interface IService
     {
@@ -14,6 +7,12 @@ namespace CandySugar.Logic
         Task ClearLog();
         Task<List<LogEntity>> QueryLog();
         #endregion
+
+        //#region Opt
+        //Task OptAdd(OptEntity root);
+        //Task OptAlter(OptEntity root);
+        //Task<OptEntity> OptFirst();
+        //#endregion
 
         #region B
         Task<BRootEntity> BAdd(BRootEntity root);

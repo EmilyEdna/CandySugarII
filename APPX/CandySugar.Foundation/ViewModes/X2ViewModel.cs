@@ -75,7 +75,6 @@ namespace CandySugar.Foundation
         }
         #endregion
 
-
         #region Command
         public DelegateCommand BackCommand => new(() =>
         {

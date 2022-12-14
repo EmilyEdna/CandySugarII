@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CandySugar.Library
 {
-    public class DataBus
+    public static class DataBus
     {
         public const string NetErr = "请检查网络是否通畅";
         public static int Cache { get; set; } = 5;
