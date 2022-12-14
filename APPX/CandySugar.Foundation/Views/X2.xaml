@@ -38,7 +38,7 @@
                             StrokeShape="RoundRectangle 0"
                             StrokeThickness="1">
                             <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding WatchCommand}" CommandParameter="1" />
+                                <TapGestureRecognizer Command="{Binding WatchCommand, Source={RelativeSource AncestorType={x:Type Local:X2ViewModel}}}" CommandParameter="1" />
                             </Border.GestureRecognizers>
                             <Label
                                 Margin="13,10,13,10"
@@ -52,7 +52,82 @@
                     </DataTemplate>
                 </CS:TabItem.HeaderTemplate>
                 <CS:TabItem.Content>
-                    <Label />
+                    <CollectionView ItemSizingStrategy="MeasureAllItems" ItemsSource="{Binding BResult, Mode=TwoWay}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout ItemSpacing="3" Orientation="Vertical" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="Lib:BRootEntity">
+                                <SwipeView>
+                                    <SwipeView.LeftItems>
+                                        <SwipeItems>
+                                            <SwipeItem
+                                                Command="{Binding BDelCommand, Source={RelativeSource AncestorType={x:Type CS:B2ViewModel}}}"
+                                                CommandParameter="{Binding Id}"
+                                                Text="删除" />
+                                        </SwipeItems>
+                                    </SwipeView.LeftItems>
+                                    <Border Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe}, Dark={StaticResource PotoBrushSafeDark}}">
+                                        <Grid ColumnDefinitions="Auto,*">
+                                            <Border
+                                                HeightRequest="130"
+                                                StrokeShape="RoundRectangle 0"
+                                                WidthRequest="90">
+                                                <Image Aspect="Fill" Source="{Binding Cover}" />
+                                            </Border>
+                                            <Grid Grid.Column="1" RowDefinitions="Auto,*">
+                                                <HorizontalStackLayout HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
+                                                    <Label
+                                                        Margin="10,0,0,0"
+                                                        LineBreakMode="WordWrap"
+                                                        Text="{Binding Name}"
+                                                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                                                    Light={StaticResource BasicDrak}}" />
+                                                </HorizontalStackLayout>
+                                                <CollectionView
+                                                    Grid.Row="1"
+                                                    Margin="10,5,0,0"
+                                                    HorizontalOptions="StartAndExpand"
+                                                    ItemSizingStrategy="MeasureAllItems"
+                                                    ItemsSource="{Binding Children}">
+                                                    <CollectionView.ItemsLayout>
+                                                        <GridItemsLayout
+                                                            HorizontalItemSpacing="5"
+                                                            Orientation="Horizontal"
+                                                            Span="3"
+                                                            VerticalItemSpacing="5" />
+                                                    </CollectionView.ItemsLayout>
+                                                    <CollectionView.ItemTemplate>
+                                                        <DataTemplate x:DataType="Lib:BElementEntity">
+                                                            <Border
+                                                                Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
+                                                                                         Dark={StaticResource PotoBrushSafeDark}}"
+                                                                StrokeShape="RoundRectangle 0"
+                                                                StrokeThickness="1">
+                                                                <Label
+                                                                    Margin="3,0,3,0"
+                                                                    FontSize="11"
+                                                                    HorizontalOptions="CenterAndExpand"
+                                                                    LineBreakMode="WordWrap"
+                                                                    Text="{Binding CollectName}"
+                                                                    TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                                                                Light={StaticResource BasicDrak}}"
+                                                                    VerticalOptions="CenterAndExpand">
+                                                                    <Label.GestureRecognizers>
+                                                                        <TapGestureRecognizer Command="{Binding BCommand, Source={RelativeSource AncestorType={x:Type Local:X2ViewModel}}}" CommandParameter="{Binding WatchRoute}" />
+                                                                    </Label.GestureRecognizers>
+                                                                </Label>
+                                                            </Border>
+                                                        </DataTemplate>
+                                                    </CollectionView.ItemTemplate>
+                                                </CollectionView>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                </SwipeView>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
                 </CS:TabItem.Content>
             </CS:TabItem>
             <CS:TabItem>

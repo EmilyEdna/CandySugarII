@@ -18,7 +18,6 @@ namespace CandySugar.Logic
         #region B
         Task<BRootEntity> BAdd(BRootEntity root);
         Task BRemove(Guid root);
-        Task BAlter(BElementEntity root);
         Task<List<BRootEntity>> BQuery(string key);
         #endregion
 

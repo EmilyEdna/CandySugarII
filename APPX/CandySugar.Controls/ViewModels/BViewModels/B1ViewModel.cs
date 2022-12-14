@@ -28,7 +28,6 @@ namespace CandySugar.Controls
 
         #region Property
         public string Route { get; set; }
-        public BRootEntity BRoot { get; set; }
         #endregion
 
         #region Property
@@ -104,7 +103,6 @@ namespace CandySugar.Controls
                         }
                     };
                 }).RunsAsync();
-                Alter(Route);
                 Navigation(result.PlayResult.PlayURL);
                 SetState();
             }
@@ -135,15 +133,7 @@ namespace CandySugar.Controls
                 });
             });
 
-            BRoot = await Service.BAdd(Root);
-        }
-        /// <summary>
-        /// 修改数据库
-        /// </summary>
-        async void Alter(string Route)
-        {
-            var Element = BRoot.Children.FirstOrDefault(t => t.WatchRoute == Route);
-            await Service.BAlter(Element);
+          await Service.BAdd(Root);
         }
         void Navigation(string Route)
         {

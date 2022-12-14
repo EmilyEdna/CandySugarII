@@ -50,7 +50,6 @@ namespace CandySugar.Logic
             {
                 t.InitProperty();
                 t.BRootId = root.Id;
-                t.IsWatching = false;
             });
 
             await Lite.InsertAsync(root);
@@ -62,18 +61,6 @@ namespace CandySugar.Logic
             var Lite = DbContext.Lite;
             await Lite.Table<BRootEntity>().DeleteAsync(t => t.Id == root);
             await Lite.Table<BElementEntity>().DeleteAsync(t => t.BRootId == root);
-        }
-        public async Task BAlter(BElementEntity root)
-        {
-            var Lite = DbContext.Lite;
-
-            var Elements = await Lite.Table<BElementEntity>().Where(t => t.BRootId == root.BRootId).ToListAsync();
-            Elements.ForEach(t =>
-            {
-                t.IsWatching = false;
-            });
-            await Lite.UpdateAllAsync(Elements, false);
-            await Lite.UpdateAsync(root);
         }
         public async Task<List<BRootEntity>> BQuery(string key)
         {

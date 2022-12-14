@@ -11,6 +11,5 @@ namespace CandySugar.Library
         public Guid BRootId { get; set; }
         public string CollectName { get; set; }
         public string WatchRoute { get; set; }
-        public bool IsWatching { get; set; }
     }
 }
