@@ -17,20 +17,34 @@
         public async Task ClearLog()
         {
             var Lite = DbContext.Lite;
-            await Lite.Table<LogEntity>().DeleteAsync(t=>t.Id!=Guid.Empty);
+            await Lite.Table<LogEntity>().DeleteAsync(t => t.Id != Guid.Empty);
         }
         public async Task<List<LogEntity>> QueryLog()
         {
             var Lite = DbContext.Lite;
-            return await Lite.Table<LogEntity>().OrderByDescending(t=>t.Span).ToListAsync();
+            return await Lite.Table<LogEntity>().OrderByDescending(t => t.Span).ToListAsync();
         }
         #endregion
 
-       // #region Opt
-       //public async Task OptAdd(OptEntity root);
-       //public async Task OptAlter(OptEntity root);
-       // public async Task<OptEntity> OptFirst();
-       // #endregion
+        #region Opt
+        public async Task OptAlter(OptEntity input)
+        {
+            var Lite = DbContext.Lite;
+            var res = await Lite.Table<OptEntity>().FirstAsync();
+            if (res != null)
+                await Lite.UpdateAsync(input);
+            else
+            {
+                input.InitProperty();
+                await Lite.InsertAsync(input);
+            }
+        }
+        public async Task<OptEntity> OptFirst()
+        {
+            var Lite = DbContext.Lite;
+            return await Lite.Table<OptEntity>().FirstOrDefaultAsync();
+        }
+        #endregion
 
         #region B
         public async Task<BRootEntity> BAdd(BRootEntity root)
@@ -147,7 +161,7 @@
         public async Task<bool> EAdd(ERootEntity root)
         {
             var Lite = DbContext.Lite;
-            var Parent = await Lite.Table<ERootEntity>().FirstOrDefaultAsync(t => t.Name == root.Name&&t.Author==root.Author);
+            var Parent = await Lite.Table<ERootEntity>().FirstOrDefaultAsync(t => t.Name == root.Name && t.Author == root.Author);
             if (Parent != null)
             {
                 return true;
@@ -208,13 +222,13 @@
         public async Task<bool> GAdd(GRootEntity root)
         {
             var Lite = DbContext.Lite;
-            var Parent = await Lite.Table<GRootEntity>().FirstOrDefaultAsync(t => t.Title == root.Title && t.Route==root.Route);
+            var Parent = await Lite.Table<GRootEntity>().FirstOrDefaultAsync(t => t.Title == root.Title && t.Route == root.Route);
             if (Parent != null)
             {
                 return true;
             }
             root.InitProperty();
-         
+
             return await Lite.InsertAsync(root) > 0;
         }
         public async Task GRemove(Guid root)

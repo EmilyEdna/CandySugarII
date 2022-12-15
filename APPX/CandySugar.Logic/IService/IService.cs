@@ -8,11 +8,10 @@
         Task<List<LogEntity>> QueryLog();
         #endregion
 
-        //#region Opt
-        //Task OptAdd(OptEntity root);
-        //Task OptAlter(OptEntity root);
-        //Task<OptEntity> OptFirst();
-        //#endregion
+        #region Opt
+        Task OptAlter(OptEntity root);
+        Task<OptEntity> OptFirst();
+        #endregion
 
         #region B
         Task<BRootEntity> BAdd(BRootEntity root);

@@ -5,14 +5,24 @@ namespace CandySugar.Entry.ViewModels
     public class IndexViewModel : ViewModelBase
     {
         BaseServices BaseServices;
+        IService Service;
         public IndexViewModel(BaseServices baseServices) : base(baseServices)
         {
             BaseServices = baseServices;
             Menu = new ObservableCollection<MenuModel>(MenuModel.GetMenus());
         }
-        public override void OnAppearing()
+        public override async void OnAppearing()
         {
-            BaseServices.Container.Resolve<IService>().ClearLog();
+            Service = BaseServices.Container.Resolve<IService>();
+            await Service.ClearLog();
+            var Opt = await Service.OptFirst();
+            if (Opt != null)
+            {
+                DataBus.Cache=Opt.Cache;
+                DataBus.QueryModule= Opt.QueryModule;
+                DataBus.Module= Opt.Module;
+                DataBus.Delay= Opt.Delay;
+            }
         }
 
         public override void OnDisappearing()
