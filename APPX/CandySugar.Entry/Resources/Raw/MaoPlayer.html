@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+
+<html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>MaoPlayer</title>
+    <style>
+        html, body {
+            width: 780px;
+            height: 360px;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        body {
+            display: flex;
+        }
+
+        #dplayer {
+            flex: auto;
+            height: 360px;
+            border-bottom-right-radius: 15px;
+        }
+    </style>
+    <script>
+        function Play(uri) {
+            var ele = document.getElementById('dplayer');
+            ele.src=uri;
+        }
+    </script>
+</head>
+<body>
+    <iframe id="dplayer" class="dplayer" frameborder="0"></iframe>
+</body>
+</html>

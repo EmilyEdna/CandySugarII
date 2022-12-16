@@ -90,9 +90,9 @@ namespace CandySugar.Foundation
             Root = input;
             Query(true);
         });
-        public DelegateCommand<string> BCommand => new(input =>
+        public DelegateCommand<BElementEntity> BCommand => new(input =>
         {
-            Nav.NavigateAsync(new Uri("B2", UriKind.Relative), new NavigationParameters { { "Route", input } });
+            Nav.NavigateAsync(new Uri("B2", UriKind.Relative), new NavigationParameters { { "Route", input.WatchRoute },{ "Inner",input.Inner } });
         });
         public DelegateCommand<string> CCommand => new(input =>
         {

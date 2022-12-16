@@ -13,8 +13,7 @@ namespace CandySugar.Controls
         {
             Route = parameters.GetValue<string>("Route");
             Inner = parameters.GetValue<bool>("Inner");
-            if (Inner)
-                LoadMauiAsset();
+            LoadMauiAsset();
             Hidden();
         }
         #region Property
@@ -26,7 +25,7 @@ namespace CandySugar.Controls
         #region Method
         async void LoadMauiAsset()
         {
-            using var stream = await FileSystem.OpenAppPackageFileAsync("Dplayer.html");
+            using var stream = await FileSystem.OpenAppPackageFileAsync(Inner?"Dplayer.html":"MaoPlayer.html");
             using var reader = new StreamReader(stream);
             Content = reader.ReadToEnd();
         }

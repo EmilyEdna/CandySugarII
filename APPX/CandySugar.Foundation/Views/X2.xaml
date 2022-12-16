@@ -114,7 +114,7 @@
                                                                                                 Light={StaticResource BasicDrak}}"
                                                                     VerticalOptions="CenterAndExpand">
                                                                     <Label.GestureRecognizers>
-                                                                        <TapGestureRecognizer Command="{Binding BCommand, Source={RelativeSource AncestorType={x:Type Local:X2ViewModel}}}" CommandParameter="{Binding WatchRoute}" />
+                                                                        <TapGestureRecognizer Command="{Binding BCommand, Source={RelativeSource AncestorType={x:Type Local:X2ViewModel}}}" CommandParameter="{Binding .}" />
                                                                     </Label.GestureRecognizers>
                                                                 </Label>
                                                             </Border>

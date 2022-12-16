@@ -73,8 +73,7 @@ namespace CandySugar.Controls
                 }).RunsAsync();
                 Result = new ObservableCollection<AnimeDetailResult>(result.DetailResults.Where(t => t.IsDownURL == false));
                 Name = Result.FirstOrDefault().Name;
-                Cover = Result.FirstOrDefault().Cover;
-                Add();
+                Cover = Result.FirstOrDefault().Cover;            
                 SetState();
             }
             catch (Exception ex)
@@ -103,6 +102,7 @@ namespace CandySugar.Controls
                         }
                     };
                 }).RunsAsync();
+                Add(result.PlayResult.All);
                 Navigation(result.PlayResult.PlayURL, result.PlayResult.InnerPlayer);
                 SetState();
             }
@@ -115,7 +115,7 @@ namespace CandySugar.Controls
         /// <summary>
         /// 写入数据库
         /// </summary>
-        async void Add()
+        async void Add(Dictionary<string,string> Map)
         {
             var Root = new BRootEntity
             {
@@ -124,14 +124,15 @@ namespace CandySugar.Controls
                 Children = new List<BElementEntity>()
             };
 
-            Result.ToList().ForEach(item =>
+            foreach (var item in Map)
             {
                 Root.Children.Add(new BElementEntity
                 {
-                    CollectName = item.CollectName,
-                    WatchRoute = item.WatchRoute,
+                    CollectName = item.Key,
+                    WatchRoute = item.Value,
+                    Inner = item.Value.Contains("m3u8.php") ? false : true
                 });
-            });
+            }
 
           await Service.BAdd(Root);
         }

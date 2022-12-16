@@ -2,12 +2,12 @@ namespace CandySugar.Controls;
 
 public partial class B2 : ContentPage
 {
-	B2ViewModel ViewModel { get; set; }
-	public B2()
-	{
-		InitializeComponent();
-		Appearing += (sender, evnt) =>
-		{
+    B2ViewModel ViewModel { get; set; }
+    public B2()
+    {
+        InitializeComponent();
+        Appearing += (sender, evnt) =>
+        {
             ViewModel = (B2ViewModel)this.BindingContext;
             if (ViewModel.Inner)
             {
@@ -20,14 +20,15 @@ public partial class B2 : ContentPage
             }
             else
             {
-                var Source = new UrlWebViewSource
+                HtmlWebViewSource Source = new()
                 {
-                    Url = ViewModel.Route
+                    Html = ViewModel.Content
                 };
                 Player.Source = Source;
+                ExcuteJs();
             }
         };
-	}
+    }
     async void ExcuteJs()
     {
         while (!Player.IsLoaded)
