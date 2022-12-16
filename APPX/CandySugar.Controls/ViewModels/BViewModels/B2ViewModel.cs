@@ -12,10 +12,13 @@ namespace CandySugar.Controls
         public override void Initialize(INavigationParameters parameters)
         {
             Route = parameters.GetValue<string>("Route");
-            LoadMauiAsset();
+            Inner = parameters.GetValue<bool>("Inner");
+            if (Inner)
+                LoadMauiAsset();
             Hidden();
         }
         #region Property
+        public bool Inner { get; set; }
         public string Route { get; set; }
         public string Content { get; set; }
         #endregion

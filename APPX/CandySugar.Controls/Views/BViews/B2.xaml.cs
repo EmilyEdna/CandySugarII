@@ -9,12 +9,23 @@ public partial class B2 : ContentPage
 		Appearing += (sender, evnt) =>
 		{
             ViewModel = (B2ViewModel)this.BindingContext;
-            HtmlWebViewSource Source = new()
+            if (ViewModel.Inner)
             {
-                Html = ViewModel.Content
-            };
-            Player.Source = Source;
-            ExcuteJs();
+                HtmlWebViewSource Source = new()
+                {
+                    Html = ViewModel.Content
+                };
+                Player.Source = Source;
+                ExcuteJs();
+            }
+            else
+            {
+                var Source = new UrlWebViewSource
+                {
+                    Url = ViewModel.Route
+                };
+                Player.Source = Source;
+            }
         };
 	}
     async void ExcuteJs()

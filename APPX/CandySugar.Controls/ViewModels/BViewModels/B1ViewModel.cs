@@ -103,7 +103,7 @@ namespace CandySugar.Controls
                         }
                     };
                 }).RunsAsync();
-                Navigation(result.PlayResult.PlayURL);
+                Navigation(result.PlayResult.PlayURL, result.PlayResult.InnerPlayer);
                 SetState();
             }
             catch (Exception ex)
@@ -135,9 +135,9 @@ namespace CandySugar.Controls
 
           await Service.BAdd(Root);
         }
-        void Navigation(string Route)
+        void Navigation(string Route,bool Inner)
         {
-            Nav.NavigateAsync(new Uri("B2", UriKind.Relative), new NavigationParameters { { "Route", Route } });
+            Nav.NavigateAsync(new Uri("B2", UriKind.Relative), new NavigationParameters { { "Route", Route },{ "Inner", Inner } });
         }
         #endregion
 
