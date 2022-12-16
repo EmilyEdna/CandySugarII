@@ -398,7 +398,10 @@ namespace CandySugar.Controls.ContentViewModel
                 this.Loading = false;
                 PlayResult = AnimeWatchData.PlayResult;
                 Logic(input);
-                await WebView.CoreWebView2.ExecuteScriptAsync($"Play('{PlayResult.PlayURL}','{CandySoft.Default.ScreenHeight - 30}')");
+                if (AnimeWatchData.PlayResult.InnerPlayer)
+                    await WebView.CoreWebView2.ExecuteScriptAsync($"Play('{PlayResult.PlayURL}','{CandySoft.Default.ScreenHeight - 30}')");
+                else
+                    WebView.Source = new Uri(AnimeWatchData.PlayResult.PlayURL);
             }
             catch (Exception ex)
             {
