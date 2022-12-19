@@ -47,25 +47,34 @@
         #endregion
 
         #region B
-        public async Task<BRootEntity> BAdd(BRootEntity root)
+        public async Task<bool> BAdd(BRootEntity root)
         {
             var Lite = DbContext.Lite;
             var Parent = await Lite.Table<BRootEntity>().FirstOrDefaultAsync(t => t.Name == root.Name);
             if (Parent != null)
             {
-                Parent.Children = await Lite.Table<BElementEntity>().Where(t => t.BRootId == Parent.Id).ToListAsync();
-                return Parent;
-            }
+                //更新
+                await Lite.Table<BElementEntity>().DeleteAsync(t => t.BRootId == Parent.Id);
+
+                root.Children.ForEach(t =>
+                {
+                    t.InitProperty();
+                    t.BRootId = Parent.Id;
+                });
+
+                var res = await Lite.InsertAllAsync(root.Children, false)>0;
+                return res;
+            };
+
             root.InitProperty();
             root.Children.ForEach(t =>
             {
                 t.InitProperty();
                 t.BRootId = root.Id;
             });
-
-            await Lite.InsertAsync(root);
-            await Lite.InsertAllAsync(root.Children, false);
-            return root;
+            var f1= await Lite.InsertAsync(root)>0;
+            var f2= await Lite.InsertAllAsync(root.Children, false)>0;
+            return f1&&f2;
         }
         public async Task BRemove(Guid root)
         {

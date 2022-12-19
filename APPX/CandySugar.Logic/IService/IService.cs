@@ -14,7 +14,7 @@
         #endregion
 
         #region B
-        Task<BRootEntity> BAdd(BRootEntity root);
+        Task<bool> BAdd(BRootEntity root);
         Task BRemove(Guid root);
         Task<List<BRootEntity>> BQuery();
         #endregion
