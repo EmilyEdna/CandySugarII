@@ -74,6 +74,11 @@
                 </VerticalStackLayout>
             </Candy:LeftPage.Body>
         </Candy:LeftPage>
+        <Candy:DropView x:Name="Drop">
+            <VerticalStackLayout HorizontalOptions="Start">
+                <Label Text="主题" TextColor="{AppThemeBinding Dark={StaticResource Basic}, Light={StaticResource BasicDrak}}" />
+            </VerticalStackLayout>
+        </Candy:DropView>
     </Candy:CandyUIPage.Attachments>
     <Grid RowDefinitions="45,80,*" RowSpacing="2">
         <HorizontalStackLayout Background="{AppThemeBinding Light={StaticResource BasicContainer}, Dark={StaticResource BasicBrushContainerDrak}}">
@@ -103,6 +108,15 @@
                     TextColor="{AppThemeBinding Light={StaticResource BasicDrak},
                                                 Dark={StaticResource BasicContainer}}" />
             </Border>
+            <Button BackgroundColor="{StaticResource Platform}" Clicked="PopupDropEvent">
+                <Button.ImageSource>
+                    <FontImageSource
+                        FontFamily="Regular"
+                        Glyph="{Static Lib:FontIcon.Filter}"
+                        Color="{AppThemeBinding Light={StaticResource BasicPrimary},
+                                                Dark={StaticResource BasicPrimaryDrak}}" />
+                </Button.ImageSource>
+            </Button>
         </HorizontalStackLayout>
         <CollectionView
             Grid.Row="1"

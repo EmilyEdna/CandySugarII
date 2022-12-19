@@ -7,8 +7,8 @@ namespace CandySugar.Entry
         public App()
         {
             InitializeComponent();
-            //AppTheme currentTheme = (AppTheme)Application.Current.RequestedTheme;
             //Application.Current.UserAppTheme = AppTheme.Dark;
+            //AppTheme currentTheme = (AppTheme)Application.Current.RequestedTheme;
         }
         protected override Window CreateWindow(IActivationState activationState)
         {

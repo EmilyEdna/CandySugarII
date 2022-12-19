@@ -19,4 +19,10 @@ public partial class Index : CandyUIPage
     {
         Left.IsPresented = false;
     }
+
+    private void PopupDropEvent(object sender, EventArgs e)
+    {
+        Drop.IsPresented = !Drop.IsPresented;
+    }
+
 }
