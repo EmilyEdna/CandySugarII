@@ -38,18 +38,12 @@ namespace CandySugar.Entry
                     fonts.AddFont("FontAwesome6Thin.otf", "Thin");
                     fonts.AddMaterialIconFonts();
                 });
-
-#if DEBUG
-            builder.Logging.AddDebug();
-#endif
-
             return builder.Build();
         }
 
         private static void HandleNavigationError(Exception ex)
         {
-            Console.WriteLine(ex);
-            System.Diagnostics.Debugger.Break();
+   
         }
     }
 }
