@@ -13,7 +13,7 @@
     <Candy:CandyUIPage.Attachments>
         <Candy:LeftPage x:Name="Left">
             <Candy:LeftPage.Body>
-                <VerticalStackLayout Grid.Row="1" HorizontalOptions="Start">
+                <VerticalStackLayout HorizontalOptions="Start">
                     <Button
                         Margin="10,5,5,5"
                         BackgroundColor="{StaticResource Platform}"
@@ -31,7 +31,9 @@
                     <Label
                         Margin="20,5,5,5"
                         FontSize="18"
-                        Text="设置">
+                        Text="设置"
+                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                    Light={StaticResource BasicDrak}}">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding NavCommand}" CommandParameter="1" />
                         </Label.GestureRecognizers>
@@ -40,7 +42,9 @@
                     <Label
                         Margin="20,5,5,5"
                         FontSize="18"
-                        Text="历史">
+                        Text="历史"
+                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                    Light={StaticResource BasicDrak}}">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding NavCommand}" CommandParameter="2" />
                         </Label.GestureRecognizers>
@@ -49,9 +53,22 @@
                     <Label
                         Margin="20,5,5,5"
                         FontSize="18"
-                        Text="日志">
+                        Text="日志"
+                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                    Light={StaticResource BasicDrak}}">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding NavCommand}" CommandParameter="3" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <BoxView StyleClass="Divider" />
+                    <Label
+                        Margin="20,5,5,5"
+                        FontSize="18"
+                        Text="检查更新"
+                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                    Light={StaticResource BasicDrak}}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavCommand}" CommandParameter="4" />
                         </Label.GestureRecognizers>
                     </Label>
                 </VerticalStackLayout>

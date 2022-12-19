@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<MO:PopupPage
+    x:Class="CandySugar.Foundation.Ask"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Local="clr-namespace:CandySugar.Foundation"
+    xmlns:MO="clr-namespace:Mopups.Pages;assembly=Mopups"
+    x:DataType="Local:AskViewModel"
+    BackgroundColor="#80E1E1E1"
+    CloseWhenBackgroundIsClicked="False">
+    <Border
+        HeightRequest="120"
+        Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
+                                 Dark={StaticResource PotoBrushSafeDark}}"
+        StrokeShape="RoundRectangle 0"
+        WidthRequest="200">
+        <Grid RowDefinitions="*,50">
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                <Label
+                    FontFamily="Sans"
+                    Text="检测到新版本是否升级?"
+                    TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                Light={StaticResource BasicDrak}}" />
+            </StackLayout>
+            <VerticalStackLayout Grid.Row="1">
+                <Line
+                    HorizontalOptions="Center"
+                    Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
+                                             Dark={StaticResource PotoBrushSafeDark}}"
+                    X1="0"
+                    X2="200"
+                    Y1="0"
+                    Y2="0" />
+                <Grid ColumnDefinitions="*,1,*">
+                    <Button
+                        Clicked="CloseEvent"
+                        CornerRadius="0"
+                        StyleClass="TextButton"
+                        Text="取消" />
+                    <Line
+                        Grid.Column="1"
+                        Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
+                                                 Dark={StaticResource PotoBrushSafeDark}}"
+                        VerticalOptions="Center"
+                        X1="0"
+                        X2="0"
+                        Y1="0"
+                        Y2="50" />
+                    <Button
+                        Grid.Column="2"
+                        Command="{Binding YesCommand}"
+                        CornerRadius="0"
+                        StyleClass="TextButton"
+                        Text="确定" />
+                </Grid>
+            </VerticalStackLayout>
+
+        </Grid>
+    </Border>
+</MO:PopupPage>

@@ -1,4 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using CandySugar.Foundation;
+using CandySugar.Library.Common;
+using Newtonsoft.Json.Linq;
+using System.Collections.ObjectModel;
+using XExten.Advance.HttpFramework.MultiFactory;
 
 namespace CandySugar.Entry.ViewModels
 {
@@ -18,10 +22,10 @@ namespace CandySugar.Entry.ViewModels
             var Opt = await Service.OptFirst();
             if (Opt != null)
             {
-                DataBus.Cache=Opt.Cache;
-                DataBus.QueryModule= Opt.QueryModule;
-                DataBus.Module= Opt.Module;
-                DataBus.Delay= Opt.Delay;
+                DataBus.Cache = Opt.Cache;
+                DataBus.QueryModule = Opt.QueryModule;
+                DataBus.Module = Opt.Module;
+                DataBus.Delay = Opt.Delay;
             }
         }
 
@@ -178,10 +182,38 @@ namespace CandySugar.Entry.ViewModels
                 case "3":
                     Nav.NavigateAsync(new Uri("X3", UriKind.Relative));
                     break;
+                case "4":
+                    if (CheckVersion())
+                    {
+                        FoundUtil.Open(BaseServices, () => "ASK");
+                        MessagingCenter.Subscribe<AskViewModel, bool>(this, "ASK", (sender, args) =>
+                        {
+                            if (args == true)
+                                ICrossExtension.Instance.InstallApk();
+                        });
+                    }
+                    break;
                 default:
                     break;
             }
         });
+        #endregion
+
+        #region Method
+        bool CheckVersion()
+        {
+            var ServerVersion = IHttpMultiClient.HttpMulti.AddNode(opt =>
+            {
+                opt.NodePath = "https://gitee.com/EmilyEdna/CandySugar/raw/master/CandySugarOption";
+            }).Build().RunStringFirst();
+            var AppVersion = ServerVersion.ToModel<JObject>()["App"].ToString();
+            if (AppVersion.Equals(AppInfo.Current.VersionString))
+            {
+                "当前版本已是最新版本".OpenToast();
+                return false;
+            }
+            else return true;
+        }
         #endregion
     }
 }
