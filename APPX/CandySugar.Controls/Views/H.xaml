@@ -3,10 +3,17 @@
     x:Class="CandySugar.Controls.H"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Lib="clr-namespace:CandySugar.Library;assembly=CandySugar.Library"
     xmlns:Local="clr-namespace:CandySugar.Controls"
     xmlns:MC="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
     xmlns:sdk="clr-namespace:Sdk.Component.Music.sdk.ViewModel.Response;assembly=Sdk.Component"
     x:DataType="Local:HViewModel">
+    <Local:CandyUIView.Resources>
+        <ResourceDictionary>
+            <Lib:Int2Str x:Key="Int2Str" />
+            <Lib:List2Str x:Key="List2Str" />
+        </ResourceDictionary>
+    </Local:CandyUIView.Resources>
     <Local:CandyUIView.Attachments>
         <Local:BottomView>
             <Local:BottomView.Header>
@@ -34,4 +41,176 @@
             </Local:BottomView.Header>
         </Local:BottomView>
     </Local:CandyUIView.Attachments>
+    <Grid>
+        <ActivityIndicator
+            HeightRequest="20"
+            HorizontalOptions="Center"
+            IsRunning="{Binding Activity}"
+            IsVisible="{Binding Activity}"
+            VerticalOptions="Center"
+            WidthRequest="20"
+            Color="{AppThemeBinding Light={StaticResource SurfacePrimaryDrak},
+                                    Dark={StaticResource SurfaceContainerDark}}" />
+        <Local:TabView>
+            <Local:TabItem>
+                <Local:TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <Border
+                            Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
+                                                     Dark={StaticResource PotoBrushSafeDark}}"
+                            StrokeShape="RoundRectangle 0"
+                            StrokeThickness="1"
+                            WidthRequest="180">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SingleCommand, Source={RelativeSource AncestorType={x:Type Local:HViewModel}}}" />
+                            </Border.GestureRecognizers>
+                            <Label
+                                Margin="13,10,13,10"
+                                FontSize="16"
+                                HorizontalOptions="Center"
+                                Text="单曲"
+                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                            Light={StaticResource BasicDrak}}"
+                                VerticalOptions="Center" />
+                        </Border>
+                    </DataTemplate>
+                </Local:TabItem.HeaderTemplate>
+                <Local:TabItem.Content>
+                    <CollectionView
+                        ItemSizingStrategy="MeasureAllItems"
+                        ItemsSource="{Binding SongResult}"
+                        RemainingItemsThreshold="0"
+                        RemainingItemsThresholdReachedCommand="{Binding MoreCommand}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="sdk:MusicSongElementResult">
+                                <StackLayout>
+                                    <Grid Padding="10,0" ColumnDefinitions="50,*,40">
+                                        <StackLayout>
+                                            <Border
+                                                Padding="3,1"
+                                                Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
+                                                                         Dark={StaticResource PotoBrushSafeDark}}"
+                                                StrokeShape="RoundRectangle 10"
+                                                StrokeThickness="1">
+                                                <Label
+                                                    HorizontalOptions="Center"
+                                                    Text="{Binding MusicPlatformType, Converter={StaticResource Int2Str}}"
+                                                    TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                                                Light={StaticResource BasicDrak}}"
+                                                    VerticalOptions="Center" />
+                                            </Border>
+                                        </StackLayout>
+                                        <HorizontalStackLayout Grid.Column="1" HorizontalOptions="Start">
+                                            <Label
+                                                LineBreakMode="WordWrap"
+                                                Text="{Binding SongName}"
+                                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                                            Light={StaticResource BasicDrak}}"
+                                                VerticalOptions="Center" />
+                                            <Label
+                                                FontSize="10"
+                                                LineBreakMode="WordWrap"
+                                                Text="{Binding SongArtistName, Converter={StaticResource List2Str}, StringFormat='({0})'}"
+                                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                                            Light={StaticResource BasicDrak}}"
+                                                VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout Grid.Column="2" HorizontalOptions="Start">
+                                            <Image Margin="-10,0,5,0" WidthRequest="20">
+                                                <Image.Source>
+                                                    <FontImageSource
+                                                        FontFamily="Solid"
+                                                        Glyph="{Static Lib:FontIcon.RecordVinyl}"
+                                                        Color="{AppThemeBinding Light={StaticResource BasicPrimary},
+                                                                                Dark={StaticResource BasicPrimaryDrak}}" />
+                                                </Image.Source>
+                                            </Image>
+                                            <Image Margin="0,0,15,0" WidthRequest="20">
+                                                <Image.Source>
+                                                    <FontImageSource
+                                                        FontFamily="Regular"
+                                                        Glyph="{Static Lib:FontIcon.Heart}"
+                                                        Color="{AppThemeBinding Light={StaticResource BasicPrimary},
+                                                                                Dark={StaticResource BasicPrimaryDrak}}" />
+                                                </Image.Source>
+                                            </Image>
+                                        </HorizontalStackLayout>
+                                    </Grid>
+                                    <BoxView Grid.ColumnSpan="3" StyleClass="Divider" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Local:TabItem.Content>
+            </Local:TabItem>
+            <Local:TabItem>
+                <Local:TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <Border
+                            Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
+                                                     Dark={StaticResource PotoBrushSafeDark}}"
+                            StrokeShape="RoundRectangle 0"
+                            StrokeThickness="1"
+                            WidthRequest="180">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ListCommand, Source={RelativeSource AncestorType={x:Type Local:HViewModel}}}" />
+                            </Border.GestureRecognizers>
+                            <Label
+                                Margin="13,10,13,10"
+                                FontSize="16"
+                                HorizontalOptions="Center"
+                                Text="歌单"
+                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                            Light={StaticResource BasicDrak}}"
+                                VerticalOptions="Center" />
+                        </Border>
+                    </DataTemplate>
+                </Local:TabItem.HeaderTemplate>
+                <Local:TabItem.Content>
+                    <CollectionView
+                        ItemSizingStrategy="MeasureAllItems"
+                        ItemsSource="{Binding PlayListResult}"
+                        RemainingItemsThreshold="0"
+                        RemainingItemsThresholdReachedCommand="{Binding MoresCommand}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="sdk:MusicSheetElementResult">
+                                <Border Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe}, Dark={StaticResource PotoBrushSafeDark}}" StrokeShape="RoundRectangle 0">
+                                    <Grid Padding="2" ColumnDefinitions="80,*">
+                                        <Image
+                                            Aspect="Fill"
+                                            HeightRequest="80"
+                                            Source="{Binding Cover}"
+                                            WidthRequest="80" />
+                                        <VerticalStackLayout Grid.Column="1" Margin="10,0,0,0">
+                                            <Label
+                                                LineBreakMode="WordWrap"
+                                                Text="{Binding MusicPlatformType, Converter={StaticResource Int2Str}}"
+                                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                                            Light={StaticResource BasicDrak}}" />
+                                            <Label
+                                                LineBreakMode="WordWrap"
+                                                Text="{Binding SongSheetName}"
+                                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                                            Light={StaticResource BasicDrak}}" />
+                                            <Label
+                                                LineBreakMode="WordWrap"
+                                                Text="{Binding ListenNumber}"
+                                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                                            Light={StaticResource BasicDrak}}" />
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Local:TabItem.Content>
+            </Local:TabItem>
+        </Local:TabView>
+    </Grid>
 </Local:CandyUIView>

@@ -176,10 +176,7 @@ namespace CandySugar.Controls
                 }).RunsAsync();
                 Total = result.SeachResult.Total;
                 if (More)
-                    result.SeachResult.ElementResult.ForEach(item =>
-                    {
-                        SearchResult.Add(item);
-                    });
+                    result.SeachResult.ElementResult.ForEach(SearchResult.Add);
                 else
                     SearchResult = new ObservableCollection<AnimeSearchElementResult>(result.SeachResult.ElementResult);
                 SetState();

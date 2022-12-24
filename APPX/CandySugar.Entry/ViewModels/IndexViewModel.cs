@@ -170,6 +170,12 @@ namespace CandySugar.Entry.ViewModels
                 model.Key = input;
                 Task.Run(() => model.QueryInit(false));
             }
+            if (Content is H HView)
+            {
+                var model = (HView.BindingContext as HViewModel);
+                model.Key = input;
+                Task.Run(() => model.QueryInit(false));
+            }
         });
         public DelegateCommand<string> NavCommand => new(input =>
         {
