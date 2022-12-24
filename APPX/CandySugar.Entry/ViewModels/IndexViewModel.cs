@@ -3,6 +3,7 @@ using CandySugar.Library.Common;
 using Newtonsoft.Json.Linq;
 using System.Collections.ObjectModel;
 using XExten.Advance.HttpFramework.MultiFactory;
+using static Microsoft.Maui.ApplicationModel.Permissions;
 
 namespace CandySugar.Entry.ViewModels
 {
@@ -27,6 +28,7 @@ namespace CandySugar.Entry.ViewModels
                 DataBus.Module = Opt.Module;
                 DataBus.Delay = Opt.Delay;
             }
+            Author();
         }
 
         public override void OnDisappearing()
@@ -200,6 +202,11 @@ namespace CandySugar.Entry.ViewModels
         #endregion
 
         #region Method
+        async void Author()
+        {
+            await RequestAsync<StorageWrite>();
+            await RequestAsync<StorageRead>();
+        }
         bool CheckVersion()
         {
             var ServerVersion = IHttpMultiClient.HttpMulti.AddNode(opt =>

@@ -21,8 +21,8 @@ namespace CandySugar.Library
                 new MenuModel  { Name="小说",Icon="ico_4.png"},
                 new MenuModel  { Name="文学",Icon="ico_5.png"},
                 new MenuModel  { Name="电影",Icon="ico_6.png"},
-/*                new MenuModel  { Name="音乐",Icon="ico_7.png"},
-                new MenuModel  { Name="太阳",Icon="ico_8.png"},
+                new MenuModel  { Name="音乐",Icon="ico_7.png"},
+               /* new MenuModel  { Name="太阳",Icon="ico_8.png"},
                 new MenuModel  { Name="月亮",Icon="ico_9.png"},
                 new MenuModel  { Name="运动",Icon="ico_0_1.png"},*/
             };
