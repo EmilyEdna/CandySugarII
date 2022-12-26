@@ -21,6 +21,18 @@ namespace CandySugar.Controls
         {
             Service = this.Container.Resolve<IService>();
             this.P1 = this.P2 = this.P3 = this.P4 = 1;
+            LikeInit();
+        }
+        public override void OnLoad()
+        {
+            MessagingCenter.Subscribe<H1ViewModel, bool>(this, "Ref", (sender, args) =>
+            {
+                LikeInit();
+            });
+            MessagingCenter.Subscribe<H2ViewModel, bool>(this, "Ref", (sender, args) =>
+            {
+                LikeInit();
+            });
         }
 
         #region Property
@@ -47,6 +59,12 @@ namespace CandySugar.Controls
         {
             get => _PlayListResult;
             set => SetProperty(ref _PlayListResult, value);
+        }
+        ObservableCollection<HRootEntity> _Result;
+        public ObservableCollection<HRootEntity> Result
+        {
+            get => _Result;
+            set => SetProperty(ref _Result, value);
         }
         #endregion
 
@@ -237,6 +255,37 @@ namespace CandySugar.Controls
                 "HQueryListInit异常".OpenToast();
             }
         }
+        async void LikeInit()
+        {
+            var res = await Service.HQuery();
+            if (res != null)
+                Result = new ObservableCollection<HRootEntity>(res);
+        }
+        async void Add(MusicSongElementResult input)
+        {
+            var res = await Service.HAdd(new HRootEntity
+            {
+                ArtistName = string.Join(",", input.SongArtistName),
+                Name = input.SongName,
+                Platfrom = Platform((int)input.MusicPlatformType),
+                SongId = input.SongId
+            });
+            if (res) "加入我的歌单成功".OpenToast();
+            LikeInit();
+        }
+        async void Delete(dynamic input)
+        {
+            var res = await Service.HRemove(input);
+            if (res) "从我的歌单移除成功".OpenToast();
+            LikeInit();
+        }
+        string Platform(int Platform)
+        {
+            if (Platform == 1) return "QQ";
+            else if (Platform == 2) return "网易";
+            else if (Platform == 3) return "酷狗";
+            else return "酷我";
+        }
         #endregion
 
         #region Command
@@ -262,7 +311,6 @@ namespace CandySugar.Controls
             if (P3 > T3) P3 = T3.Value; if (P4 > T4) P4 = T4.Value;
             QueryListInit(true);
         });
-
         public DelegateCommand SingleCommand => new(() =>
         {
             this.P1 = this.P2 = this.P3 = this.P4 = 1;
@@ -275,6 +323,16 @@ namespace CandySugar.Controls
             if (!Key.IsNullOrEmpty())
                 QueryListInit(false);
         });
+        public DelegateCommand<MusicSongElementResult> AlbumCommand => new(input =>
+        {
+            Nav.NavigateAsync(new Uri("H1", UriKind.Relative), new NavigationParameters { { "Data", input } });
+        });
+        public DelegateCommand<MusicSheetElementResult> PlayListCommand => new(input =>
+        {
+            Nav.NavigateAsync(new Uri("H2", UriKind.Relative), new NavigationParameters { { "Data", input } });
+        });
+        public DelegateCommand<MusicSongElementResult> LikeCommand => new(Add);
+        public DelegateCommand<dynamic> DelCommand => new(Delete);
         #endregion
     }
 }

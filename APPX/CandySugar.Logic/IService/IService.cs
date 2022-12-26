@@ -48,6 +48,11 @@
         Task GRemove(Guid root);
         Task<List<GRootEntity>> GQuery();
         #endregion
-        
+
+        #region H
+        Task<bool> HAdd(HRootEntity root);
+        Task<bool> HRemove(Guid root);
+        Task<List<HRootEntity>> HQuery();
+        #endregion
     }
 }

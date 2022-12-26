@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="CandySugar.Controls.H2"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Lib="clr-namespace:CandySugar.Library;assembly=CandySugar.Library"
+    xmlns:Local="clr-namespace:CandySugar.Controls"
+    xmlns:sdk="clr-namespace:Sdk.Component.Music.sdk.ViewModel.Response;assembly=Sdk.Component"
+    x:DataType="Local:H2ViewModel"
+    Background="{AppThemeBinding Dark={StaticResource BasicDrak},
+                                 Light={StaticResource Basic}}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Lib:Int2Str x:Key="Int2Str" />
+            <Lib:List2Str x:Key="List2Str" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid RowDefinitions="45,*" RowSpacing="2">
+            <HorizontalStackLayout Background="{AppThemeBinding Light={StaticResource BasicContainer}, Dark={StaticResource BasicBrushContainerDrak}}">
+                <Button BackgroundColor="{StaticResource Platform}" Command="{Binding BackCommand}">
+                    <Button.ImageSource>
+                        <FontImageSource
+                            FontFamily="Solid"
+                            Glyph="{Static Lib:FontIcon.ArrowLeft}"
+                            Color="{AppThemeBinding Light={StaticResource BasicPrimary},
+                                                    Dark={StaticResource BasicPrimaryDrak}}" />
+                    </Button.ImageSource>
+                </Button>
+                <VerticalStackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Center">
+                    <Label
+                        FontSize="15"
+                        Text="{Binding Sheet.SongSheetName}"
+                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                    Light={StaticResource BasicDrak}}" />
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+            <CollectionView
+                Grid.Row="1"
+                ItemSizingStrategy="MeasureAllItems"
+                ItemsSource="{Binding Result, Mode=TwoWay}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="3" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="sdk:MusicSongElementResult">
+                        <StackLayout>
+                            <Grid Padding="10,0" ColumnDefinitions="50,*,40">
+                                <StackLayout>
+                                    <Border
+                                        Padding="3,1"
+                                        Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
+                                                                 Dark={StaticResource PotoBrushSafeDark}}"
+                                        StrokeShape="RoundRectangle 10"
+                                        StrokeThickness="1">
+                                        <Label
+                                            HorizontalOptions="Center"
+                                            Text="{Binding MusicPlatformType, Converter={StaticResource Int2Str}}"
+                                            TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                                        Light={StaticResource BasicDrak}}"
+                                            VerticalOptions="Center" />
+                                    </Border>
+                                </StackLayout>
+                                <HorizontalStackLayout Grid.Column="1" HorizontalOptions="Start">
+                                    <Label
+                                        LineBreakMode="WordWrap"
+                                        Text="{Binding SongName}"
+                                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                                    Light={StaticResource BasicDrak}}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        FontSize="10"
+                                        LineBreakMode="WordWrap"
+                                        Text="{Binding SongArtistName, Converter={StaticResource List2Str}, StringFormat='({0})'}"
+                                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                                    Light={StaticResource BasicDrak}}"
+                                        VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Grid.Column="2" HorizontalOptions="Center">
+                                    <Image WidthRequest="20">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding LikeCommand, Source={RelativeSource AncestorType={x:Type Local:H2ViewModel}}}" CommandParameter="{Binding .}" />
+                                        </Image.GestureRecognizers>
+                                        <Image.Source>
+                                            <FontImageSource
+                                                FontFamily="Regular"
+                                                Glyph="{Static Lib:FontIcon.Heart}"
+                                                Color="{AppThemeBinding Light={StaticResource BasicPrimary},
+                                                                        Dark={StaticResource BasicPrimaryDrak}}" />
+                                        </Image.Source>
+                                    </Image>
+                                </HorizontalStackLayout>
+                            </Grid>
+                            <BoxView Grid.ColumnSpan="3" StyleClass="Divider" />
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+        <ActivityIndicator
+            HeightRequest="20"
+            HorizontalOptions="Center"
+            IsRunning="{Binding Activity}"
+            IsVisible="{Binding Activity}"
+            VerticalOptions="Center"
+            WidthRequest="20"
+            Color="{AppThemeBinding Light={StaticResource SurfacePrimaryDrak},
+                                    Dark={StaticResource SurfaceContainerDark}}" />
+    </Grid>
+</ContentPage>

@@ -39,6 +39,78 @@
                         VerticalOptions="Center" />
                 </Grid>
             </Local:BottomView.Header>
+            <Grid HeightRequest="400">
+                <CollectionView ItemSizingStrategy="MeasureAllItems" ItemsSource="{Binding Result}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="Lib:HRootEntity">
+                            <StackLayout Margin="0,5">
+                                <Grid Padding="10,0" ColumnDefinitions="50,*,40">
+                                    <StackLayout>
+                                        <Border
+                                            Padding="3,1"
+                                            Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
+                                                                     Dark={StaticResource PotoBrushSafeDark}}"
+                                            StrokeShape="RoundRectangle 10"
+                                            StrokeThickness="1">
+                                            <Label
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Platfrom}"
+                                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                                            Light={StaticResource BasicDrak}}"
+                                                VerticalOptions="Center" />
+                                        </Border>
+                                    </StackLayout>
+                                    <HorizontalStackLayout Grid.Column="1" HorizontalOptions="Start">
+                                        <Label
+                                            LineBreakMode="WordWrap"
+                                            Text="{Binding Name}"
+                                            TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                                        Light={StaticResource BasicDrak}}"
+                                            VerticalOptions="Center" />
+                                        <Label
+                                            FontSize="10"
+                                            LineBreakMode="WordWrap"
+                                            Text="{Binding ArtistName, StringFormat='({0})'}"
+                                            TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                                        Light={StaticResource BasicDrak}}"
+                                            VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout Grid.Column="2" HorizontalOptions="Start">
+                                        <Image Margin="-10,0,5,0" WidthRequest="20">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding PlayCommand, Source={RelativeSource AncestorType={x:Type Local:HViewModel}}}" CommandParameter="{Binding .}" />
+                                            </Image.GestureRecognizers>
+                                            <Image.Source>
+                                                <FontImageSource
+                                                    FontFamily="Regular"
+                                                    Glyph="{Static Lib:FontIcon.CirclePlay}"
+                                                    Color="{AppThemeBinding Light={StaticResource BasicPrimary},
+                                                                            Dark={StaticResource BasicPrimaryDrak}}" />
+                                            </Image.Source>
+                                        </Image>
+                                        <Image Margin="0,0,15,0" WidthRequest="20">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding DelCommand, Source={RelativeSource AncestorType={x:Type Local:HViewModel}}}" CommandParameter="{Binding Id}" />
+                                            </Image.GestureRecognizers>
+                                            <Image.Source>
+                                                <FontImageSource
+                                                    FontFamily="Regular"
+                                                    Glyph="{Static Lib:FontIcon.TrashCan}"
+                                                    Color="{AppThemeBinding Light={StaticResource BasicPrimary},
+                                                                            Dark={StaticResource BasicPrimaryDrak}}" />
+                                            </Image.Source>
+                                        </Image>
+                                    </HorizontalStackLayout>
+                                </Grid>
+                                <BoxView Grid.ColumnSpan="3" StyleClass="Divider" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
         </Local:BottomView>
     </Local:CandyUIView.Attachments>
     <Grid>
@@ -87,8 +159,20 @@
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="sdk:MusicSongElementResult">
                                 <StackLayout>
-                                    <Grid Padding="10,0" ColumnDefinitions="50,*,40">
-                                        <StackLayout>
+                                    <Grid Padding="10,0" ColumnDefinitions="60,*,30">
+                                        <HorizontalStackLayout>
+                                            <Image Margin="5,0,5,0" WidthRequest="20">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding AlbumCommand, Source={RelativeSource AncestorType={x:Type Local:HViewModel}}}" CommandParameter="{Binding .}" />
+                                                </Image.GestureRecognizers>
+                                                <Image.Source>
+                                                    <FontImageSource
+                                                        FontFamily="Solid"
+                                                        Glyph="{Static Lib:FontIcon.RecordVinyl}"
+                                                        Color="{AppThemeBinding Light={StaticResource BasicPrimary},
+                                                                                Dark={StaticResource BasicPrimaryDrak}}" />
+                                                </Image.Source>
+                                            </Image>
                                             <Border
                                                 Padding="3,1"
                                                 Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
@@ -102,7 +186,7 @@
                                                                                 Light={StaticResource BasicDrak}}"
                                                     VerticalOptions="Center" />
                                             </Border>
-                                        </StackLayout>
+                                        </HorizontalStackLayout>
                                         <HorizontalStackLayout Grid.Column="1" HorizontalOptions="Start">
                                             <Label
                                                 LineBreakMode="WordWrap"
@@ -118,17 +202,11 @@
                                                                             Light={StaticResource BasicDrak}}"
                                                 VerticalOptions="Center" />
                                         </HorizontalStackLayout>
-                                        <HorizontalStackLayout Grid.Column="2" HorizontalOptions="Start">
-                                            <Image Margin="-10,0,5,0" WidthRequest="20">
-                                                <Image.Source>
-                                                    <FontImageSource
-                                                        FontFamily="Solid"
-                                                        Glyph="{Static Lib:FontIcon.RecordVinyl}"
-                                                        Color="{AppThemeBinding Light={StaticResource BasicPrimary},
-                                                                                Dark={StaticResource BasicPrimaryDrak}}" />
-                                                </Image.Source>
-                                            </Image>
-                                            <Image Margin="0,0,15,0" WidthRequest="20">
+                                        <HorizontalStackLayout Grid.Column="2" HorizontalOptions="Center">
+                                            <Image WidthRequest="20">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding LikeCommand, Source={RelativeSource AncestorType={x:Type Local:HViewModel}}}" CommandParameter="{Binding .}" />
+                                                </Image.GestureRecognizers>
                                                 <Image.Source>
                                                     <FontImageSource
                                                         FontFamily="Regular"
@@ -181,6 +259,9 @@
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="sdk:MusicSheetElementResult">
                                 <Border Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe}, Dark={StaticResource PotoBrushSafeDark}}" StrokeShape="RoundRectangle 0">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding PlayListCommand, Source={RelativeSource AncestorType={x:Type Local:HViewModel}}}" CommandParameter="{Binding .}" />
+                                    </Border.GestureRecognizers>
                                     <Grid Padding="2" ColumnDefinitions="80,*">
                                         <Image
                                             Aspect="Fill"

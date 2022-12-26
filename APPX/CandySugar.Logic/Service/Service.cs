@@ -62,7 +62,7 @@
                     t.BRootId = Parent.Id;
                 });
 
-                var res = await Lite.InsertAllAsync(root.Children, false)>0;
+                var res = await Lite.InsertAllAsync(root.Children, false) > 0;
                 return res;
             };
 
@@ -72,9 +72,9 @@
                 t.InitProperty();
                 t.BRootId = root.Id;
             });
-            var f1= await Lite.InsertAsync(root)>0;
-            var f2= await Lite.InsertAllAsync(root.Children, false)>0;
-            return f1&&f2;
+            var f1 = await Lite.InsertAsync(root) > 0;
+            var f2 = await Lite.InsertAllAsync(root.Children, false) > 0;
+            return f1 && f2;
         }
         public async Task BRemove(Guid root)
         {
@@ -249,6 +249,31 @@
         {
             var Lite = DbContext.Lite;
             var roots = await Lite.Table<GRootEntity>().OrderByDescending(t => t.Span).ToListAsync();
+            return roots;
+        }
+        #endregion
+
+        #region H
+        public async Task<bool> HAdd(HRootEntity root)
+        {
+            var Lite = DbContext.Lite;
+            var Parent = await Lite.Table<HRootEntity>().FirstOrDefaultAsync(t => t.SongId == root.SongId);
+            if (Parent != null)
+            {
+                return true;
+            }
+            root.InitProperty();
+            return await Lite.InsertAsync(root) > 0;
+        }
+        public async Task<bool> HRemove(Guid root)
+        {
+            var Lite = DbContext.Lite;
+            return (await Lite.Table<HRootEntity>().DeleteAsync(t => t.Id == root)) > 0;
+        }
+        public async Task<List<HRootEntity>> HQuery()
+        {
+            var Lite = DbContext.Lite;
+            var roots = await Lite.Table<HRootEntity>().OrderByDescending(t => t.Span).ToListAsync();
             return roots;
         }
         #endregion

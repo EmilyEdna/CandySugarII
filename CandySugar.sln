@@ -67,7 +67,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CandySugar.Library", "APPX\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CandySugar.Controls", "APPX\CandySugar.Controls\CandySugar.Controls.csproj", "{FB84C2B6-6059-4E18-8070-24711E077F50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CandySugar.Foundation", "APPX\CandySugar.Foundation\CandySugar.Foundation.csproj", "{88415475-1B0F-406B-887F-93E3D30F230D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CandySugar.Foundation", "APPX\CandySugar.Foundation\CandySugar.Foundation.csproj", "{88415475-1B0F-406B-887F-93E3D30F230D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
