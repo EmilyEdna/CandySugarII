@@ -1,4 +1,6 @@
-﻿namespace CandySugar.Library
+﻿using CandySugar.Library.Common.Audio;
+
+namespace CandySugar.Library
 {
     public class LibraryModule : IModule
     {
@@ -9,7 +11,7 @@
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            containerRegistry.UseNativeMedia();
         }
     }
 }

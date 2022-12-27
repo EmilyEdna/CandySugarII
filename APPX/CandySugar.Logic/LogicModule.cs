@@ -9,7 +9,8 @@
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.Register<IService, Service>();
+            containerRegistry.RegisterSingleton<IService, Service>();
+            containerRegistry.RegisterSingleton<IPlayService, PlayService>();
         }
     }
 }

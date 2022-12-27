@@ -62,6 +62,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\pause.png" />
+	  <None Remove="Resources\Images\play.png" />
+	  <None Remove="Resources\Raw\head.png" />
+	  <None Remove="Resources\Raw\icon.png" />
 	  <None Remove="Resources\Raw\MaoPlayer.html" />
 	</ItemGroup>
 

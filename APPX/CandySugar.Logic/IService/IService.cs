@@ -51,6 +51,7 @@
 
         #region H
         Task<bool> HAdd(HRootEntity root);
+        Task<HRootEntity> HAlter(Guid root, string input);
         Task<bool> HRemove(Guid root);
         Task<List<HRootEntity>> HQuery();
         #endregion

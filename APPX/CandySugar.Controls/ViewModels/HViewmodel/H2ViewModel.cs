@@ -25,7 +25,7 @@ namespace CandySugar.Controls
         public DelegateCommand BackCommand => new(() =>
         {
             Nav.GoBackAsync();
-            MessagingCenter.Send(this, "Ref", true);
+            MessagingCenter.Send("Music", "Ref", true);
         });
         public DelegateCommand<MusicSongElementResult> LikeCommand => new(Add);
         #endregion
@@ -52,8 +52,10 @@ namespace CandySugar.Controls
             {
                 ArtistName = string.Join(",", input.SongArtistName),
                 Name = input.SongName,
+                AlbumId = input.SongAlbumId,
                 Platfrom = Platform((int)input.MusicPlatformType),
-                SongId = input.SongId
+                SongId = input.SongId,
+                AlbumName = input.SongAlbumName
             });
             if (res) "加入我的歌单成功".OpenToast();
         }

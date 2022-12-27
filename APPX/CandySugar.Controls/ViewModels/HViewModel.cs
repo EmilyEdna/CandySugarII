@@ -11,25 +11,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using XExten.Advance.LinqFramework;
+using CandySugar.Library.Common;
+using XExten.Advance.HttpFramework.MultiFactory;
 
 namespace CandySugar.Controls
 {
     public class HViewModel : ViewModelBase
     {
         readonly IService Service;
+        public IPlayService PlayService;
         public HViewModel(BaseServices baseServices) : base(baseServices)
         {
             Service = this.Container.Resolve<IService>();
+            PlayService = this.Container.Resolve<IPlayService>();
             this.P1 = this.P2 = this.P3 = this.P4 = 1;
             LikeInit();
         }
+
         public override void OnLoad()
         {
-            MessagingCenter.Subscribe<H1ViewModel, bool>(this, "Ref", (sender, args) =>
-            {
-                LikeInit();
-            });
-            MessagingCenter.Subscribe<H2ViewModel, bool>(this, "Ref", (sender, args) =>
+            MessagingCenter.Subscribe<string, bool>("Music", "Ref", (sender, args) =>
             {
                 LikeInit();
             });
@@ -45,6 +46,7 @@ namespace CandySugar.Controls
         public int? T2 { get; set; }
         public int? T3 { get; set; }
         public int? T4 { get; set; }
+        public HRootEntity Entity { get; set; }
         #endregion
 
         #region Property
@@ -267,8 +269,10 @@ namespace CandySugar.Controls
             {
                 ArtistName = string.Join(",", input.SongArtistName),
                 Name = input.SongName,
+                AlbumId = input.SongAlbumId,
                 Platfrom = Platform((int)input.MusicPlatformType),
-                SongId = input.SongId
+                SongId = input.SongId,
+                AlbumName = input.SongAlbumName
             });
             if (res) "加入我的歌单成功".OpenToast();
             LikeInit();
@@ -285,6 +289,66 @@ namespace CandySugar.Controls
             else if (Platform == 2) return "网易";
             else if (Platform == 3) return "酷狗";
             else return "酷我";
+        }
+        PlatformEnum Platform(string input)
+        {
+            if (input == "QQ") return PlatformEnum.QQMusic;
+            else if (input == "网易") return PlatformEnum.NeteaseMusic;
+            else if (input == "酷狗") return PlatformEnum.KuGouMusic;
+            else return PlatformEnum.KuWoMusic;
+        }
+        async void PlayInit(HRootEntity input)
+        {
+            try
+            {
+                var result = await MusicFactory.Music(opt =>
+                {
+                    opt.RequestParam = new Input
+                    {
+                        CacheSpan = DataBus.Cache,
+                        ImplType = DataCenter.ImplType(),
+                        MusicType = MusicEnum.Route,
+                        PlatformType = Platform(input.Platfrom),
+                        Play = Platform(input.Platfrom) == PlatformEnum.KuGouMusic ? new MusicPlaySearch
+                        {
+                            Dynamic = input.SongId,
+                            KuGouAlbumId = input.AlbumId,
+                        } : new MusicPlaySearch
+                        {
+                            Dynamic = input.SongId,
+                        }
+                    };
+                }).RunsAsync();
+
+                if (result.PlayResult.CanPlay == false)
+                {
+                    "当前歌曲已下架".OpenToast();
+                    return;
+                }
+                var Model = (await Service.HQuery()).Where(t => t.Id == input.Id).FirstOrDefault();
+                if (!Model.Route.IsNullOrEmpty())
+                {
+                    Entity = Model;
+                    LikeInit();
+                    await PlayService.PlayAsync(Entity);
+                    return;
+                }
+                var SongFile = $"{input.Name}({input.AlbumName})-{string.Join(",", input.ArtistName)}_{input.Platfrom}.mp3";
+                var Directory = SyncStatic.CreateDir(Path.Combine(ICrossExtension.Instance.AndriodPath, "CandyDown", "Music"));
+                var Files = SyncStatic.CreateFile(Path.Combine(Directory, SongFile));
+
+                var filebytes = IHttpMultiClient.HttpMulti.AddNode(opt => opt.NodePath = result.PlayResult.SongURL).Build().RunBytesFirst();
+                var CacheAddress = SyncStatic.WriteFile(filebytes, Files);
+                Entity = await Service.HAlter(input.Id, CacheAddress);
+                LikeInit();
+                await PlayService.PlayAsync(Entity);
+            }
+            catch (Exception ex)
+            {
+                SetState();
+                await Service.AddLog("HPlayInit异常", ex);
+                "HPlayInit异常".OpenToast();
+            }
         }
         #endregion
 
@@ -333,6 +397,14 @@ namespace CandySugar.Controls
         });
         public DelegateCommand<MusicSongElementResult> LikeCommand => new(Add);
         public DelegateCommand<dynamic> DelCommand => new(Delete);
+        public DelegateCommand<HRootEntity> PlayCommand => new(input =>
+        {
+            Task.Run(() => PlayInit(input));
+        });
+        public DelegateCommand PlayOrPauseCommand => new(()=>
+        {
+            PlayService.PlayAsync(Entity);
+        });
         #endregion
     }
 }

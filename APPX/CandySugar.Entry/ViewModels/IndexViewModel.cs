@@ -1,5 +1,6 @@
 ﻿using CandySugar.Foundation;
 using CandySugar.Library.Common;
+using CandySugar.Logic;
 using Newtonsoft.Json.Linq;
 using System.Collections.ObjectModel;
 using XExten.Advance.HttpFramework.MultiFactory;
@@ -107,7 +108,7 @@ namespace CandySugar.Entry.ViewModels
                 case "音乐":
                     this.Content = new H
                     {
-                        BindingContext = new HViewModel(this.BaseServices)
+                        BindingContext  = new HViewModel(this.BaseServices)
                     };
                     break;
                 case "太阳":

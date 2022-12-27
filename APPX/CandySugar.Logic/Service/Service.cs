@@ -265,6 +265,14 @@
             root.InitProperty();
             return await Lite.InsertAsync(root) > 0;
         }
+        public async Task<HRootEntity> HAlter(Guid root, string input)
+        {
+            var Lite = DbContext.Lite;
+            var entity = await Lite.Table<HRootEntity>().FirstOrDefaultAsync(t => t.Id == root);
+            entity.Route = input;
+            await Lite.UpdateAsync(entity);
+            return entity;
+        }
         public async Task<bool> HRemove(Guid root)
         {
             var Lite = DbContext.Lite;

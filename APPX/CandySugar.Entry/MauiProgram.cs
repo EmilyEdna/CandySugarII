@@ -1,5 +1,6 @@
 ﻿using CandySugar.Entry.ViewModels;
 using CandySugar.Foundation;
+using CandySugar.Library.Common.Audio;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using UraniumUI;
@@ -12,7 +13,9 @@ namespace CandySugar.Entry
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
-            builder.UseMauiApp<App>().UseMauiCommunityToolkit().UseUraniumUI()
+            builder.UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
+                .UseUraniumUI()
                 .UsePrism(prism => prism.ConfigureModuleCatalog(moduleCatalog =>
                 {
                     //配置模块目录
