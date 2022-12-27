@@ -280,7 +280,10 @@ namespace CandySugar.Controls
         async void Delete(dynamic input)
         {
             var res = await Service.HRemove(input);
-            if (res) "从我的歌单移除成功".OpenToast();
+            if (res)
+            {
+                "从我的歌单移除成功".OpenToast();
+            }
             LikeInit();
         }
         string Platform(int Platform)

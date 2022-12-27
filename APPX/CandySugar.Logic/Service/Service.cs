@@ -276,6 +276,9 @@
         public async Task<bool> HRemove(Guid root)
         {
             var Lite = DbContext.Lite;
+            var Path = (await Lite.Table<HRootEntity>().FirstOrDefaultAsync(t => t.Id == root)).Route;
+            if (File.Exists(Path))
+                File.Delete(Path);
             return (await Lite.Table<HRootEntity>().DeleteAsync(t => t.Id == root)) > 0;
         }
         public async Task<List<HRootEntity>> HQuery()

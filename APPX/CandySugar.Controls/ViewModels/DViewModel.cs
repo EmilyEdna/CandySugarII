@@ -131,7 +131,7 @@ namespace CandySugar.Controls
                 if (More)
                     result.SearchResult.ElementResults.ToMapper<List<MangaCategoryElementResult>>().ForEach(GroupResult.Add);
                 else
-                    GroupResult = new ObservableCollection<MangaCategoryElementResult>(result.SearchResult.ElementResults.ToMapper<List<MangaCategoryElementResult>>());
+                    GroupResult = new ObservableCollection<MangaCategoryElementResult>(result.SearchResult.ElementResults.ToMapest<List<MangaCategoryElementResult>>());
                 SetState();
             }
             catch (Exception ex)

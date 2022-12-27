@@ -220,7 +220,10 @@
                                                     VerticalOptions="Center" />
                                             </Border>
                                         </HorizontalStackLayout>
-                                        <HorizontalStackLayout Grid.Column="1" HorizontalOptions="Start">
+                                        <HorizontalStackLayout
+                                            Grid.Column="1"
+                                            Margin="8,0,0,0"
+                                            HorizontalOptions="Start">
                                             <Label
                                                 LineBreakMode="WordWrap"
                                                 Text="{Binding SongName}"
