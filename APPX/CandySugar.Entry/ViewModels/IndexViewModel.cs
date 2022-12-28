@@ -108,7 +108,7 @@ namespace CandySugar.Entry.ViewModels
                 case "音乐":
                     this.Content = new H
                     {
-                        BindingContext  = new HViewModel(this.BaseServices)
+                        BindingContext = new HViewModel(this.BaseServices)
                     };
                     break;
                 case "太阳":
@@ -227,6 +227,21 @@ namespace CandySugar.Entry.ViewModels
                 return false;
             }
             else return true;
+        }
+
+        public async void AddLocalMusic(string fileName, string fullPath)
+        {
+            var Name = fileName.Split(".").FirstOrDefault();
+            await Service.HAdd(new HRootEntity
+            {
+                Platfrom = "本地",
+                Name = Name.Contains("-") ? Name.Split("-").LastOrDefault().Trim() : Name,
+                ArtistName = Name.Contains("-") ? Name.Split("-").FirstOrDefault().Trim() : Name,
+                Route = fullPath,
+                SongId = string.Empty,
+                AlbumId = string.Empty,
+                AlbumName = Name
+            });
         }
         #endregion
     }

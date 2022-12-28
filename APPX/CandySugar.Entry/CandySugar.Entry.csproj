@@ -62,18 +62,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Images\pause.png" />
-	  <None Remove="Resources\Images\play.png" />
-	  <None Remove="Resources\Raw\head.png" />
-	  <None Remove="Resources\Raw\icon.png" />
-	  <None Remove="Resources\Raw\MaoPlayer.html" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <ProjectReference Include="..\CandySugar.Foundation\CandySugar.Foundation.csproj" />
 	</ItemGroup>
 
@@ -87,23 +75,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\Index.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
 	  <Using Include="CandySugar.Controls" />
 	  <Using Include="CandySugar.Library" />
 	  <Using Include="CandySugar.Logic" />
 	  <Using Include="XExten.Advance.LinqFramework" />
 	  <Using Include="XExten.Advance.StaticFramework" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiAsset Update="Resources\Raw\MaoPlayer.html">
-	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-	  </MauiAsset>
 	</ItemGroup>
 
 </Project>

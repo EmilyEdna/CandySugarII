@@ -103,6 +103,15 @@
                     TextColor="{AppThemeBinding Light={StaticResource BasicDrak},
                                                 Dark={StaticResource BasicContainer}}" />
             </Border>
+            <Button BackgroundColor="{StaticResource Platform}" Clicked="PickerEvent">
+                <Button.ImageSource>
+                    <FontImageSource
+                        FontFamily="Solid"
+                        Glyph="{Static Lib:FontIcon.ListMusic}"
+                        Color="{AppThemeBinding Light={StaticResource BasicPrimary},
+                                                Dark={StaticResource BasicPrimaryDrak}}" />
+                </Button.ImageSource>
+            </Button>
         </HorizontalStackLayout>
         <CollectionView
             Grid.Row="1"

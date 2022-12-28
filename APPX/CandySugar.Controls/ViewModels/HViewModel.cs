@@ -304,6 +304,15 @@ namespace CandySugar.Controls
         {
             try
             {
+                var Model = (await Service.HQuery()).Where(t => t.Id == input.Id).FirstOrDefault();
+                if (!Model.Route.IsNullOrEmpty())
+                {
+                    Entity = Model;
+                    LikeInit();
+                    await PlayService.PlayAsync(Entity);
+                    return;
+                }
+
                 var result = await MusicFactory.Music(opt =>
                 {
                     opt.RequestParam = new Input
@@ -328,14 +337,7 @@ namespace CandySugar.Controls
                     "当前歌曲已下架".OpenToast();
                     return;
                 }
-                var Model = (await Service.HQuery()).Where(t => t.Id == input.Id).FirstOrDefault();
-                if (!Model.Route.IsNullOrEmpty())
-                {
-                    Entity = Model;
-                    LikeInit();
-                    await PlayService.PlayAsync(Entity);
-                    return;
-                }
+
                 var SongFile = $"{input.Name}({input.AlbumName})-{string.Join(",", input.ArtistName)}_{input.Platfrom}.mp3";
                 var Directory = SyncStatic.CreateDir(Path.Combine(ICrossExtension.Instance.AndriodPath, "CandyDown", "Music"));
                 var Files = SyncStatic.CreateFile(Path.Combine(Directory, SongFile));
@@ -404,7 +406,7 @@ namespace CandySugar.Controls
         {
             Task.Run(() => PlayInit(input));
         });
-        public DelegateCommand PlayOrPauseCommand => new(()=>
+        public DelegateCommand PlayOrPauseCommand => new(() =>
         {
             PlayService.PlayAsync(Entity);
         });
