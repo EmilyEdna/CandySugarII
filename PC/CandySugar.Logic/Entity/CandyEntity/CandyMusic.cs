@@ -9,7 +9,9 @@
         public string AlbumId { get; set; }
         public string AlbumName { get; set; }
         public bool IsComplete { get; set; }
+        [SugarColumn(IsNullable = true)]
         public string LocalRoute { get; set; }
+        [SugarColumn(IsNullable = true)]
         public string NetRoute { get; set; }
     }
 }
