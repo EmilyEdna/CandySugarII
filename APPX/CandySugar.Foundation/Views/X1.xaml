@@ -67,7 +67,7 @@
                     CommandParameter="{Binding Opt.Module}"
                     IsChecked="{Binding Opt.Module, Converter={StaticResource Int2Bool}, ConverterParameter=3}"
                     StyleClass="CheckRadioButton"
-                    Text="请求模式三(12)" />
+                    Text="壁纸模式三(12)" />
             </MC:RadioButtonGroupView>
             <BoxView StyleClass="Divider" />
             <VerticalStackLayout>

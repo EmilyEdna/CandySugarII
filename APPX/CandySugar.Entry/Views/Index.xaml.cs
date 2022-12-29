@@ -22,10 +22,17 @@ public partial class Index : CandyUIPage
 
     private async void PickerEvent(object sender, EventArgs e)
     {
-        var result = await FilePicker.Default.PickAsync();
-        if (result.ContentType.Equals("audio/mpeg")&& result.FileName.ToLower().EndsWith("mp3"))
+        var result = await FilePicker.Default.PickMultipleAsync();
+
+        if (result.Count() > 0)
         {
-            (this.BindingContext as IndexViewModel).AddLocalMusic(result.FileName,result.FullPath);
+            foreach (var item in result)
+            {
+                if (item.ContentType.Equals("audio/mpeg") && item.FileName.ToLower().EndsWith("mp3"))
+                {
+                    (this.BindingContext as IndexViewModel).AddLocalMusic(item.FileName, item.FullPath);
+                }
+            }
         }
     }
 }
