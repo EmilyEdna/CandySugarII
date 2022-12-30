@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:Lib="clr-namespace:CandySugar.Library;assembly=CandySugar.Library"
     xmlns:Local="clr-namespace:CandySugar.Controls"
+    xmlns:Lottie="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
     xmlns:sdk="clr-namespace:Sdk.Component.Manga.sdk.ViewModel.Response;assembly=Sdk.Component"
     x:DataType="Local:D1ViewModel"
     Background="{AppThemeBinding Dark={StaticResource BasicDrak},
@@ -59,14 +60,14 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </Grid>
-        <ActivityIndicator
-            HeightRequest="20"
+        <Lottie:SKLottieView
+            HeightRequest="200"
             HorizontalOptions="Center"
-            IsRunning="{Binding Activity}"
+            IsEnabled="{Binding Activity}"
             IsVisible="{Binding Activity}"
-            VerticalOptions="Center"
-            WidthRequest="20"
-            Color="{AppThemeBinding Light={StaticResource SurfacePrimaryDrak},
-                                    Dark={StaticResource SurfaceContainerDark}}" />
+            RepeatCount="-1"
+            SemanticProperties.Description="Loading"
+            Source="lottie_loading.json"
+            WidthRequest="200" />
     </Grid>
 </ContentPage>

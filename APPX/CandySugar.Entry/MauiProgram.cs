@@ -1,8 +1,7 @@
 ﻿using CandySugar.Entry.ViewModels;
 using CandySugar.Foundation;
-using CandySugar.Library.Common.Audio;
 using CommunityToolkit.Maui;
-using Microsoft.Extensions.Logging;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 using UraniumUI;
 using Index = CandySugar.Entry.Views.Index;
 
@@ -16,6 +15,7 @@ namespace CandySugar.Entry
             builder.UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
                 .UseUraniumUI()
+                .UseSkiaSharp()
                 .UsePrism(prism => prism.ConfigureModuleCatalog(moduleCatalog =>
                 {
                     //配置模块目录

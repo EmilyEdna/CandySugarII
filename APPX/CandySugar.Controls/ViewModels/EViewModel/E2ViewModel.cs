@@ -49,7 +49,7 @@ namespace CandySugar.Controls
         {
             try
             {
-                Activity = true;
+                SetActivity();
                 await Task.Delay(DataBus.Delay);
                 var result = await NovelFactory.Novel(opt =>
                 {

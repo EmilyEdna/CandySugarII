@@ -63,9 +63,9 @@ namespace CandySugar.Library
             this.Activity = false;
             this.Refresh = false;
         }
-        protected void SetState(bool More)
+        protected void SetActivity()
         {
-            if (!More) Activity = true;
+            Activity = true;
         }
     }
     public class BaseServices

@@ -64,7 +64,7 @@ internal class F2ViewModel : ViewModelBase
     {
         try
         {
-            Activity = true;
+            SetActivity();
             await Task.Delay(DataBus.Delay);
             var result = await LovelFactory.Lovel(opt =>
             {

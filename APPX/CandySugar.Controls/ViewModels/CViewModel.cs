@@ -59,7 +59,7 @@ namespace CandySugar.Controls
             try
             {
                 Module = 1;
-                SetState(More);
+                SetActivity();
                 await Task.Delay(DataBus.Delay);
                 var result = await ImageFactory.Image(opt =>
                 {
@@ -107,7 +107,7 @@ namespace CandySugar.Controls
             try
             {
                 Module = 2;
-                SetState(More);
+                SetActivity();
                 await Task.Delay(DataBus.Delay);
                 var result = await ImageFactory.Image(opt =>
                 {

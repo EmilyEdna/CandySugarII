@@ -56,7 +56,7 @@ namespace CandySugar.Controls
         {
             try
             {
-                Activity = true;
+                SetActivity();
                 await Task.Delay(DataBus.Delay);
                 var result = await AnimeFactory.Anime(opt =>
                 {
@@ -86,7 +86,7 @@ namespace CandySugar.Controls
         {
             try
             {
-                Activity = true;
+                SetActivity();
                 await Task.Delay(DataBus.Delay);
                 var result = await AnimeFactory.Anime(opt =>
                 {

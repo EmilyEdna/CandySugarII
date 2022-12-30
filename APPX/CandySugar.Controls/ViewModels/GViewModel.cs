@@ -50,7 +50,7 @@ namespace CandySugar.Controls
             try
             {
                 Module = 0;
-                Activity = true;
+                SetActivity();
                 await Task.Delay(DataBus.Delay);
                 var result = await MovieFactory.Movie(opt =>
                 {
@@ -75,7 +75,7 @@ namespace CandySugar.Controls
             try
             {
                 Module = 1;
-                SetState(More);
+                SetActivity();
                 await Task.Delay(DataBus.Delay);
                 var result = await MovieFactory.Movie(opt =>
                 {
@@ -109,7 +109,7 @@ namespace CandySugar.Controls
             try
             {
                 Module = 2;
-                SetState(More);
+                SetActivity();
                 await Task.Delay(DataBus.Delay);
                 var result = await MovieFactory.Movie(opt =>
                 {

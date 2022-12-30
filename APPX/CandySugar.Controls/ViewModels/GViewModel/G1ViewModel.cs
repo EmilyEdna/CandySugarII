@@ -48,7 +48,7 @@ internal class G1ViewModel : ViewModelBase
     {
         try
         {
-            Activity = true;
+            SetActivity();
             await Task.Delay(DataBus.Delay);
             var result = await MovieFactory.Movie(opt =>
             {
@@ -76,7 +76,7 @@ internal class G1ViewModel : ViewModelBase
     {
         try
         {
-            Activity = true;
+            SetActivity();
             await Task.Delay(DataBus.Delay);
             var result = await MovieFactory.Movie(opt =>
             {

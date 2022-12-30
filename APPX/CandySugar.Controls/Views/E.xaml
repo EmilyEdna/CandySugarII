@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:Local="clr-namespace:CandySugar.Controls"
+    xmlns:Lottie="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
     xmlns:MC="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
     xmlns:sdk="clr-namespace:Sdk.Component.Novel.sdk.ViewModel.Response;assembly=Sdk.Component"
     x:DataType="Local:EViewModel">
@@ -58,15 +59,15 @@
         </Local:BottomView>
     </Local:CandyUIView.Attachments>
     <Grid>
-        <ActivityIndicator
-            HeightRequest="20"
+        <Lottie:SKLottieView
+            HeightRequest="200"
             HorizontalOptions="Center"
-            IsRunning="{Binding Activity}"
+            IsEnabled="{Binding Activity}"
             IsVisible="{Binding Activity}"
-            VerticalOptions="Center"
-            WidthRequest="20"
-            Color="{AppThemeBinding Light={StaticResource SurfacePrimaryDrak},
-                                    Dark={StaticResource SurfaceContainerDark}}" />
+            RepeatCount="-1"
+            SemanticProperties.Description="Loading"
+            Source="lottie_loading.json"
+            WidthRequest="200" />
         <RefreshView
             Command="{Binding RefreshCommand}"
             IsRefreshing="{Binding Refresh}"

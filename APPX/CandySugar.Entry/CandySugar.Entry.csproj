@@ -61,6 +61,11 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
+
+	<ItemGroup>
+	  <None Remove="Resources\Raw\lottie_loading.json" />
+	</ItemGroup>
+
 	<ItemGroup>
 	  <ProjectReference Include="..\CandySugar.Foundation\CandySugar.Foundation.csproj" />
 	</ItemGroup>

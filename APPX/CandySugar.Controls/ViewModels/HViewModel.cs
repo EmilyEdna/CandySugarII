@@ -75,7 +75,7 @@ namespace CandySugar.Controls
         {
             try
             {
-                SetState(More);
+                SetActivity();
                 await Task.Delay(DataBus.Delay);
                 var QQ = await MusicFactory.Music(opt =>
                 {
@@ -168,7 +168,7 @@ namespace CandySugar.Controls
         {
             try
             {
-                SetState(More);
+                SetActivity();
                 await Task.Delay(DataBus.Delay);
                 var QQ = await MusicFactory.Music(opt =>
                 {

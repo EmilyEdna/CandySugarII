@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:Candy="http://github.emilyedna.io"
     xmlns:Lib="clr-namespace:CandySugar.Library;assembly=CandySugar.Library"
+    xmlns:Lottie="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
     xmlns:MC="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
     xmlns:VM="clr-namespace:CandySugar.Entry.ViewModels"
     x:DataType="VM:IndexViewModel"
@@ -139,5 +140,13 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
         <ContentView Grid.Row="2" Content="{Binding Content}" />
+        <Lottie:SKLottieView
+            HeightRequest="200"
+            HorizontalOptions="Center"
+            IsVisible="False"
+            RepeatCount="-1"
+            SemanticProperties.Description="Loading"
+            Source="lottie_loading.json"
+            WidthRequest="200" />
     </Grid>
 </Candy:CandyUIPage>

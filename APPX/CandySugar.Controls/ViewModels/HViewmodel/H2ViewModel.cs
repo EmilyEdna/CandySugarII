@@ -70,7 +70,7 @@ namespace CandySugar.Controls
         {
             try
             {
-                this.Activity = true;
+                SetActivity();
                 await Task.Delay(DataBus.Delay);
                 var result = await MusicFactory.Music(opt =>
                 {
