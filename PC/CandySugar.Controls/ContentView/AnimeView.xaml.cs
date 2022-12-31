@@ -29,34 +29,7 @@ namespace CandySugar.Controls.ContentView
         public AnimeView()
         {
             InitializeComponent();
-            FloatBtn.ClickEvent += FloatBtnClickEvent;
-        }
-
-        private void FloatBtnClickEvent(object sender, EventArgs e)
-        {
-            var Model = (this.DataContext as AnimeViewModel);
-            if (((MenuItem)sender).CommandParameter.AsString().Equals("1"))
-            {
-                this.RouteOne.IsEnabled = true;
-                this.RouteOne.Visibility = Visibility.Visible;
-                this.RouteTwo.IsEnabled = false;
-                this.RouteTwo.Visibility = Visibility.Collapsed;
-                Model.Switch = true;
-                Model.InitAnime();
-                if (!Model.KeyWord.IsNullOrEmpty())
-                    Model.SearchAction(Model.KeyWord);
-            }
-            else
-            {
-                this.RouteTwo.IsEnabled = true;
-                this.RouteTwo.Visibility = Visibility.Visible;
-                this.RouteOne.IsEnabled = false;
-                this.RouteOne.Visibility = Visibility.Collapsed;
-                Model.Switch = false;
-                Model.InitAnime();
-                if (!Model.KeyWord.IsNullOrEmpty())
-                    Model.SearchAction(Model.KeyWord);
-            }
+            //FloatBtn.ClickEvent += FloatBtnClickEvent;
         }
 
         private void ItemSelected(object sender, SelectionChangedEventArgs e)

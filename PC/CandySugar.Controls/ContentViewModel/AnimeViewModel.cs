@@ -35,7 +35,6 @@ namespace CandySugar.Controls.ContentViewModel
             this.Container = Container;
             this.CandyAnime = Container.Get<ICandyAnime>();
             this.CategoryPage = 1;
-            this.Switch = true;
             this.StepOne = true;
             this.StepTwo = false;
             OnViewLoaded();
@@ -61,11 +60,6 @@ namespace CandySugar.Controls.ContentViewModel
             set => SetAndNotify(ref _StepTwo, value);
         }
         private bool _Switch;
-        public bool Switch
-        {
-            get => _Switch;
-            set => SetAndNotify(ref _Switch, value);
-        }
         #endregion
 
         #region 整型
@@ -172,26 +166,11 @@ namespace CandySugar.Controls.ContentViewModel
             this.CateKeyWord = null;
             InitSearch(input);
         }
-        public void CategoryAction(Dictionary<object, object> input)
-        {
-            this.CategoryPage = 1;
-            this.CateKeyWord = input;
-            this.KeyWord = string.Empty;
-            InitCategory(input);
-        }
         public void PageCateAction(FunctionEventArgs<int> input)
         {
             this.CategoryPage = input.Info;
-            if (Switch)
-            {
-                if (this.CateKeyWord != null && this.KeyWord.IsNullOrEmpty()) InitCategory(this.CateKeyWord);
-                if (this.CateKeyWord == null && !this.KeyWord.IsNullOrEmpty()) InitSearch(KeyWord);
-            }
-            else
-            {
-                if (this.KeyWord.IsNullOrEmpty()) InitCategory();
-                else InitSearch(KeyWord);
-            }
+            if (this.KeyWord.IsNullOrEmpty()) InitCategory();
+            else InitSearch(KeyWord);
         }
         public void DetailAction(AnimeSearchElementResult input)
         {
@@ -218,7 +197,6 @@ namespace CandySugar.Controls.ContentViewModel
                         CacheSpan = CandySoft.Default.Cache,
                         Proxy = StaticResource.Proxy(),
                         ImplType = StaticResource.ImplType(),
-                        SourceType = Switch ? AnimeSourceEnum.SBDM : AnimeSourceEnum.YSJDM,
                         AnimeType = AnimeEnum.Init
                     };
                 }).RunsAsync();
@@ -248,7 +226,6 @@ namespace CandySugar.Controls.ContentViewModel
                         Proxy = StaticResource.Proxy(),
                         ImplType = StaticResource.ImplType(),
                         AnimeType = AnimeEnum.Search,
-                        SourceType = Switch ? AnimeSourceEnum.SBDM : AnimeSourceEnum.YSJDM,
                         Search = new AnimeSearch
                         {
                             KeyWord = input,
@@ -267,44 +244,6 @@ namespace CandySugar.Controls.ContentViewModel
             }
 
         }
-        private async void InitCategory(Dictionary<object, object> input)
-        {
-            try
-            {
-                var key = input.Keys.FirstOrDefault().ToString();
-                var val = input.Values.FirstOrDefault().ToString();
-                this.Loading = true;
-                await Task.Delay(CandySoft.Default.WaitSpan);
-                var AnimeCateData = await AnimeFactory.Anime(opt =>
-                {
-                    opt.RequestParam = new Input
-                    {
-                        CacheSpan = CandySoft.Default.Cache,
-                        Proxy = StaticResource.Proxy(),
-                        ImplType = StaticResource.ImplType(),
-                        AnimeType = key.Equals("Char") ? AnimeEnum.Category : AnimeEnum.CategoryType,
-                        Category = key.Equals("Char") ? new AnimeCategory
-                        {
-                            Route = val,
-                            LetterType = Enum.Parse<AnimeLetterEnum>(val),
-                            Page = CategoryPage
-                        } : new AnimeCategory
-                        {
-                            Route = val,
-                            Page = CategoryPage
-                        }
-                    };
-                }).RunsAsync();
-                this.Loading = false;
-                CategoryTotal = AnimeCateData.SeachResult.Total;
-                SearchResult = new ObservableCollection<AnimeSearchElementResult>(AnimeCateData.SeachResult.ElementResult);
-            }
-            catch (Exception ex)
-            {
-                Log.Logger.Error(ex, "");
-                HandyControl.Controls.Growl.Error("服务异常");
-            }
-        }
         private async void InitCategory()
         {
             try
@@ -319,7 +258,6 @@ namespace CandySugar.Controls.ContentViewModel
                         Proxy = StaticResource.Proxy(),
                         ImplType = StaticResource.ImplType(),
                         AnimeType = AnimeEnum.Category,
-                        SourceType = AnimeSourceEnum.YSJDM,
                         Category = new AnimeCategory
                         {
 
@@ -353,7 +291,6 @@ namespace CandySugar.Controls.ContentViewModel
                     {
                         CacheSpan = CandySoft.Default.Cache,
                         Proxy = StaticResource.Proxy(),
-                        SourceType = Switch ? AnimeSourceEnum.SBDM : AnimeSourceEnum.YSJDM,
                         ImplType = StaticResource.ImplType(),
                         AnimeType = AnimeEnum.Detail,
                         Detail = new AnimeDetail
@@ -386,7 +323,6 @@ namespace CandySugar.Controls.ContentViewModel
                         CacheSpan = CandySoft.Default.Cache,
                         Proxy = StaticResource.Proxy(),
                         ImplType = StaticResource.ImplType(),
-                        SourceType = Switch ? AnimeSourceEnum.SBDM : AnimeSourceEnum.YSJDM,
                         AnimeType = AnimeEnum.Watch,
                         WatchPlay = new AnimeWatch
                         {
