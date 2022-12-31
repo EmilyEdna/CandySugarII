@@ -16,7 +16,7 @@ namespace CandySugar.Controls
             Service = this.Container.Resolve<IService>();
         }
         /// <summary>
-        /// 1 查询 2 字母分类 3类别分类
+        /// 1 查询 2 分类
         /// </summary>
         public static int Module = 0;
 
@@ -26,20 +26,16 @@ namespace CandySugar.Controls
         }
 
         #region Property
-        public string Type { get; set; }
-        public string Group { get; set; }
         public string Key { get; set; }
+        private AnimeLetterEnum Letter = AnimeLetterEnum.全部;
+        private AnimeTypeEnum Types = AnimeTypeEnum.全部;
+        private AnimeAreaEnum Areas = AnimeAreaEnum.全部;
+        private string Years = string.Empty;
         #endregion
 
         #region Property
-        ObservableCollection<string> _Words;
-        public ObservableCollection<string> Words
-        {
-            get => _Words;
-            set => SetProperty(ref _Words, value);
-        }
-        ObservableCollection<AnimeWeekDayIndexResult> _InitResult;
-        public ObservableCollection<AnimeWeekDayIndexResult> InitResult
+        AnimeInitResult _InitResult;
+        public AnimeInitResult InitResult
         {
             get => _InitResult;
             set => SetProperty(ref _InitResult, value);
@@ -69,8 +65,7 @@ namespace CandySugar.Controls
                         AnimeType = AnimeEnum.Init
                     };
                 }).RunsAsync();
-                this.Words = new ObservableCollection<string>(result.InitResult.Letters.Where(t => !t.Equals("全部")));
-                InitResult = new ObservableCollection<AnimeWeekDayIndexResult>(result.InitResult.RecResults);
+                this.InitResult = result.InitResult;
                 SetState();
             }
             catch (Exception ex)
@@ -79,7 +74,7 @@ namespace CandySugar.Controls
                 "BInit异常".OpenToast();
             }
         }
-        async void TypeInit(bool More)
+        async void GroupInit(bool More)
         {
             try
             {
@@ -95,54 +90,17 @@ namespace CandySugar.Controls
                         AnimeType = AnimeEnum.Category,
                         Category = new AnimeCategory
                         {
-                            LetterType = Enum.Parse<AnimeLetterEnum>(Type),
-                            Page = this.Page
+                            LetterType = Letter,
+                            Area = Areas,
+                            Type = Types,
+                            Year = Years,
+                            Page = Page
                         }
                     };
                 }).RunsAsync();
                 Total = result.SeachResult.Total;
                 if (More)
-                    result.SeachResult.ElementResult.ForEach(item =>
-                    {
-                        SearchResult.Add(item);
-                    });
-                else
-                    SearchResult = new ObservableCollection<AnimeSearchElementResult>(result.SeachResult.ElementResult);
-                SetState();
-            }
-            catch (Exception ex)
-            {
-                await Service.AddLog("BTypeInit异常", ex);
-                "BTypeInit异常".OpenToast();
-            }
-        }
-        async void GroupInit(bool More)
-        {
-            try
-            {
-                Module = 3;
-                SetActivity();
-                await Task.Delay(DataBus.Delay);
-                var result = await AnimeFactory.Anime(opt =>
-                {
-                    opt.RequestParam = new Input
-                    {
-                        CacheSpan = DataBus.Cache,
-                        ImplType = DataCenter.ImplType(),
-                        AnimeType = AnimeEnum.CategoryType,
-                        Category = new AnimeCategory
-                        {
-                            Route = Group,
-                            Page = this.Page
-                        }
-                    };
-                }).RunsAsync();
-                Total = result.SeachResult.Total;
-                if (More)
-                    result.SeachResult.ElementResult.ForEach(item =>
-                    {
-                        SearchResult.Add(item);
-                    });
+                    result.SeachResult.ElementResult.ForEach(SearchResult.Add);
                 else
                     SearchResult = new ObservableCollection<AnimeSearchElementResult>(result.SeachResult.ElementResult);
                 SetState();
@@ -190,14 +148,20 @@ namespace CandySugar.Controls
         #endregion
 
         #region Command
-        public DelegateCommand<string> TypeCammand => new(input =>
-        {
-            this.Type = input;
-            Task.Run(() => TypeInit(false));
+        public DelegateCommand<string> LetterCammand => new(input => {
+            Letter = Enum.Parse<AnimeLetterEnum>(input);
+            Task.Run(() => GroupInit(false));
         });
-        public DelegateCommand<string> GroupCammand => new(input =>
-        {
-            this.Group = input;
+        public DelegateCommand<string> TypeCammand => new(input => {
+            Types = Enum.Parse<AnimeTypeEnum>(input);
+            Task.Run(() => GroupInit(false));
+        });
+        public DelegateCommand<string> YearCammand => new(input => {
+            Years = input.Equals("全部") ? string.Empty : input;
+            Task.Run(() => GroupInit(false));
+        });
+        public DelegateCommand<string> AreaCammand => new(input => {
+            Areas = Enum.Parse<AnimeAreaEnum>(input);
             Task.Run(() => GroupInit(false));
         });
         public DelegateCommand<string> DetailCommand => new(input =>
@@ -208,8 +172,7 @@ namespace CandySugar.Controls
         {
             this.Page = 1;
             if (Module == 1) Task.Run(() => QueryInit(false));
-            if (Module == 2) Task.Run(() => TypeInit(false));
-            if (Module == 3) Task.Run(() => GroupInit(false));
+            if (Module == 2) Task.Run(() => GroupInit(false));
         });
         public DelegateCommand MoreCommand => new(() =>
         {
@@ -217,8 +180,7 @@ namespace CandySugar.Controls
             this.Page += 1;
             if (this.Page > this.Total) return;
             if (Module == 1) Task.Run(() => QueryInit(true));
-            if (Module == 2) Task.Run(() => TypeInit(true));
-            if (Module == 3) Task.Run(() => GroupInit(true));
+            if (Module == 2) Task.Run(() => GroupInit(true));
         });
         #endregion
     }

@@ -87,21 +87,6 @@ namespace CandySugar.Controls.ContentViewModel
         #endregion
 
         #region 属性
-        private ObservableCollection<string> _Chars;
-        public ObservableCollection<string> Chars
-        {
-            get => _Chars;
-            set => SetAndNotify(ref _Chars, value);
-        }
-        private ObservableCollection<AnimeWeekDayIndexResult> _DayResult;
-        /// <summary>
-        /// 初始化结果
-        /// </summary>
-        public ObservableCollection<AnimeWeekDayIndexResult> DayResult
-        {
-            get => _DayResult;
-            set => SetAndNotify(ref _DayResult, value);
-        }
         private ObservableCollection<AnimeSearchElementResult> _SearchResult;
         /// <summary>
         /// 检索分类结果
@@ -202,8 +187,6 @@ namespace CandySugar.Controls.ContentViewModel
                 }).RunsAsync();
                 this.Loading = false;
                 InitResult = AnimeInitData.InitResult;
-                this.Chars = new ObservableCollection<string>(AnimeInitData.InitResult.Letters.Where(t => !t.Equals("全部")));
-                DayResult = new ObservableCollection<AnimeWeekDayIndexResult>(AnimeInitData.InitResult.RecResults ?? new List<AnimeWeekDayIndexResult>());
             }
             catch (Exception ex)
             {
