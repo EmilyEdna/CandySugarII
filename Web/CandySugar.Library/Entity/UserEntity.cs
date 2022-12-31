@@ -23,10 +23,6 @@ namespace CandySugar.Library.Entity
         /// </summary>
         public int Cache { get; set; }
         /// <summary>
-        /// 数据源 0:SBDM 1:YSJDM
-        /// </summary>
-        public int AnimeSource { get; set; }
-        /// <summary>
         /// 强制拉取
         /// </summary>
         public bool Force { get; set; }

@@ -13,12 +13,10 @@ namespace CandySugar.Library.Entity.Anime
         public string Route { get; set; }
         public string Cover { get; set; }
         public string Name { get; set; }
-        public int Source { get; set; }
         public bool IsSearch { get; set; }
-        public void Create(int input,bool search)
+        public override void Create(bool search)
         {
             this.IsSearch = search;
-            this.Source = input;
             base.Create(true);
         }
     }
