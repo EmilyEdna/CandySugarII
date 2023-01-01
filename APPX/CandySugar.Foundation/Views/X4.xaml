@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="CandySugar.Foundation.X4"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Lib="clr-namespace:CandySugar.Library;assembly=CandySugar.Library"
+    xmlns:Local="clr-namespace:CandySugar.Foundation"
+    x:DataType="Local:X4ViewModel"
+    Background="{AppThemeBinding Dark={StaticResource BasicDrak},
+                                 Light={StaticResource Basic}}">
+    <Grid RowDefinitions="45,*" RowSpacing="2">
+        <HorizontalStackLayout Background="{AppThemeBinding Light={StaticResource BasicContainer}, Dark={StaticResource BasicBrushContainerDrak}}">
+            <Button BackgroundColor="{StaticResource Platform}" Command="{Binding BackCommand}">
+                <Button.ImageSource>
+                    <FontImageSource
+                        FontFamily="Solid"
+                        Glyph="{Static Lib:FontIcon.ArrowLeft}"
+                        Color="{AppThemeBinding Light={StaticResource BasicPrimary},
+                                                Dark={StaticResource BasicPrimaryDrak}}" />
+                </Button.ImageSource>
+            </Button>
+            <VerticalStackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Center">
+                <Label
+                    FontSize="15"
+                    Text="日志"
+                    TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                Light={StaticResource BasicDrak}}" />
+            </VerticalStackLayout>
+        </HorizontalStackLayout>
+        <CollectionView
+            Grid.Row="1"
+            IsVisible="{Binding IsActivity}"
+            ItemSizingStrategy="MeasureAllItems"
+            ItemsSource="{Binding Result, Mode=TwoWay}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="3" Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="Lib:LogEntity">
+                    <Border
+                        Padding="5"
+                        Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
+                                                 Dark={StaticResource PotoBrushSafeDark}}"
+                        StrokeShape="RoundRectangle 10"
+                        StrokeThickness="1">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding DetailCommand, Source={RelativeSource AncestorType={x:Type Local:X3ViewModel}}}" CommandParameter="{Binding Stack}" />
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout>
+                            <Label
+                                Margin="10,0,0,5"
+                                FontSize="16"
+                                LineBreakMode="WordWrap"
+                                Text="{Binding Info}"
+                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                            Light={StaticResource BasicDrak}}" />
+                            <Label
+                                Margin="10,0,0,0"
+                                FontSize="14"
+                                LineBreakMode="WordWrap"
+                                Text="{Binding Span, StringFormat='{0:yyyy-MM-dd HH:mm:ss}'}"
+                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                            Light={StaticResource BasicDrak}}" />
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Grid
+            Grid.Row="1"
+            IsVisible="{Binding IsNotActivity}"
+            RowDefinitions="*,40"
+            RowSpacing="5">
+            <VerticalStackLayout HorizontalOptions="Center">
+                <Label
+                    FontSize="18"
+                    LineBreakMode="WordWrap"
+                    Text="{Binding Trace}"
+                    TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                Light={StaticResource BasicDrak}}" />
+            </VerticalStackLayout>
+            <Button
+                Grid.Row="1"
+                Command="{Binding ReBackCommand}"
+                StyleClass="ElevatedButton"
+                Text="返回" />
+        </Grid>
+
+    </Grid>
+</ContentPage>

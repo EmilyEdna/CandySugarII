@@ -176,7 +176,6 @@ namespace CandySugar.Controls
         });
         public DelegateCommand MoreCommand => new(() =>
         {
-
             this.Page += 1;
             if (this.Page > this.Total) return;
             if (Module == 1) Task.Run(() => QueryInit(true));

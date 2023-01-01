@@ -192,6 +192,9 @@ namespace CandySugar.Entry.ViewModels
                     Nav.NavigateAsync(new Uri("X3", UriKind.Relative));
                     break;
                 case "4":
+                    Nav.NavigateAsync(new Uri("X4", UriKind.Relative));
+                    break;
+                case "5":
                     if (CheckVersion())
                     {
                         FoundUtil.Open(BaseServices, () => "ASK");

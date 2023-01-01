@@ -32,7 +32,7 @@
                     <Label
                         Margin="20,5,5,5"
                         FontSize="18"
-                        Text="设置"
+                        Text="视频库"
                         TextColor="{AppThemeBinding Dark={StaticResource Basic},
                                                     Light={StaticResource BasicDrak}}">
                         <Label.GestureRecognizers>
@@ -43,7 +43,7 @@
                     <Label
                         Margin="20,5,5,5"
                         FontSize="18"
-                        Text="历史"
+                        Text="设置"
                         TextColor="{AppThemeBinding Dark={StaticResource Basic},
                                                     Light={StaticResource BasicDrak}}">
                         <Label.GestureRecognizers>
@@ -54,7 +54,7 @@
                     <Label
                         Margin="20,5,5,5"
                         FontSize="18"
-                        Text="日志"
+                        Text="历史"
                         TextColor="{AppThemeBinding Dark={StaticResource Basic},
                                                     Light={StaticResource BasicDrak}}">
                         <Label.GestureRecognizers>
@@ -65,11 +65,22 @@
                     <Label
                         Margin="20,5,5,5"
                         FontSize="18"
-                        Text="检查更新"
+                        Text="日志"
                         TextColor="{AppThemeBinding Dark={StaticResource Basic},
                                                     Light={StaticResource BasicDrak}}">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding NavCommand}" CommandParameter="4" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <BoxView StyleClass="Divider" />
+                    <Label
+                        Margin="20,5,5,5"
+                        FontSize="18"
+                        Text="检查更新"
+                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
+                                                    Light={StaticResource BasicDrak}}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavCommand}" CommandParameter="5" />
                         </Label.GestureRecognizers>
                     </Label>
                 </VerticalStackLayout>

@@ -9,12 +9,7 @@
     x:DataType="Local:X1ViewModel"
     Background="{AppThemeBinding Dark={StaticResource BasicDrak},
                                  Light={StaticResource Basic}}">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Lib:Int2Bool x:Key="Int2Bool" />
-        </ResourceDictionary>
-    </ContentPage.Resources>
-    <Grid RowDefinitions="45,*,50" RowSpacing="2">
+    <Grid RowDefinitions="45,*" RowSpacing="2">
         <HorizontalStackLayout Background="{AppThemeBinding Light={StaticResource BasicContainer}, Dark={StaticResource BasicBrushContainerDrak}}">
             <Button BackgroundColor="{StaticResource Platform}" Command="{Binding BackCommand}">
                 <Button.ImageSource>
@@ -28,65 +23,14 @@
             <VerticalStackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Center">
                 <Label
                     FontSize="15"
-                    Text="设置"
+                    Text="视频库/"
                     TextColor="{AppThemeBinding Dark={StaticResource Basic},
                                                 Light={StaticResource BasicDrak}}" />
             </VerticalStackLayout>
         </HorizontalStackLayout>
-        <VerticalStackLayout Grid.Row="1">
-            <MC:RadioButtonGroupView Margin="10,0,0,0">
-                <MC:RadioButton
-                    CommandParameter="{Binding Opt.QueryModule}"
-                    IsChecked="{Binding Opt.QueryModule, Converter={StaticResource Int2Bool}, ConverterParameter=1}"
-                    StyleClass="CheckRadioButton"
-                    Text="请求模式一" />
-                <MC:RadioButton
-                    CommandParameter="{Binding Opt.QueryModule}"
-                    IsChecked="{Binding Opt.QueryModule, Converter={StaticResource Int2Bool}, ConverterParameter=2}"
-                    StyleClass="CheckRadioButton"
-                    Text="请求模式二" />
-                <MC:RadioButton
-                    CommandParameter="{Binding Opt.QueryModule}"
-                    IsChecked="{Binding Opt.QueryModule, Converter={StaticResource Int2Bool}, ConverterParameter=3}"
-                    StyleClass="CheckRadioButton"
-                    Text="请求模式三" />
-            </MC:RadioButtonGroupView>
-            <BoxView StyleClass="Divider" />
-            <MC:RadioButtonGroupView Margin="10,0,0,0">
-                <MC:RadioButton
-                    CommandParameter="{Binding Opt.Module}"
-                    IsChecked="{Binding Opt.Module, Converter={StaticResource Int2Bool}, ConverterParameter=1}"
-                    StyleClass="CheckRadioButton"
-                    Text="壁纸模式一(18)" />
-                <MC:RadioButton
-                    CommandParameter="{Binding Opt.Module}"
-                    IsChecked="{Binding Opt.Module, Converter={StaticResource Int2Bool}, ConverterParameter=2}"
-                    StyleClass="CheckRadioButton"
-                    Text="壁纸模式二(15)" />
-                <MC:RadioButton
-                    CommandParameter="{Binding Opt.Module}"
-                    IsChecked="{Binding Opt.Module, Converter={StaticResource Int2Bool}, ConverterParameter=3}"
-                    StyleClass="CheckRadioButton"
-                    Text="壁纸模式三(12)" />
-            </MC:RadioButtonGroupView>
-            <BoxView StyleClass="Divider" />
-            <VerticalStackLayout>
-                <MC:TextField
-                    Title="缓存时间(分钟)"
-                    Margin="10,5"
-                    Keyboard="Numeric"
-                    Text="{Binding Opt.Cache}" />
-                <MC:TextField
-                    Title="延迟加载时间(毫秒)"
-                    Margin="10,5"
-                    Keyboard="Numeric"
-                    Text="{Binding Opt.Delay}" />
-            </VerticalStackLayout>
-        </VerticalStackLayout>
-        <Button
-            Grid.Row="2"
-            Command="{Binding SaveCommand}"
-            StyleClass="TextButton"
-            Text="保存" />
+        <WebView
+            x:Name="Player"
+            Grid.Row="1"
+            Source="https://vidhub.top" />
     </Grid>
 </ContentPage>

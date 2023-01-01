@@ -20,6 +20,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\X2.xaml.cs">
+	    <DependentUpon>X2.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\X3.xaml.cs">
+	    <DependentUpon>X3.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\X4.xaml.cs">
+	    <DependentUpon>X4.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Views\Ask.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -30,6 +42,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\X3.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\X4.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

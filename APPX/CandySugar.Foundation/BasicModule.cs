@@ -17,6 +17,7 @@ namespace CandySugar.Foundation
             containerRegistry.RegisterForNavigation<X1, X1ViewModel>();
             containerRegistry.RegisterForNavigation<X2, X2ViewModel>();
             containerRegistry.RegisterForNavigation<X3, X3ViewModel>();
+            containerRegistry.RegisterForNavigation<X4, X4ViewModel>();
         }
     }
 }
