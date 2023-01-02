@@ -1,8 +1,10 @@
-﻿using CandySugar.Foundation;
+﻿using CandySugar.Entry.Resources.Styles;
+using CandySugar.Foundation;
 using CandySugar.Library.Common;
 using CandySugar.Logic;
 using Newtonsoft.Json.Linq;
 using System.Collections.ObjectModel;
+using System.Linq;
 using XExten.Advance.HttpFramework.MultiFactory;
 using static Microsoft.Maui.ApplicationModel.Permissions;
 
@@ -203,6 +205,23 @@ namespace CandySugar.Entry.ViewModels
                             if (args == true)
                                 ICrossExtension.Instance.InstallApk();
                         });
+                    }
+                    break;
+                case "6":
+                    ICollection<ResourceDictionary> Theme = Application.Current.Resources.MergedDictionaries;
+                    if (Theme.Any(t => t.GetType() == typeof(LightTheme)))
+                    {
+                        var Target = Theme.Where(t => t.GetType() == typeof(LightTheme)).FirstOrDefault();
+                        Theme.Remove(Target);
+                        Theme.Add(new DarkTheme());
+                        return;
+                    }
+                    if (Theme.Any(t => t.GetType() == typeof(DarkTheme)))
+                    {
+                        var Target = Theme.Where(t => t.GetType() == typeof(DarkTheme)).FirstOrDefault();
+                        Theme.Remove(Target);
+                        Theme.Add(new LightTheme());
+                        return;
                     }
                     break;
                 default:

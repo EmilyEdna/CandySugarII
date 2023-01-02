@@ -12,14 +12,12 @@
         <Local:BottomView>
             <Local:BottomView.Header>
                 <Grid
-                    Background="{AppThemeBinding Light={StaticResource Surface},
-                                                 Dark={StaticResource SurfaceDrak}}"
+                    Background="{DynamicResource Surface}"
                     ColumnDefinitions="60,*"
                     HeightRequest="60">
                     <Grid.Shadow>
                         <Shadow
-                            Brush="{AppThemeBinding Light={StaticResource PotoBrush},
-                                                    Dark={StaticResource PotoBrushDrak}}"
+                            Brush="{DynamicResource PotoBrush}"
                             Opacity="0.3"
                             Radius="20" />
                     </Grid.Shadow>
@@ -28,8 +26,7 @@
                         Grid.Column="1"
                         FontSize="Medium"
                         Text="世界那么大我也想去看看！！！"
-                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                    Light={StaticResource BasicDrak}}"
+                        TextColor="{DynamicResource Basic}"
                         VerticalOptions="Center" />
                 </Grid>
             </Local:BottomView.Header>
@@ -50,8 +47,7 @@
                                 FontFamily="Sans"
                                 StyleClass="TextButton"
                                 Text="{Binding CategoryName}"
-                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                            Light={StaticResource BasicDrak}}" />
+                                TextColor="{DynamicResource Basic}" />
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
@@ -71,8 +67,7 @@
         <RefreshView
             Command="{Binding RefreshCommand}"
             IsRefreshing="{Binding Refresh}"
-            RefreshColor="{AppThemeBinding Light={StaticResource SurfaceContainer},
-                                           Dark={StaticResource SurfaceContainerDark}}">
+            RefreshColor="{DynamicResource SurfaceContainer}">
             <CollectionView
                 ItemSizingStrategy="MeasureAllItems"
                 ItemsSource="{Binding GroupResult}"
@@ -83,7 +78,7 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="sdk:NovelCategoryElementResult">
-                        <Border Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe}, Dark={StaticResource PotoBrushSafeDark}}">
+                        <Border Stroke="{DynamicResource PotoBrushSafe}">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding DetailCommand, Source={RelativeSource AncestorType={x:Type Local:EViewModel}}}" CommandParameter="{Binding DetailRoute}" />
                             </Border.GestureRecognizers>
@@ -92,14 +87,12 @@
                                     Margin="10,0,0,5"
                                     LineBreakMode="WordWrap "
                                     Text="{Binding BookName}"
-                                    TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                                Light={StaticResource BasicDrak}}" />
+                                    TextColor="{DynamicResource Basic}" />
                                 <Label
                                     Margin="10,0,0,0"
                                     LineBreakMode="WordWrap "
                                     Text="{Binding Author, StringFormat='作者：{0}'}"
-                                    TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                                Light={StaticResource BasicDrak}}" />
+                                    TextColor="{DynamicResource Basic}" />
                             </VerticalStackLayout>
                         </Border>
                     </DataTemplate>

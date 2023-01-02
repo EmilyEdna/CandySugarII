@@ -24,7 +24,7 @@ public partial class Index : CandyUIPage
     {
         var result = await FilePicker.Default.PickMultipleAsync();
 
-        if (result.Count() > 0)
+        if (result!=null&&result.Count() > 0)
         {
             foreach (var item in result)
             {

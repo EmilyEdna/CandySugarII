@@ -8,8 +8,7 @@
     xmlns:Lottie="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
     xmlns:sdk="clr-namespace:Sdk.Component.Music.sdk.ViewModel.Response;assembly=Sdk.Component"
     x:DataType="Local:H2ViewModel"
-    Background="{AppThemeBinding Dark={StaticResource BasicDrak},
-                                 Light={StaticResource Basic}}">
+    Background="{DynamicResource BasicPage}">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Lib:Int2Str x:Key="Int2Str" />
@@ -18,22 +17,20 @@
     </ContentPage.Resources>
     <Grid>
         <Grid RowDefinitions="45,*" RowSpacing="2">
-            <HorizontalStackLayout Background="{AppThemeBinding Light={StaticResource BasicContainer}, Dark={StaticResource BasicBrushContainerDrak}}">
+            <HorizontalStackLayout Background="{DynamicResource PotoBrushSafe}">
                 <Button BackgroundColor="{StaticResource Platform}" Command="{Binding BackCommand}">
                     <Button.ImageSource>
                         <FontImageSource
                             FontFamily="Solid"
                             Glyph="{Static Lib:FontIcon.ArrowLeft}"
-                            Color="{AppThemeBinding Light={StaticResource BasicPrimary},
-                                                    Dark={StaticResource BasicPrimaryDrak}}" />
+                            Color="{DynamicResource BasicPrimary}" />
                     </Button.ImageSource>
                 </Button>
                 <VerticalStackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Center">
                     <Label
                         FontSize="15"
                         Text="{Binding Sheet.SongSheetName}"
-                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                    Light={StaticResource BasicDrak}}" />
+                        TextColor="{DynamicResource Basic}" />
                 </VerticalStackLayout>
             </HorizontalStackLayout>
             <CollectionView
@@ -50,15 +47,13 @@
                                 <StackLayout>
                                     <Border
                                         Padding="3,1"
-                                        Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
-                                                                 Dark={StaticResource PotoBrushSafeDark}}"
+                                        Stroke="{DynamicResource PotoBrushSafe}"
                                         StrokeShape="RoundRectangle 10"
                                         StrokeThickness="1">
                                         <Label
                                             HorizontalOptions="Center"
                                             Text="{Binding MusicPlatformType, Converter={StaticResource Int2Str}}"
-                                            TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                                        Light={StaticResource BasicDrak}}"
+                                            TextColor="{DynamicResource Basic}"
                                             VerticalOptions="Center" />
                                     </Border>
                                 </StackLayout>
@@ -66,15 +61,13 @@
                                     <Label
                                         LineBreakMode="WordWrap"
                                         Text="{Binding SongName}"
-                                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                                    Light={StaticResource BasicDrak}}"
+                                        TextColor="{DynamicResource Basic}"
                                         VerticalOptions="Center" />
                                     <Label
                                         FontSize="10"
                                         LineBreakMode="WordWrap"
                                         Text="{Binding SongArtistName, Converter={StaticResource List2Str}, StringFormat='({0})'}"
-                                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                                    Light={StaticResource BasicDrak}}"
+                                        TextColor="{DynamicResource Basic}"
                                         VerticalOptions="Center" />
                                 </HorizontalStackLayout>
                                 <HorizontalStackLayout Grid.Column="2" HorizontalOptions="Center">
@@ -86,8 +79,7 @@
                                             <FontImageSource
                                                 FontFamily="Regular"
                                                 Glyph="{Static Lib:FontIcon.Heart}"
-                                                Color="{AppThemeBinding Light={StaticResource BasicPrimary},
-                                                                        Dark={StaticResource BasicPrimaryDrak}}" />
+                                                Color="{DynamicResource BasicPrimary}" />
                                         </Image.Source>
                                     </Image>
                                 </HorizontalStackLayout>

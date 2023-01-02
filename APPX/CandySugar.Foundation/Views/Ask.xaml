@@ -10,8 +10,7 @@
     CloseWhenBackgroundIsClicked="False">
     <Border
         HeightRequest="120"
-        Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
-                                 Dark={StaticResource PotoBrushSafeDark}}"
+        Stroke="{DynamicResource PotoBrushSafe}"
         StrokeShape="RoundRectangle 0"
         WidthRequest="200">
         <Grid RowDefinitions="*,50">
@@ -19,14 +18,12 @@
                 <Label
                     FontFamily="Sans"
                     Text="检测到新版本是否升级?"
-                    TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                Light={StaticResource BasicDrak}}" />
+                    TextColor="{DynamicResource Basic}" />
             </StackLayout>
             <VerticalStackLayout Grid.Row="1">
                 <Line
                     HorizontalOptions="Center"
-                    Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
-                                             Dark={StaticResource PotoBrushSafeDark}}"
+                    Stroke="{DynamicResource PotoBrushSafe}"
                     X1="0"
                     X2="200"
                     Y1="0"
@@ -39,8 +36,7 @@
                         Text="取消" />
                     <Line
                         Grid.Column="1"
-                        Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
-                                                 Dark={StaticResource PotoBrushSafeDark}}"
+                        Stroke="{DynamicResource PotoBrushSafe}"
                         VerticalOptions="Center"
                         X1="0"
                         X2="0"

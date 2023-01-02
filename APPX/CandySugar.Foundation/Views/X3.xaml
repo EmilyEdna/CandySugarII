@@ -7,25 +7,22 @@
     xmlns:Lib="clr-namespace:CandySugar.Library;assembly=CandySugar.Library"
     xmlns:Local="clr-namespace:CandySugar.Foundation"
     x:DataType="Local:X3ViewModel"
-    Background="{AppThemeBinding Dark={StaticResource BasicDrak},
-                                 Light={StaticResource Basic}}">
+    Background="{DynamicResource BasicPage}">
     <Grid RowDefinitions="45,*" RowSpacing="2">
-        <HorizontalStackLayout Background="{AppThemeBinding Light={StaticResource BasicContainer}, Dark={StaticResource BasicBrushContainerDrak}}">
+        <HorizontalStackLayout Background="{DynamicResource BasicContainer}">
             <Button BackgroundColor="{StaticResource Platform}" Command="{Binding BackCommand}">
                 <Button.ImageSource>
                     <FontImageSource
                         FontFamily="Solid"
                         Glyph="{Static Lib:FontIcon.ArrowLeft}"
-                        Color="{AppThemeBinding Light={StaticResource BasicPrimary},
-                                                Dark={StaticResource BasicPrimaryDrak}}" />
+                        Color="{DynamicResource BasicPrimary}" />
                 </Button.ImageSource>
             </Button>
             <VerticalStackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Center">
                 <Label
                     FontSize="15"
                     Text="历史"
-                    TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                Light={StaticResource BasicDrak}}" />
+                    TextColor="{DynamicResource Basic}" />
             </VerticalStackLayout>
         </HorizontalStackLayout>
         <CS:TabView Grid.Row="1">
@@ -33,8 +30,7 @@
                 <CS:TabItem.HeaderTemplate>
                     <DataTemplate>
                         <Border
-                            Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
-                                                     Dark={StaticResource PotoBrushSafeDark}}"
+                            Stroke="{DynamicResource PotoBrushSafe}"
                             StrokeShape="RoundRectangle 0"
                             StrokeThickness="1">
                             <Border.GestureRecognizers>
@@ -45,8 +41,7 @@
                                 FontSize="16"
                                 HorizontalOptions="Center"
                                 Text="动漫"
-                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                            Light={StaticResource BasicDrak}}"
+                                TextColor="{DynamicResource Basic}"
                                 VerticalOptions="Center" />
                         </Border>
                     </DataTemplate>
@@ -67,7 +62,7 @@
                                                 Text="删除" />
                                         </SwipeItems>
                                     </SwipeView.LeftItems>
-                                    <Border Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe}, Dark={StaticResource PotoBrushSafeDark}}">
+                                    <Border Stroke="{DynamicResource PotoBrushSafe}">
                                         <Grid ColumnDefinitions="Auto,*">
                                             <Border
                                                 HeightRequest="130"
@@ -81,8 +76,7 @@
                                                         Margin="10,0,0,0"
                                                         LineBreakMode="WordWrap"
                                                         Text="{Binding Name}"
-                                                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                                                    Light={StaticResource BasicDrak}}" />
+                                                        TextColor="{DynamicResource Basic}" />
                                                 </HorizontalStackLayout>
                                                 <CollectionView
                                                     Grid.Row="1"
@@ -100,8 +94,7 @@
                                                     <CollectionView.ItemTemplate>
                                                         <DataTemplate x:DataType="Lib:BElementEntity">
                                                             <Border
-                                                                Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
-                                                                                         Dark={StaticResource PotoBrushSafeDark}}"
+                                                                Stroke="{DynamicResource PotoBrushSafe}"
                                                                 StrokeShape="RoundRectangle 0"
                                                                 StrokeThickness="1">
                                                                 <Label
@@ -110,8 +103,7 @@
                                                                     HorizontalOptions="CenterAndExpand"
                                                                     LineBreakMode="WordWrap"
                                                                     Text="{Binding CollectName}"
-                                                                    TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                                                                Light={StaticResource BasicDrak}}"
+                                                                    TextColor="{DynamicResource Basic}"
                                                                     VerticalOptions="CenterAndExpand">
                                                                     <Label.GestureRecognizers>
                                                                         <TapGestureRecognizer Command="{Binding BCommand, Source={RelativeSource AncestorType={x:Type Local:X2ViewModel}}}" CommandParameter="{Binding .}" />
@@ -134,8 +126,7 @@
                 <CS:TabItem.HeaderTemplate>
                     <DataTemplate>
                         <Border
-                            Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
-                                                     Dark={StaticResource PotoBrushSafeDark}}"
+                            Stroke="{DynamicResource PotoBrushSafe}"
                             StrokeShape="RoundRectangle 0"
                             StrokeThickness="1">
                             <Border.GestureRecognizers>
@@ -146,8 +137,7 @@
                                 FontSize="16"
                                 HorizontalOptions="Center"
                                 Text="壁纸"
-                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                            Light={StaticResource BasicDrak}}"
+                                TextColor="{DynamicResource Basic}"
                                 VerticalOptions="Center" />
                         </Border>
                     </DataTemplate>
@@ -163,13 +153,12 @@
                         </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="Lib:CRootEntity">
-                                <Border Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe}, Dark={StaticResource PotoBrushSafeDark}}" StrokeShape="RoundRectangle 0">
+                                <Border Stroke="{DynamicResource PotoBrushSafe}" StrokeShape="RoundRectangle 0">
                                     <Grid Padding="2">
                                         <ActivityIndicator
                                             IsRunning="False"
                                             VerticalOptions="Center"
-                                            Color="{AppThemeBinding Light={StaticResource SurfacePrimaryDrak},
-                                                                    Dark={StaticResource SurfaceContainerDark}}" />
+                                            Color="{DynamicResource SurfacePrimary}" />
                                         <Image
                                             CS:ImageDep.Source="{Binding Preview}"
                                             CS:ImageDep.Type="1"
@@ -191,8 +180,7 @@
                                                 <FontImageSource
                                                     FontFamily="Regular"
                                                     Glyph="{Static Lib:FontIcon.TrashCan}"
-                                                    Color="{AppThemeBinding Light={StaticResource BasicPrimary},
-                                                                            Dark={StaticResource BasicPrimaryDrak}}" />
+                                                    Color="{DynamicResource BasicPrimary}" />
                                             </ImageButton.Source>
                                         </ImageButton>
                                     </Grid>
@@ -206,8 +194,7 @@
                 <CS:TabItem.HeaderTemplate>
                     <DataTemplate>
                         <Border
-                            Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
-                                                     Dark={StaticResource PotoBrushSafeDark}}"
+                            Stroke="{DynamicResource PotoBrushSafe}"
                             StrokeShape="RoundRectangle 0"
                             StrokeThickness="1">
                             <Border.GestureRecognizers>
@@ -218,8 +205,7 @@
                                 FontSize="16"
                                 HorizontalOptions="Center"
                                 Text="漫画"
-                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                            Light={StaticResource BasicDrak}}"
+                                TextColor="{DynamicResource Basic}"
                                 VerticalOptions="Center" />
                         </Border>
                     </DataTemplate>
@@ -240,7 +226,7 @@
                                                 Text="删除" />
                                         </SwipeItems>
                                     </SwipeView.LeftItems>
-                                    <Border Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe}, Dark={StaticResource PotoBrushSafeDark}}">
+                                    <Border Stroke="{DynamicResource PotoBrushSafe}}">
                                         <Grid ColumnDefinitions="Auto,*">
                                             <Border
                                                 HeightRequest="130"
@@ -257,8 +243,7 @@
                                                         Margin="10,0,0,0"
                                                         LineBreakMode="WordWrap"
                                                         Text="{Binding Name}"
-                                                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                                                    Light={StaticResource BasicDrak}}" />
+                                                        TextColor="{DynamicResource Basic}" />
 
                                                 </HorizontalStackLayout>
                                                 <HorizontalStackLayout
@@ -287,8 +272,7 @@
                 <CS:TabItem.HeaderTemplate>
                     <DataTemplate>
                         <Border
-                            Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
-                                                     Dark={StaticResource PotoBrushSafeDark}}"
+                            Stroke="{DynamicResource PotoBrushSafe}"
                             StrokeShape="RoundRectangle 0"
                             StrokeThickness="1">
                             <Border.GestureRecognizers>
@@ -299,8 +283,7 @@
                                 FontSize="16"
                                 HorizontalOptions="Center"
                                 Text="小说"
-                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                            Light={StaticResource BasicDrak}}"
+                                TextColor="{DynamicResource Basic}"
                                 VerticalOptions="Center" />
                         </Border>
                     </DataTemplate>
@@ -321,7 +304,7 @@
                                                 Text="删除" />
                                         </SwipeItems>
                                     </SwipeView.LeftItems>
-                                    <Border Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe}, Dark={StaticResource PotoBrushSafeDark}}">
+                                    <Border Stroke="{DynamicResource PotoBrushSafe}">
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding ECommand, Source={RelativeSource AncestorType={x:Type Local:X2ViewModel}}}" CommandParameter="{Binding Route}" />
                                         </Border.GestureRecognizers>
@@ -330,14 +313,12 @@
                                                 Margin="10,0,0,5"
                                                 LineBreakMode="WordWrap "
                                                 Text="{Binding Name}"
-                                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                                            Light={StaticResource BasicDrak}}" />
+                                                TextColor="{DynamicResource Basic}" />
                                             <Label
                                                 Margin="10,0,0,0"
                                                 LineBreakMode="WordWrap "
                                                 Text="{Binding Author, StringFormat='作者：{0}'}"
-                                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                                            Light={StaticResource BasicDrak}}" />
+                                                TextColor="{DynamicResource Basic}" />
                                         </VerticalStackLayout>
                                     </Border>
                                 </SwipeView>
@@ -350,8 +331,7 @@
                 <CS:TabItem.HeaderTemplate>
                     <DataTemplate>
                         <Border
-                            Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
-                                                     Dark={StaticResource PotoBrushSafeDark}}"
+                            Stroke="{DynamicResource PotoBrushSafe}"
                             StrokeShape="RoundRectangle 0"
                             StrokeThickness="1">
                             <Border.GestureRecognizers>
@@ -362,8 +342,7 @@
                                 FontSize="16"
                                 HorizontalOptions="Center"
                                 Text="文学"
-                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                            Light={StaticResource BasicDrak}}"
+                                TextColor="{DynamicResource Basic}"
                                 VerticalOptions="Center" />
                         </Border>
                     </DataTemplate>
@@ -384,7 +363,7 @@
                                                 Text="删除" />
                                         </SwipeItems>
                                     </SwipeView.LeftItems>
-                                    <Border Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe}, Dark={StaticResource PotoBrushSafeDark}}">
+                                    <Border Stroke="{DynamicResource PotoBrushSafe}">
                                         <Grid ColumnDefinitions="Auto,*">
                                             <Border
                                                 HeightRequest="130"
@@ -401,8 +380,7 @@
                                                         Margin="10,0,0,0"
                                                         LineBreakMode="WordWrap"
                                                         Text="{Binding Name}"
-                                                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                                                    Light={StaticResource BasicDrak}}" />
+                                                        TextColor="{DynamicResource Basic}" />
 
                                                 </HorizontalStackLayout>
                                                 <HorizontalStackLayout
@@ -431,8 +409,7 @@
                 <CS:TabItem.HeaderTemplate>
                     <DataTemplate>
                         <Border
-                            Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
-                                                     Dark={StaticResource PotoBrushSafeDark}}"
+                            Stroke="{DynamicResource PotoBrushSafe}"
                             StrokeShape="RoundRectangle 0"
                             StrokeThickness="1">
                             <Border.GestureRecognizers>
@@ -443,8 +420,7 @@
                                 FontSize="16"
                                 HorizontalOptions="Center"
                                 Text="电影"
-                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                            Light={StaticResource BasicDrak}}"
+                                TextColor="{DynamicResource Basic}"
                                 VerticalOptions="Center" />
                         </Border>
                     </DataTemplate>
@@ -465,7 +441,7 @@
                                                 Text="删除" />
                                         </SwipeItems>
                                     </SwipeView.LeftItems>
-                                    <Border Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe}, Dark={StaticResource PotoBrushSafeDark}}">
+                                    <Border Stroke="{DynamicResource PotoBrushSafe}">
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding GCommand, Source={RelativeSource AncestorType={x:Type Local:X2ViewModel}}}" CommandParameter="{Binding .}" />
                                         </Border.GestureRecognizers>
@@ -481,14 +457,12 @@
                                                     Margin="10,0,0,0"
                                                     LineBreakMode="WordWrap"
                                                     Text="{Binding Title}"
-                                                    TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                                                Light={StaticResource BasicDrak}}" />
+                                                    TextColor="{DynamicResource Basic}" />
                                                 <Label
                                                     Margin="10,0,0,0"
                                                     LineBreakMode="WordWrap"
                                                     Text="{Binding ReleaseTime}"
-                                                    TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                                                Light={StaticResource BasicDrak}}" />
+                                                    TextColor="{DynamicResource Basic}" />
                                             </StackLayout>
                                         </Grid>
                                     </Border>

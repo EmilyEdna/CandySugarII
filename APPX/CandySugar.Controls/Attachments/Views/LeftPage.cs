@@ -49,13 +49,15 @@ namespace CandySugar.Controls
             this.HorizontalOptions = LayoutOptions.StartAndExpand;
             this.StrokeThickness = 0;
             this.HeightRequest = DeviceDisplay.Current.MainDisplayInfo.Height;
-            this.Content = new VerticalStackLayout()
+            var Stack = new VerticalStackLayout()
             {
                 Children =
                 {
                     Body
                 }
             };
+            Stack.Background.SetDynamicResource(VerticalStackLayout.BackgroundProperty, "BasicPage");
+            this.Content = Stack;
 
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.Tapped += (s, e) => IsPresented = !IsPresented;

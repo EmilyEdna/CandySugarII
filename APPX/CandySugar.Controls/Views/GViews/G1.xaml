@@ -8,26 +8,23 @@
     xmlns:Lottie="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
     xmlns:sdk="clr-namespace:Sdk.Component.Movie.sdk.ViewModel.Response;assembly=Sdk.Component"
     x:DataType="Local:G1ViewModel"
-    Background="{AppThemeBinding Dark={StaticResource BasicDrak},
-                                 Light={StaticResource Basic}}">
+    Background="{DynamicResource BasicPage}">
     <Grid>
         <Grid RowDefinitions="45,*" RowSpacing="2">
-            <HorizontalStackLayout Background="{AppThemeBinding Light={StaticResource BasicContainer}, Dark={StaticResource BasicBrushContainerDrak}}">
+            <HorizontalStackLayout Background="{DynamicResource PotoBrushSafe}">
                 <Button BackgroundColor="{StaticResource Platform}" Command="{Binding BackCommand}">
                     <Button.ImageSource>
                         <FontImageSource
                             FontFamily="Solid"
                             Glyph="{Static Lib:FontIcon.ArrowLeft}"
-                            Color="{AppThemeBinding Light={StaticResource BasicPrimary},
-                                                    Dark={StaticResource BasicPrimaryDrak}}" />
+                            Color="{DynamicResource BasicPrimary}" />
                     </Button.ImageSource>
                 </Button>
                 <VerticalStackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Center">
                     <Label
                         FontSize="15"
                         Text="{Binding Element.Title}"
-                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                    Light={StaticResource BasicDrak}}" />
+                        TextColor="{DynamicResource Basic}" />
                 </VerticalStackLayout>
             </HorizontalStackLayout>
             <CollectionView
@@ -41,8 +38,7 @@
                     <DataTemplate x:DataType="sdk:MovieDetailResult">
                         <Border
                             Padding="5"
-                            Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
-                                                     Dark={StaticResource PotoBrushSafeDark}}"
+                            Stroke="{DynamicResource PotoBrushSafe}"
                             StrokeShape="RoundRectangle 10"
                             StrokeThickness="1">
                             <Border.GestureRecognizers>
@@ -53,8 +49,7 @@
                                 FontSize="16"
                                 LineBreakMode="WordWrap"
                                 Text="{Binding Name}"
-                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                            Light={StaticResource BasicDrak}}" />
+                                TextColor="{DynamicResource Basic}" />
                         </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

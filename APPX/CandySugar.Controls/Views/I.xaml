@@ -11,14 +11,12 @@
         <Local:BottomView>
             <Local:BottomView.Header>
                 <Grid
-                    Background="{AppThemeBinding Light={StaticResource Surface},
-                                                 Dark={StaticResource SurfaceDrak}}"
+                    Background="{DynamicResource Surface}"
                     ColumnDefinitions="60,*"
                     HeightRequest="60">
                     <Grid.Shadow>
                         <Shadow
-                            Brush="{AppThemeBinding Light={StaticResource PotoBrush},
-                                                    Dark={StaticResource PotoBrushDrak}}"
+                            Brush="{DynamicResource PotoBrush}"
                             Opacity="0.3"
                             Radius="20" />
                     </Grid.Shadow>
@@ -27,8 +25,7 @@
                         Grid.Column="1"
                         FontSize="Medium"
                         Text="世界那么大我也想去看看！！！"
-                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                    Light={StaticResource BasicDrak}}"
+                        TextColor="{DynamicResource Basic}"
                         VerticalOptions="Center" />
                 </Grid>
             </Local:BottomView.Header>
@@ -49,8 +46,7 @@
                                 FontFamily="Sans"
                                 StyleClass="TextButton"
                                 Text="{Binding Title}"
-                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                            Light={StaticResource BasicDrak}}" />
+                                TextColor="{DynamicResource Basic}" />
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
@@ -65,13 +61,11 @@
             IsVisible="{Binding Activity}"
             VerticalOptions="Center"
             WidthRequest="20"
-            Color="{AppThemeBinding Light={StaticResource SurfacePrimaryDrak},
-                                    Dark={StaticResource SurfaceContainerDark}}" />
+            Color="{DynamicResource SurfacePrimary}" />
         <RefreshView
             Command="{Binding RefreshCommand}"
             IsRefreshing="{Binding Refresh}"
-            RefreshColor="{AppThemeBinding Light={StaticResource SurfaceContainer},
-                                           Dark={StaticResource SurfaceContainerDark}}">
+            RefreshColor="{DynamicResource SurfaceContainer}">
             <CollectionView
                 ItemSizingStrategy="MeasureAllItems"
                 ItemsSource="{Binding Result}"
@@ -86,7 +80,7 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="sdk:HnimeSearchElementResult">
-                        <Border Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe}, Dark={StaticResource PotoBrushSafeDark}}">
+                        <Border Stroke="{DynamicResource PotoBrushSafe}">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding DetailCommand, Source={RelativeSource AncestorType={x:Type Local:IViewModel}}}" CommandParameter="{Binding Watch}" />
                             </Border.GestureRecognizers>
@@ -99,8 +93,7 @@
                                         <ActivityIndicator
                                             IsRunning="False"
                                             VerticalOptions="Center"
-                                            Color="{AppThemeBinding Light={StaticResource SurfacePrimaryDrak},
-                                                                    Dark={StaticResource SurfaceContainerDark}}" />
+                                            Color="{DynamicResource SurfacePrimary}" />
                                         <Image
                                             Local:ImageDep.Source="{Binding Cover}"
                                             Local:ImageDep.Type="4"
@@ -112,8 +105,7 @@
                                         Margin="10,0,0,0"
                                         LineBreakMode="WordWrap"
                                         Text="{Binding Title}"
-                                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                                    Light={StaticResource BasicDrak}}" />
+                                        TextColor="{DynamicResource Basic}" />
                                 </StackLayout>
                             </Grid>
                         </Border>

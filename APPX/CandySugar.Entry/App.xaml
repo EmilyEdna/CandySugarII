@@ -9,7 +9,6 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <MUI:ColorResource />
                 <MUI:StyleResource />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />

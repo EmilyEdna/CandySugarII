@@ -7,30 +7,27 @@
     xmlns:Local="clr-namespace:CandySugar.Foundation"
     xmlns:MC="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
     x:DataType="Local:X2ViewModel"
-    Background="{AppThemeBinding Dark={StaticResource BasicDrak},
-                                 Light={StaticResource Basic}}">
+    Background="{DynamicResource BasicPage}">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Lib:Int2Bool x:Key="Int2Bool" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid RowDefinitions="45,*,50" RowSpacing="2">
-        <HorizontalStackLayout Background="{AppThemeBinding Light={StaticResource BasicContainer}, Dark={StaticResource BasicBrushContainerDrak}}">
+        <HorizontalStackLayout Background="{DynamicResource BasicContainer}">
             <Button BackgroundColor="{StaticResource Platform}" Command="{Binding BackCommand}">
                 <Button.ImageSource>
                     <FontImageSource
                         FontFamily="Solid"
                         Glyph="{Static Lib:FontIcon.ArrowLeft}"
-                        Color="{AppThemeBinding Light={StaticResource BasicPrimary},
-                                                Dark={StaticResource BasicPrimaryDrak}}" />
+                        Color="{DynamicResource BasicPrimary}" />
                 </Button.ImageSource>
             </Button>
             <VerticalStackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Center">
                 <Label
                     FontSize="15"
                     Text="设置"
-                    TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                Light={StaticResource BasicDrak}}" />
+                    TextColor="{DynamicResource Basic}" />
             </VerticalStackLayout>
         </HorizontalStackLayout>
         <VerticalStackLayout Grid.Row="1">

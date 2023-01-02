@@ -9,12 +9,11 @@
     xmlns:MC="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
     xmlns:VM="clr-namespace:CandySugar.Entry.ViewModels"
     x:DataType="VM:IndexViewModel"
-    Background="{AppThemeBinding Dark={StaticResource BasicDrak},
-                                 Light={StaticResource Basic}}">
+    Background="{DynamicResource BasicPage}">
     <Candy:CandyUIPage.Attachments>
         <Candy:LeftPage x:Name="Left">
             <Candy:LeftPage.Body>
-                <VerticalStackLayout HorizontalOptions="Start">
+                <VerticalStackLayout Background="{DynamicResource BasicPage}" HorizontalOptions="Start">
                     <Button
                         Margin="10,5,5,5"
                         BackgroundColor="{StaticResource Platform}"
@@ -24,8 +23,7 @@
                             <FontImageSource
                                 FontFamily="Solid"
                                 Glyph="{Static Lib:FontIcon.ArrowLeft}"
-                                Color="{AppThemeBinding Light={StaticResource BasicPrimary},
-                                                        Dark={StaticResource BasicPrimaryDrak}}" />
+                                Color="{DynamicResource BasicPrimary}" />
                         </Button.ImageSource>
                     </Button>
                     <BoxView StyleClass="Divider" />
@@ -33,8 +31,7 @@
                         Margin="20,5,5,5"
                         FontSize="18"
                         Text="视频库"
-                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                    Light={StaticResource BasicDrak}}">
+                        TextColor="{DynamicResource Basic}">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding NavCommand}" CommandParameter="1" />
                         </Label.GestureRecognizers>
@@ -44,8 +41,7 @@
                         Margin="20,5,5,5"
                         FontSize="18"
                         Text="设置"
-                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                    Light={StaticResource BasicDrak}}">
+                        TextColor="{DynamicResource Basic}">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding NavCommand}" CommandParameter="2" />
                         </Label.GestureRecognizers>
@@ -55,8 +51,7 @@
                         Margin="20,5,5,5"
                         FontSize="18"
                         Text="历史"
-                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                    Light={StaticResource BasicDrak}}">
+                        TextColor="{DynamicResource Basic}">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding NavCommand}" CommandParameter="3" />
                         </Label.GestureRecognizers>
@@ -66,8 +61,7 @@
                         Margin="20,5,5,5"
                         FontSize="18"
                         Text="日志"
-                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                    Light={StaticResource BasicDrak}}">
+                        TextColor="{DynamicResource Basic}">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding NavCommand}" CommandParameter="4" />
                         </Label.GestureRecognizers>
@@ -77,10 +71,19 @@
                         Margin="20,5,5,5"
                         FontSize="18"
                         Text="检查更新"
-                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                    Light={StaticResource BasicDrak}}">
+                        TextColor="{DynamicResource Basic}">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding NavCommand}" CommandParameter="5" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <BoxView StyleClass="Divider" />
+                    <Label
+                        Margin="20,5,5,5"
+                        FontSize="18"
+                        Text="切换主题"
+                        TextColor="{DynamicResource Basic}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavCommand}" CommandParameter="6" />
                         </Label.GestureRecognizers>
                     </Label>
                 </VerticalStackLayout>
@@ -88,14 +91,13 @@
         </Candy:LeftPage>
     </Candy:CandyUIPage.Attachments>
     <Grid RowDefinitions="45,80,*" RowSpacing="2">
-        <HorizontalStackLayout Background="{AppThemeBinding Light={StaticResource BasicContainer}, Dark={StaticResource BasicBrushContainerDrak}}">
+        <HorizontalStackLayout Background="{DynamicResource BasicContainer}">
             <Button BackgroundColor="{StaticResource Platform}" Clicked="PopupLeftEvent">
                 <Button.ImageSource>
                     <FontImageSource
                         FontFamily="Regular"
                         Glyph="{Static Lib:FontIcon.Bars}"
-                        Color="{AppThemeBinding Light={StaticResource BasicPrimary},
-                                                Dark={StaticResource BasicPrimaryDrak}}" />
+                        Color="{DynamicResource BasicPrimary}" />
                 </Button.ImageSource>
             </Button>
             <Border
@@ -108,20 +110,17 @@
                     FontFamily="Sans"
                     IsTextPredictionEnabled="True"
                     Placeholder="请输入检索内容"
-                    PlaceholderColor="{AppThemeBinding Light={StaticResource BasicDrak},
-                                                       Dark={StaticResource BasicContainer}}"
+                    PlaceholderColor="{DynamicResource Basic}"
                     SearchCommand="{Binding SearchCommand}"
                     SearchCommandParameter="{Binding Text, Source={RelativeSource Self}}"
-                    TextColor="{AppThemeBinding Light={StaticResource BasicDrak},
-                                                Dark={StaticResource BasicContainer}}" />
+                    TextColor="{DynamicResource Basic}" />
             </Border>
             <Button BackgroundColor="{StaticResource Platform}" Clicked="PickerEvent">
                 <Button.ImageSource>
                     <FontImageSource
                         FontFamily="Solid"
                         Glyph="{Static Lib:FontIcon.ListMusic}"
-                        Color="{AppThemeBinding Light={StaticResource BasicPrimary},
-                                                Dark={StaticResource BasicPrimaryDrak}}" />
+                        Color="{DynamicResource BasicPrimary}" />
                 </Button.ImageSource>
             </Button>
         </HorizontalStackLayout>

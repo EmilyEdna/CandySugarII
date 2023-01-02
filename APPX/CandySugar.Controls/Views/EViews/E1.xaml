@@ -8,27 +8,24 @@
     xmlns:Lottie="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
     xmlns:sdk="clr-namespace:Sdk.Component.Novel.sdk.ViewModel.Response;assembly=Sdk.Component"
     x:DataType="Local:E1ViewModel"
-    Background="{AppThemeBinding Dark={StaticResource BasicDrak},
-                                 Light={StaticResource Basic}}">
+    Background="{DynamicResource BasicPage}">
     <Grid>
         <Grid RowDefinitions="45,*" RowSpacing="2">
-            <Grid Background="{AppThemeBinding Light={StaticResource BasicContainer}, Dark={StaticResource BasicBrushContainerDrak}}" ColumnDefinitions="*,40">
+            <Grid Background="{DynamicResource BasicContainer}" ColumnDefinitions="*,40">
                 <HorizontalStackLayout>
                     <Button BackgroundColor="{StaticResource Platform}" Command="{Binding BackCommand}">
                         <Button.ImageSource>
                             <FontImageSource
                                 FontFamily="Solid"
                                 Glyph="{Static Lib:FontIcon.ArrowLeft}"
-                                Color="{AppThemeBinding Light={StaticResource BasicPrimary},
-                                                        Dark={StaticResource BasicPrimaryDrak}}" />
+                                Color="{DynamicResource BasicPrimary}" />
                         </Button.ImageSource>
                     </Button>
                     <VerticalStackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Center">
                         <Label
                             FontSize="15"
                             Text="{Binding Result.BookName}"
-                            TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                        Light={StaticResource BasicDrak}}" />
+                            TextColor="{DynamicResource Basic}" />
                     </VerticalStackLayout>
                 </HorizontalStackLayout>
                 <Button
@@ -40,8 +37,7 @@
                         <FontImageSource
                             FontFamily="Solid"
                             Glyph="{Static Lib:FontIcon.ArrowRightArrowLeft}"
-                            Color="{AppThemeBinding Light={StaticResource BasicPrimary},
-                                                    Dark={StaticResource BasicPrimaryDrak}}" />
+                            Color="{DynamicResource BasicPrimary}" />
                     </Button.ImageSource>
                 </Button>
             </Grid>
@@ -58,8 +54,7 @@
                     <DataTemplate x:DataType="sdk:NovelDetailElementResult">
                         <Border
                             Padding="5"
-                            Stroke="{AppThemeBinding Light={StaticResource PotoBrushSafe},
-                                                     Dark={StaticResource PotoBrushSafeDark}}"
+                            Stroke="{DynamicResource PotoBrushSafe}"
                             StrokeShape="RoundRectangle 10"
                             StrokeThickness="1">
                             <Border.GestureRecognizers>
@@ -70,8 +65,7 @@
                                 FontSize="16"
                                 LineBreakMode="WordWrap"
                                 Text="{Binding ChapterName}"
-                                TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                            Light={StaticResource BasicDrak}}" />
+                                TextColor="{DynamicResource Basic}" />
                         </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

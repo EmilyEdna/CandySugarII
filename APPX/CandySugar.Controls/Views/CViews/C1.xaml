@@ -6,15 +6,13 @@
     xmlns:Lib="clr-namespace:CandySugar.Library;assembly=CandySugar.Library"
     xmlns:Local="clr-namespace:CandySugar.Controls"
     x:DataType="Local:C1ViewModel"
-    Background="{AppThemeBinding Dark={StaticResource BasicDrak},
-                                 Light={StaticResource Basic}}">
+    Background="{DynamicResource BasicPage}">
     <Local:PinchZoom>
         <Grid>
             <ActivityIndicator
                 IsRunning="False"
                 VerticalOptions="Center"
-                Color="{AppThemeBinding Light={StaticResource SurfacePrimaryDrak},
-                                        Dark={StaticResource SurfaceContainerDark}}" />
+                Color="{DynamicResource SurfacePrimary}" />
             <Image
                 Local:ImageDep.Source="{Binding Route}"
                 Local:ImageDep.Type="1"
@@ -29,8 +27,7 @@
                         <FontImageSource
                             FontFamily="Thin"
                             Glyph="{Static Lib:FontIcon.Left}"
-                            Color="{AppThemeBinding Light={StaticResource BasicContainer},
-                                                    Dark={StaticResource PotoSafeDark}}" />
+                            Color="{DynamicResource BasicContainer}" />
                     </ImageButton.Source>
                 </ImageButton>
                 <ImageButton
@@ -42,8 +39,7 @@
                         <FontImageSource
                             FontFamily="Thin"
                             Glyph="{Static Lib:FontIcon.Right}"
-                            Color="{AppThemeBinding Light={StaticResource BasicContainer},
-                                                    Dark={StaticResource PotoSafeDark}}" />
+                            Color="{DynamicResource BasicContainer}" />
                     </ImageButton.Source>
                 </ImageButton>
             </Grid>

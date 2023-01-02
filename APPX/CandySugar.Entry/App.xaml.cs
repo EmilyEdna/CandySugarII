@@ -1,4 +1,5 @@
-﻿using CandySugar.Entry.ViewModels;
+﻿using CandySugar.Entry.Resources.Styles;
+using CandySugar.Entry.ViewModels;
 
 namespace CandySugar.Entry
 {
@@ -7,8 +8,7 @@ namespace CandySugar.Entry
         public App()
         {
             InitializeComponent();
-            //Application.Current.UserAppTheme = AppTheme.Dark;
-            //AppTheme currentTheme = (AppTheme)Application.Current.RequestedTheme;
+            Current.Resources.MergedDictionaries.Add(new LightTheme());
         }
         protected override Window CreateWindow(IActivationState activationState)
         {

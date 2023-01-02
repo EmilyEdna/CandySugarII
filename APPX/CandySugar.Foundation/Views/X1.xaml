@@ -7,30 +7,47 @@
     xmlns:Local="clr-namespace:CandySugar.Foundation"
     xmlns:MC="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
     x:DataType="Local:X1ViewModel"
-    Background="{AppThemeBinding Dark={StaticResource BasicDrak},
-                                 Light={StaticResource Basic}}">
-    <Grid RowDefinitions="45,*" RowSpacing="2">
-        <HorizontalStackLayout Background="{AppThemeBinding Light={StaticResource BasicContainer}, Dark={StaticResource BasicBrushContainerDrak}}">
-            <Button BackgroundColor="{StaticResource Platform}" Command="{Binding BackCommand}">
+    Background="{DynamicResource BasicPage}">
+    <Grid RowDefinitions="*,45" RowSpacing="2">
+        <WebView x:Name="Player" Source="https://vidhub.top" />
+        <Grid
+            Grid.Row="1"
+            ColumnDefinitions="*,30,*"
+            ColumnSpacing="5">
+            <Button
+                BackgroundColor="{StaticResource Platform}"
+                Clicked="GoEvent"
+                CommandParameter="1">
                 <Button.ImageSource>
                     <FontImageSource
                         FontFamily="Solid"
                         Glyph="{Static Lib:FontIcon.ArrowLeft}"
-                        Color="{AppThemeBinding Light={StaticResource BasicPrimary},
-                                                Dark={StaticResource BasicPrimaryDrak}}" />
+                        Color="{DynamicResource BasicPrimary}" />
                 </Button.ImageSource>
             </Button>
-            <VerticalStackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Center">
-                <Label
-                    FontSize="15"
-                    Text="视频库/"
-                    TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                Light={StaticResource BasicDrak}}" />
-            </VerticalStackLayout>
-        </HorizontalStackLayout>
-        <WebView
-            x:Name="Player"
-            Grid.Row="1"
-            Source="https://vidhub.top" />
+            <Button
+                Grid.Column="1"
+                BackgroundColor="{StaticResource Platform}"
+                Command="{Binding BackCommand}">
+                <Button.ImageSource>
+                    <FontImageSource
+                        FontFamily="Solid"
+                        Glyph="{Static Lib:FontIcon.PowerOff}"
+                        Color="{DynamicResource BasicPrimary}" />
+                </Button.ImageSource>
+            </Button>
+            <Button
+                Grid.Column="2"
+                BackgroundColor="{StaticResource Platform}"
+                Clicked="GoEvent"
+                CommandParameter="2">
+                <Button.ImageSource>
+                    <FontImageSource
+                        FontFamily="Solid"
+                        Glyph="{Static Lib:FontIcon.ArrowRight}"
+                        Color="{DynamicResource BasicPrimary}" />
+                </Button.ImageSource>
+            </Button>
+        </Grid>
     </Grid>
 </ContentPage>

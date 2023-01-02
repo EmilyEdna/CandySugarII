@@ -7,26 +7,23 @@
     xmlns:Local="clr-namespace:CandySugar.Controls"
     xmlns:Lottie="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
     x:DataType="Local:E2ViewModel"
-    Background="{AppThemeBinding Dark={StaticResource BasicDrak},
-                                 Light={StaticResource Basic}}">
+    Background="{DynamicResource BasicPage}">
     <Grid>
         <Grid RowDefinitions="45,*" RowSpacing="2">
-            <HorizontalStackLayout Background="{AppThemeBinding Light={StaticResource BasicContainer}, Dark={StaticResource BasicBrushContainerDrak}}">
+            <HorizontalStackLayout Background="{DynamicResource PotoBrushSafe}">
                 <Button BackgroundColor="{StaticResource Platform}" Command="{Binding BackCommand}">
                     <Button.ImageSource>
                         <FontImageSource
                             FontFamily="Solid"
                             Glyph="{Static Lib:FontIcon.ArrowLeft}"
-                            Color="{AppThemeBinding Light={StaticResource BasicPrimary},
-                                                    Dark={StaticResource BasicPrimaryDrak}}" />
+                            Color="{DynamicResource BasicPrimary}" />
                     </Button.ImageSource>
                 </Button>
                 <VerticalStackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Center">
                     <Label
                         FontSize="15"
                         Text="{Binding Title}"
-                        TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                    Light={StaticResource BasicDrak}}" />
+                        TextColor="{DynamicResource Basic}" />
                 </VerticalStackLayout>
             </HorizontalStackLayout>
             <CollectionView
@@ -40,8 +37,7 @@
                         <Label
                             FontSize="18"
                             Text="{Binding .}"
-                            TextColor="{AppThemeBinding Dark={StaticResource Basic},
-                                                        Light={StaticResource BasicDrak}}" />
+                            TextColor="{DynamicResource Basic}" />
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

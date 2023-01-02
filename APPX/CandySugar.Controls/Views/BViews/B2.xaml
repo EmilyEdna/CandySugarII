@@ -6,8 +6,7 @@
     xmlns:Lib="clr-namespace:CandySugar.Library;assembly=CandySugar.Library"
     xmlns:Local="clr-namespace:CandySugar.Controls"
     x:DataType="Local:B2ViewModel"
-    Background="{AppThemeBinding Dark={StaticResource BasicDrak},
-                                 Light={StaticResource Basic}}">
+    Background="{DynamicResource BasicPage}">
     <Grid>
         <WebView x:Name="Player" />
         <Grid ColumnDefinitions="*,*" ColumnSpacing="2">
@@ -19,8 +18,7 @@
                     <FontImageSource
                         FontFamily="Thin"
                         Glyph="{Static Lib:FontIcon.Left}"
-                        Color="{AppThemeBinding Light={StaticResource BasicContainer},
-                                                Dark={StaticResource PotoSafeDark}}" />
+                        Color="{DynamicResource PotoSafe}" />
                 </ImageButton.Source>
             </ImageButton>
             <ImageButton
@@ -32,8 +30,7 @@
                     <FontImageSource
                         FontFamily="Thin"
                         Glyph="{Static Lib:FontIcon.Right}"
-                        Color="{AppThemeBinding Light={StaticResource BasicContainer},
-                                                Dark={StaticResource PotoSafeDark}}" />
+                        Color="{DynamicResource PotoSafe}" />
                 </ImageButton.Source>
             </ImageButton>
         </Grid>
