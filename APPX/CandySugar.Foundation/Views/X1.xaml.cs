@@ -19,13 +19,13 @@ public partial class X1 : ContentPage
 
     private async void ViewEvent(object sender, WebNavigatedEventArgs e)
     {
-        if (e.Url.Contains("https://vidhub.top/vodplay/"))
-        {
-            var Doc = await new HtmlWeb().LoadFromWebAsync(e.Url);
-            var path = $"https://vidhub.top{Doc.DocumentNode.SelectSingleNode("//iframe[@id='player_if']").GetAttributeValue("src", "")}";
-            Player.Source = path;
-            //await ViewModel.Navgation(path);
-        }
+        //if (e.Url.Contains("https://vidhub.top/vodplay/"))
+        //{
+        //    var Doc = await new HtmlWeb().LoadFromWebAsync(e.Url);
+        //    var path = $"https://vidhub.top{Doc.DocumentNode.SelectSingleNode("//iframe[@id='player_if']").GetAttributeValue("src", "")}";
+        //    Player.Source = path;
+        //    await ViewModel.Navgation(path);
+        //}
     }
 
     private void GoEvent(object sender, EventArgs e)

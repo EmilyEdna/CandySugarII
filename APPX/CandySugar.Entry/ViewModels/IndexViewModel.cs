@@ -113,7 +113,8 @@ namespace CandySugar.Entry.ViewModels
                         BindingContext = new HViewModel(this.BaseServices)
                     };
                     break;
-                case "太阳":
+                case "运动":
+              
                     this.Content = new I
                     {
                         BindingContext = new IViewModel(this.BaseServices)
@@ -125,7 +126,7 @@ namespace CandySugar.Entry.ViewModels
                         BindingContext = new JViewModel(this.BaseServices)
                     };
                     break;
-                case "运动":
+                case "太阳":
                     this.Content = new K
                     {
                         BindingContext = new KViewModel(this.BaseServices)
@@ -176,6 +177,12 @@ namespace CandySugar.Entry.ViewModels
             if (Content is H HView)
             {
                 var model = (HView.BindingContext as HViewModel);
+                model.Key = input;
+                Task.Run(() => model.QueryInit(false));
+            }
+            if (Content is I IView)
+            {
+                var model = (IView.BindingContext as IViewModel);
                 model.Key = input;
                 Task.Run(() => model.QueryInit(false));
             }

@@ -16,6 +16,7 @@ namespace CandySugar.Entry
                 .UseMauiCommunityToolkit()
                 .UseUraniumUI()
                 .UseSkiaSharp()
+                .UseRender()
                 .UsePrism(prism => prism.ConfigureModuleCatalog(moduleCatalog =>
                 {
                     //配置模块目录

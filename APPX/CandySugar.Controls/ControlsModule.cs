@@ -17,7 +17,7 @@ namespace CandySugar.Controls
             DataCenter.RegistFunc();
             HttpEvent.HttpActionEvent = new Action<HttpClient, Exception>((client, ex) =>
             {
-                containerProvider.Resolve<IService>().AddLog("HttpClient请求异常",ex);
+                containerProvider.Resolve<IService>().AddLog("HttpClient请求异常", ex);
             });
             HttpEvent.RestActionEvent = new Action<RestClient, Exception>((client, ex) =>
             {
@@ -46,6 +46,8 @@ namespace CandySugar.Controls
 
             containerRegistry.RegisterForNavigation<H1, H1ViewModel>();
             containerRegistry.RegisterForNavigation<H2, H2ViewModel>();
+
+            containerRegistry.RegisterForNavigation<I1, I1ViewModel>();
         }
     }
 }

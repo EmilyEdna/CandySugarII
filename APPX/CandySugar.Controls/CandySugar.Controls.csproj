@@ -104,6 +104,9 @@
 	  <MauiXaml Update="Views\HViews\H2.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\IViews\I1.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\K.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

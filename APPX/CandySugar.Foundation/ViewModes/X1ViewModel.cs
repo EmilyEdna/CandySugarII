@@ -19,7 +19,7 @@ namespace CandySugar.Foundation
         });
         #endregion
 
-        #region 
+        #region  Method
         public async Task Navgation(string Path)
         {
             await Nav.NavigateAsync(new Uri("B2", UriKind.Relative), new NavigationParameters { { "Route", Path }, { "Inner", false } });

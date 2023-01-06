@@ -4,8 +4,9 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:Local="clr-namespace:CandySugar.Controls"
+    xmlns:Lottie="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
     xmlns:MC="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
-    xmlns:sdk="clr-namespace:Sdk.Component.Hnime.sdk.ViewModel.Response;assembly=Sdk.Component"
+    xmlns:sdk="clr-namespace:Sdk.Component.Axgle.sdk.ViewModel.Response;assembly=Sdk.Component"
     x:DataType="Local:IViewModel">
     <Local:CandyUIView.Attachments>
         <Local:BottomView>
@@ -38,14 +39,14 @@
                     ItemsLayout="HorizontalList"
                     ItemsSource="{Binding InitResult}">
                     <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="sdk:HnimeInitResult">
+                        <DataTemplate x:DataType="sdk:AxgleInitResult">
                             <Button
                                 Margin="0,0,0,15"
                                 Command="{Binding GroupCammand, Source={RelativeSource AncestorType={x:Type Local:IViewModel}}}"
-                                CommandParameter="{Binding Route}"
+                                CommandParameter="{Binding AId}"
                                 FontFamily="Sans"
                                 StyleClass="TextButton"
-                                Text="{Binding Title}"
+                                Text="{Binding ShortName}"
                                 TextColor="{DynamicResource Basic}" />
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
@@ -54,21 +55,22 @@
         </Local:BottomView>
     </Local:CandyUIView.Attachments>
     <Grid>
-        <ActivityIndicator
-            HeightRequest="20"
+        <Lottie:SKLottieView
+            HeightRequest="200"
             HorizontalOptions="Center"
-            IsRunning="{Binding Activity}"
+            IsEnabled="{Binding Activity}"
             IsVisible="{Binding Activity}"
-            VerticalOptions="Center"
-            WidthRequest="20"
-            Color="{DynamicResource SurfacePrimary}" />
+            RepeatCount="-1"
+            SemanticProperties.Description="Loading"
+            Source="lottie_loading.json"
+            WidthRequest="200" />
         <RefreshView
             Command="{Binding RefreshCommand}"
             IsRefreshing="{Binding Refresh}"
             RefreshColor="{DynamicResource SurfaceContainer}">
             <CollectionView
                 ItemSizingStrategy="MeasureAllItems"
-                ItemsSource="{Binding Result}"
+                ItemsSource="{Binding QueryResult}"
                 RemainingItemsThreshold="0"
                 RemainingItemsThresholdReachedCommand="{Binding MoreCommand}">
                 <CollectionView.ItemsLayout>
@@ -79,30 +81,38 @@
                         VerticalItemSpacing="5" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="sdk:HnimeSearchElementResult">
+                    <DataTemplate x:DataType="sdk:AxgleSearchElementResult">
                         <Border Stroke="{DynamicResource PotoBrushSafe}">
                             <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding DetailCommand, Source={RelativeSource AncestorType={x:Type Local:IViewModel}}}" CommandParameter="{Binding Watch}" />
+                                <TapGestureRecognizer Command="{Binding DetailCommand, Source={RelativeSource AncestorType={x:Type Local:IViewModel}}}" CommandParameter="{Binding Play}" />
                             </Border.GestureRecognizers>
-                            <Grid ColumnDefinitions="Auto,*">
+                            <Grid RowDefinitions="Auto,*">
                                 <Border
                                     HeightRequest="130"
                                     StrokeShape="RoundRectangle 0"
-                                    WidthRequest="90">
+                                    WidthRequest="180">
                                     <Grid>
                                         <ActivityIndicator
                                             IsRunning="False"
                                             VerticalOptions="Center"
                                             Color="{DynamicResource SurfacePrimary}" />
                                         <Image
-                                            Local:ImageDep.Source="{Binding Cover}"
+                                            Local:ImageDep.Source="{Binding Preview}"
                                             Local:ImageDep.Type="4"
                                             Aspect="Fill" />
+                                        <Label
+                                            Margin="0,0,5,0"
+                                            FontSize="10"
+                                            HorizontalOptions="End"
+                                            LineBreakMode="WordWrap"
+                                            Text="{Binding Duration}"
+                                            TextColor="{DynamicResource PotoSafe}"
+                                            VerticalOptions="End" />
                                     </Grid>
                                 </Border>
-                                <StackLayout Grid.Column="1" VerticalOptions="StartAndExpand">
+                                <StackLayout Grid.Row="1" VerticalOptions="StartAndExpand">
                                     <Label
-                                        Margin="10,0,0,0"
+                                        FontSize="10"
                                         LineBreakMode="WordWrap"
                                         Text="{Binding Title}"
                                         TextColor="{DynamicResource Basic}" />

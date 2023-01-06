@@ -50,6 +50,12 @@ namespace CandySugar.Entry
             base.OnResume();
             await Task.Delay(500);
         }
+
+        public override bool OnKeyDown([GeneratedEnum] Keycode keyCode, KeyEvent e)
+        {
+            if(keyCode== Keycode.Back) return true;
+            return base.OnKeyDown(keyCode, e);
+        }
         /// <summary>
         /// 全局异常
         /// </summary>
