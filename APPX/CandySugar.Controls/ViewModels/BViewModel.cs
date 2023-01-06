@@ -22,7 +22,7 @@ namespace CandySugar.Controls
 
         public override void OnLoad()
         {
-            Task.Run(() => Init());
+            Task.Run(Init);
         }
 
         #region Property
