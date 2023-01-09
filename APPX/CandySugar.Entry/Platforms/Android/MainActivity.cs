@@ -3,13 +3,9 @@ using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
-using Android.Util;
 using Android.Views;
-using Android.Widget;
-using CandySugar.Library;
-using CandySugar.Library.Platforms.Android;
 using CandySugar.Library.Platforms.Android.Audio;
-using Esprima.Ast;
+using XExten.Advance.Maui.MainActivity;
 
 namespace CandySugar.Entry
 {
