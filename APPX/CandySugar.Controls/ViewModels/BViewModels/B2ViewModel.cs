@@ -1,7 +1,6 @@
 ﻿using CandySugar.Library;
 using CandySugar.Library.Common;
-using CandySugar.Library.Common.Device;
-using CandySugar.Library.Common.Screen;
+
 
 namespace CandySugar.Controls
 {
@@ -31,14 +30,18 @@ namespace CandySugar.Controls
         }
         public void Show()
         {
-            CrossDeviceOrientation.Current.LockOrientation(DeviceOrientations.Portrait);
-            ICrossScreen.ScreenState.ShowStatusBar();
+#if ANDROID
+            XExten.Advance.Maui.Direction.IDirection.Instance.LockOrientation(XExten.Advance.Maui.Direction.Platforms.Android.OrientationEnum.Portrait);
+            XExten.Advance.Maui.Bar.IBarStatus.Instance.ShowStatusBar();
+#endif
             Nav.GoBackAsync();
         }
         public void Hidden()
         {
-            CrossDeviceOrientation.Current.LockOrientation(DeviceOrientations.Landscape);
-            ICrossScreen.ScreenState.HiddenStatusBar();
+#if ANDROID
+            XExten.Advance.Maui.Direction.IDirection.Instance.LockOrientation(XExten.Advance.Maui.Direction.Platforms.Android.OrientationEnum.Landscape);
+            XExten.Advance.Maui.Bar.IBarStatus.Instance.HiddenStatusBar();
+#endif
         }
         #endregion
 
@@ -47,6 +50,6 @@ namespace CandySugar.Controls
         {
             Show();
         });
-        #endregion
+#endregion
     }
 }

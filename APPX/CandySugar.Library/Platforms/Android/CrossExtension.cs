@@ -1,6 +1,7 @@
 ﻿using Android.Content;
 using Android.OS;
 using CandySugar.Library.Common;
+using XExten.Advance.Maui.MainActivity;
 using Env = Android.OS.Environment;
 using FileProvider = AndroidX.Core.Content.FileProvider;
 using Settings = Android.Provider.Settings;

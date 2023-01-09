@@ -26,6 +26,9 @@
 		<PackageReference Include="UraniumUI.Icons.MaterialIcons" Version="2.1.0" />
 		<PackageReference Include="UraniumUI.Material" Version="2.1.0" />
 		<PackageReference Include="XExten.Advance" Version="1.2.4.4-preview" />
+		<PackageReference Include="XExten.Advance.Maui.Bar" Version="1.0.0" />
+		<PackageReference Include="XExten.Advance.Maui.FileDown" Version="1.0.0" />
+		<PackageReference Include="XExten.Advance.Maui.Gravity" Version="1.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>

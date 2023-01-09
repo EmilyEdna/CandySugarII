@@ -1,7 +1,7 @@
 ﻿using Android.Graphics;
 using Android.Media;
 using CandySugar.Library.Common.Audio;
-using AndroidApp = Android.App;
+using XExten.Advance.Maui.MainActivity;
 using AudioMetadata = CandySugar.Library.Common.Audio.AudioMetadata;
 
 namespace CandySugar.Library.Platforms.Android.Audio
