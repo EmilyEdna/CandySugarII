@@ -69,6 +69,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CandySugar.Controls", "APPX
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CandySugar.Foundation", "APPX\CandySugar.Foundation\CandySugar.Foundation.csproj", "{88415475-1B0F-406B-887F-93E3D30F230D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "桌面组件", "桌面组件", "{6EC65E80-C2A1-4083-B459-E785926EF562}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CandySugar.Component", "Com\CandySugar.Component\CandySugar.Component.csproj", "{371A6C32-0EBF-4BAC-8F8F-B219ED1DA18A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -153,6 +157,10 @@ Global
 		{88415475-1B0F-406B-887F-93E3D30F230D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88415475-1B0F-406B-887F-93E3D30F230D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88415475-1B0F-406B-887F-93E3D30F230D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{371A6C32-0EBF-4BAC-8F8F-B219ED1DA18A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{371A6C32-0EBF-4BAC-8F8F-B219ED1DA18A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{371A6C32-0EBF-4BAC-8F8F-B219ED1DA18A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{371A6C32-0EBF-4BAC-8F8F-B219ED1DA18A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -187,6 +195,7 @@ Global
 		{6E487C43-BC4E-4359-9CD8-2FECB32BFB04} = {844CC809-7AA8-4A48-8DF4-388E63EA6E03}
 		{FB84C2B6-6059-4E18-8070-24711E077F50} = {BB58D1B4-CE4D-4A3D-9475-988C91C9042B}
 		{88415475-1B0F-406B-887F-93E3D30F230D} = {BB58D1B4-CE4D-4A3D-9475-988C91C9042B}
+		{371A6C32-0EBF-4BAC-8F8F-B219ED1DA18A} = {6EC65E80-C2A1-4083-B459-E785926EF562}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F97AB604-6A74-4B7E-9792-59D62C7D490B}
