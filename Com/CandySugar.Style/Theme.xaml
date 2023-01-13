@@ -11,7 +11,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Window">
-                    <Border BorderBrush="WhiteSmoke" BorderThickness="2">
+                    <Border BorderBrush="SkyBlue" BorderThickness="2">
                         <Border.Background>
                             <ImageBrush ImageSource="/CandySugar.Style;component/Resources/Backgroud.jpg" />
                         </Border.Background>

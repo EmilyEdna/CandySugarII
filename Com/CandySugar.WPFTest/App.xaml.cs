@@ -10,7 +10,6 @@ namespace CandySugar.WPFTest
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = ThemeExtension.GetStyleAbsoluteUri("LightTheme.xaml") });
             this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = ThemeExtension.GetStyleAbsoluteUri("Theme.xaml") });
             base.OnStartup(e);
         }

@@ -15,9 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="DarkTheme.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Theme.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
