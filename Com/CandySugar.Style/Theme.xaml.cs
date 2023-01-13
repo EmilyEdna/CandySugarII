@@ -1,8 +1,9 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace CandySugar.Component
+namespace CandySugar.Style
 {
     /// <summary>
     /// Theme.xaml 的交互逻辑
@@ -15,7 +16,6 @@ namespace CandySugar.Component
             if (e.LeftButton == MouseButtonState.Pressed)
                 ((Window)((Border)sender).TemplatedParent).DragMove();
         }
-
         public virtual void MinEvent(object sender, RoutedEventArgs e)
         {
             Window win = (Window)((Button)sender).TemplatedParent;

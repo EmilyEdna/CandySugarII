@@ -1,5 +1,5 @@
 ﻿<ResourceDictionary
-    x:Class="CandySugar.Component.Theme"
+    x:Class="CandySugar.Style.Theme"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style x:Key="WindowUIStyle" TargetType="Window">
@@ -13,7 +13,7 @@
                 <ControlTemplate TargetType="Window">
                     <Border BorderBrush="WhiteSmoke" BorderThickness="2">
                         <Border.Background>
-                            <ImageBrush ImageSource="/Resources/Backgroud.jpg" />
+                            <ImageBrush ImageSource="/CandySugar.Style;component/Resources/Backgroud.jpg" />
                         </Border.Background>
                         <Grid>
                             <Rectangle
@@ -168,7 +168,6 @@
                                         </Button>
                                     </WrapPanel>
                                 </Grid>
-
                             </Border>
                             <ContentPresenter Content="{TemplateBinding Content}" />
                         </Grid>
