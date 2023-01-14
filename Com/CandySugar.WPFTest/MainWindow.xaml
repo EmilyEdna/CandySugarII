@@ -8,7 +8,7 @@
     Title="MainWindow"
     Width="800"
     Height="450"
-    Style="{StaticResource WindowUIStyle}"
+    Style="{StaticResource CandyUI}"
     mc:Ignorable="d">
-    <Grid />
+    <Button Content="CandySugar" Style="{StaticResource CandyPrimaryButton}" />
 </Window>

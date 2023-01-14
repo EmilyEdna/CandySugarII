@@ -2,7 +2,7 @@
     x:Class="CandySugar.Style.Theme"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Style x:Key="WindowUIStyle" TargetType="Window">
+    <Style x:Key="CandyUI" TargetType="Window">
         <Setter Property="WindowStyle" Value="None" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
@@ -21,155 +21,161 @@
                                 Height="{TemplateBinding Height}"
                                 Fill="LightSkyBlue"
                                 Opacity=".3" />
-                            <Border
-                                Width="{TemplateBinding Width}"
-                                Height="25"
-                                VerticalAlignment="Top"
-                                Background="DimGray"
-                                Opacity=".7">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <WrapPanel
-                                        Margin="10,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center">
-                                        <TextBlock Foreground="Pink" Text="{TemplateBinding Title}" />
-                                    </WrapPanel>
-                                    <WrapPanel
-                                        Grid.Column="1"
-                                        Margin="0,0,5,0"
-                                        HorizontalAlignment="Right">
-                                        <Button
-                                            Width="25"
-                                            Height="25"
-                                            Background="Transparent"
-                                            BorderThickness="0">
-                                            <Button.Content>
-                                                <Path Stroke="Pink" StrokeThickness="1">
-                                                    <Path.Data>
-                                                        <LineGeometry StartPoint="15,0" />
-                                                    </Path.Data>
-                                                </Path>
-                                            </Button.Content>
-                                            <Button.Style>
-                                                <Style TargetType="Button">
-                                                    <Setter Property="Template">
-                                                        <Setter.Value>
-                                                            <ControlTemplate TargetType="Button">
-                                                                <Border
-                                                                    x:Name="MyBackgroundElement"
-                                                                    BorderBrush="Transparent"
-                                                                    BorderThickness="0">
-                                                                    <ContentPresenter
-                                                                        x:Name="ButtonContentPresenter"
-                                                                        HorizontalAlignment="Center"
-                                                                        VerticalAlignment="Center" />
-                                                                </Border>
-                                                                <ControlTemplate.Triggers>
-                                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                                        <Setter TargetName="MyBackgroundElement" Property="Background" Value="SkyBlue" />
-                                                                        <Setter TargetName="MyBackgroundElement" Property="Opacity" Value="0.8" />
-                                                                    </Trigger>
-                                                                </ControlTemplate.Triggers>
-                                                            </ControlTemplate>
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                    <EventSetter Event="Click" Handler="MinEvent" />
-                                                </Style>
-                                            </Button.Style>
-                                        </Button>
-                                        <Button
-                                            Width="25"
-                                            Height="25"
-                                            Background="Transparent"
-                                            BorderThickness="0">
-                                            <Button.Content>
-                                                <Path Stroke="Pink" StrokeThickness="1">
-                                                    <Path.Data>
-                                                        <RectangleGeometry Rect="0,0,12,12" />
-                                                    </Path.Data>
-                                                </Path>
-                                            </Button.Content>
-                                            <Button.Style>
-                                                <Style TargetType="Button">
-                                                    <Setter Property="Template">
-                                                        <Setter.Value>
-                                                            <ControlTemplate TargetType="Button">
-                                                                <Border
-                                                                    x:Name="MyBackgroundElement"
-                                                                    BorderBrush="Transparent"
-                                                                    BorderThickness="0">
-                                                                    <ContentPresenter
-                                                                        x:Name="ButtonContentPresenter"
-                                                                        HorizontalAlignment="Center"
-                                                                        VerticalAlignment="Center" />
-                                                                </Border>
-                                                                <ControlTemplate.Triggers>
-                                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                                        <Setter TargetName="MyBackgroundElement" Property="Background" Value="SkyBlue" />
-                                                                        <Setter TargetName="MyBackgroundElement" Property="Opacity" Value="0.8" />
-                                                                    </Trigger>
-                                                                </ControlTemplate.Triggers>
-                                                            </ControlTemplate>
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                    <EventSetter Event="Click" Handler="MaxEvent" />
-                                                </Style>
-                                            </Button.Style>
-                                        </Button>
-                                        <Button
-                                            Width="25"
-                                            Height="25"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Background="Transparent"
-                                            BorderThickness="0">
-                                            <Button.Content>
-                                                <Grid Margin="3">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="25" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Border
+                                    Width="{TemplateBinding Width}"
+                                    Height="25"
+                                    VerticalAlignment="Top"
+                                    Background="DimGray"
+                                    Opacity=".7">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <WrapPanel
+                                            Margin="10,0,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center">
+                                            <TextBlock Foreground="Pink" Text="{TemplateBinding Title}" />
+                                        </WrapPanel>
+                                        <WrapPanel
+                                            Grid.Column="1"
+                                            Margin="0,0,5,0"
+                                            HorizontalAlignment="Right">
+                                            <Button
+                                                Width="25"
+                                                Height="25"
+                                                Background="Transparent"
+                                                BorderThickness="0">
+                                                <Button.Content>
                                                     <Path Stroke="Pink" StrokeThickness="1">
                                                         <Path.Data>
-                                                            <GeometryGroup>
-                                                                <PathGeometry Figures="M0,0 L15,15" />
-                                                                <PathGeometry Figures="M0,15 L15,0" />
-                                                            </GeometryGroup>
+                                                            <LineGeometry StartPoint="15,0" />
                                                         </Path.Data>
                                                     </Path>
-                                                </Grid>
-                                            </Button.Content>
-                                            <Button.Style>
-                                                <Style TargetType="Button">
-                                                    <Setter Property="Template">
-                                                        <Setter.Value>
-                                                            <ControlTemplate TargetType="Button">
-                                                                <Border
-                                                                    x:Name="MyBackgroundElement"
-                                                                    BorderBrush="Transparent"
-                                                                    BorderThickness="0">
-                                                                    <ContentPresenter
-                                                                        x:Name="ButtonContentPresenter"
-                                                                        HorizontalAlignment="Center"
-                                                                        VerticalAlignment="Center" />
-                                                                </Border>
-                                                                <ControlTemplate.Triggers>
-                                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                                        <Setter TargetName="MyBackgroundElement" Property="Background" Value="SkyBlue" />
-                                                                        <Setter TargetName="MyBackgroundElement" Property="Opacity" Value="0.8" />
-                                                                    </Trigger>
-                                                                </ControlTemplate.Triggers>
-                                                            </ControlTemplate>
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                    <EventSetter Event="Click" Handler="CloseEvent" />
-                                                </Style>
-                                            </Button.Style>
-                                        </Button>
-                                    </WrapPanel>
-                                </Grid>
-                            </Border>
-                            <ContentPresenter Content="{TemplateBinding Content}" />
+                                                </Button.Content>
+                                                <Button.Style>
+                                                    <Style TargetType="Button">
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="Button">
+                                                                    <Border
+                                                                        x:Name="MyBackgroundElement"
+                                                                        BorderBrush="Transparent"
+                                                                        BorderThickness="0">
+                                                                        <ContentPresenter
+                                                                            x:Name="ButtonContentPresenter"
+                                                                            HorizontalAlignment="Center"
+                                                                            VerticalAlignment="Center" />
+                                                                    </Border>
+                                                                    <ControlTemplate.Triggers>
+                                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                                            <Setter TargetName="MyBackgroundElement" Property="Background" Value="SkyBlue" />
+                                                                            <Setter TargetName="MyBackgroundElement" Property="Opacity" Value="0.8" />
+                                                                        </Trigger>
+                                                                    </ControlTemplate.Triggers>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                        <EventSetter Event="Click" Handler="MinEvent" />
+                                                    </Style>
+                                                </Button.Style>
+                                            </Button>
+                                            <Button
+                                                Width="25"
+                                                Height="25"
+                                                Background="Transparent"
+                                                BorderThickness="0">
+                                                <Button.Content>
+                                                    <Path Stroke="Pink" StrokeThickness="1">
+                                                        <Path.Data>
+                                                            <RectangleGeometry Rect="0,0,12,12" />
+                                                        </Path.Data>
+                                                    </Path>
+                                                </Button.Content>
+                                                <Button.Style>
+                                                    <Style TargetType="Button">
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="Button">
+                                                                    <Border
+                                                                        x:Name="MyBackgroundElement"
+                                                                        BorderBrush="Transparent"
+                                                                        BorderThickness="0">
+                                                                        <ContentPresenter
+                                                                            x:Name="ButtonContentPresenter"
+                                                                            HorizontalAlignment="Center"
+                                                                            VerticalAlignment="Center" />
+                                                                    </Border>
+                                                                    <ControlTemplate.Triggers>
+                                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                                            <Setter TargetName="MyBackgroundElement" Property="Background" Value="SkyBlue" />
+                                                                            <Setter TargetName="MyBackgroundElement" Property="Opacity" Value="0.8" />
+                                                                        </Trigger>
+                                                                    </ControlTemplate.Triggers>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                        <EventSetter Event="Click" Handler="MaxEvent" />
+                                                    </Style>
+                                                </Button.Style>
+                                            </Button>
+                                            <Button
+                                                Width="25"
+                                                Height="25"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Background="Transparent"
+                                                BorderThickness="0">
+                                                <Button.Content>
+                                                    <Grid Margin="3">
+                                                        <Path Stroke="Pink" StrokeThickness="1">
+                                                            <Path.Data>
+                                                                <GeometryGroup>
+                                                                    <PathGeometry Figures="M0,0 L15,15" />
+                                                                    <PathGeometry Figures="M0,15 L15,0" />
+                                                                </GeometryGroup>
+                                                            </Path.Data>
+                                                        </Path>
+                                                    </Grid>
+                                                </Button.Content>
+                                                <Button.Style>
+                                                    <Style TargetType="Button">
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="Button">
+                                                                    <Border
+                                                                        x:Name="MyBackgroundElement"
+                                                                        BorderBrush="Transparent"
+                                                                        BorderThickness="0">
+                                                                        <ContentPresenter
+                                                                            x:Name="ButtonContentPresenter"
+                                                                            HorizontalAlignment="Center"
+                                                                            VerticalAlignment="Center" />
+                                                                    </Border>
+                                                                    <ControlTemplate.Triggers>
+                                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                                            <Setter TargetName="MyBackgroundElement" Property="Background" Value="SkyBlue" />
+                                                                            <Setter TargetName="MyBackgroundElement" Property="Opacity" Value="0.8" />
+                                                                        </Trigger>
+                                                                    </ControlTemplate.Triggers>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                        <EventSetter Event="Click" Handler="CloseEvent" />
+                                                    </Style>
+                                                </Button.Style>
+                                            </Button>
+                                        </WrapPanel>
+                                    </Grid>
+                                </Border>
+                                <ContentPresenter Grid.Row="1" Content="{TemplateBinding Content}" />
+                            </Grid>
                         </Grid>
                         <Border.Style>
                             <Style TargetType="Border">
@@ -177,6 +183,39 @@
                             </Style>
                         </Border.Style>
                     </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="CandyPrimaryButton" TargetType="Button">
+        <Setter Property="Width" Value="100" />
+        <Setter Property="Height" Value="35" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border
+                        x:Name="Element"
+                        BorderBrush="Gray"
+                        BorderThickness="1">
+                        <Border.Background>
+                            <SolidColorBrush Opacity=".6" Color=" DeepSkyBlue" />
+                        </Border.Background>
+                        <ContentPresenter
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Content="{TemplateBinding Content}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Element" Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Opacity=".6" Color="HotPink" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Element" Property="BorderBrush" Value="Black" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
