@@ -129,6 +129,20 @@
                                             Color="{DynamicResource BasicPrimary}" />
                                     </ImageButton.Source>
                                 </ImageButton>
+                                <ImageButton
+                                    Command="{Binding DownCommand, Source={RelativeSource AncestorType={x:Type Local:CViewModel}}}"
+                                    CommandParameter="{Binding .}"
+                                    HeightRequest="25"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="End"
+                                    WidthRequest="25">
+                                    <ImageButton.Source>
+                                        <FontImageSource
+                                            FontFamily="Regular"
+                                            Glyph="{Static Lib:FontIcon.CloudArrowDown}"
+                                            Color="{DynamicResource BasicPrimary}" />
+                                    </ImageButton.Source>
+                                </ImageButton>
                             </Grid>
                         </Border>
                     </DataTemplate>

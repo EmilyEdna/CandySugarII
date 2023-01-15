@@ -1,18 +1,11 @@
-﻿using CandySugar.Library;
-using Sdk.Component.Image.sdk.ViewModel;
+﻿using CandySugar.Library.Common;
 using Sdk.Component.Image.sdk;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Sdk.Component.Image.sdk.ViewModel;
 using Sdk.Component.Image.sdk.ViewModel.Enums;
 using Sdk.Component.Image.sdk.ViewModel.Request;
 using Sdk.Component.Image.sdk.ViewModel.Response;
 using System.Collections.ObjectModel;
-using XExten.Advance.LinqFramework;
-using CandySugar.Logic;
-using Prism.Ioc;
+using XExten.Advance.Maui.FileDown;
 
 namespace CandySugar.Controls
 {
@@ -140,6 +133,19 @@ namespace CandySugar.Controls
                 "CQueryInit异常".OpenToast();
             }
         }
+        void Down(ImageElementResult input)
+        {
+#if ANDROID
+            var Route = SyncStatic.CreateDir(Path.Combine(ICrossExtension.Instance.AndriodPath, "CandyDown", "Image"));
+            var URI = input.OriginalJepg.IsNullOrEmpty() ? input.OriginalPng : input.OriginalJepg;
+            var FileName = URI.Split("/").LastOrDefault();
+            var Current = IDownFileManager.Current;
+            Current.PathNameForDownloadedFile = new Func<XExten.Advance.Maui.FileDown.Platforms.Android.IDownloadFile, string>(File => Path.Combine(Route, FileName));
+            ((XExten.Advance.Maui.FileDown.Platforms.Android.DownManager)Current).IsVisibleInDownloadsUi = true;
+            var File = IDownFileManager.Current.CreateDownloadFile(URI);
+            Current.Start(File);
+#endif
+        }
         #endregion
 
         #region Command
@@ -173,6 +179,10 @@ namespace CandySugar.Controls
         public DelegateCommand ShowCammand => new(() =>
         {
             Nav.NavigateAsync(new Uri("C1", UriKind.Relative), new NavigationParameters { { "Route", Element.OriginalPng.IsNullOrEmpty() ? Element.OriginalPng : Element.OriginalJepg } });
+        });
+        public DelegateCommand<ImageElementResult> DownCommand => new(input =>
+        {
+            Task.Run(() => Down(input));
         });
         #endregion
     }
