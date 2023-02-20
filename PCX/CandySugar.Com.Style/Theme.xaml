@@ -2,6 +2,7 @@
     x:Class="CandySugar.Com.Style.Theme"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:lb="clr-namespace:CandySugar.Com.Library.Enums;assembly=CandySugar.Com.Library"
     xmlns:uc="http://ctrl.candy.com">
     <Style x:Key="CandyDefaultWindowStyle" TargetType="Window">
         <Setter Property="WindowStyle" Value="None" />
@@ -217,38 +218,38 @@
                             </Setter>
                             <Setter TargetName="Element" Property="BorderBrush" Value="Black" />
                         </Trigger>
-                        <DataTrigger Binding="{Binding BorderType, ElementName=Element}" Value="1">
+                        <DataTrigger Binding="{Binding BorderType, ElementName=Element}" Value="{x:Static lb:EButton.Primary}">
                             <Setter TargetName="Element" Property="Background">
                                 <Setter.Value>
                                     <SolidColorBrush Opacity=".6" Color="DeepSkyBlue" />
                                 </Setter.Value>
                             </Setter>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding BorderType, ElementName=Element}" Value="2">
+                        <DataTrigger Binding="{Binding BorderType, ElementName=Element}" Value="{x:Static lb:EButton.Info}">
                             <Setter TargetName="Element" Property="Background">
                                 <Setter.Value>
                                     <SolidColorBrush Opacity=".6" Color="SkyBlue" />
                                 </Setter.Value>
                             </Setter>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding BorderType, ElementName=Element}" Value="3">
+                        <DataTrigger Binding="{Binding BorderType, ElementName=Element}" Value="{x:Static lb:EButton.Success}">
                             <Setter TargetName="Element" Property="Background">
                                 <Setter.Value>
                                     <SolidColorBrush Opacity=".6" Color="LightGreen" />
                                 </Setter.Value>
                             </Setter>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding BorderType, ElementName=Element}" Value="4">
+                        <DataTrigger Binding="{Binding BorderType, ElementName=Element}" Value="{x:Static lb:EButton.Warning}">
                             <Setter TargetName="Element" Property="Background">
                                 <Setter.Value>
                                     <SolidColorBrush Opacity=".6" Color="Tomato" />
                                 </Setter.Value>
                             </Setter>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding BorderType, ElementName=Element}" Value="5">
+                        <DataTrigger Binding="{Binding BorderType, ElementName=Element}" Value="{x:Static lb:EButton.Error}">
                             <Setter TargetName="Element" Property="Background">
                                 <Setter.Value>
-                                    <SolidColorBrush Opacity=".6" Color="IndianRed" />
+                                    <SolidColorBrush Opacity=".6" Color="DarkRed" />
                                 </Setter.Value>
                             </Setter>
                         </DataTrigger>

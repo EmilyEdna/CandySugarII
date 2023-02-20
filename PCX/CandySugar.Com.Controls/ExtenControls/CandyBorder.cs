@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CandySugar.Com.Library.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,15 +11,15 @@ namespace CandySugar.Com.Controls.ExtenControls
 {
     public class CandyBorder:Border
     {
-        public int BorderType
+        public EButton BorderType
         {
-            get { return (int)GetValue(BorderTypeProperty); }
+            get { return (EButton)GetValue(BorderTypeProperty); }
             set { SetValue(BorderTypeProperty, value); }
         }
         /// <summary>
-        /// [1:Primary] [2:Info] [3:Success] [4:Warn] [5:Error]
+        /// [Primary] [Info] [Success] [Warn] [Error]
         /// </summary>
         public static readonly DependencyProperty BorderTypeProperty =
-            DependencyProperty.Register("BorderType", typeof(int), typeof(CandyBorder), new PropertyMetadata(1));
+            DependencyProperty.Register("BorderType", typeof(EButton), typeof(CandyBorder), new PropertyMetadata(EButton.Primary));
     }
 }

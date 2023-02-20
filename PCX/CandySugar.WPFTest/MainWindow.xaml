@@ -12,7 +12,7 @@
     Style="{StaticResource CandyDefaultWindowStyle}"
     mc:Ignorable="d">
     <uc:CandyButton
-        ButtonType="5"
+        ButtonType="Warning"
         Content="CandySugar"
         Style="{StaticResource CandyButtonStyle}" />
 </Window>
