@@ -5,10 +5,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:CandySugar.WPFTest"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="http://ctrl.candy.com"
     Title="MainWindow"
     Width="800"
     Height="450"
-    Style="{StaticResource CandyUI}"
+    Style="{StaticResource CandyDefaultWindowStyle}"
     mc:Ignorable="d">
-    <Button Content="CandySugar" Style="{StaticResource CandyPrimaryButton}" />
+    <uc:CandyButton
+        ButtonType="5"
+        Content="CandySugar"
+        Style="{StaticResource CandyButtonStyle}" />
 </Window>

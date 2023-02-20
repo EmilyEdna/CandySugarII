@@ -2,5 +2,14 @@
     x:Class="CandySugar.WPFTest.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cs="http://style.candy.com"
     xmlns:local="clr-namespace:CandySugar.WPFTest"
-    StartupUri="MainWindow.xaml" />
+    StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <cs:ThemeExtension />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

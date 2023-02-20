@@ -1,8 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
@@ -11,13 +10,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\Backgroud.jpg" />
+    <ProjectReference Include="..\CandySugar.Com.Controls\CandySugar.Com.Controls.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Theme.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Resource Include="Resources\Backgroud.jpg" />
   </ItemGroup>
 
 </Project>

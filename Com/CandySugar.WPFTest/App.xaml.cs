@@ -1,4 +1,4 @@
-﻿using CandySugar.Style;
+﻿using CandySugar.Com.Style;
 using System.Windows;
 
 namespace CandySugar.WPFTest
@@ -10,7 +10,7 @@ namespace CandySugar.WPFTest
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = ThemeExtension.GetStyleAbsoluteUri("Theme.xaml") });
+            //this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = ThemeExtension.GetStyleAbsoluteUri("Theme.xaml") });
             base.OnStartup(e);
         }
     }
