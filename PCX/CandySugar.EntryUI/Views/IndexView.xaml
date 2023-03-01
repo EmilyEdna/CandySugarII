@@ -6,9 +6,11 @@
     xmlns:local="clr-namespace:CandySugar.EntryUI.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="http://ctrl.candy.com"
-    Title="IndexView"
+    xmlns:vm="clr-namespace:CandySugar.EntryUI.ViewModels"
+    Title="{Binding Title}"
     Width="800"
     Height="450"
+    d:DataContext="{d:DesignInstance vm:IndexViewModel}"
     Style="{StaticResource CandyDefaultWindowStyle}"
     mc:Ignorable="d">
     <uc:CandyButton
