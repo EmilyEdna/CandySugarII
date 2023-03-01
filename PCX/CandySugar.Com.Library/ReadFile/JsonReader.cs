@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace CandySugar.Com.Library.ReadJson
+namespace CandySugar.Com.Library.ReadFile
 {
     public class JsonReader
     {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows;
 
-namespace CandySugar.Com.Library.CtrlTree
+namespace CandySugar.Com.Library.VisualTree
 {
     public static class VisualHelper
     {
