@@ -13,7 +13,7 @@
             </ct:ApplicationLoader.Bootstrapper>
 
             <ct:ApplicationLoader.MergedDictionaries>
-                <hc:StandaloneTheme />
+                <hc:Theme />
                 <cs:ThemeExtension />
             </ct:ApplicationLoader.MergedDictionaries>
         </ct:ApplicationLoader>
