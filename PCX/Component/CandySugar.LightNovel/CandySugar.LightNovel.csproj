@@ -7,7 +7,7 @@
 		<!--动态加载-->
 		<EnableDynamicLoading>true</EnableDynamicLoading>
 		<!--Aot发布-->
-		<PublishAot>true</PublishAot>
+		<!--<PublishAot>true</PublishAot>-->
 	</PropertyGroup>
 
 	<ItemGroup>

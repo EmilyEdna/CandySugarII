@@ -15,12 +15,13 @@ namespace CandySugar.Com.Library.DLLoader
         private string _basePath;
         private AssemblyLoadContext context;
         public static ConcurrentQueue<Type> Types = new ConcurrentQueue<Type>();
+        public static ConcurrentQueue<Type> ConfTypes = new ConcurrentQueue<Type>();
         public AssemblyLoader(string basePath)
         {
             _basePath = basePath;
         }
 
-        public Type Load(string dllFileName, string typeName)
+        public void Load(string dllFileName, string typeName)
         {
             context = new AssemblyLoadContext(dllFileName);
             context.Resolving += Context_Resolving;
@@ -35,7 +36,6 @@ namespace CandySugar.Com.Library.DLLoader
                         Assembly assembly = context.LoadFromStream(stream);
                         Type type = assembly.GetTypes().FirstOrDefault(t => t.Name.ToLower().Equals(typeName.ToLower()));
                         Types.Enqueue(type);
-                        return type;
                     }
                 }
                 catch (Exception ex)
@@ -48,9 +48,37 @@ namespace CandySugar.Com.Library.DLLoader
             {
                 Console.WriteLine($"节点动态库{dllFileName}不存在：{path}");
             }
-            return null;
         }
+        public void Load(string dllFileName, string typeName,string configTypeName)
+        {
+            context = new AssemblyLoadContext(dllFileName);
+            context.Resolving += Context_Resolving;
+            //需要绝对路径
+            string path = Path.Combine(_basePath, dllFileName);
+            if (File.Exists(path))
+            {
+                try
+                {
+                    using (var stream = File.OpenRead(path))
+                    {
+                        Assembly assembly = context.LoadFromStream(stream);
+                        Type type = assembly.GetTypes().FirstOrDefault(t => t.Name.ToLower().Equals(typeName.ToLower()));
+                        Type ctype= assembly.GetTypes().FirstOrDefault(t => t.Name.ToLower().Equals(configTypeName.ToLower())); 
+                        Types.Enqueue(type);
+                        ConfTypes.Enqueue(ctype);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"加载节点{dllFileName}-{typeName}发生异常：{ex.Message},{ex.StackTrace}");
+                }
 
+            }
+            else
+            {
+                Console.WriteLine($"节点动态库{dllFileName}不存在：{path}");
+            }
+        }
         /// <summary>
         /// 加载依赖文件
         /// </summary>

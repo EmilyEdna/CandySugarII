@@ -1,0 +1,17 @@
+﻿<UserControl
+    x:Class="CandySugar.LightNovel.View.IndexView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:CandySugar.LightNovel.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="http://ctrl.candy.com"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Background="WhiteSmoke"
+    mc:Ignorable="d">
+    <uc:CandyButton
+        ButtonType="Warning"
+        Content="CandySugar"
+        Style="{DynamicResource CandyButtonStyle}" />
+</UserControl>

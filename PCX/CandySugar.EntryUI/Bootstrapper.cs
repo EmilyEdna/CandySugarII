@@ -15,6 +15,8 @@ using XExten.Advance;
 using Stylet;
 using CandySugar.EntryUI.ViewModels;
 using StyletIoC;
+using CandySugar.Com.Library.DLLoader;
+using CandySugar.Com.Library;
 
 namespace CandySugar.EntryUI
 {
@@ -25,7 +27,8 @@ namespace CandySugar.EntryUI
         /// </summary>
         protected override void OnStart()
         {
-
+            AssemblyLoader Loader = new AssemblyLoader(CommonHelper.AppPath);
+            Loader.Load("CandySugar.LightNovel.dll", "IndexView", "LightNovelModule");
             HttpEvent.HttpActionEvent = new Action<HttpClient, Exception>((client, ex) =>
             {
                
@@ -38,7 +41,8 @@ namespace CandySugar.EntryUI
 
         protected override void ConfigureIoC(IStyletIoCBuilder builder)
         {
-
+            AssemblyLoader.ConfTypes.TryDequeue(out Type ConfigType);
+            builder.AddModule((StyletIoCModule)Activator.CreateInstance(ConfigType));
         }
 
         /// <summary>
@@ -46,6 +50,9 @@ namespace CandySugar.EntryUI
         /// </summary>
         protected override void Configure()
         {
+            
+
+
             base.Configure();
         }
 

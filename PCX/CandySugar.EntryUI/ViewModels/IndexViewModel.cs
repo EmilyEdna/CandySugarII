@@ -1,9 +1,12 @@
-﻿using Stylet;
+﻿using CandySugar.Com.Library.DLLoader;
+using Stylet;
 using StyletIoC;
+using System;
+using System.Windows.Controls;
 
 namespace CandySugar.EntryUI.ViewModels
 {
-    public   class  IndexViewModel: Conductor<IScreen>
+    public class IndexViewModel : Conductor<IScreen>
     {
         public IContainer Container;
         public IWindowManager WindowManager;
@@ -12,6 +15,8 @@ namespace CandySugar.EntryUI.ViewModels
             this.Container = Container;
             this.WindowManager = WindowManager;
             this.Title = "IndexView";
+            AssemblyLoader.Types.TryDequeue(out Type Controls);
+            CandyControl = (Control)Activator.CreateInstance(Controls);
         }
 
         #region Property
@@ -20,6 +25,12 @@ namespace CandySugar.EntryUI.ViewModels
         {
             get => _Title;
             set => SetAndNotify(ref _Title, value);
+        }
+        private Control _CandyControl;
+        public Control CandyControl
+        {
+            get => _CandyControl;
+            set => SetAndNotify(ref _CandyControl, value);
         }
         #endregion
     }
