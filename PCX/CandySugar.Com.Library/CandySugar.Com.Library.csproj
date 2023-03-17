@@ -14,4 +14,8 @@
     <PackageReference Include="XExten.Advance" Version="1.2.4.4-preview" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Component\CandySugar.Com.Options\CandySugar.Com.Options.csproj" />
+  </ItemGroup>
+
 </Project>

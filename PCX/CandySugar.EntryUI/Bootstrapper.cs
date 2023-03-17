@@ -17,6 +17,8 @@ using CandySugar.EntryUI.ViewModels;
 using StyletIoC;
 using CandySugar.Com.Library.DLLoader;
 using CandySugar.Com.Library;
+using CandySugar.Com.Library.ReadFile;
+using CandySugar.Com.Options.ComponentObject;
 
 namespace CandySugar.EntryUI
 {
@@ -27,22 +29,29 @@ namespace CandySugar.EntryUI
         /// </summary>
         protected override void OnStart()
         {
-            AssemblyLoader Loader = new AssemblyLoader(CommonHelper.AppPath);
-            Loader.Load("CandySugar.LightNovel.dll", "IndexView", "LightNovelModule");
+            JsonReader.JsonRead(CommonHelper.OptionPath, CommonHelper.OptionFile);
+            AssemblyLoader Loader = new(CommonHelper.AppPath);
+            ComponentBinding.ComponentObjectModels.ForEach(Dll =>
+            {
+                Loader.Load(Dll.Plugin, Dll.Bootstrapper, Dll.Module, Dll.Description);
+            });
             HttpEvent.HttpActionEvent = new Action<HttpClient, Exception>((client, ex) =>
             {
-               
+
             });
             HttpEvent.RestActionEvent = new Action<RestClient, Exception>((client, ex) =>
             {
-                
+
             });
         }
 
         protected override void ConfigureIoC(IStyletIoCBuilder builder)
         {
-            AssemblyLoader.ConfTypes.TryDequeue(out Type ConfigType);
-            builder.AddModule((StyletIoCModule)Activator.CreateInstance(ConfigType));
+            AssemblyLoader.Dll.ForEach(Component =>
+            {
+                builder.AddModule((StyletIoCModule)Activator.CreateInstance(Component.InstanceConfigType));
+            });
+
         }
 
         /// <summary>
@@ -50,9 +59,6 @@ namespace CandySugar.EntryUI
         /// </summary>
         protected override void Configure()
         {
-            
-
-
             base.Configure();
         }
 
@@ -96,7 +102,7 @@ namespace CandySugar.EntryUI
         /// <param name="e"></param>
         protected override void OnUnhandledException(DispatcherUnhandledExceptionEventArgs e)
         {
-         
+
         }
     }
 }

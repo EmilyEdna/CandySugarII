@@ -2,6 +2,7 @@
 using Stylet;
 using StyletIoC;
 using System;
+using System.Linq;
 using System.Windows.Controls;
 
 namespace CandySugar.EntryUI.ViewModels
@@ -15,8 +16,8 @@ namespace CandySugar.EntryUI.ViewModels
             this.Container = Container;
             this.WindowManager = WindowManager;
             this.Title = "IndexView";
-            AssemblyLoader.Types.TryDequeue(out Type Controls);
-            CandyControl = (Control)Activator.CreateInstance(Controls);
+            var Component = AssemblyLoader.Dll.FirstOrDefault();
+            CandyControl = (Control)Activator.CreateInstance(Component.InstanceType);
         }
 
         #region Property

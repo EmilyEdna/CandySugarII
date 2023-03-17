@@ -85,11 +85,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CandySugar.Com.Style", "PCX
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CandySugar.Com.Library", "PCX\CandySugar.Com.Library\CandySugar.Com.Library.csproj", "{FFECD0B7-2D50-47EF-BA25-39E46265DF0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CandySugar.LightNovel", "PCX\Component\CandySugar.LightNovel\CandySugar.LightNovel.csproj", "{EA0B9F42-E396-453C-B5E3-CDF821886C91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CandySugar.LightNovel", "PCX\Component\CandySugar.LightNovel\CandySugar.LightNovel.csproj", "{EA0B9F42-E396-453C-B5E3-CDF821886C91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CandySugar.EntryUI", "PCX\CandySugar.EntryUI\CandySugar.EntryUI.csproj", "{45928D2E-A873-4231-94E5-F577EAE39122}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CandySugar.EntryUI", "PCX\CandySugar.EntryUI\CandySugar.EntryUI.csproj", "{45928D2E-A873-4231-94E5-F577EAE39122}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "启动项", "启动项", "{8EDAB186-F532-44C7-A0A0-55CDE01F67C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CandySugar.Com.Options", "PCX\Component\CandySugar.Com.Options\CandySugar.Com.Options.csproj", "{0B529169-9FC2-44DE-ACAB-C9073BA256A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -195,6 +197,10 @@ Global
 		{45928D2E-A873-4231-94E5-F577EAE39122}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45928D2E-A873-4231-94E5-F577EAE39122}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45928D2E-A873-4231-94E5-F577EAE39122}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B529169-9FC2-44DE-ACAB-C9073BA256A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B529169-9FC2-44DE-ACAB-C9073BA256A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B529169-9FC2-44DE-ACAB-C9073BA256A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B529169-9FC2-44DE-ACAB-C9073BA256A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -239,6 +245,7 @@ Global
 		{EA0B9F42-E396-453C-B5E3-CDF821886C91} = {85CAA985-60DD-4A30-A61A-55A17726924C}
 		{45928D2E-A873-4231-94E5-F577EAE39122} = {8EDAB186-F532-44C7-A0A0-55CDE01F67C8}
 		{8EDAB186-F532-44C7-A0A0-55CDE01F67C8} = {6EC65E80-C2A1-4083-B459-E785926EF562}
+		{0B529169-9FC2-44DE-ACAB-C9073BA256A1} = {0B5075E5-1DDB-4811-B08E-F51509B9D950}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F97AB604-6A74-4B7E-9792-59D62C7D490B}

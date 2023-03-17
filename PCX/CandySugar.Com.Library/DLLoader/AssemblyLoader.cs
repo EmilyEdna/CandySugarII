@@ -14,13 +14,17 @@ namespace CandySugar.Com.Library.DLLoader
     {
         private string _basePath;
         private AssemblyLoadContext context;
-        public static ConcurrentQueue<Type> Types = new ConcurrentQueue<Type>();
-        public static ConcurrentQueue<Type> ConfTypes = new ConcurrentQueue<Type>();
+        public static ConcurrentQueue<Type> Single = new ConcurrentQueue<Type>();
+        public static List<DLLInfomations> Dll= new List<DLLInfomations>();
         public AssemblyLoader(string basePath)
         {
             _basePath = basePath;
         }
-
+        /// <summary>
+        /// 动态加载Dll
+        /// </summary>
+        /// <param name="dllFileName"></param>
+        /// <param name="typeName"></param>
         public void Load(string dllFileName, string typeName)
         {
             context = new AssemblyLoadContext(dllFileName);
@@ -34,8 +38,8 @@ namespace CandySugar.Com.Library.DLLoader
                     using (var stream = File.OpenRead(path))
                     {
                         Assembly assembly = context.LoadFromStream(stream);
-                        Type type = assembly.GetTypes().FirstOrDefault(t => t.Name.ToLower().Equals(typeName.ToLower()));
-                        Types.Enqueue(type);
+                        Type InstanceType = assembly.GetTypes().FirstOrDefault(t => t.Name.ToLower().Equals(typeName.ToLower()));
+                        Single.Enqueue(InstanceType);
                     }
                 }
                 catch (Exception ex)
@@ -49,7 +53,14 @@ namespace CandySugar.Com.Library.DLLoader
                 Console.WriteLine($"节点动态库{dllFileName}不存在：{path}");
             }
         }
-        public void Load(string dllFileName, string typeName,string configTypeName)
+        /// <summary>
+        /// 动态加载Dll
+        /// </summary>
+        /// <param name="dllFileName"></param>
+        /// <param name="typeName"></param>
+        /// <param name="configTypeName"></param>
+        /// <param name="description"></param>
+        public void Load(string dllFileName, string typeName,string configTypeName,string description="")
         {
             context = new AssemblyLoadContext(dllFileName);
             context.Resolving += Context_Resolving;
@@ -62,10 +73,15 @@ namespace CandySugar.Com.Library.DLLoader
                     using (var stream = File.OpenRead(path))
                     {
                         Assembly assembly = context.LoadFromStream(stream);
-                        Type type = assembly.GetTypes().FirstOrDefault(t => t.Name.ToLower().Equals(typeName.ToLower()));
-                        Type ctype= assembly.GetTypes().FirstOrDefault(t => t.Name.ToLower().Equals(configTypeName.ToLower())); 
-                        Types.Enqueue(type);
-                        ConfTypes.Enqueue(ctype);
+                        Type InstanceType = assembly.GetTypes().FirstOrDefault(t => t.Name.ToLower().Equals(typeName.ToLower()));
+                        Type InstanceConfigType = assembly.GetTypes().FirstOrDefault(t => t.Name.ToLower().Equals(configTypeName.ToLower()));
+                        Dll.Add(new DLLInfomations
+                        {
+                            InstanceType = InstanceType,
+                            InstanceConfigType = InstanceConfigType,
+                            Description = description,
+                            IsEnable = true
+                        });
                     }
                 }
                 catch (Exception ex)
