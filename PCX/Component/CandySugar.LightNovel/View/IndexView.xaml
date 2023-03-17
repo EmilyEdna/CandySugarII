@@ -8,7 +8,7 @@
     xmlns:uc="http://ctrl.candy.com"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Background="WhiteSmoke"
+    Background="Transparent"
     mc:Ignorable="d">
     <uc:CandyButton
         ButtonType="Warning"

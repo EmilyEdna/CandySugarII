@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\FontAwesome6Regular.otf" />
+    <None Remove="Fonts\FontAwesome6Solid.otf" />
+    <None Remove="Fonts\FontAwesome6Thin.otf" />
+    <None Remove="Fonts\HappyZcool.ttf" />
+    <None Remove="Fonts\站酷快乐体2016修订版.ttf" />
     <None Remove="Resources\Backgroud.jpg" />
   </ItemGroup>
 
@@ -14,6 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Fonts\FontAwesome6Regular.otf" />
+    <Resource Include="Fonts\FontAwesome6Solid.otf" />
+    <Resource Include="Fonts\FontAwesome6Thin.otf" />
+    <Resource Include="Fonts\HappyZcool.ttf" />
     <Resource Include="Resources\Backgroud.jpg" />
   </ItemGroup>
 

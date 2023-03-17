@@ -15,7 +15,7 @@ namespace CandySugar.EntryUI.ViewModels
         {
             this.Container = Container;
             this.WindowManager = WindowManager;
-            this.Title = "IndexView";
+            this.Title = "甜糖V1.0.0";
             var Component = AssemblyLoader.Dll.FirstOrDefault();
             CandyControl = (Control)Activator.CreateInstance(Component.InstanceType);
         }
