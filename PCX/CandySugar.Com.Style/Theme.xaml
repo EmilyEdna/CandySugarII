@@ -10,32 +10,86 @@
     <FontFamily x:Key="Thin">/CandySugar.Com.Style;component/Fonts/#Font Awesome 6 Pro Regular</FontFamily>
     <FontFamily x:Key="Solid">/CandySugar.Com.Style;component/Fonts/#Font Awesome 6 Pro Thin</FontFamily>
     <FontFamily x:Key="Regular">/CandySugar.Com.Style;component/Fonts/#Font Awesome 6 Pro Solid</FontFamily>
-    <Style x:Key="CandyFloatButtonStyle" TargetType="uc:CandyFloatButton">
+    <Style x:Key="CandyFloatButtonStyle" TargetType="Button">
         <Setter Property="Width" Value="50" />
         <Setter Property="Height" Value="50" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="uc:CandyFloatButton">
+                <ControlTemplate TargetType="Button">
                     <Border
+                        x:Name="X1"
                         Width="{TemplateBinding Width}"
                         Height="{TemplateBinding Height}"
                         CornerRadius="25">
                         <Border.Background>
                             <SolidColorBrush Opacity=".8" Color="White" />
                         </Border.Background>
-                        <Border Margin="5" CornerRadius="25">
+                        <Border.Effect>
+                            <DropShadowEffect
+                                BlurRadius="10"
+                                ShadowDepth="0"
+                                Color="LightPink" />
+                        </Border.Effect>
+                        <Border
+                            x:Name="X2"
+                            Margin="5"
+                            CornerRadius="25">
                             <Border.Background>
                                 <SolidColorBrush Opacity=".4" Color="Turquoise" />
                             </Border.Background>
+                            <Border.Effect>
+                                <DropShadowEffect
+                                    BlurRadius="10"
+                                    ShadowDepth="0"
+                                    Color="Khaki" />
+                            </Border.Effect>
                             <TextBlock
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 FontFamily="{StaticResource Thin}"
                                 FontSize="25"
-                                Foreground="HotPink"
+                                Foreground="GhostWhite"
                                 Text="{x:Static lib:FontIcon.FaceKissWinkHeart}" />
                         </Border>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="X1" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect
+                                        BlurRadius="10"
+                                        ShadowDepth="0"
+                                        Color="#FF9999" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="X2" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect
+                                        BlurRadius="10"
+                                        ShadowDepth="0"
+                                        Color="MediumVioletRed" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="X1" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect
+                                        BlurRadius="10"
+                                        ShadowDepth="0"
+                                        Color="#FF9999" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="X2" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect
+                                        BlurRadius="10"
+                                        ShadowDepth="0"
+                                        Color="MediumVioletRed" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -50,9 +104,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Window">
                     <Border BorderBrush="SkyBlue" BorderThickness="2">
-                        <!--<Border.Background>
+                        <Border.Background>
                             <ImageBrush ImageSource="/CandySugar.Com.Style;component/Resources/Backgroud.jpg" />
-                        </Border.Background>-->
+                        </Border.Background>
                         <Border.Style>
                             <Style TargetType="Border">
                                 <EventSetter Event="MouseLeftButtonDown" Handler="MoveEvent" />

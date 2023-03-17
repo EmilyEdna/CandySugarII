@@ -24,9 +24,17 @@ namespace CandySugar.EntryUI.Views
         public IndexView()
         {
             InitializeComponent();
+            RelyLocation();
             _HotKey = new HotKeyAction();
             Loaded += Window_Loaded;
+            StateChanged += Window_Stated;
         }
+
+        private void Window_Stated(object sender, EventArgs e)
+        {
+            RelyLocation();
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             _HotKey.RegistHotKey();
@@ -40,6 +48,12 @@ namespace CandySugar.EntryUI.Views
         {
             base.OnContentRendered(e);
             _HotKey.InitHotKey();
+        }
+
+        protected void RelyLocation()
+        {
+            Canvas.SetTop(FloatBtn, this.Height - 100);
+            Canvas.SetLeft(FloatBtn, this.Width - 100);
         }
     }
 }
