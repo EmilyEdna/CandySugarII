@@ -14,5 +14,6 @@
     d:DataContext="{d:DesignInstance vm:IndexViewModel}"
     Style="{StaticResource CandyDefaultWindowStyle}"
     mc:Ignorable="d">
-    <ContentControl Content="{Binding CandyControl}" />
+    <uc:CandyFloatButton Style="{DynamicResource CandyFloatButtonStyle}" />
+    <!--<ContentControl Content="{Binding CandyControl}" />-->
 </Window>
