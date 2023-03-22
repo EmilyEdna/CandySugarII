@@ -55,6 +55,16 @@ namespace CandySugar.EntryUI.Views
         /// </summary>
         protected void RelyLocation()
         {
+            if (this.WindowState == WindowState.Maximized)
+            {
+                this.Height = SystemParameters.PrimaryScreenHeight;
+                this.Width = SystemParameters.PrimaryScreenWidth;
+            }
+            if (this.WindowState == WindowState.Normal)
+            {
+                this.Height = 450;
+                this.Width = 800;
+            }
             Canvas.SetTop(FloatBtn, this.Height - 100);
             Canvas.SetLeft(FloatBtn, this.Width - 100);
         }
