@@ -55,5 +55,10 @@ namespace CandySugar.EntryUI.Views
             Canvas.SetTop(FloatBtn, this.Height - 100);
             Canvas.SetLeft(FloatBtn, this.Width - 100);
         }
+
+        private void PopMenuEvent(object sender, RoutedEventArgs e)
+        {
+            Pop.IsOpen = true;
+        }
     }
 }

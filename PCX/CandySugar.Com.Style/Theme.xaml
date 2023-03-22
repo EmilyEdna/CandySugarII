@@ -10,90 +10,24 @@
     <FontFamily x:Key="Thin">/CandySugar.Com.Style;component/Fonts/#Font Awesome 6 Pro Regular</FontFamily>
     <FontFamily x:Key="Solid">/CandySugar.Com.Style;component/Fonts/#Font Awesome 6 Pro Thin</FontFamily>
     <FontFamily x:Key="Regular">/CandySugar.Com.Style;component/Fonts/#Font Awesome 6 Pro Solid</FontFamily>
-    <Style x:Key="CandyFloatButtonStyle" TargetType="Button">
-        <Setter Property="Width" Value="50" />
-        <Setter Property="Height" Value="50" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border
-                        x:Name="X1"
-                        Width="{TemplateBinding Width}"
-                        Height="{TemplateBinding Height}"
-                        CornerRadius="25">
-                        <Border.Background>
-                            <SolidColorBrush Opacity=".8" Color="White" />
-                        </Border.Background>
-                        <Border.Effect>
-                            <DropShadowEffect
-                                BlurRadius="10"
-                                ShadowDepth="0"
-                                Color="LightPink" />
-                        </Border.Effect>
-                        <Border
-                            x:Name="X2"
-                            Margin="5"
-                            CornerRadius="25">
-                            <Border.Background>
-                                <SolidColorBrush Opacity=".4" Color="Turquoise" />
-                            </Border.Background>
-                            <Border.Effect>
-                                <DropShadowEffect
-                                    BlurRadius="10"
-                                    ShadowDepth="0"
-                                    Color="Khaki" />
-                            </Border.Effect>
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                FontFamily="{StaticResource Thin}"
-                                FontSize="25"
-                                Foreground="GhostWhite"
-                                Text="{x:Static lib:FontIcon.FaceKissWinkHeart}" />
-                        </Border>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="X1" Property="Effect">
-                                <Setter.Value>
-                                    <DropShadowEffect
-                                        BlurRadius="10"
-                                        ShadowDepth="0"
-                                        Color="#FF9999" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter TargetName="X2" Property="Effect">
-                                <Setter.Value>
-                                    <DropShadowEffect
-                                        BlurRadius="10"
-                                        ShadowDepth="0"
-                                        Color="MediumVioletRed" />
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="X1" Property="Effect">
-                                <Setter.Value>
-                                    <DropShadowEffect
-                                        BlurRadius="10"
-                                        ShadowDepth="0"
-                                        Color="#FF9999" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter TargetName="X2" Property="Effect">
-                                <Setter.Value>
-                                    <DropShadowEffect
-                                        BlurRadius="10"
-                                        ShadowDepth="0"
-                                        Color="MediumVioletRed" />
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+
+    <!--#region Anime-->
+
+    <Storyboard x:Key="ObjectFontAnimeFrame">
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+            <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+            <EasingDoubleKeyFrame KeyTime="0:0:0.200" Value="-1" />
+            <EasingDoubleKeyFrame KeyTime="0:0:0.400" Value="0" />
+            <EasingDoubleKeyFrame KeyTime="0:0:0.600" Value="-1" />
+            <EasingDoubleKeyFrame KeyTime="0:0:0.800" Value="0" />
+            <EasingDoubleKeyFrame KeyTime="0:0:1" Value="-1" />
+        </DoubleAnimationUsingKeyFrames>
+    </Storyboard>
+
+    <!--#endregion-->
+
+    <!--#region Window-->
+
     <Style x:Key="CandyDefaultWindowStyle" TargetType="Window">
         <Setter Property="WindowStyle" Value="None" />
         <Setter Property="BorderBrush" Value="Transparent" />
@@ -154,27 +88,7 @@
                                                 Foreground="Pink">
                                                 <Button.Style>
                                                     <Style TargetType="Button">
-                                                        <Setter Property="Template">
-                                                            <Setter.Value>
-                                                                <ControlTemplate TargetType="Button">
-                                                                    <Border
-                                                                        x:Name="MyBackgroundElement"
-                                                                        BorderBrush="Transparent"
-                                                                        BorderThickness="0">
-                                                                        <ContentPresenter
-                                                                            x:Name="ButtonContentPresenter"
-                                                                            HorizontalAlignment="Center"
-                                                                            VerticalAlignment="Center" />
-                                                                    </Border>
-                                                                    <ControlTemplate.Triggers>
-                                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                                            <Setter TargetName="MyBackgroundElement" Property="Background" Value="SkyBlue" />
-                                                                            <Setter TargetName="MyBackgroundElement" Property="Opacity" Value="0.8" />
-                                                                        </Trigger>
-                                                                    </ControlTemplate.Triggers>
-                                                                </ControlTemplate>
-                                                            </Setter.Value>
-                                                        </Setter>
+                                                        <Setter Property="Template" Value="{DynamicResource CandyDefaultWindowButtonStyle}" />
                                                         <EventSetter Event="Click" Handler="MinEvent" />
                                                     </Style>
                                                 </Button.Style>
@@ -189,27 +103,7 @@
                                                 Foreground="Pink">
                                                 <Button.Style>
                                                     <Style TargetType="Button">
-                                                        <Setter Property="Template">
-                                                            <Setter.Value>
-                                                                <ControlTemplate TargetType="Button">
-                                                                    <Border
-                                                                        x:Name="MyBackgroundElement"
-                                                                        BorderBrush="Transparent"
-                                                                        BorderThickness="0">
-                                                                        <ContentPresenter
-                                                                            x:Name="ButtonContentPresenter"
-                                                                            HorizontalAlignment="Center"
-                                                                            VerticalAlignment="Center" />
-                                                                    </Border>
-                                                                    <ControlTemplate.Triggers>
-                                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                                            <Setter TargetName="MyBackgroundElement" Property="Background" Value="SkyBlue" />
-                                                                            <Setter TargetName="MyBackgroundElement" Property="Opacity" Value="0.8" />
-                                                                        </Trigger>
-                                                                    </ControlTemplate.Triggers>
-                                                                </ControlTemplate>
-                                                            </Setter.Value>
-                                                        </Setter>
+                                                        <Setter Property="Template" Value="{DynamicResource CandyDefaultWindowButtonStyle}" />
                                                         <EventSetter Event="Click" Handler="MaxEvent" />
                                                     </Style>
                                                 </Button.Style>
@@ -226,27 +120,7 @@
                                                 Foreground="Pink">
                                                 <Button.Style>
                                                     <Style TargetType="Button">
-                                                        <Setter Property="Template">
-                                                            <Setter.Value>
-                                                                <ControlTemplate TargetType="Button">
-                                                                    <Border
-                                                                        x:Name="MyBackgroundElement"
-                                                                        BorderBrush="Transparent"
-                                                                        BorderThickness="0">
-                                                                        <ContentPresenter
-                                                                            x:Name="ButtonContentPresenter"
-                                                                            HorizontalAlignment="Center"
-                                                                            VerticalAlignment="Center" />
-                                                                    </Border>
-                                                                    <ControlTemplate.Triggers>
-                                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                                            <Setter TargetName="MyBackgroundElement" Property="Background" Value="SkyBlue" />
-                                                                            <Setter TargetName="MyBackgroundElement" Property="Opacity" Value="0.8" />
-                                                                        </Trigger>
-                                                                    </ControlTemplate.Triggers>
-                                                                </ControlTemplate>
-                                                            </Setter.Value>
-                                                        </Setter>
+                                                        <Setter Property="Template" Value="{DynamicResource CandyDefaultWindowButtonStyle}" />
                                                         <EventSetter Event="Click" Handler="CloseEvent" />
                                                     </Style>
                                                 </Button.Style>
@@ -262,9 +136,141 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <ControlTemplate x:Key="CandyDefaultWindowButtonStyle" TargetType="Button">
+        <Border
+            x:Name="MyBackgroundElement"
+            BorderBrush="Transparent"
+            BorderThickness="0">
+            <ContentPresenter
+                x:Name="ButtonContentPresenter"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center" />
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="MyBackgroundElement" Property="Background" Value="SkyBlue" />
+                <Setter TargetName="MyBackgroundElement" Property="Opacity" Value="0.8" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!--#endregion-->
+
+    <!--#region Button-->
+
+    <Style x:Key="CandyFloatButtonStyle" TargetType="Button">
+        <Setter Property="Width" Value="50" />
+        <Setter Property="Height" Value="50" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border
+                        x:Name="X1"
+                        Width="{TemplateBinding Width}"
+                        Height="{TemplateBinding Height}"
+                        CornerRadius="25">
+                        <Border.Background>
+                            <SolidColorBrush Opacity=".25" Color="Pink" />
+                        </Border.Background>
+                        <Border.Effect>
+                            <DropShadowEffect
+                                BlurRadius="10"
+                                ShadowDepth="0"
+                                Color="WhiteSmoke" />
+                        </Border.Effect>
+                        <Border
+                            x:Name="X2"
+                            Margin="5"
+                            CornerRadius="25">
+                            <Border.Background>
+                                <SolidColorBrush Opacity=".25" Color="Ivory" />
+                            </Border.Background>
+                            <Border.Effect>
+                                <DropShadowEffect
+                                    BlurRadius="10"
+                                    ShadowDepth="0"
+                                    Color="Khaki" />
+                            </Border.Effect>
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontFamily="{StaticResource Thin}"
+                                FontSize="18"
+                                Foreground="Black"
+                                RenderTransformOrigin="0.5,0.5"
+                                Text="{x:Static lib:FontIcon.Bars}">
+                                <TextBlock.RenderTransform>
+                                    <TransformGroup>
+                                        <TransformCollection>
+                                            <ScaleTransform />
+                                        </TransformCollection>
+                                    </TransformGroup>
+                                </TextBlock.RenderTransform>
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Trigger.EnterActions>
+                                                    <BeginStoryboard Name="StartAnimation" Storyboard="{DynamicResource ObjectFontAnimeFrame}" />
+                                                </Trigger.EnterActions>
+                                                <Trigger.ExitActions>
+                                                    <RemoveStoryboard BeginStoryboardName="StartAnimation" />
+                                                </Trigger.ExitActions>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Border>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="X1" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect
+                                        BlurRadius="10"
+                                        ShadowDepth="0"
+                                        Color="MediumVioletRed" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="X2" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect
+                                        BlurRadius="10"
+                                        ShadowDepth="0"
+                                        Color="Gold" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="X1" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect
+                                        BlurRadius="10"
+                                        ShadowDepth="0"
+                                        Color="#FF9999" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="X2" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect
+                                        BlurRadius="10"
+                                        ShadowDepth="0"
+                                        Color="MediumVioletRed" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="CandyButtonStyle" TargetType="uc:CandyButton">
         <Setter Property="Width" Value="100" />
         <Setter Property="Height" Value="35" />
+        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Foreground" Value="White" />
         <Setter Property="Template">
             <Setter.Value>
@@ -272,7 +278,7 @@
                     <uc:CandyBorder
                         x:Name="Element"
                         BorderBrush="Gray"
-                        BorderThickness="1"
+                        BorderThickness="{TemplateBinding BorderThickness}"
                         BorderType="{TemplateBinding ButtonType}">
                         <Border.Background>
                             <SolidColorBrush Opacity=".6" Color=" DeepSkyBlue" />
@@ -283,14 +289,6 @@
                             Content="{TemplateBinding Content}" />
                     </uc:CandyBorder>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Element" Property="Background">
-                                <Setter.Value>
-                                    <SolidColorBrush Opacity=".6" Color="HotPink" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter TargetName="Element" Property="BorderBrush" Value="Black" />
-                        </Trigger>
                         <DataTrigger Binding="{Binding BorderType, ElementName=Element}" Value="{x:Static lib:EButton.Primary}">
                             <Setter TargetName="Element" Property="Background">
                                 <Setter.Value>
@@ -326,9 +324,68 @@
                                 </Setter.Value>
                             </Setter>
                         </DataTrigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Element" Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Opacity=".6" Color="HotPink" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Element" Property="BorderBrush" Value="Black" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Element" Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Opacity=".6" Color="HotPink" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!--#endregion-->
+
+    <!--#region  ListBox-->
+
+    <Style x:Key="CandyListBoxStyle" TargetType="ListBox">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="ItemContainerStyle" Value="{DynamicResource CandyListBoxItemStyle}" />
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel
+                        Margin="5"
+                        HorizontalAlignment="Center"
+                        FocusVisualStyle="{x:Null}" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="CandyListBoxItemStyle" TargetType="ListBoxItem">
+        <Setter Property="UIElement.SnapsToDevicePixels" Value="True" />
+        <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <ContentPresenter
+                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--#endregion-->
+
 </ResourceDictionary>
