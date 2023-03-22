@@ -50,6 +50,9 @@ namespace CandySugar.EntryUI.Views
             _HotKey.InitHotKey();
         }
 
+        /// <summary>
+        /// 动态转换浮动按钮的位置
+        /// </summary>
         protected void RelyLocation()
         {
             Canvas.SetTop(FloatBtn, this.Height - 100);

@@ -21,17 +21,32 @@ namespace CandySugar.Com.Style
     /// </summary>
     public partial class Theme : ResourceDictionary
     {
+        /// <summary>
+        /// 窗体拖拽事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public virtual void MoveEvent(object sender, MouseButtonEventArgs e)
         {
 
             if (e.LeftButton == MouseButtonState.Pressed)
                 ((Window)((Border)sender).TemplatedParent).DragMove();
         }
+        /// <summary>
+        /// 最小化事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public virtual void MinEvent(object sender, RoutedEventArgs e)
         {
             Window win = (Window)((Button)sender).TemplatedParent;
             win.WindowState = WindowState.Minimized;
         }
+        /// <summary>
+        /// 最大化事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public virtual void MaxEvent(object sender, RoutedEventArgs e)
         {
             Window win = (Window)((Button)sender).TemplatedParent;
@@ -40,6 +55,11 @@ namespace CandySugar.Com.Style
             else
                 win.WindowState = WindowState.Maximized;
         }
+        /// <summary>
+        /// 窗体关闭事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public virtual void CloseEvent(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown(0);
