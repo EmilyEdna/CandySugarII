@@ -56,7 +56,7 @@ namespace CandySugar.EntryUI.ViewModels
         #endregion
 
         #region Command
-        public void ActiveCommand(Type InstanceType) 
+        public void ActiveCommand(Type InstanceType)
         {
             this.View.Dispatcher.Invoke(() =>
             {
@@ -66,7 +66,10 @@ namespace CandySugar.EntryUI.ViewModels
 
         public void SearchCommand(string keyword)
         {
-            
+            if (this.CandyControl != null)
+            {
+                var Type = CandyControl.GetType().Assembly.GetTypes().FirstOrDefault(t => t.Name.Equals($"{CandyControl.GetType().Name}Model"))
+            }
         }
         #endregion
     }

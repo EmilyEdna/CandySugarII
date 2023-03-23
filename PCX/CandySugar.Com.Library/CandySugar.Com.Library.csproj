@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Component\CandySugar.Com.Options\CandySugar.Com.Options.csproj" />
+    <ProjectReference Include="..\CandySugar.Com.Options\CandySugar.Com.Options.csproj" />
   </ItemGroup>
 
 </Project>

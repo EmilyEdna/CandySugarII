@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 
 namespace CandySugar.LightNovel.ViewModel
 {
-    public class IndexViewModel: Screen
+    public class IndexViewModel : PropertyChangedBase
     {
+        public void SearchHandler(string keyword)
+        {
+            var x = keyword;
+        }
     }
 }
