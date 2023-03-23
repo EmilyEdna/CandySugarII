@@ -1,4 +1,6 @@
 ﻿using CandySugar.Com.Library.HotKey;
+using CandySugar.Com.Options.NotifyObject;
+using CommunityToolkit.Mvvm.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -48,6 +51,24 @@ namespace CandySugar.EntryUI.Views
         {
             base.OnContentRendered(e);
             _HotKey.InitHotKey();
+            //自定义搜索框的位置
+            PopBox.CustomPopupPlacementCallback = new((popupSize, targetSize, offset) =>
+            {
+                Point point = new(0, 0);
+                if (WindowState == WindowState.Maximized)
+                    point = new Point(SystemParameters.PrimaryScreenWidth / 2.4, SystemParameters.PrimaryScreenHeight / 10);
+                if (this.WindowState == WindowState.Normal)
+                    point = new Point(Width / 3, Height / 10);
+                CustomPopupPlacement placement = new(point, PopupPrimaryAxis.None);
+                return new CustomPopupPlacement[] { placement };
+            });
+            WeakReferenceMessenger.Default.Register<DefaultNotify>(this, (recip, notify) =>
+            {
+                if (notify.Module == EDefaultNotify.SearchNotify)
+                {
+                    PopBox.IsOpen = true;
+                }
+            });
         }
 
         /// <summary>
@@ -71,7 +92,7 @@ namespace CandySugar.EntryUI.Views
 
         private void PopMenuEvent(object sender, RoutedEventArgs e)
         {
-            Pop.IsOpen = true;
+            PopMenu.IsOpen = true;
         }
     }
 }

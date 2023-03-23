@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CandySugar.Com.Options.NotifyObject;
+using CommunityToolkit.Mvvm.Messaging;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -63,6 +65,15 @@ namespace CandySugar.Com.Style
         public virtual void CloseEvent(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown(0);
+        }
+        /// <summary>
+        /// 搜索事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public virtual void SearchEvent(object sender, RoutedEventArgs e)
+        {
+            WeakReferenceMessenger.Default.Send(new DefaultNotify { Module = EDefaultNotify.SearchNotify });
         }
     }
 }

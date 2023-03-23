@@ -52,36 +52,57 @@
                                 Width="{TemplateBinding Width}"
                                 Height="{TemplateBinding Height}"
                                 Fill="LightSkyBlue"
-                                Opacity=".3" />
+                                Opacity=".4" />
                             <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="25" />
+                                    <RowDefinition Height="30" />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <Border
                                     Width="{TemplateBinding Width}"
-                                    Height="25"
+                                    Height="35"
                                     VerticalAlignment="Top"
                                     Background="DimGray"
                                     Opacity=".7">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
+                                            <ColumnDefinition Width=".1*" />
+                                            <ColumnDefinition Width=".1*" />
+                                            <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <WrapPanel
                                             Margin="10,0,0,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Center">
-                                            <TextBlock Foreground="Pink" Text="{TemplateBinding Title}" />
+                                            <TextBlock
+                                                FontSize="15"
+                                                Foreground="Pink"
+                                                Text="{TemplateBinding Title}" />
+                                        </WrapPanel>
+                                        <WrapPanel Grid.Column="1" HorizontalAlignment="Right">
+                                            <Button
+                                                Width="32"
+                                                Height="30"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                Content="{x:Static lib:FontIcon.MagnifyingGlass}"
+                                                FontFamily="{DynamicResource Thin}"
+                                                Foreground="Pink">
+                                                <Button.Style>
+                                                    <Style TargetType="Button">
+                                                        <Setter Property="Template" Value="{DynamicResource CandyDefaultWindowButtonStyle}" />
+                                                        <EventSetter Event="Click" Handler="SearchEvent" />
+                                                    </Style>
+                                                </Button.Style>
+                                            </Button>
                                         </WrapPanel>
                                         <WrapPanel
-                                            Grid.Column="1"
+                                            Grid.Column="2"
                                             Margin="0,0,2.5,0"
                                             HorizontalAlignment="Right">
                                             <Button
-                                                Width="25"
-                                                Height="25"
+                                                Width="30"
+                                                Height="30"
                                                 Background="Transparent"
                                                 BorderThickness="0"
                                                 Content="{x:Static lib:FontIcon.Minus}"
@@ -95,8 +116,8 @@
                                                 </Button.Style>
                                             </Button>
                                             <Button
-                                                Width="25"
-                                                Height="25"
+                                                Width="30"
+                                                Height="30"
                                                 Background="Transparent"
                                                 BorderThickness="0"
                                                 Content="{x:Static lib:FontIcon.Square}"
@@ -110,8 +131,8 @@
                                                 </Button.Style>
                                             </Button>
                                             <Button
-                                                Width="25"
-                                                Height="25"
+                                                Width="30"
+                                                Height="30"
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
                                                 Background="Transparent"

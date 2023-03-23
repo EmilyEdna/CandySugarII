@@ -63,6 +63,11 @@ namespace CandySugar.EntryUI.ViewModels
                 CandyControl = (Control)Activator.CreateInstance(InstanceType);
             });
         }
+
+        public void SearchCommand(string keyword)
+        {
+            
+        }
         #endregion
     }
 }
