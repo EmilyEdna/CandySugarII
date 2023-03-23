@@ -19,6 +19,11 @@
     mc:Ignorable="d">
     <Canvas x:Name="ContentCanvas">
         <ContentControl Content="{Binding CandyControl}" />
+        <Button
+            x:Name="FloatBtn"
+            Panel.ZIndex="1"
+            Click="PopMenuEvent"
+            Style="{DynamicResource CandyFloatButtonStyle}" />
         <Popup
             x:Name="PopBox"
             Width="300"
@@ -31,7 +36,7 @@
             <hc:SearchBar
                 hc:InfoElement.Placeholder="请输入查询内容"
                 hc:InfoElement.ShowClearButton="True"
-                Background="#25fdf0e3"
+                Background="#40a7f6f6"
                 Command="{s:Action SearchCommand}"
                 CommandParameter="{Binding Text, RelativeSource={RelativeSource Self}}"
                 FontSize="18"
@@ -86,10 +91,5 @@
                 </ListBox>
             </Grid>
         </Popup>
-        <Button
-            x:Name="FloatBtn"
-            Panel.ZIndex="1"
-            Click="PopMenuEvent"
-            Style="{DynamicResource CandyFloatButtonStyle}" />
     </Canvas>
 </Window>

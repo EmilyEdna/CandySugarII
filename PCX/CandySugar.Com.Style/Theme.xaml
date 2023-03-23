@@ -16,11 +16,9 @@
     <Storyboard x:Key="ObjectFontAnimeFrame">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
             <EasingDoubleKeyFrame KeyTime="0" Value="0" />
-            <EasingDoubleKeyFrame KeyTime="0:0:0.200" Value="-1" />
-            <EasingDoubleKeyFrame KeyTime="0:0:0.400" Value="0" />
-            <EasingDoubleKeyFrame KeyTime="0:0:0.600" Value="-1" />
+            <EasingDoubleKeyFrame KeyTime="0:0:0.400" Value="-1" />
             <EasingDoubleKeyFrame KeyTime="0:0:0.800" Value="0" />
-            <EasingDoubleKeyFrame KeyTime="0:0:1" Value="-1" />
+            <EasingDoubleKeyFrame KeyTime="0:0:1.200" Value="-1" />
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
 
@@ -38,7 +36,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Window">
-                    <Border BorderBrush="HotPink" BorderThickness="2">
+                    <Border BorderBrush="#faf0e6" BorderThickness="1.5">
                         <Border.Background>
                             <ImageBrush ImageSource="/CandySugar.Com.Style;component/Resources/Backgroud.jpg" />
                         </Border.Background>
@@ -51,7 +49,7 @@
                             <Rectangle
                                 Width="{TemplateBinding Width}"
                                 Height="{TemplateBinding Height}"
-                                Fill="LightSkyBlue"
+                                Fill="#e6cfe6"
                                 Opacity=".4" />
                             <Grid>
                                 <Grid.RowDefinitions>
