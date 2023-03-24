@@ -1,4 +1,7 @@
-﻿using System.Windows.Controls;
+﻿using CandySugar.Com.Library.VisualTree;
+using CandySugar.Com.Options.ComponentGeneric;
+using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Media.Animation;
 
 namespace CandySugar.LightNovel.View
@@ -11,6 +14,11 @@ namespace CandySugar.LightNovel.View
         public IndexView()
         {
             InitializeComponent();
+            GenericDelegate.InformationAction = new((width,height) =>
+            {
+                Canvas.SetTop(FloatBtn, height - 160);
+                Canvas.SetLeft(FloatBtn, width - 100);
+            });
         }
 
         private void PopMenuEvent(object sender, System.Windows.RoutedEventArgs e)

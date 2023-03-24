@@ -8,6 +8,9 @@ namespace CandySugar.Com.Options.ComponentObject
 {
     public class OptionObjectModel
     {
+        /// <summary>
+        /// 缓存时常
+        /// </summary>
         public int Cache { get; set; }
     }
 }

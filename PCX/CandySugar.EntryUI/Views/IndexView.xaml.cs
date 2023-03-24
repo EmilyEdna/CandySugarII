@@ -1,5 +1,6 @@
 ﻿using CandySugar.Com.Library.HotKey;
 using CandySugar.Com.Library.VisualTree;
+using CandySugar.Com.Options.ComponentGeneric;
 using CandySugar.Com.Options.NotifyObject;
 using CommunityToolkit.Mvvm.Messaging;
 using System;
@@ -76,7 +77,7 @@ namespace CandySugar.EntryUI.Views
         /// <summary>
         /// 动态转换浮动按钮的位置
         /// </summary>
-        public async void RelyLocation()
+        public  void RelyLocation()
         {
             if (this.WindowState == WindowState.Maximized)
             {
@@ -90,18 +91,7 @@ namespace CandySugar.EntryUI.Views
             }
             Canvas.SetTop(FloatBtn, this.Height - 100);
             Canvas.SetLeft(FloatBtn, this.Width - 100);
-
-            if (this.ItemComponent.Content != null)
-            {
-                var Ctrl = ((Control)this.ItemComponent.Content);
-                await Task.Delay(5);
-                var ChildFloatBtn = Ctrl.FindChild<Button>("FloatBtn");
-                if (ChildFloatBtn != null)
-                {
-                    Canvas.SetTop(ChildFloatBtn, this.Height - 160);
-                    Canvas.SetLeft(ChildFloatBtn, this.Width - 100);
-                }
-            }
+            GenericDelegate.InformationAction?.Invoke(this.Width, this.Height);
         }
 
         private void PopMenuEvent(object sender, RoutedEventArgs e)

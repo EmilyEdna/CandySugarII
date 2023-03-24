@@ -4,6 +4,7 @@ using CandySugar.Com.Library.DLLoader;
 using CandySugar.Com.Library.Internet;
 using CandySugar.Com.Library.Threads;
 using CandySugar.Com.Library.Transfers;
+using CandySugar.Com.Options.ComponentGeneric;
 using CandySugar.EntryUI.Views;
 using Stylet;
 using StyletIoC;
@@ -44,7 +45,7 @@ namespace CandySugar.EntryUI.ViewModels
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        new ScreenNotifyView("网络异常请检查当前网络是否连接成功！").Show();
+                        new ScreenNotifyView(CommonHelper.InternetErrorInformation).Show();
                     });
                    Thread.Sleep(10000);
                 }
@@ -75,6 +76,10 @@ namespace CandySugar.EntryUI.ViewModels
         #endregion
 
         #region Command
+        /// <summary>
+        /// 激活组件内容
+        /// </summary>
+        /// <param name="InstanceType"></param>
         public void ActiveCommand(Type InstanceType)
         {
             this.View.Dispatcher.Invoke(() =>
@@ -83,17 +88,20 @@ namespace CandySugar.EntryUI.ViewModels
                 var ViewModel = MenuObj.FirstOrDefault(t => InstanceType == InstanceType).ViewModel;
                 Ctrl.DataContext = Activator.CreateInstance(ViewModel);
                 CandyControl = Ctrl;
-                ((IndexView)View).RelyLocation();
+                var MainView = (IndexView)View;
+                GenericDelegate.InformationAction?.Invoke(MainView.Width,MainView.Height);
             });
         }
-
+        /// <summary>
+        /// 组件检索
+        /// </summary>
+        /// <param name="keyword"></param>
         public void SearchCommand(string keyword)
         {
             if (this.CandyControl != null)
             {
                 this.CandyControl.DataContext.GetType()
-                    .GetMethod(CommonHelper.DefaultMethod)
-                    .Invoke(this.CandyControl.DataContext, new object[] { keyword });
+                    .GetMethod(CommonHelper.DefaultMethod)?.Invoke(this.CandyControl.DataContext, new object[] { keyword });
             }
         }
         #endregion

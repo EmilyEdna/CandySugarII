@@ -16,6 +16,7 @@ using System.Windows;
 using Sdk.Component.Plugins;
 using CandySugar.Com.Options.ComponentObject;
 using System.Collections.ObjectModel;
+using CandySugar.Com.Library;
 
 namespace CandySugar.LightNovel.ViewModels
 {
@@ -65,7 +66,7 @@ namespace CandySugar.LightNovel.ViewModels
                 catch (Exception ex)
                 {
                     Log.Logger.Error(ex, "");
-                    new ScreenNotifyView("组件内部异常，请查看日志!").Show();
+                    new ScreenNotifyView(CommonHelper.ComponentErrorInformation).Show();
                 }
             });
         }
