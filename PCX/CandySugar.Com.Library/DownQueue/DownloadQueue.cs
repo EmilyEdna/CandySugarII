@@ -52,6 +52,7 @@ namespace CandySugar.Com.Library.DownQueue
                     }
                 }
                 if (Datas.Count > 0) continue;
+                //阻塞线程
                 AutoEvent.WaitOne();
             }
         }

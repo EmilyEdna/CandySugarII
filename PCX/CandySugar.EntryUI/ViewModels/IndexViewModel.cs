@@ -85,7 +85,7 @@ namespace CandySugar.EntryUI.ViewModels
             this.View.Dispatcher.Invoke(() =>
             {
                 var Ctrl = (Control)Activator.CreateInstance(InstanceType);
-                var ViewModel = MenuObj.FirstOrDefault(t => InstanceType == InstanceType).ViewModel;
+                var ViewModel = MenuObj.FirstOrDefault(t => t.InstanceType == InstanceType).ViewModel;
                 Ctrl.DataContext = Activator.CreateInstance(ViewModel);
                 CandyControl = Ctrl;
                 var MainView = (IndexView)View;

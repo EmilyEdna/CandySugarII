@@ -13,7 +13,7 @@ namespace CandySugar.Com.Library.DownQueue
     public class DownloadRequest
     {
         /// <summary>
-        /// 队列下载
+        /// 队列委托下载
         /// </summary>
         public static void DownByQueue()
         {
