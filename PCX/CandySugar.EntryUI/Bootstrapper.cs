@@ -1,5 +1,6 @@
 ﻿using CandySugar.Com.Library;
 using CandySugar.Com.Library.DLLoader;
+using CandySugar.Com.Library.DownQueue;
 using CandySugar.Com.Library.ReadFile;
 using CandySugar.Com.Options.ComponentObject;
 using CandySugar.EntryUI.ViewModels;
@@ -54,6 +55,7 @@ namespace CandySugar.EntryUI
         /// </summary>
         protected override void Configure()
         {
+            DownloadRequest.DownByQueue();
             base.Configure();
         }
 

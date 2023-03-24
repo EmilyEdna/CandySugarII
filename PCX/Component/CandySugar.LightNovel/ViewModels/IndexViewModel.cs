@@ -33,11 +33,30 @@ namespace CandySugar.LightNovel.ViewModels
         }
 
         #region Property
+        /// <summary>
+        /// 分类菜单
+        /// </summary>
         private ObservableCollection<LovelInitResult> _MenuIndex;
         public ObservableCollection<LovelInitResult> MenuIndex
         {
             get => _MenuIndex;
             set => SetAndNotify(ref _MenuIndex, value);
+        }
+        private ObservableCollection<LovelCategoryElementResult> _InformationElement;
+        /// <summary>
+        /// 分类结果
+        /// </summary>
+        public ObservableCollection<LovelCategoryElementResult> InformationElement
+        {
+            get => _InformationElement;
+            set => SetAndNotify(ref _InformationElement, value);
+        }
+        #endregion
+
+        #region Command
+        public void ActiveCommand(string route)
+        {
+            OnInitInformation(route);
         }
         #endregion
 
@@ -62,6 +81,39 @@ namespace CandySugar.LightNovel.ViewModels
                         };
                     }).RunsAsync()).InitResults;
                     MenuIndex = new ObservableCollection<LovelInitResult>(result);
+                }
+                catch (Exception ex)
+                {
+                    Log.Logger.Error(ex, "");
+                    new ScreenNotifyView(CommonHelper.ComponentErrorInformation).Show();
+                }
+            });
+        }
+        /// <summary>
+        /// 初始化分类
+        /// </summary>
+        /// <param name="route"></param>
+        private void OnInitInformation(string route)
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    var result = (await LovelFactory.Lovel(opt =>
+                    {
+                        opt.RequestParam = new Input
+                        {
+                            CacheSpan = ComponentBinding.OptionObjectModels.Cache,
+                            ImplType = SdkImpl.Rest,
+                            LovelType = LovelEnum.Category,
+                            Category = new LovelCategory
+                            {
+                                Page = 1,
+                                Route = route
+                            }
+                        };
+                    }).RunsAsync()).CategoryResult;
+                    InformationElement = new ObservableCollection<LovelCategoryElementResult>(result.ElementResults);
                 }
                 catch (Exception ex)
                 {

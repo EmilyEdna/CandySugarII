@@ -18,6 +18,8 @@ namespace CandySugar.LightNovel.View
             {
                 Canvas.SetTop(FloatBtn, height - 160);
                 Canvas.SetLeft(FloatBtn, width - 100);
+                this.Width = width;
+                this.Height = height - 35;
             });
         }
 

@@ -9,40 +9,7 @@ namespace CandySugar.Com.Library.Cursors
 {
     public class CursorExten
     {
-        /// <summary>
-        /// BitmapSource 转 Bitmap
-        /// </summary>
-        /// <param name="bi"></param>
-        /// <returns>错误则返回null</returns>
-        public static Bitmap BitmapSource2Bitmap(BitmapSource bitmapSource)
-        {
-            using (MemoryStream outStream = new MemoryStream())
-            {
-                BmpBitmapEncoder enc = new BmpBitmapEncoder();
-                enc.Frames.Add(BitmapFrame.Create(bitmapSource));
-                enc.Save(outStream);
-                Bitmap bitmap = new Bitmap(outStream);
-                return new Bitmap(bitmap);
-            }  
-        }
-        /// <summary>
-        /// BitmapImage 转 Bitmap
-        /// </summary>
-        /// <param name="bitmapImage"></param>
-        /// <returns></returns>
-        public static Bitmap BitmapImage2Bitmap(BitmapImage bitmapImage)
-        {
-            using (MemoryStream outStream = new MemoryStream())
-            {
-                BitmapEncoder enc = new BmpBitmapEncoder();
-                enc.Frames.Add(BitmapFrame.Create(bitmapImage));
-                enc.Save(outStream);
-                Bitmap bitmap = new Bitmap(outStream);
-
-                return new Bitmap(bitmap);
-            }
-        }
-
+      
         /// <summary>
         /// 根据 本地文件路径 创建鼠标图标
         /// </summary>
