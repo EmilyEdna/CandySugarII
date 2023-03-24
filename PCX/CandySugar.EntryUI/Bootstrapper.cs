@@ -1,24 +1,17 @@
-﻿using HandyControl.Controls;
-using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net.Http;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Threading;
-using System.Windows;
-using XExten.Advance.StaticFramework;
-using XExten.Advance;
-using Stylet;
-using CandySugar.EntryUI.ViewModels;
-using StyletIoC;
+﻿using CandySugar.Com.Library;
 using CandySugar.Com.Library.DLLoader;
-using CandySugar.Com.Library;
 using CandySugar.Com.Library.ReadFile;
 using CandySugar.Com.Options.ComponentObject;
+using CandySugar.EntryUI.ViewModels;
+using RestSharp;
+using Serilog;
+using Stylet;
+using StyletIoC;
+using System;
+using System.Net.Http;
+using System.Windows;
+using System.Windows.Threading;
+using XExten.Advance;
 
 namespace CandySugar.EntryUI
 {
@@ -29,6 +22,12 @@ namespace CandySugar.EntryUI
         /// </summary>
         protected override void OnStart()
         {
+            //日志
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .WriteTo.File("Logs/Candy.log", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+
             JsonReader.JsonRead(CommonHelper.OptionPath, CommonHelper.OptionFile);
             AssemblyLoader Loader = new(CommonHelper.AppPath);
             ComponentBinding.ComponentObjectModels.ForEach(Dll =>
@@ -98,7 +97,8 @@ namespace CandySugar.EntryUI
         /// <param name="e"></param>
         protected override void OnUnhandledException(DispatcherUnhandledExceptionEventArgs e)
         {
-
+            Log.Logger.Error(e.Exception.InnerException ?? e.Exception, "");
+            GC.Collect();
         }
     }
 }
