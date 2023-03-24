@@ -15,7 +15,7 @@ namespace CandySugar.Com.Library.DLLoader
         private string _basePath;
         private AssemblyLoadContext context;
         public static ConcurrentQueue<Type> Single = new ConcurrentQueue<Type>();
-        public static List<DLLInfomations> Dll= new List<DLLInfomations>();
+        public static List<DLLInfomations> Dll = new List<DLLInfomations>();
         public AssemblyLoader(string basePath)
         {
             _basePath = basePath;
@@ -60,7 +60,7 @@ namespace CandySugar.Com.Library.DLLoader
         /// <param name="typeName"></param>
         /// <param name="configTypeName"></param>
         /// <param name="description"></param>
-        public void Load(string dllFileName, string typeName,string configTypeName,string description="")
+        public void Load(string dllFileName, string typeName, string description = "")
         {
             context = new AssemblyLoadContext(dllFileName);
             context.Resolving += Context_Resolving;
@@ -74,13 +74,13 @@ namespace CandySugar.Com.Library.DLLoader
                     {
                         Assembly assembly = context.LoadFromStream(stream);
                         Type InstanceType = assembly.GetTypes().FirstOrDefault(t => t.Name.ToLower().Equals(typeName.ToLower()));
-                        Type InstanceConfigType = assembly.GetTypes().FirstOrDefault(t => t.Name.ToLower().Equals(configTypeName.ToLower()));
+                        Type ViewModel = assembly.GetTypes().FirstOrDefault(t => t.Name.Contains("ViewModel"));
                         Dll.Add(new DLLInfomations
                         {
+                            InstanceViewModel = ViewModel,
                             InstanceType = InstanceType,
-                            InstanceConfigType = InstanceConfigType,
                             Description = description,
-                            IsEnable = true
+                            IsEnable = true,
                         });
                     }
                 }

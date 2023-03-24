@@ -6,12 +6,20 @@
     xmlns:local="clr-namespace:CandySugar.LightNovel.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="http://ctrl.candy.com"
+    xmlns:vm="clr-namespace:CandySugar.LightNovel.ViewModels"
+    d:DataContext="{d:DesignInstance vm:IndexViewViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Background="Transparent"
     mc:Ignorable="d">
-    <uc:CandyButton
-        ButtonType="Warning"
-        Content="CandySugar"
-        Style="{DynamicResource CandyButtonStyle}" />
+    <StackPanel>
+        <uc:CandyButton
+            ButtonType="Warning"
+            Content="CandySugar"
+            Style="{DynamicResource CandyButtonStyle}" />
+        <TextBlock
+            FontSize="55"
+            Foreground="Red"
+            Text="{Binding Test}" />
+    </StackPanel>
 </UserControl>

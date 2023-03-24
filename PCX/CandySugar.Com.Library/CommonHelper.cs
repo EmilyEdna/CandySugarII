@@ -14,6 +14,10 @@ namespace CandySugar.Com.Library
         /// </summary>
         public static string AppPath => AppDomain.CurrentDomain.BaseDirectory;
         /// <summary>
+        /// 默认方法
+        /// </summary>
+        public static string DefaultMethod => "SearchHandler";
+        /// <summary>
         /// 配置目录
         /// </summary>
         public static string OptionPath => "Component";

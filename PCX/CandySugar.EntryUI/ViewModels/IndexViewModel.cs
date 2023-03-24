@@ -1,4 +1,5 @@
-﻿using CandySugar.Com.Library.DLLoader;
+﻿using CandySugar.Com.Library;
+using CandySugar.Com.Library.DLLoader;
 using CandySugar.Com.Library.Transfers;
 using Stylet;
 using StyletIoC;
@@ -27,7 +28,8 @@ namespace CandySugar.EntryUI.ViewModels
             {
                 InstanceType = item.InstanceType,
                 Name = item.Description,
-                IsEnable = item.IsEnable
+                IsEnable = item.IsEnable,
+                ViewModel = item.InstanceViewModel
             });
             MenuObj = new ObservableCollection<MenuObject>(dlls);
         }
@@ -60,7 +62,10 @@ namespace CandySugar.EntryUI.ViewModels
         {
             this.View.Dispatcher.Invoke(() =>
             {
-                CandyControl = (Control)Activator.CreateInstance(InstanceType);
+                var Ctrl = (Control)Activator.CreateInstance(InstanceType);
+                var ViewModel = MenuObj.FirstOrDefault(t => InstanceType == InstanceType).ViewModel;
+                Ctrl.DataContext = Activator.CreateInstance(ViewModel);
+                CandyControl = Ctrl;
             });
         }
 
@@ -68,7 +73,9 @@ namespace CandySugar.EntryUI.ViewModels
         {
             if (this.CandyControl != null)
             {
-                var Type = CandyControl.GetType().Assembly.GetTypes().FirstOrDefault(t => t.Name.Equals($"{CandyControl.GetType().Name}Model"))
+                this.CandyControl.DataContext.GetType()
+                    .GetMethod(CommonHelper.DefaultMethod)
+                    .Invoke(this.CandyControl.DataContext, new object[] { keyword });
             }
         }
         #endregion

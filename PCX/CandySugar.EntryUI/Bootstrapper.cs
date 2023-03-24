@@ -33,7 +33,7 @@ namespace CandySugar.EntryUI
             AssemblyLoader Loader = new(CommonHelper.AppPath);
             ComponentBinding.ComponentObjectModels.ForEach(Dll =>
             {
-                Loader.Load(Dll.Plugin, Dll.Bootstrapper, Dll.Module, Dll.Description);
+                Loader.Load(Dll.Plugin, Dll.Bootstrapper, Dll.Description);
             });
             HttpEvent.HttpActionEvent = new Action<HttpClient, Exception>((client, ex) =>
             {
@@ -47,10 +47,6 @@ namespace CandySugar.EntryUI
 
         protected override void ConfigureIoC(IStyletIoCBuilder builder)
         {
-            AssemblyLoader.Dll.ForEach(Component =>
-            {
-                builder.AddModule((StyletIoCModule)Activator.CreateInstance(Component.InstanceConfigType));
-            });
 
         }
 

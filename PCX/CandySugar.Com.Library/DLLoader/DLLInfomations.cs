@@ -9,7 +9,7 @@ namespace CandySugar.Com.Library.DLLoader
     public class DLLInfomations
     {
         public Type InstanceType { get; set; }
-        public Type InstanceConfigType { get; set; }
+        public Type InstanceViewModel { get; set; }
         public bool IsEnable { get; set; }
         public string Description { get; set; }
     }

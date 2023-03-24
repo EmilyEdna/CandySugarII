@@ -1,6 +1,7 @@
 ﻿using Stylet;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,12 @@ namespace CandySugar.Com.Library.Transfers
         {
             get => _Name;
             set => SetAndNotify(ref _Name, value);
+        }
+        private Type _ViewModel;
+        public Type ViewModel
+        {
+            get => _ViewModel;
+            set => SetAndNotify(ref _ViewModel, value);
         }
     }
 }

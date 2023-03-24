@@ -8,7 +8,6 @@ namespace CandySugar.Com.Options.ComponentObject
     {
         public string Plugin { get; set; }
         public string Bootstrapper { get; set; }
-        public string Module { get; set; }
         public string Description { get; set; }
     }
 }
