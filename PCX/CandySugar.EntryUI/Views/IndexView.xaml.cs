@@ -1,4 +1,5 @@
 ﻿using CandySugar.Com.Library.HotKey;
+using CandySugar.Com.Library.VisualTree;
 using CandySugar.Com.Options.NotifyObject;
 using CommunityToolkit.Mvvm.Messaging;
 using System;
@@ -13,6 +14,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -74,7 +76,7 @@ namespace CandySugar.EntryUI.Views
         /// <summary>
         /// 动态转换浮动按钮的位置
         /// </summary>
-        protected void RelyLocation()
+        public async void RelyLocation()
         {
             if (this.WindowState == WindowState.Maximized)
             {
@@ -88,10 +90,23 @@ namespace CandySugar.EntryUI.Views
             }
             Canvas.SetTop(FloatBtn, this.Height - 100);
             Canvas.SetLeft(FloatBtn, this.Width - 100);
+
+            if (this.ItemComponent.Content != null)
+            {
+                var Ctrl = ((Control)this.ItemComponent.Content);
+                await Task.Delay(5);
+                var ChildFloatBtn = Ctrl.FindChild<Button>("FloatBtn");
+                if (ChildFloatBtn != null)
+                {
+                    Canvas.SetTop(ChildFloatBtn, this.Height - 160);
+                    Canvas.SetLeft(ChildFloatBtn, this.Width - 100);
+                }
+            }
         }
 
         private void PopMenuEvent(object sender, RoutedEventArgs e)
         {
+            PopMenu.Opened += delegate { ((Storyboard)FindResource("Overly")).Begin(); };
             PopMenu.IsOpen = true;
         }
     }

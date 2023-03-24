@@ -17,8 +17,16 @@
     d:DataContext="{d:DesignInstance vm:IndexViewModel}"
     Style="{StaticResource CandyDefaultWindowStyle}"
     mc:Ignorable="d">
+    <Window.Resources>
+        <Storyboard x:Key="Overly">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PopMenuContent" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
     <Canvas x:Name="ContentCanvas">
-        <ContentControl Content="{Binding CandyControl}" />
+        <ContentControl x:Name="ItemComponent" Content="{Binding CandyControl}" />
         <Button
             x:Name="FloatBtn"
             Panel.ZIndex="1"
@@ -54,7 +62,7 @@
             PlacementTarget="{Binding ElementName=FloatBtn}"
             StaysOpen="False"
             VerticalOffset="-10">
-            <Grid>
+            <Grid x:Name="PopMenuContent">
                 <Rectangle
                     Margin="3"
                     Fill="#60FDD3D3"

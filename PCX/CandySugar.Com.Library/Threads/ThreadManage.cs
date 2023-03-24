@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace CandySugar.Com.Library.Threads
 {
-    public class TheadManage
+    public class ThreadManage
     {
-        private static TheadManage _Instance;
-        public static TheadManage Instance
+        private static ThreadManage _Instance;
+        public static ThreadManage Instance
         {
             get {
                 if (_Instance != null) return _Instance;
                 else
                 {
-                    _Instance = new TheadManage();
+                    _Instance = new ThreadManage();
                     return _Instance;
                 }
             }

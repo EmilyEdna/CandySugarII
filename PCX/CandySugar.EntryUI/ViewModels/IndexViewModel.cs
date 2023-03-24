@@ -1,11 +1,17 @@
-﻿using CandySugar.Com.Library;
+﻿using CandySugar.Com.Controls.UIExtenControls;
+using CandySugar.Com.Library;
 using CandySugar.Com.Library.DLLoader;
+using CandySugar.Com.Library.Internet;
+using CandySugar.Com.Library.Threads;
 using CandySugar.Com.Library.Transfers;
+using CandySugar.EntryUI.Views;
 using Stylet;
 using StyletIoC;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace CandySugar.EntryUI.ViewModels
@@ -32,6 +38,17 @@ namespace CandySugar.EntryUI.ViewModels
                 ViewModel = item.InstanceViewModel
             });
             MenuObj = new ObservableCollection<MenuObject>(dlls);
+            ThreadManage.Instance.StartLong(() =>
+            {
+                if (!InternetWork.GetNetworkState)
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        new ScreenNotifyView("网络异常请检查当前网络是否连接成功！").Show();
+                    });
+                   Thread.Sleep(10000);
+                }
+            }, "InternetWorkCheck", true);
         }
 
         #region Property
@@ -66,6 +83,7 @@ namespace CandySugar.EntryUI.ViewModels
                 var ViewModel = MenuObj.FirstOrDefault(t => InstanceType == InstanceType).ViewModel;
                 Ctrl.DataContext = Activator.CreateInstance(ViewModel);
                 CandyControl = Ctrl;
+                ((IndexView)View).RelyLocation();
             });
         }
 

@@ -37,9 +37,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Window">
                     <Border BorderBrush="#e63995" BorderThickness="1.5">
-                        <Border.Background>
+                        <!--<Border.Background>
                             <ImageBrush ImageSource="/CandySugar.Com.Style;component/Resources/Backgroud.jpg" />
-                        </Border.Background>
+                        </Border.Background>-->
                         <Border.Style>
                             <Style TargetType="Border">
                                 <EventSetter Event="MouseLeftButtonDown" Handler="MoveEvent" />
@@ -74,7 +74,7 @@
                                             VerticalAlignment="Center">
                                             <TextBlock
                                                 FontSize="15"
-                                                Foreground="Pink"
+                                                Foreground="#fff0f5"
                                                 Text="{TemplateBinding Title}" />
                                         </WrapPanel>
                                         <WrapPanel Grid.Column="1" HorizontalAlignment="Right">
@@ -85,7 +85,7 @@
                                                 BorderThickness="0"
                                                 Content="{x:Static lib:FontIcon.MagnifyingGlass}"
                                                 FontFamily="{DynamicResource Thin}"
-                                                Foreground="Pink">
+                                                Foreground="#fff0f5">
                                                 <Button.Style>
                                                     <Style TargetType="Button">
                                                         <Setter Property="Template" Value="{DynamicResource CandyDefaultWindowButtonStyle}" />
@@ -105,7 +105,7 @@
                                                 BorderThickness="0"
                                                 Content="{x:Static lib:FontIcon.Minus}"
                                                 FontFamily="{DynamicResource Thin}"
-                                                Foreground="Pink">
+                                                Foreground="#fff0f5">
                                                 <Button.Style>
                                                     <Style TargetType="Button">
                                                         <Setter Property="Template" Value="{DynamicResource CandyDefaultWindowButtonStyle}" />
@@ -120,7 +120,7 @@
                                                 BorderThickness="0"
                                                 Content="{x:Static lib:FontIcon.Square}"
                                                 FontFamily="{DynamicResource Thin}"
-                                                Foreground="Pink">
+                                                Foreground="#fff0f5">
                                                 <Button.Style>
                                                     <Style TargetType="Button">
                                                         <Setter Property="Template" Value="{DynamicResource CandyDefaultWindowButtonStyle}" />
@@ -137,7 +137,7 @@
                                                 BorderThickness="0"
                                                 Content="{x:Static lib:FontIcon.PowerOff}"
                                                 FontFamily="{DynamicResource Thin}"
-                                                Foreground="Pink">
+                                                Foreground="#fff0f5">
                                                 <Button.Style>
                                                     <Style TargetType="Button">
                                                         <Setter Property="Template" Value="{DynamicResource CandyDefaultWindowButtonStyle}" />
@@ -174,6 +174,31 @@
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
+
+    <Style x:Key="CandyDefaultNotifyWindowStyle" TargetType="Window">
+        <Setter Property="ResizeMode" Value="NoResize" />
+        <Setter Property="WindowStyle" Value="None" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="AllowsTransparency" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Window">
+                    <Border BorderBrush="#e63995" BorderThickness="1.5">
+                        <Grid>
+                            <Rectangle
+                                Width="{TemplateBinding Width}"
+                                Height="{TemplateBinding Height}"
+                                Fill="#faf0e6"
+                                Opacity=".3" />
+                            <ContentPresenter Content="{TemplateBinding Content}" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <!--#endregion-->
 
@@ -242,6 +267,92 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
+                        </Border>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="X1" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect
+                                        BlurRadius="10"
+                                        ShadowDepth="0"
+                                        Color="MediumVioletRed" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="X2" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect
+                                        BlurRadius="10"
+                                        ShadowDepth="0"
+                                        Color="Gold" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="X1" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect
+                                        BlurRadius="10"
+                                        ShadowDepth="0"
+                                        Color="#FF9999" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="X2" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect
+                                        BlurRadius="10"
+                                        ShadowDepth="0"
+                                        Color="MediumVioletRed" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="CandyFloatChildButtonStyle" TargetType="Button">
+        <Setter Property="Width" Value="50" />
+        <Setter Property="Height" Value="50" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border
+                        x:Name="X1"
+                        Width="{TemplateBinding Width}"
+                        Height="{TemplateBinding Height}"
+                        CornerRadius="25">
+                        <Border.Background>
+                            <SolidColorBrush Opacity=".25" Color="Pink" />
+                        </Border.Background>
+                        <Border.Effect>
+                            <DropShadowEffect
+                                BlurRadius="10"
+                                ShadowDepth="0"
+                                Color="WhiteSmoke" />
+                        </Border.Effect>
+                        <Border
+                            x:Name="X2"
+                            Margin="5"
+                            CornerRadius="25">
+                            <Border.Background>
+                                <SolidColorBrush Opacity=".25" Color="Ivory" />
+                            </Border.Background>
+                            <Border.Effect>
+                                <DropShadowEffect
+                                    BlurRadius="10"
+                                    ShadowDepth="0"
+                                    Color="Khaki" />
+                            </Border.Effect>
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontFamily="{StaticResource Thin}"
+                                FontSize="18"
+                                Foreground="Black"
+                                RenderTransformOrigin="0.5,0.5"
+                                Text="{x:Static lib:FontIcon.MagnifyingGlassPlus}" />
                         </Border>
                     </Border>
                     <ControlTemplate.Triggers>

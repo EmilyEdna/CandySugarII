@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -86,13 +87,13 @@ namespace CandySugar.Com.Library.DLLoader
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"加载节点{dllFileName}-{typeName}发生异常：{ex.Message},{ex.StackTrace}");
+                    Log.Logger.Error($"加载节点{dllFileName}-{typeName}发生异常：{ex.Message},{ex.StackTrace}");
                 }
 
             }
             else
             {
-                Console.WriteLine($"节点动态库{dllFileName}不存在：{path}");
+                Log.Logger.Error($"节点动态库{dllFileName}不存在：{path}");
             }
         }
         /// <summary>
@@ -115,12 +116,12 @@ namespace CandySugar.Com.Library.DLLoader
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"加载节点{expectedPath}发生异常：{ex.Message},{ex.StackTrace}");
+                    Log.Logger.Error($"加载节点{expectedPath}发生异常：{ex.Message},{ex.StackTrace}");
                 }
             }
             else
             {
-                Console.WriteLine($"依赖文件不存在：{expectedPath}");
+                Log.Logger.Error($"依赖文件不存在：{expectedPath}");
             }
             return null;
         }

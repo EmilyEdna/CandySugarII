@@ -26,5 +26,24 @@ namespace CandySugar.Com.Options.ComponentObject
                 }
             }
         }
+
+        private static OptionObjectModel _OptionObjectModels;
+        /// <summary>
+        /// 系统配置
+        /// </summary>
+        public static OptionObjectModel OptionObjectModels
+        {
+            get
+            {
+                if (_OptionObjectModels != null) return _OptionObjectModels;
+                else
+                {
+                    OptionObjectModel Model = new();
+                    JsonReader.Configuration.Bind("Option", Model);
+                    _OptionObjectModels = Model;
+                    return _OptionObjectModels;
+                }
+            }
+        }
     }
 }

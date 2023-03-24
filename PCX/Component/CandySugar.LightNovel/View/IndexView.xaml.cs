@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Media.Animation;
 
 namespace CandySugar.LightNovel.View
 {
@@ -10,6 +11,12 @@ namespace CandySugar.LightNovel.View
         public IndexView()
         {
             InitializeComponent();
+        }
+
+        private void PopMenuEvent(object sender, System.Windows.RoutedEventArgs e)
+        {
+            PopMenu.Opened += delegate { ((Storyboard)FindResource("Overly")).Begin(); };
+            PopMenu.IsOpen = true;
         }
     }
 }
