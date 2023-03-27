@@ -57,7 +57,7 @@ namespace CandySugar.Com.Library.BitConvert
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <returns></returns>
-        public static BitmapSource Bytes2Image(byte[] bytes, int width = 180, int height = 240)
+        public static BitmapSource Bytes2Image(byte[] bytes, int width = 160, int height = 240)
         {
             Bitmap bmp = Image.FromStream(new MemoryStream(bytes)) as Bitmap;
             var ptr = bmp.GetHbitmap();

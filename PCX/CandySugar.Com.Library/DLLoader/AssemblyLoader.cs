@@ -104,6 +104,8 @@ namespace CandySugar.Com.Library.DLLoader
         /// <returns></returns>
         private Assembly Context_Resolving(AssemblyLoadContext context, AssemblyName assemblyName)
         {
+            string[] Filter = { $"{Path.GetFileNameWithoutExtension(context.Name)}.resources" };
+            if (Filter.Contains(assemblyName.Name)) return null;
             string expectedPath = Path.Combine(_basePath, assemblyName.Name + ".dll"); ;
             if (File.Exists(expectedPath))
             {

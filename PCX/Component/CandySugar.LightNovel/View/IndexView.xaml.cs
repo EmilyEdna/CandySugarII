@@ -14,12 +14,12 @@ namespace CandySugar.LightNovel.View
         public IndexView()
         {
             InitializeComponent();
-            GenericDelegate.InformationAction = new((width,height) =>
+            GenericDelegate.InformationAction = new((width, height) =>
             {
                 Canvas.SetTop(FloatBtn, height - 160);
                 Canvas.SetLeft(FloatBtn, width - 100);
                 this.Width = width;
-                this.Height = height - 35;
+                this.Height = height - 35 <= 0 ? 0 : height - 35;
             });
         }
 

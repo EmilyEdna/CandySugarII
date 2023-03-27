@@ -22,10 +22,18 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1" />
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
+        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="1,2" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Foreground" Value="#fdf5e6" />
+        </Style>
     </UserControl.Resources>
     <Canvas>
         <Grid Width="{Binding Width, ElementName=LightViewCtrl}" Height="{Binding Height, ElementName=LightViewCtrl}">
-            <ListBox ItemsSource="{Binding InformationElement, IsAsync=True}" Style="{DynamicResource CandyListBoxStyle}">
+            <ListBox
+                uc:ListBoxAttach.Command="{Binding ScrollCommand}"
+                ItemsSource="{Binding InformationElement, IsAsync=True}"
+                Style="{DynamicResource CandyListBoxStyle}">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Columns="1" />
@@ -38,14 +46,33 @@
                                 <ColumnDefinition />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <Image
-                                uc:ImageAttach.SourceAsync="{Binding Cover}"
-                                Stretch="Uniform"
-                                Tag="{x:Static lib:EDownload.Light}" />
-                            <StackPanel Grid.Column="1">
-                                <TextBlock Text="{Binding BookName, StringFormat=书名：{0}}" />
-                                <TextBlock Text="{Binding Author, StringFormat=作者：{0}}" />
-                            </StackPanel>
+                            <Border
+                                Margin="1.5"
+                                BorderBrush="#FFBD6318"
+                                BorderThickness="1">
+                                <Image
+                                    uc:ImageAttach.SourceAsync="{Binding Cover}"
+                                    Stretch="Uniform"
+                                    Tag="{x:Static lib:EDownload.Light}" />
+                            </Border>
+                            <WrapPanel
+                                Grid.Column="1"
+                                Width="350"
+                                Orientation="Vertical">
+                                <TextBlock
+                                    Style="{DynamicResource TextBlockStyle}"
+                                    Text="{Binding BookName, StringFormat=书名：{0}}"
+                                    TextWrapping="Wrap" />
+                                <TextBlock Style="{DynamicResource TextBlockStyle}" Text="{Binding Author, StringFormat=作者：{0}}" />
+                                <TextBlock Style="{DynamicResource TextBlockStyle}" Text="{Binding Category, StringFormat=类别:{0}}" />
+                                <TextBlock Style="{DynamicResource TextBlockStyle}" Text="{Binding Status, StringFormat=状态:{0}}" />
+                                <TextBlock Style="{DynamicResource TextBlockStyle}" Text="{Binding Press, StringFormat=出版:{0}}" />
+                                <TextBlock Style="{DynamicResource TextBlockStyle}" Text="{Binding Date, StringFormat=最近更新:{0:yyyy-MM-dd HH:mm:ss}}" />
+                                <TextBlock
+                                    Style="{DynamicResource TextBlockStyle}"
+                                    Text="{Binding Description, StringFormat=简介:{0}}"
+                                    TextWrapping="Wrap" />
+                            </WrapPanel>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
