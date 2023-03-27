@@ -81,7 +81,7 @@ namespace CandySugar.LightNovel.ViewModels
         public void ActiveCommand(string route)
         {
             HandleType = 1;
-            SearchPageIndex = 1;
+            InfomationPageIndex = 1;
             InfomationRoute = route;
             OnInitInformation();
         }
@@ -268,10 +268,16 @@ namespace CandySugar.LightNovel.ViewModels
                             }
                         };
                     }).RunsAsync()).SearchResult;
-                    SearchTotal = result.Total;
-                    InformationElement = new ObservableCollection<LovelCategoryElementResult>(result.ElementResults.ToMapest<List<LovelCategoryElementResult>>());
-                    // 这一句很关键，开启集合的异步访问支持
-                    BindingOperations.EnableCollectionSynchronization(InformationElement, lockObject);
+                    lock (lockObject)
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            result.ElementResults.ForEach(index =>
+                            {
+                                InformationElement.Add(index.ToMapest<LovelCategoryElementResult>());
+                            });
+                        });
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -290,7 +296,7 @@ namespace CandySugar.LightNovel.ViewModels
         public void SearchHandler(string keyword)
         {
             HandleType = 2;
-            InfomationPageIndex = 1;
+            SearchPageIndex = 1;
             SearchKeyword = keyword;
             OnInitSearch();
         }

@@ -47,7 +47,7 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Border
-                                Margin="1.5"
+                                Margin="5,0"
                                 BorderBrush="#FFBD6318"
                                 BorderThickness="1">
                                 <Image
