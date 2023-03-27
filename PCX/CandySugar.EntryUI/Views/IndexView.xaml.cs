@@ -86,8 +86,8 @@ namespace CandySugar.EntryUI.Views
             }
             if (this.WindowState == WindowState.Normal)
             {
-                this.Height = 450;
-                this.Width = 800;
+                this.Height = 700;
+                this.Width = 1200;
             }
             Canvas.SetTop(FloatBtn, this.Height - 100);
             Canvas.SetLeft(FloatBtn, this.Width - 100);

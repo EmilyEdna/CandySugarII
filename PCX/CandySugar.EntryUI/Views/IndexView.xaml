@@ -12,8 +12,8 @@
     xmlns:vm="clr-namespace:CandySugar.EntryUI.ViewModels"
     x:Name="CandyWindow"
     Title="{Binding Title}"
-    Width="800"
-    Height="450"
+    Width="1200"
+    Height="700"
     d:DataContext="{d:DesignInstance vm:IndexViewModel}"
     Style="{StaticResource CandyDefaultWindowStyle}"
     mc:Ignorable="d">

@@ -25,6 +25,7 @@ using CandySugar.Com.Library.VisualTree;
 using System.Windows.Data;
 using XExten.Advance.LinqFramework;
 using System.Runtime.InteropServices;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace CandySugar.LightNovel.ViewModels
 {
@@ -57,10 +58,19 @@ namespace CandySugar.LightNovel.ViewModels
         #endregion
 
         #region Property
+        private ObservableCollection<LovelViewResult> _ViewResult;
+        /// <summary>
+        /// 章节结果
+        /// </summary>
+        public ObservableCollection<LovelViewResult> ViewResult
+        {
+            get => _ViewResult;
+            set => SetAndNotify(ref _ViewResult, value);
+        }
+        private ObservableCollection<LovelInitResult> _MenuIndex;
         /// <summary>
         /// 分类菜单
         /// </summary>
-        private ObservableCollection<LovelInitResult> _MenuIndex;
         public ObservableCollection<LovelInitResult> MenuIndex
         {
             get => _MenuIndex;
@@ -84,6 +94,10 @@ namespace CandySugar.LightNovel.ViewModels
             InfomationPageIndex = 1;
             InfomationRoute = route;
             OnInitInformation();
+        }
+        public void ChapterCommand(string Chapter)
+        {
+            OnInitChapter(Chapter);
         }
         public RelayCommand<ScrollChangedEventArgs> ScrollCommand => new((obj) =>
         {
@@ -278,6 +292,53 @@ namespace CandySugar.LightNovel.ViewModels
                             });
                         });
                     }
+                }
+                catch (Exception ex)
+                {
+                    Log.Logger.Error(ex, "");
+                    new ScreenNotifyView(CommonHelper.ComponentErrorInformation).Show();
+                }
+            });
+        }
+        /// <summary>
+        /// 初始化章节
+        /// </summary>
+        /// <param name="ChapterRoute"></param>
+        private void OnInitChapter(string ChapterRoute) 
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    var ChapterResult = (await LovelFactory.Lovel(opt =>
+                    {
+                        opt.RequestParam = new Input
+                        {
+                            CacheSpan = ComponentBinding.OptionObjectModels.Cache,
+                            ImplType = SdkImpl.Rest,
+                            LovelType = LovelEnum.Detail,
+                            Detail = new LovelDetail
+                            {
+                                Route = ChapterRoute
+                            }
+                        };
+                    }).RunsAsync()).DetailResult;
+                    await Task.Delay(1000);
+                    var result = (await LovelFactory.Lovel(opt =>
+                    {
+                        opt.RequestParam = new Input
+                        {
+                            CacheSpan = ComponentBinding.OptionObjectModels.Cache,
+                            ImplType = SdkImpl.Rest,
+                            LovelType = LovelEnum.View,
+                            View = new LovelView
+                            {
+                                Route = ChapterResult.Route
+                            }
+                        };
+                    }).RunsAsync()).ViewResult;
+                    ViewResult = new ObservableCollection<LovelViewResult>(result);
+                    WeakReferenceMessenger.Default.Send(new LightNotify());
                 }
                 catch (Exception ex)
                 {

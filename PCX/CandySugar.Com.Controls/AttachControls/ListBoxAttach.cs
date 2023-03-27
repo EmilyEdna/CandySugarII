@@ -13,18 +13,18 @@ namespace CandySugar.Com.Controls.AttachControls
     public static class ListBoxAttach
     {
 
-        public static void SetCommand(DependencyObject target, ICommand value)
+        public static void SetScrollCommand(DependencyObject target, ICommand value)
         {
-            target.SetValue(CommandProperty, value);
+            target.SetValue(ScrollCommandProperty, value);
         }
 
-        public static ICommand GetPreviewMouseLeftButtonDown(DependencyObject target)
+        public static ICommand GetScrollCommand(DependencyObject target)
         {
-            return (ICommand)target.GetValue(CommandProperty);
+            return (ICommand)target.GetValue(ScrollCommandProperty);
         }
 
-        public static DependencyProperty CommandProperty =
-            DependencyProperty.RegisterAttached("Command", typeof(ICommand), typeof(ListBoxAttach), new FrameworkPropertyMetadata(default(ICommand), new PropertyChangedCallback(CommandChanged)));
+        public static DependencyProperty ScrollCommandProperty =
+            DependencyProperty.RegisterAttached("ScrollCommand", typeof(ICommand), typeof(ListBoxAttach), new FrameworkPropertyMetadata(default(ICommand), new PropertyChangedCallback(CommandChanged)));
 
         private static void CommandChanged(DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
@@ -61,7 +61,7 @@ namespace CandySugar.Com.Controls.AttachControls
             ListBox element = (sender as ScrollViewer).FindParent<ListBox>();
             if (element != null)
             {
-                ICommand command = (ICommand)element.GetValue(CommandProperty);
+                ICommand command = (ICommand)element.GetValue(ScrollCommandProperty);
                 command.Execute(e);
             }
         }
