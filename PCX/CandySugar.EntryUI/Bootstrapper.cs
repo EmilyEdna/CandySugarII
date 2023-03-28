@@ -43,6 +43,7 @@ namespace CandySugar.EntryUI
             });
             HttpEvent.RestActionEvent = new Action<RestClient, Exception>((client, ex) =>
             {
+                Log.Logger.Error(ex,"");
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     new ScreenNotifyView($"网络内部异常，请看日志!").Show();
