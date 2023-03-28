@@ -1,10 +1,12 @@
-﻿using CandySugar.Com.Library.VisualTree;
+﻿using CandySugar.Com.Library;
+using CandySugar.Com.Library.VisualTree;
 using CandySugar.Com.Options.ComponentGeneric;
 using CommunityToolkit.Mvvm.Messaging;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace CandySugar.LightNovel.View
@@ -17,38 +19,71 @@ namespace CandySugar.LightNovel.View
         public IndexView()
         {
             InitializeComponent();
+            Icon.Content = FontIcon.AnglesLeft;
             GenericDelegate.InformationAction = new((width, height) =>
             {
                 Canvas.SetTop(FloatBtn, height - 160);
                 Canvas.SetLeft(FloatBtn, width - 100);
                 this.Width = width;
                 this.Height = height - 35 <= 0 ? 0 : height - 35;
+                this.RightSider.Width = this.Width / 3;
+                this.RightSider.Height = this.Height;
             });
             WeakReferenceMessenger.Default.Register<LightNotify>(this, (recip, notify) =>
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    CreateDyamicAmime().Begin(this.RightSider);
+                    CreateOpenDyamicAmime();
                 });
             });
         }
 
-        private void PopMenuEvent(object sender, System.Windows.RoutedEventArgs e)
+        private void PopMenuEvent(object sender, RoutedEventArgs e)
         {
             PopMenu.Opened += delegate { ((Storyboard)FindResource("Overly")).Begin(); };
             PopMenu.IsOpen = true;
         }
 
-        private Storyboard CreateDyamicAmime() 
+        private void CloseSilderEvent(object sender, RoutedEventArgs e)
+        {
+            CreateCloseDyamicAmime();
+        }
+
+        #region DyamicAmime
+
+        private void CreateOpenDyamicAmime()
         {
             Storyboard storyboard = new Storyboard();
             DoubleAnimationUsingKeyFrames doubleAnimations = new DoubleAnimationUsingKeyFrames();
             Storyboard.SetTargetName(doubleAnimations, "RightSider");
-            Storyboard.SetTargetProperty(doubleAnimations, new PropertyPath(WidthProperty));
+            Storyboard.SetTargetProperty(doubleAnimations, new PropertyPath("(UIElement.RenderTransform).(TransformGroup.Children)[0].(TranslateTransform.X)"));
             doubleAnimations.KeyFrames.Add(new EasingDoubleKeyFrame(0, TimeSpan.Zero));
-            doubleAnimations.KeyFrames.Add(new EasingDoubleKeyFrame(this.Width/3, TimeSpan.FromSeconds(1)));
+            doubleAnimations.KeyFrames.Add(new EasingDoubleKeyFrame(this.Width / (-3), TimeSpan.FromSeconds(1)));
             storyboard.Children.Add(doubleAnimations);
-            return storyboard;
+            storyboard.Completed += delegate
+            {
+                Icon.IsEnabled = true;
+                Icon.Content = FontIcon.AnglesRight;
+            };
+            storyboard.Begin(this.RightSider);
         }
+
+        private void CreateCloseDyamicAmime()
+        {
+            Storyboard storyboard = new Storyboard();
+            DoubleAnimationUsingKeyFrames doubleAnimations = new DoubleAnimationUsingKeyFrames();
+            Storyboard.SetTargetName(doubleAnimations, "RightSider");
+            Storyboard.SetTargetProperty(doubleAnimations, new PropertyPath("(UIElement.RenderTransform).(TransformGroup.Children)[0].(TranslateTransform.X)"));
+            doubleAnimations.KeyFrames.Add(new EasingDoubleKeyFrame(this.Width / (-3), TimeSpan.Zero));
+            doubleAnimations.KeyFrames.Add(new EasingDoubleKeyFrame(0, TimeSpan.FromSeconds(1)));
+            storyboard.Children.Add(doubleAnimations);
+            storyboard.Completed += delegate
+            {
+                Icon.IsEnabled = false;
+                Icon.Content = FontIcon.AnglesLeft;
+            };
+            storyboard.Begin(this.RightSider);
+        }
+        #endregion
     }
 }

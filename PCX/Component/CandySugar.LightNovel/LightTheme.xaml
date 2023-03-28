@@ -14,9 +14,9 @@
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
     <Storyboard x:Key="SilderOverly">
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="RightSider" Storyboard.TargetProperty="Width">
-            <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0" />
-            <EasingDoubleKeyFrame KeyTime="00:00:01" Value="{c:Binding (Width/3), ElementName=LightViewCtrl}" />
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="RightSider" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(TranslateTransform.X)">
+            <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+            <EasingDoubleKeyFrame KeyTime="0:0:1" Value="{c:Binding (Width/(-3)), ElementName=LightViewCtrl}" />
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
 </ResourceDictionary>
