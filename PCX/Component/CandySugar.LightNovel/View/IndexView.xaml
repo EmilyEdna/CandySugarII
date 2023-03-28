@@ -86,13 +86,13 @@
         <Grid x:Name="RightSider" Canvas.Left="{Binding Width, ElementName=LightViewCtrl}">
             <Grid.RenderTransform>
                 <TransformGroup>
-                    <TranslateTransform />
+                    <TranslateTransform X="-80" />
                 </TransformGroup>
             </Grid.RenderTransform>
             <Rectangle
                 Width="{Binding Width, ElementName=RightSider}"
                 Height="{Binding Height, ElementName=RightSider}"
-                Fill="#30d94dff" />
+                Fill="#201e90ff" />
             <Grid Width="{Binding Width, ElementName=RightSider}" Height="{Binding Height, ElementName=RightSider}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="80" />
@@ -102,7 +102,7 @@
                     x:Name="Icon"
                     Width="80"
                     Height="80"
-                    Click="CloseSilderEvent"
+                    Click="SilderEvent"
                     FontSize="50"
                     IsEnabled="False"
                     Style="{DynamicResource CandyFontButtonStyle}" />
@@ -114,10 +114,7 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="2,3">
-                                <TextBlock
-                                    Style="{DynamicResource TextBlockStyle}"
-                                    Text="{Binding ChapterName}"
-                                    TextWrapping="WrapWithOverflow" />
+                                <Button Content="{Binding ChapterName}" Style="{DynamicResource CandyTextBlockButtonStyle}" />
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

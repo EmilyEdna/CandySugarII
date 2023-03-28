@@ -44,9 +44,11 @@ namespace CandySugar.LightNovel.View
             PopMenu.IsOpen = true;
         }
 
-        private void CloseSilderEvent(object sender, RoutedEventArgs e)
+        private void SilderEvent(object sender, RoutedEventArgs e)
         {
-            CreateCloseDyamicAmime();
+            Icon.IsEnabled = false;
+            if ((int)Icon.Tag == 0) CreateOpenDyamicAmime();
+            else CreateCloseDyamicAmime();
         }
 
         #region DyamicAmime
@@ -57,11 +59,12 @@ namespace CandySugar.LightNovel.View
             DoubleAnimationUsingKeyFrames doubleAnimations = new DoubleAnimationUsingKeyFrames();
             Storyboard.SetTargetName(doubleAnimations, "RightSider");
             Storyboard.SetTargetProperty(doubleAnimations, new PropertyPath("(UIElement.RenderTransform).(TransformGroup.Children)[0].(TranslateTransform.X)"));
-            doubleAnimations.KeyFrames.Add(new EasingDoubleKeyFrame(0, TimeSpan.Zero));
+            doubleAnimations.KeyFrames.Add(new EasingDoubleKeyFrame(-80, TimeSpan.Zero));
             doubleAnimations.KeyFrames.Add(new EasingDoubleKeyFrame(this.Width / (-3), TimeSpan.FromSeconds(1)));
             storyboard.Children.Add(doubleAnimations);
             storyboard.Completed += delegate
             {
+                Icon.Tag = 1;
                 Icon.IsEnabled = true;
                 Icon.Content = FontIcon.AnglesRight;
             };
@@ -75,11 +78,12 @@ namespace CandySugar.LightNovel.View
             Storyboard.SetTargetName(doubleAnimations, "RightSider");
             Storyboard.SetTargetProperty(doubleAnimations, new PropertyPath("(UIElement.RenderTransform).(TransformGroup.Children)[0].(TranslateTransform.X)"));
             doubleAnimations.KeyFrames.Add(new EasingDoubleKeyFrame(this.Width / (-3), TimeSpan.Zero));
-            doubleAnimations.KeyFrames.Add(new EasingDoubleKeyFrame(0, TimeSpan.FromSeconds(1)));
+            doubleAnimations.KeyFrames.Add(new EasingDoubleKeyFrame(-80, TimeSpan.FromSeconds(1)));
             storyboard.Children.Add(doubleAnimations);
             storyboard.Completed += delegate
             {
-                Icon.IsEnabled = false;
+                Icon.Tag = 0;
+                Icon.IsEnabled = true;
                 Icon.Content = FontIcon.AnglesLeft;
             };
             storyboard.Begin(this.RightSider);
