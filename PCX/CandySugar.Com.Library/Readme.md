@@ -9,3 +9,5 @@
 1. <u>Transfers</u>数据传输对象。
 1. <u>VisualTree</u>控件对象遍历功能。
 1. <u>Audios</u>音频播放功能。
+1. <u>BitConvert</u>图片转换功能。
+1. <u>DownQueue</u>图片多线程后台下载功能。
