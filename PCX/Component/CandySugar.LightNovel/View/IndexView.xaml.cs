@@ -1,6 +1,7 @@
 ﻿using CandySugar.Com.Library;
 using CandySugar.Com.Library.VisualTree;
 using CandySugar.Com.Options.ComponentGeneric;
+using CandySugar.LightNovel.ViewModels;
 using CommunityToolkit.Mvvm.Messaging;
 using System;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace CandySugar.LightNovel.View
     /// </summary>
     public partial class IndexView : UserControl
     {
+        private IndexViewModel ViewModel;
         public IndexView()
         {
             InitializeComponent();
@@ -33,9 +35,13 @@ namespace CandySugar.LightNovel.View
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    CreateOpenDyamicAmime();
+                    if (notify.SliderStatus == 1)
+                        CreateOpenDyamicAmime();
+                    else
+                        CreateCloseDyamicAmime();
                 });
             });
+            Loaded += delegate { ViewModel = (IndexViewModel)this.DataContext; };
         }
 
         private void PopMenuEvent(object sender, RoutedEventArgs e)
@@ -47,7 +53,7 @@ namespace CandySugar.LightNovel.View
         private void SilderEvent(object sender, RoutedEventArgs e)
         {
             Icon.IsEnabled = false;
-            if ((int)Icon.Tag == 0) CreateOpenDyamicAmime();
+            if (ViewModel.SliderStatus==2) CreateOpenDyamicAmime();
             else CreateCloseDyamicAmime();
         }
 
@@ -64,8 +70,8 @@ namespace CandySugar.LightNovel.View
             storyboard.Children.Add(doubleAnimations);
             storyboard.Completed += delegate
             {
-                Icon.Tag = 1;
                 Icon.IsEnabled = true;
+                ViewModel.SliderStatus = 1;
                 Icon.Content = FontIcon.AnglesRight;
             };
             storyboard.Begin(this.RightSider);
@@ -82,8 +88,8 @@ namespace CandySugar.LightNovel.View
             storyboard.Children.Add(doubleAnimations);
             storyboard.Completed += delegate
             {
-                Icon.Tag = 0;
                 Icon.IsEnabled = true;
+                ViewModel.SliderStatus = 2;
                 Icon.Content = FontIcon.AnglesLeft;
             };
             storyboard.Begin(this.RightSider);

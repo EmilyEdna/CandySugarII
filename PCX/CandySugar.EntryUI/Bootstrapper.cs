@@ -1,4 +1,5 @@
-﻿using CandySugar.Com.Library;
+﻿using CandySugar.Com.Controls.UIExtenControls;
+using CandySugar.Com.Library;
 using CandySugar.Com.Library.DLLoader;
 using CandySugar.Com.Library.DownQueue;
 using CandySugar.Com.Library.ReadFile;
@@ -9,6 +10,7 @@ using Serilog;
 using Stylet;
 using StyletIoC;
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Windows;
 using System.Windows.Threading;
@@ -33,7 +35,7 @@ namespace CandySugar.EntryUI
             AssemblyLoader Loader = new(CommonHelper.AppPath);
             ComponentBinding.ComponentObjectModels.ForEach(Dll =>
             {
-                Loader.Load(Dll.Plugin, Dll.Bootstrapper, Dll.Description);
+                Loader.Load(Dll.Plugin, Dll.Bootstrapper, Dll.Ioc, Dll.Description);
             });
             HttpEvent.HttpActionEvent = new Action<HttpClient, Exception>((client, ex) =>
             {
@@ -41,13 +43,20 @@ namespace CandySugar.EntryUI
             });
             HttpEvent.RestActionEvent = new Action<RestClient, Exception>((client, ex) =>
             {
-
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    new ScreenNotifyView($"网络内部异常，请看日志!").Show();
+                });
             });
         }
 
         protected override void ConfigureIoC(IStyletIoCBuilder builder)
         {
-
+            AssemblyLoader.Dll.ForEach(item =>
+            {
+                if (item.IocModule != null)
+                    Activator.CreateInstance(item.IocModule);
+            });
         }
 
         /// <summary>

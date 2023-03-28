@@ -16,7 +16,7 @@
             <DropShadowEffect
                 BlurRadius="8"
                 ShadowDepth="0"
-                Color="Gold" />
+                Color="#faf0e6" />
         </Grid.Effect>
         <Button
             Margin="5"
@@ -28,14 +28,14 @@
             Content="{x:Static lib:FontIcon.Xmark}"
             FontFamily="{DynamicResource Thin}"
             FontSize="16"
-            Foreground="#f400a1" />
+            Foreground="#1e90ff" />
         <TextBlock
             Margin="0,15,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             FontFamily="{DynamicResource FontStyle}"
             FontSize="15"
-            Foreground="#f400a1"
+            Foreground="#1e90ff"
             Text="{Binding Info}" />
     </Grid>
 </Window>

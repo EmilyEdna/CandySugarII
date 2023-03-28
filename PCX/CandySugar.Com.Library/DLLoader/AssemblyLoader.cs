@@ -61,7 +61,7 @@ namespace CandySugar.Com.Library.DLLoader
         /// <param name="typeName"></param>
         /// <param name="configTypeName"></param>
         /// <param name="description"></param>
-        public void Load(string dllFileName, string typeName, string description = "")
+        public void Load(string dllFileName, string typeName, string ioc = "Module", string description = "")
         {
             context = new AssemblyLoadContext(dllFileName);
             context.Resolving += Context_Resolving;
@@ -75,11 +75,13 @@ namespace CandySugar.Com.Library.DLLoader
                     {
                         Assembly assembly = context.LoadFromStream(stream);
                         Type InstanceType = assembly.GetTypes().FirstOrDefault(t => t.Name.ToLower().Equals(typeName.ToLower()));
-                        Type ViewModel = assembly.GetTypes().FirstOrDefault(t => t.Name.Contains("ViewModel"));
+                        Type ViewModel = assembly.GetTypes().FirstOrDefault(t => t.Name.ToLower().Contains($"{typeName}Model".ToLower()));
+                        Type IocModule = assembly.GetTypes().FirstOrDefault(t => t.Name.ToLower().Equals(ioc.ToLower()));
                         Dll.Add(new DLLInfomations
                         {
                             InstanceViewModel = ViewModel,
                             InstanceType = InstanceType,
+                            IocModule = IocModule,
                             Description = description,
                             IsEnable = true,
                         });

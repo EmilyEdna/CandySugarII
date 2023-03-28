@@ -55,6 +55,10 @@ namespace CandySugar.LightNovel.ViewModels
         /// 操作类型 1:分类 2:查询
         /// </summary>
         private int HandleType = 1;
+        /// <summary>
+        /// 侧边栏开关状态 1 开 2关
+        /// </summary>
+        public int SliderStatus = 2;
         #endregion
 
         #region Property
@@ -97,6 +101,8 @@ namespace CandySugar.LightNovel.ViewModels
         }
         public void ChapterCommand(string Chapter)
         {
+            if (SliderStatus == 1)
+                WeakReferenceMessenger.Default.Send(new LightNotify { SliderStatus = 2 });
             OnInitChapter(Chapter);
         }
         public RelayCommand<ScrollChangedEventArgs> ScrollCommand => new((obj) =>
@@ -304,7 +310,7 @@ namespace CandySugar.LightNovel.ViewModels
         /// 初始化章节
         /// </summary>
         /// <param name="ChapterRoute"></param>
-        private void OnInitChapter(string ChapterRoute) 
+        private void OnInitChapter(string ChapterRoute)
         {
             Task.Run(async () =>
             {
@@ -338,7 +344,7 @@ namespace CandySugar.LightNovel.ViewModels
                         };
                     }).RunsAsync()).ViewResult;
                     ViewResult = new ObservableCollection<LovelViewResult>(result);
-                    WeakReferenceMessenger.Default.Send(new LightNotify());
+                    WeakReferenceMessenger.Default.Send(new LightNotify { SliderStatus = 1 });
                 }
                 catch (Exception ex)
                 {

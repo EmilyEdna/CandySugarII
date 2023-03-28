@@ -2,7 +2,8 @@
   "ComponentInfos": [
     {
       "Plugin": "CandySugar.LightNovel.dll",
-      "Bootstrapper": "IndexView",
+      "Bootstrapper": "MainView",
+       "Ioc": "Module",
       "Description": "轻小说"
     }
   ]
