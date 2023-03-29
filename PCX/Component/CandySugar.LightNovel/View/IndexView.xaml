@@ -114,7 +114,12 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="2,3">
-                                <Button Content="{Binding ChapterName}" Style="{DynamicResource CandyTextBlockButtonStyle}" />
+                                <Button
+                                    s:View.ActionTarget="{Binding DataContext, ElementName=LightViewCtrl}"
+                                    Command="{s:Action ViewCommand}"
+                                    CommandParameter="{Binding .}"
+                                    Content="{Binding ChapterName}"
+                                    Style="{DynamicResource CandyTextBlockButtonStyle}" />
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

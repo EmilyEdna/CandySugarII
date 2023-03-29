@@ -37,7 +37,7 @@ namespace CandySugar.LightNovel.View
                 {
                     if (notify.SliderStatus == 1)
                         CreateOpenDyamicAmime();
-                    else
+                    if (notify.SliderStatus == 2)
                         CreateCloseDyamicAmime();
                 });
             });

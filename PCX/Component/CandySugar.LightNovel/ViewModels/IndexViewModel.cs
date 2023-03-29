@@ -26,6 +26,7 @@ using System.Windows.Data;
 using XExten.Advance.LinqFramework;
 using System.Runtime.InteropServices;
 using CommunityToolkit.Mvvm.Messaging;
+using CandySugar.Com.Library.FileDown;
 
 namespace CandySugar.LightNovel.ViewModels
 {
@@ -92,6 +93,14 @@ namespace CandySugar.LightNovel.ViewModels
         #endregion
 
         #region Command
+        public void ViewCommand(LovelViewResult view)
+        {
+            if (view.IsDown)
+            {
+                new ScreenNotifyView("后台下载中请稍后!").Show();
+                OnDownload(view.ChapterRoute, view.BookName);
+            }
+        }
         public void ActiveCommand(string route)
         {
             HandleType = 1;
@@ -99,11 +108,11 @@ namespace CandySugar.LightNovel.ViewModels
             InfomationRoute = route;
             OnInitInformation();
         }
-        public void ChapterCommand(string Chapter)
+        public void ChapterCommand(string chapter)
         {
             if (SliderStatus == 1)
                 WeakReferenceMessenger.Default.Send(new LightNotify { SliderStatus = 2 });
-            OnInitChapter(Chapter);
+            OnInitChapter(chapter);
         }
         public RelayCommand<ScrollChangedEventArgs> ScrollCommand => new((obj) =>
         {
@@ -147,7 +156,7 @@ namespace CandySugar.LightNovel.ViewModels
                 catch (Exception ex)
                 {
                     Log.Logger.Error(ex, "");
-                    new ScreenNotifyView(CommonHelper.ComponentErrorInformation).Show();
+                    ErrorNotify();
                 }
             });
         }
@@ -183,7 +192,7 @@ namespace CandySugar.LightNovel.ViewModels
                 catch (Exception ex)
                 {
                     Log.Logger.Error(ex, "");
-                    new ScreenNotifyView(CommonHelper.ComponentErrorInformation).Show();
+                    ErrorNotify();
                 }
             });
         }
@@ -224,7 +233,7 @@ namespace CandySugar.LightNovel.ViewModels
                 catch (Exception ex)
                 {
                     Log.Logger.Error(ex, "");
-                    new ScreenNotifyView(CommonHelper.ComponentErrorInformation).Show();
+                    ErrorNotify();
                 }
             });
         }
@@ -260,7 +269,7 @@ namespace CandySugar.LightNovel.ViewModels
                 catch (Exception ex)
                 {
                     Log.Logger.Error(ex, "");
-                    new ScreenNotifyView(CommonHelper.ComponentErrorInformation).Show();
+                    ErrorNotify();
                 }
             });
         }
@@ -302,7 +311,7 @@ namespace CandySugar.LightNovel.ViewModels
                 catch (Exception ex)
                 {
                     Log.Logger.Error(ex, "");
-                    new ScreenNotifyView(CommonHelper.ComponentErrorInformation).Show();
+                    ErrorNotify();
                 }
             });
         }
@@ -349,10 +358,56 @@ namespace CandySugar.LightNovel.ViewModels
                 catch (Exception ex)
                 {
                     Log.Logger.Error(ex, "");
-                    new ScreenNotifyView(CommonHelper.ComponentErrorInformation).Show();
+                    ErrorNotify();
                 }
             });
         }
+        /// <summary>
+        /// 初始化后台下载
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="bookName"></param>
+        private void OnDownload(string id, string bookName)
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    var result = (await LovelFactory.Lovel(opt =>
+                    {
+                        opt.RequestParam = new Input
+                        {
+                            CacheSpan = ComponentBinding.OptionObjectModels.Cache,
+                            ImplType = SdkImpl.Rest,
+                            LovelType = LovelEnum.Download,
+                            Down = new LovelDown
+                            {
+                                BookName = bookName,
+                                UId = id.AsInt()
+                            }
+                        };
+                    }).RunsAsync()).DownResult.Bytes;
+                    result.FileCreate(bookName, FileTypes.Txt, "LightNovel", (catalog) =>
+                    {
+                        new ScreenDownNofityView(CommonHelper.DownloadFinishInformation, catalog).Show();
+                    });
+                }
+                catch (Exception ex)
+                {
+                    Log.Logger.Error(ex, "");
+                    ErrorNotify();
+                }
+            });
+        }
+
+        private void ErrorNotify()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                new ScreenNotifyView(CommonHelper.ComponentErrorInformation).Show();
+            });
+        }
+
         #endregion
 
         #region ExternalCalls

@@ -1,6 +1,6 @@
-﻿using Stylet;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +8,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -18,18 +17,20 @@ using System.Windows.Shapes;
 namespace CandySugar.Com.Controls.UIExtenControls
 {
     /// <summary>
-    /// ScreenNotifyView.xaml 的交互逻辑
+    /// ScreenDownNofityView.xaml 的交互逻辑
     /// </summary>
-    public partial class ScreenNotifyView : Window
+    public partial class ScreenDownNofityView : Window
     {
-        public ScreenNotifyView(string Info)
+        public ScreenDownNofityView(string Info,string Catalog)
         {
             this.Info = Info;
+            this.Catalog = Catalog;
             InitializeComponent();
             Loaded += NotifyLoad;
         }
 
         public string Info { get; set; }
+        public string Catalog { get; set; }
 
         private void NotifyLoad(object sender, RoutedEventArgs e)
         {
@@ -55,6 +56,12 @@ namespace CandySugar.Com.Controls.UIExtenControls
                 this.Close();
             };
             this.BeginAnimation(TopProperty, animation);
+        }
+
+        private void OpenCloseEvent(object sender, RoutedEventArgs e)
+        {
+            Process.Start("explorer.exe", Catalog);
+            CloseEvent(sender, e);
         }
     }
 }

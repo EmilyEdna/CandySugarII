@@ -22,6 +22,14 @@ namespace CandySugar.Com.Library
         /// </summary>
         public static string OptionPath => "Component";
         /// <summary>
+        /// 下载目录
+        /// </summary>
+        public static string DownloadPath => Path.Combine(AppPath, "download");
+        /// <summary>
+        /// 下载完成消息
+        /// </summary>
+        public static string DownloadFinishInformation => "文件下载完成，是否打开目录?";
+        /// <summary>
         /// 组件错误消息
         /// </summary>
         public static string ComponentErrorInformation => "组件内部异常，请查看日志!";
