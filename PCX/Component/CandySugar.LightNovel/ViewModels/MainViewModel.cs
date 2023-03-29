@@ -1,10 +1,12 @@
 ﻿using CandySugar.LightNovel.View;
+using CommunityToolkit.Mvvm.Messaging;
 using Stylet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace CandySugar.LightNovel.ViewModels
@@ -15,6 +17,24 @@ namespace CandySugar.LightNovel.ViewModels
         public MainViewModel()
         {
             ComponentControl = Module.IocModule.Resolve<IndexView>();
+            WeakReferenceMessenger.Default.Register<LightNotify>(this, (recip, notify) =>
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    if (notify.NotifyType == NotifyType.ChangeControl)
+                    {
+                        ModuleEnv.GlobalTempParam = notify.ControlParam;
+                        if (notify.ControlType == 1) ComponentControl = Module.IocModule.Resolve<IndexView>();
+                        if (notify.ControlType == 2)
+                        {
+                            var Reader = Module.IocModule.Resolve<ReaderView>();
+                            Reader.Height = ComponentControl.Height;
+                            Reader.Width = ComponentControl.Width;
+                            ComponentControl = Reader;
+                        }
+                    }
+                });
+            });
         }
 
         #region Property

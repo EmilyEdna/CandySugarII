@@ -1,34 +1,4 @@
-﻿using CandySugar.Com.Controls.UIExtenControls;
-using Sdk.Component.Lovel.sdk;
-using Sdk.Core;
-using Serilog;
-using Stylet;
-using System;
-using Sdk.Component.Lovel.sdk.ViewModel;
-using Sdk.Component.Lovel.sdk.ViewModel.Enums;
-using Sdk.Component.Lovel.sdk.ViewModel.Request;
-using Sdk.Component.Lovel.sdk.ViewModel.Response;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using Sdk.Component.Plugins;
-using CandySugar.Com.Options.ComponentObject;
-using System.Collections.ObjectModel;
-using CandySugar.Com.Library;
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.Input;
-using System.Windows.Controls;
-using System.Collections;
-using CandySugar.Com.Library.VisualTree;
-using System.Windows.Data;
-using XExten.Advance.LinqFramework;
-using System.Runtime.InteropServices;
-using CommunityToolkit.Mvvm.Messaging;
-using CandySugar.Com.Library.FileDown;
-
-namespace CandySugar.LightNovel.ViewModels
+﻿namespace CandySugar.LightNovel.ViewModels
 {
     public class IndexViewModel : PropertyChangedBase
     {
@@ -100,6 +70,13 @@ namespace CandySugar.LightNovel.ViewModels
                 new ScreenNotifyView("后台下载中请稍后!").Show();
                 OnDownload(view.ChapterRoute, view.BookName);
             }
+            else
+                WeakReferenceMessenger.Default.Send(new LightNotify
+                {
+                    NotifyType = NotifyType.ChangeControl,
+                    ControlType = 2,
+                    ControlParam= view.ChapterRoute
+                });
         }
         public void ActiveCommand(string route)
         {

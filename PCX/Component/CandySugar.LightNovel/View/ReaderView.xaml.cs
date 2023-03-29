@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CandySugar.Com.Options.ComponentGeneric;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,11 @@ namespace CandySugar.LightNovel.View
         public ReaderView()
         {
             InitializeComponent();
+            GenericDelegate.InformationAction = new((width, height) =>
+            {
+                this.Width = width;
+                this.Height = height - 35 <= 0 ? 0 : height - 35;
+            });
         }
     }
 }

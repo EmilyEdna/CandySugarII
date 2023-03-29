@@ -37,9 +37,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Window">
                     <Border BorderBrush="#e63995" BorderThickness="1.5">
-                        <!--<Border.Background>
+                        <Border.Background>
                             <ImageBrush ImageSource="/CandySugar.Com.Style;component/Resources/Backgroud.jpg" />
-                        </Border.Background>-->
+                        </Border.Background>
                         <Border.Style>
                             <Style TargetType="Border">
                                 <EventSetter Event="MouseLeftButtonDown" Handler="MoveEvent" />
@@ -586,4 +586,46 @@
 
     <!--#endregion-->
 
+    <!--#region Border-->
+    <Style x:Key="CandyBorderStyle" TargetType="uc:CandyBorder">
+        <Setter Property="BorderThickness" Value="1" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding BorderType, RelativeSource={RelativeSource Mode=Self}}" Value="{x:Static lib:EButton.Primary}">
+                <Setter Property="BorderBrush">
+                    <Setter.Value>
+                        <SolidColorBrush Opacity=".6" Color="DeepSkyBlue" />
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding BorderType, RelativeSource={RelativeSource Mode=Self}}" Value="{x:Static lib:EButton.Info}">
+                <Setter Property="BorderBrush">
+                    <Setter.Value>
+                        <SolidColorBrush Opacity=".6" Color="SkyBlue" />
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding BorderType, RelativeSource={RelativeSource Mode=Self}}" Value="{x:Static lib:EButton.Success}">
+                <Setter Property="BorderBrush">
+                    <Setter.Value>
+                        <SolidColorBrush Opacity=".6" Color="LightGreen" />
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding BorderType, RelativeSource={RelativeSource Mode=Self}}" Value="{x:Static lib:EButton.Warning}">
+                <Setter Property="BorderBrush">
+                    <Setter.Value>
+                        <SolidColorBrush Opacity=".6" Color="Tomato" />
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding BorderType, RelativeSource={RelativeSource Mode=Self}}" Value="{x:Static lib:EButton.Error}">
+                <Setter Property="BorderBrush">
+                    <Setter.Value>
+                        <SolidColorBrush Opacity=".6" Color="DarkRed" />
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <!--#endregion-->
 </ResourceDictionary>

@@ -35,10 +35,13 @@ namespace CandySugar.LightNovel.View
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    if (notify.SliderStatus == 1)
-                        CreateOpenDyamicAmime();
-                    if (notify.SliderStatus == 2)
-                        CreateCloseDyamicAmime();
+                    if (notify.NotifyType == NotifyType.Notify)
+                    {
+                        if (notify.SliderStatus == 1)
+                            CreateOpenDyamicAmime();
+                        if (notify.SliderStatus == 2)
+                            CreateCloseDyamicAmime();
+                    }
                 });
             });
             Loaded += delegate { ViewModel = (IndexViewModel)this.DataContext; };
@@ -53,7 +56,7 @@ namespace CandySugar.LightNovel.View
         private void SilderEvent(object sender, RoutedEventArgs e)
         {
             Icon.IsEnabled = false;
-            if (ViewModel.SliderStatus==2) CreateOpenDyamicAmime();
+            if (ViewModel.SliderStatus == 2) CreateOpenDyamicAmime();
             else CreateCloseDyamicAmime();
         }
 

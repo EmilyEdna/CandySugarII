@@ -14,10 +14,10 @@ namespace CandySugar.LightNovel
         {
             IocModule = this;
             Container = new Container();
-            Container.Register(typeof(IndexView),Reuse.Transient);
+            Container.Register(typeof(IndexView), Reuse.Singleton);
             Container.Register(typeof(ReaderView), Reuse.Transient);
 
-            Container.Register(typeof(IndexViewModel), Reuse.Transient);
+            Container.Register(typeof(IndexViewModel), Reuse.Singleton);
             Container.Register(typeof(ReaderViewModel), Reuse.Transient);
         }
         public T Resolve<T>() where T : UserControl
@@ -27,5 +27,9 @@ namespace CandySugar.LightNovel
             Ctrl.DataContext = Container.Resolve(VM);
             return (T)Ctrl;
         }
+    }
+    public class ModuleEnv
+    {
+        public static object GlobalTempParam { get; set; }
     }
 }

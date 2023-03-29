@@ -12,7 +12,7 @@
     xmlns:s="https://github.com/canton7/Stylet"
     xmlns:uc="http://ctrl.candy.com"
     xmlns:vm="clr-namespace:CandySugar.LightNovel.ViewModels"
-    x:Name="LightViewCtrl"
+    x:Name="IndexViewCtrl"
     d:DataContext="{d:DesignInstance vm:IndexViewModel}"
     d:DesignHeight="700"
     d:DesignWidth="1200"
@@ -26,7 +26,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Canvas>
-        <Grid Width="{Binding Width, ElementName=LightViewCtrl}" Height="{Binding Height, ElementName=LightViewCtrl}">
+        <Grid Width="{Binding Width, ElementName=IndexViewCtrl}" Height="{Binding Height, ElementName=IndexViewCtrl}">
             <ListBox
                 uc:ListBoxAttach.ScrollCommand="{Binding ScrollCommand}"
                 ItemsSource="{Binding InformationElement, IsAsync=True}"
@@ -42,7 +42,7 @@
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                                     <i:InvokeCommandAction
-                                        s:View.ActionTarget="{Binding DataContext, ElementName=LightViewCtrl}"
+                                        s:View.ActionTarget="{Binding DataContext, ElementName=IndexViewCtrl}"
                                         Command="{s:Action ChapterCommand}"
                                         CommandParameter="{Binding DetailAddress}" />
                                 </i:EventTrigger>
@@ -51,15 +51,15 @@
                                 <ColumnDefinition />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <Border
+                            <uc:CandyBorder
                                 Margin="5"
-                                BorderBrush="#FFBD6318"
-                                BorderThickness="1">
+                                BorderType="Primary"
+                                Style="{DynamicResource CandyBorderStyle}">
                                 <Image
                                     uc:ImageAttach.SourceAsync="{Binding Cover}"
                                     Stretch="Uniform"
                                     Tag="{x:Static lib:EDownload.Light}" />
-                            </Border>
+                            </uc:CandyBorder>
                             <WrapPanel
                                 Grid.Column="1"
                                 Width="350"
@@ -83,7 +83,7 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
-        <Grid x:Name="RightSider" Canvas.Left="{Binding Width, ElementName=LightViewCtrl}">
+        <Grid x:Name="RightSider" Canvas.Left="{Binding Width, ElementName=IndexViewCtrl}">
             <Grid.RenderTransform>
                 <TransformGroup>
                     <TranslateTransform X="-80" />
@@ -115,7 +115,7 @@
                         <DataTemplate>
                             <Grid Margin="2,3">
                                 <Button
-                                    s:View.ActionTarget="{Binding DataContext, ElementName=LightViewCtrl}"
+                                    s:View.ActionTarget="{Binding DataContext, ElementName=IndexViewCtrl}"
                                     Command="{s:Action ViewCommand}"
                                     CommandParameter="{Binding .}"
                                     Content="{Binding ChapterName}"
@@ -167,7 +167,7 @@
                                 Width="80"
                                 Height="25"
                                 Margin="1.5"
-                                s:View.ActionTarget="{Binding DataContext, ElementName=LightViewCtrl}"
+                                s:View.ActionTarget="{Binding DataContext, ElementName=IndexViewCtrl}"
                                 BorderThickness="0"
                                 ButtonType="Primary"
                                 Command="{s:Action ActiveCommand}"
