@@ -20,3 +20,4 @@ global using XExten.Advance.LinqFramework;
 global using CandySugar.Music.View;
 global using CandySugar.Music.ViewModels;
 global using DryIoc;
+global using CandySugar.Com.Options.ComponentGeneric;

@@ -18,12 +18,6 @@
             <RowDefinition />
             <RowDefinition Height="1.1*" />
         </Grid.RowDefinitions>
-        <Grid.Effect>
-            <DropShadowEffect
-                BlurRadius=".2"
-                ShadowDepth="0"
-                Color="#faf0e6" />
-        </Grid.Effect>
         <Button
             Margin="4,2"
             HorizontalAlignment="Right"

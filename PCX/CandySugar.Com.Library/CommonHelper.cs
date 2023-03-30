@@ -14,10 +14,6 @@ namespace CandySugar.Com.Library
         /// </summary>
         public static string AppPath => AppDomain.CurrentDomain.BaseDirectory;
         /// <summary>
-        /// 默认方法
-        /// </summary>
-        public static string DefaultMethod => "SearchHandler";
-        /// <summary>
         /// 配置目录
         /// </summary>
         public static string OptionPath => "Component";
@@ -25,6 +21,10 @@ namespace CandySugar.Com.Library
         /// 下载目录
         /// </summary>
         public static string DownloadPath => Path.Combine(AppPath, "download");
+        /// <summary>
+        /// 查询错误消息
+        /// </summary>
+        public static string SearckWordErrorInfomartion => "查询条件不能为空!";
         /// <summary>
         /// 下载完成消息
         /// </summary>

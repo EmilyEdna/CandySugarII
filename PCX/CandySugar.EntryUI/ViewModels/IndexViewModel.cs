@@ -100,8 +100,7 @@ namespace CandySugar.EntryUI.ViewModels
         {
             if (this.CandyControl != null)
             {
-                this.CandyControl.DataContext.GetType()
-                    .GetMethod(CommonHelper.DefaultMethod)?.Invoke(this.CandyControl.DataContext, new object[] { keyword });
+                GenericDelegate.SearchAction?.Invoke(keyword);
             }
         }
         #endregion

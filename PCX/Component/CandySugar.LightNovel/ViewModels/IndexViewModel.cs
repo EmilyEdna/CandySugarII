@@ -6,11 +6,7 @@
         private object lockObject = new object();
         public IndexViewModel()
         {
-            SdkLicense.Register(new SdkLicenseModel
-            {
-                Account = "EmilyEdna",
-                Password = DateTime.Now.ToString("yyyyMMdd")
-            });
+            GenericDelegate.SearchAction = new(SearchHandler);
             OnInit();
 
         }
@@ -392,7 +388,7 @@
         /// 检索数据
         /// </summary>
         /// <param name="keyword"></param>
-        public void SearchHandler(string keyword)
+        private void SearchHandler(string keyword)
         {
             HandleType = 2;
             SearchPageIndex = 1;

@@ -12,12 +12,6 @@
     Style="{DynamicResource CandyDefaultNotifyWindowStyle}"
     mc:Ignorable="d">
     <Grid Margin="3" Background="#40e6cfe6">
-        <Grid.Effect>
-            <DropShadowEffect
-                BlurRadius=".2"
-                ShadowDepth="0"
-                Color="#faf0e6" />
-        </Grid.Effect>
         <Button
             Margin="5"
             HorizontalAlignment="Right"
