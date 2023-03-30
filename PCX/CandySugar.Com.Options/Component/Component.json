@@ -3,8 +3,14 @@
     {
       "Plugin": "CandySugar.LightNovel.dll",
       "Bootstrapper": "MainView",
-       "Ioc": "Module",
+      "Ioc": "Module",
       "Description": "轻小说"
+    },
+    {
+      "Plugin": "CandySugar.Music.dll",
+      "Bootstrapper": "MainView",
+      "Ioc": "Module",
+      "Description": "音乐"
     }
   ]
 }
