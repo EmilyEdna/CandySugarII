@@ -45,6 +45,10 @@ namespace CandySugar.Music.ViewModels
         /// 歌单总数
         /// </summary>
         private int SheetTotal;
+        /// <summary>
+        /// 侧边栏开关状态 1 开 2关
+        /// </summary>
+        public int SliderStatus = 2;
         #endregion
 
         #region Property
@@ -74,6 +78,15 @@ namespace CandySugar.Music.ViewModels
         {
             get => _SheetResult;
             set => SetAndNotify(ref _SheetResult, value);
+        }
+        private ObservableCollection<MusicSongElementResult> _AlbumResult;
+        /// <summary>
+        /// 专辑
+        /// </summary>
+        public ObservableCollection<MusicSongElementResult> AlbumResult
+        {
+            get => _AlbumResult;
+            set => SetAndNotify(ref _AlbumResult, value);
         }
         #endregion
 
@@ -106,6 +119,16 @@ namespace CandySugar.Music.ViewModels
                 OnInitSheet();
         }
 
+        public void AlbumCommand(string albumId) 
+        {
+            OnInitAlbum(albumId);
+        }
+
+        public void DownCommand(string songId) 
+        { 
+        
+        }
+
         public RelayCommand<ScrollChangedEventArgs> ScrollCommand => new((obj) =>
         {
             if (HandleType == 1)
@@ -124,6 +147,38 @@ namespace CandySugar.Music.ViewModels
         #endregion
 
         #region Method
+        private void OnInitAlbum(string albumId)
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    var result = (await MusicFactory.Music(opt =>
+                    {
+                        opt.RequestParam = new Input
+                        {
+                            PlatformType = Platform,
+                            CacheSpan = ComponentBinding.OptionObjectModels.Cache,
+                            ImplType = SdkImpl.Rest,
+                            MusicType = MusicEnum.AlbumDetail,
+                            AlbumDetail = new MusicAlbumDetail
+                            {
+                                AlbumId = albumId
+                            }
+                        };
+                    }).RunsAsync()).AlbumResult;
+                    AlbumResult = new ObservableCollection<MusicSongElementResult>(result.ElementResults);
+                    // 这一句很关键，开启集合的异步访问支持
+                    BindingOperations.EnableCollectionSynchronization(AlbumResult, lockObject);
+                    WeakReferenceMessenger.Default.Send(new MessageNotify { SliderStatus = 1 });
+                }
+                catch (Exception ex)
+                {
+                    Log.Logger.Error(ex, "");
+                    ErrorNotify();
+                }
+            });
+        }
         /// <summary>
         /// 单曲查询
         /// </summary>

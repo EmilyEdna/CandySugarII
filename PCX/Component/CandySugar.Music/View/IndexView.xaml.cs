@@ -24,32 +24,49 @@ namespace CandySugar.Music.View
     public partial class IndexView : UserControl
     {
         private int ActiveAnime = 1;
-        private IndexViewModel VM;
+        private IndexViewModel ViewModel;
         private Storyboard AnimeX1;
         private Storyboard AnimeX2;
         private Storyboard AnimeX3;
         public IndexView()
         {
             InitializeComponent();
+            Icon.Content = FontIcon.AnglesLeft;
             AnimeX1 = (Storyboard)FindResource("SingleSongAnimeKey");
             AnimeX2 = (Storyboard)FindResource("SongListAnimeKey");
             AnimeX3 = (Storyboard)FindResource("CollectListAnimeKey");
             AnimeX1.Completed += AnimeEvent;
             AnimeX2.Completed += AnimeEvent;
             AnimeX3.Completed += AnimeEvent;
-            Loaded += delegate { VM = (IndexViewModel)this.DataContext; };
+            Loaded += delegate { ViewModel = (IndexViewModel)this.DataContext; };
             GenericDelegate.InformationAction = new((width, height) =>
             {
                 Canvas.SetTop(FloatBtn, height - 160);
                 Canvas.SetLeft(FloatBtn, width - 100);
                 this.Width = width;
                 this.Height = height - 35 <= 0 ? 0 : height - 35;
+
+                this.RightSider.Width = this.Width / 3;
+                this.RightSider.Height = this.Height;
+            });
+            WeakReferenceMessenger.Default.Register<MessageNotify>(this, (recip, notify) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    if (notify.NotifyType == NotifyType.Notify)
+                    {
+                        if (notify.SliderStatus == 1)
+                            CreateOpenDyamicAmime();
+                        if (notify.SliderStatus == 2)
+                            CreateCloseDyamicAmime();
+                    }
+                });
             });
         }
 
         private void AnimeEvent(object sender, EventArgs e)
         {
-            VM.ChangeCommand(ActiveAnime);
+            ViewModel.ChangeCommand(ActiveAnime);
         }
 
         private void PopMenuEvent(object sender, RoutedEventArgs e)
@@ -74,5 +91,51 @@ namespace CandySugar.Music.View
             else if (active == 2) return AnimeX2;
             else return AnimeX3;
         }
+
+        private void SilderEvent(object sender, RoutedEventArgs e)
+        {
+            Icon.IsEnabled = false;
+            if (ViewModel.SliderStatus == 2) CreateOpenDyamicAmime();
+            else CreateCloseDyamicAmime();
+        }
+
+        #region DyamicAmime
+
+        private void CreateOpenDyamicAmime()
+        {
+            Storyboard storyboard = new Storyboard();
+            DoubleAnimationUsingKeyFrames doubleAnimations = new DoubleAnimationUsingKeyFrames();
+            Storyboard.SetTargetName(doubleAnimations, "RightSider");
+            Storyboard.SetTargetProperty(doubleAnimations, new PropertyPath("(UIElement.RenderTransform).(TransformGroup.Children)[0].(TranslateTransform.X)"));
+            doubleAnimations.KeyFrames.Add(new EasingDoubleKeyFrame(-80, TimeSpan.Zero));
+            doubleAnimations.KeyFrames.Add(new EasingDoubleKeyFrame(this.Width / (-3), TimeSpan.FromSeconds(1)));
+            storyboard.Children.Add(doubleAnimations);
+            storyboard.Completed += delegate
+            {
+                Icon.IsEnabled = true;
+                ViewModel.SliderStatus = 1;
+                Icon.Content = FontIcon.AnglesRight;
+            };
+            storyboard.Begin(this.RightSider);
+        }
+
+        private void CreateCloseDyamicAmime()
+        {
+            Storyboard storyboard = new Storyboard();
+            DoubleAnimationUsingKeyFrames doubleAnimations = new DoubleAnimationUsingKeyFrames();
+            Storyboard.SetTargetName(doubleAnimations, "RightSider");
+            Storyboard.SetTargetProperty(doubleAnimations, new PropertyPath("(UIElement.RenderTransform).(TransformGroup.Children)[0].(TranslateTransform.X)"));
+            doubleAnimations.KeyFrames.Add(new EasingDoubleKeyFrame(this.Width / (-3), TimeSpan.Zero));
+            doubleAnimations.KeyFrames.Add(new EasingDoubleKeyFrame(-80, TimeSpan.FromSeconds(1)));
+            storyboard.Children.Add(doubleAnimations);
+            storyboard.Completed += delegate
+            {
+                Icon.IsEnabled = true;
+                ViewModel.SliderStatus = 2;
+                Icon.Content = FontIcon.AnglesLeft;
+            };
+            storyboard.Begin(this.RightSider);
+        }
+        #endregion
     }
 }

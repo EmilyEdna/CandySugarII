@@ -22,7 +22,7 @@ namespace CandySugar.LightNovel.ViewModels
                 Password = DateTime.Now.ToString("yyyyMMdd")
             });
             ComponentControl = Module.IocModule.Resolve<IndexView>();
-            WeakReferenceMessenger.Default.Register<LightNotify>(this, (recip, notify) =>
+            WeakReferenceMessenger.Default.Register<MessageNotify>(this, (recip, notify) =>
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {

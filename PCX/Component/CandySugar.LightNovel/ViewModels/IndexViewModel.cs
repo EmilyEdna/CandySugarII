@@ -67,7 +67,7 @@
                 OnDownload(view.ChapterRoute, view.BookName);
             }
             else
-                WeakReferenceMessenger.Default.Send(new LightNotify
+                WeakReferenceMessenger.Default.Send(new MessageNotify
                 {
                     NotifyType = NotifyType.ChangeControl,
                     ControlType = 2,
@@ -84,7 +84,7 @@
         public void ChapterCommand(string chapter)
         {
             if (SliderStatus == 1)
-                WeakReferenceMessenger.Default.Send(new LightNotify { SliderStatus = 2 });
+                WeakReferenceMessenger.Default.Send(new MessageNotify { SliderStatus = 2 });
             OnInitChapter(chapter);
         }
         public RelayCommand<ScrollChangedEventArgs> ScrollCommand => new((obj) =>
@@ -326,7 +326,7 @@
                         };
                     }).RunsAsync()).ViewResult;
                     ViewResult = new ObservableCollection<LovelViewResult>(result);
-                    WeakReferenceMessenger.Default.Send(new LightNotify { SliderStatus = 1 });
+                    WeakReferenceMessenger.Default.Send(new MessageNotify { SliderStatus = 1 });
                 }
                 catch (Exception ex)
                 {

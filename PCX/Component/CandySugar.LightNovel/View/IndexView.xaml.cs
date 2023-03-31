@@ -31,7 +31,7 @@ namespace CandySugar.LightNovel.View
                 this.RightSider.Width = this.Width / 3;
                 this.RightSider.Height = this.Height;
             });
-            WeakReferenceMessenger.Default.Register<LightNotify>(this, (recip, notify) =>
+            WeakReferenceMessenger.Default.Register<MessageNotify>(this, (recip, notify) =>
             {
                 this.Dispatcher.Invoke(() =>
                 {

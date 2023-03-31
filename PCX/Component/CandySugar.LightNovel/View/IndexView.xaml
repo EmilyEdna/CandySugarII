@@ -57,7 +57,7 @@
                                 Style="{DynamicResource CandyBorderStyle}">
                                 <Image
                                     uc:ImageAttach.SourceAsync="{Binding Cover}"
-                                    Stretch="Uniform"
+                                    Stretch="None"
                                     Tag="{x:Static lib:EDownload.Light}" />
                             </uc:CandyBorder>
                             <WrapPanel
@@ -96,7 +96,7 @@
             <Grid Width="{Binding Width, ElementName=RightSider}" Height="{Binding Height, ElementName=RightSider}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="80" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Button
                     x:Name="Icon"

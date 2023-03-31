@@ -10,7 +10,7 @@ using System.Windows.Controls;
 
 namespace CandySugar.Com.Controls.AttachControls
 {
-    public static class ImageAttach
+    public class ImageAttach
     {
 
         static ImageAttach()

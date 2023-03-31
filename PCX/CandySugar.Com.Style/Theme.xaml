@@ -522,7 +522,7 @@
     <Style x:Key="CandyTextBlockButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontSize" Value="16" />
         <Setter Property="Foreground" Value="#fdf5e6" />
         <Setter Property="Template">
             <Setter.Value>
@@ -536,7 +536,7 @@
                             FontSize="{TemplateBinding FontSize}"
                             Foreground="{TemplateBinding Foreground}"
                             Text="{TemplateBinding Content}"
-                            TextWrapping="WrapWithOverflow" />
+                            TextTrimming="CharacterEllipsis" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">

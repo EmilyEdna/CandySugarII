@@ -85,6 +85,9 @@
                                                 HorizontalAlignment="Right"
                                                 Orientation="Horizontal">
                                                 <Button
+                                                    s:View.ActionTarget="{Binding DataContext, ElementName=IndexViewCtrl}"
+                                                    Command="{s:Action AlbumCommand}"
+                                                    CommandParameter="{Binding SongAlbumId}"
                                                     Content="{x:Static lib:FontIcon.RecordVinyl}"
                                                     Cursor="Hand"
                                                     FontSize="17"
@@ -219,10 +222,55 @@
                 </uc:CandyBorder>
             </Grid>
             <Canvas
+                x:Name="RightCanvas"
                 Grid.Column="1"
                 Width="{c:Binding (Width/2),
                                   ElementName=IndexViewCtrl}"
-                Height="{Binding Height, ElementName=IndexViewCtrl}" />
+                Height="{Binding Height, ElementName=IndexViewCtrl}">
+                <Grid x:Name="RightSider" Canvas.Left="{Binding Width, ElementName=RightCanvas}">
+                    <Grid.RenderTransform>
+                        <TransformGroup>
+                            <TranslateTransform X="-80" />
+                        </TransformGroup>
+                    </Grid.RenderTransform>
+                    <Rectangle
+                        Width="{Binding Width, ElementName=RightSider}"
+                        Height="{Binding Height, ElementName=RightSider}"
+                        Fill="#201e90ff" />
+                    <Grid Width="{Binding Width, ElementName=RightSider}" Height="{Binding Height, ElementName=RightSider}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Button
+                            x:Name="Icon"
+                            Width="80"
+                            Height="80"
+                            Click="SilderEvent"
+                            FontSize="50"
+                            IsEnabled="False"
+                            Style="{DynamicResource CandyFontButtonStyle}" />
+                        <ListBox
+                            Grid.Column="1"
+                            ItemsSource="{Binding AlbumResult}"
+                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                            Style="{DynamicResource CandyListBoxStyle}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="2,3">
+                                        <Button
+                                            s:View.ActionTarget="{Binding DataContext, ElementName=IndexViewCtrl}"
+                                            Command="{s:Action DownCommand}"
+                                            CommandParameter="{Binding SongId}"
+                                            Content="{Binding SongName}"
+                                            Style="{DynamicResource CandyTextBlockButtonStyle}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </Grid>
+            </Canvas>
         </Grid>
         <Button
             x:Name="FloatBtn"
