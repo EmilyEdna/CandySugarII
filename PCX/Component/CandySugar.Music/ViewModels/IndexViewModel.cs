@@ -4,6 +4,9 @@ using Sdk.Component.Music.sdk.ViewModel.Enums;
 using Sdk.Component.Music.sdk.ViewModel.Request;
 using Sdk.Component.Music.sdk.ViewModel.Response;
 using System.Windows.Input;
+using XExten.Advance.HttpFramework.MultiFactory;
+using System.Net.Http;
+using CandySugar.Com.Library.FileDown;
 
 namespace CandySugar.Music.ViewModels
 {
@@ -20,6 +23,7 @@ namespace CandySugar.Music.ViewModels
                 { PlatformEnum.MiGuMusic,"咪咕音乐"}
             };
             GenericDelegate.SearchAction = new(SearchHandler);
+            CollectResult = new(DownUtil.ReadFile<List<MusicSongElementResult>>("Music", FileTypes.Dat, "Music") ?? new List<MusicSongElementResult>());
         }
 
         #region Field
@@ -61,6 +65,15 @@ namespace CandySugar.Music.ViewModels
             get => _MenuIndex;
             set => SetAndNotify(ref _MenuIndex, value);
         }
+        private ObservableCollection<MusicSongElementResult> _CollectResult;
+        /// <summary>
+        /// 播放列表
+        /// </summary>
+        public ObservableCollection<MusicSongElementResult> CollectResult
+        {
+            get => _CollectResult;
+            set => SetAndNotify(ref _CollectResult, value);
+        }
         private ObservableCollection<MusicSongElementResult> _SingleResult;
         /// <summary>
         /// 单曲
@@ -79,14 +92,14 @@ namespace CandySugar.Music.ViewModels
             get => _SheetResult;
             set => SetAndNotify(ref _SheetResult, value);
         }
-        private ObservableCollection<MusicSongElementResult> _AlbumResult;
+        private ObservableCollection<MusicSongElementResult> _BasicResult;
         /// <summary>
-        /// 专辑
+        /// 专辑/歌单
         /// </summary>
-        public ObservableCollection<MusicSongElementResult> AlbumResult
+        public ObservableCollection<MusicSongElementResult> BasicResult
         {
-            get => _AlbumResult;
-            set => SetAndNotify(ref _AlbumResult, value);
+            get => _BasicResult;
+            set => SetAndNotify(ref _BasicResult, value);
         }
         #endregion
 
@@ -104,6 +117,7 @@ namespace CandySugar.Music.ViewModels
             if (SheetResult == null)
                 OnInitSheet();
         }
+
         public void ActiveCommand(PlatformEnum platform)
         {
             Platform = platform;
@@ -119,14 +133,19 @@ namespace CandySugar.Music.ViewModels
                 OnInitSheet();
         }
 
-        public void AlbumCommand(string albumId) 
+        public void AlbumCommand(string albumId)
         {
             OnInitAlbum(albumId);
         }
 
-        public void DownCommand(string songId) 
-        { 
-        
+        public void SheetCommand(dynamic sheetId)
+        {
+            OnInitLists(sheetId.ToString());
+        }
+
+        public void DownCommand(MusicSongElementResult input)
+        {
+            OnInitDown(input);
         }
 
         public RelayCommand<ScrollChangedEventArgs> ScrollCommand => new((obj) =>
@@ -147,6 +166,42 @@ namespace CandySugar.Music.ViewModels
         #endregion
 
         #region Method
+        private void OnInitLists(string sheetId)
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    var result = (await MusicFactory.Music(opt =>
+                    {
+                        opt.RequestParam = new Input
+                        {
+                            PlatformType = Platform,
+                            CacheSpan = ComponentBinding.OptionObjectModels.Cache,
+                            ImplType = SdkImpl.Rest,
+                            MusicType = MusicEnum.SheetDetail,
+                            SheetDetail = new MusicSheetDetail
+                            {
+                                Id = sheetId
+                            }
+                        };
+                    }).RunsAsync()).SheetDetailResult;
+                    BasicResult = new ObservableCollection<MusicSongElementResult>(result.ElementResults);
+                    // 这一句很关键，开启集合的异步访问支持
+                    BindingOperations.EnableCollectionSynchronization(BasicResult, lockObject);
+                    WeakReferenceMessenger.Default.Send(new MessageNotify { SliderStatus = 1 });
+                }
+                catch (Exception ex)
+                {
+                    Log.Logger.Error(ex, "");
+                    ErrorNotify();
+                }
+            });
+        }
+        /// <summary>
+        /// 专辑关联
+        /// </summary>
+        /// <param name="albumId"></param>
         private void OnInitAlbum(string albumId)
         {
             Task.Run(async () =>
@@ -167,9 +222,9 @@ namespace CandySugar.Music.ViewModels
                             }
                         };
                     }).RunsAsync()).AlbumResult;
-                    AlbumResult = new ObservableCollection<MusicSongElementResult>(result.ElementResults);
+                    BasicResult = new ObservableCollection<MusicSongElementResult>(result.ElementResults);
                     // 这一句很关键，开启集合的异步访问支持
-                    BindingOperations.EnableCollectionSynchronization(AlbumResult, lockObject);
+                    BindingOperations.EnableCollectionSynchronization(BasicResult, lockObject);
                     WeakReferenceMessenger.Default.Send(new MessageNotify { SliderStatus = 1 });
                 }
                 catch (Exception ex)
@@ -335,11 +390,60 @@ namespace CandySugar.Music.ViewModels
                 }
             });
         }
-        private void ErrorNotify()
+        /// <summary>
+        /// 歌曲下载
+        /// </summary>
+        /// <param name="input"></param>
+        private void OnInitDown(MusicSongElementResult input)
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    var result = (await MusicFactory.Music(opt =>
+                    {
+                        opt.RequestParam = new Input
+                        {
+                            PlatformType = Platform,
+                            CacheSpan = ComponentBinding.OptionObjectModels.Cache,
+                            ImplType = SdkImpl.Rest,
+                            MusicType = MusicEnum.Route,
+                            Play = Platform == PlatformEnum.KuGouMusic ? new MusicPlaySearch
+                            {
+                                Dynamic = input.SongId,
+                                KuGouAlbumId = input.SongAlbumId,
+                            } : new MusicPlaySearch
+                            {
+                                Dynamic = input.SongId,
+                            }
+                        };
+                    }).RunsAsync()).PlayResult;
+                    if (!result.CanPlay)
+                    {
+                        ErrorNotify("当前歌曲已下架，请切换平台!");
+                        return;
+                    }
+                    var fileBytes = await (new HttpClient().GetByteArrayAsync(result.SongURL));
+                    var fileName = $"{input.SongName}-{string.Join(",", input.SongArtistName)}";
+                    fileBytes.FileCreate(fileName, FileTypes.Mp3, "Music", catalog =>
+                    {
+                        new ScreenDownNofityView(CommonHelper.DownloadFinishInformation, catalog).Show();
+                        CollectResult.Add(input);
+                    });
+                    CollectResult.ToList().DeleteAndCreate("Music", FileTypes.Dat, "Music");
+                }
+                catch (Exception ex)
+                {
+                    Log.Logger.Error(ex, "");
+                    ErrorNotify();
+                }
+            });
+        }
+        private void ErrorNotify(string Info = "")
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                new ScreenNotifyView(CommonHelper.ComponentErrorInformation).Show();
+                new ScreenNotifyView(Info.IsNullOrEmpty() ? CommonHelper.ComponentErrorInformation : Info).Show();
             });
         }
         #endregion
@@ -354,7 +458,10 @@ namespace CandySugar.Music.ViewModels
             SearchKeyword = keyword;
             Platform = PlatformEnum.NeteaseMusic;
             SearchPageIndex = 1;
-            OnInitSingle();
+            if (HandleType == 1)
+                OnInitSingle();
+            if (HandleType == 2)
+                OnInitSheet();
         }
         #endregion
     }

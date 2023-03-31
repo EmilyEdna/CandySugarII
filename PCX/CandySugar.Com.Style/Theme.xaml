@@ -555,7 +555,6 @@
     <!--#endregion-->
 
     <!--#region  ListBox-->
-
     <Style x:Key="CandyListBoxStyle" TargetType="ListBox">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Background" Value="Transparent" />
