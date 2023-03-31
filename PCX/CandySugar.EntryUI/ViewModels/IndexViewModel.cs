@@ -68,6 +68,9 @@ namespace CandySugar.EntryUI.ViewModels
         }
 
         private ObservableCollection<MenuObject> _MenuObj;
+        /// <summary>
+        /// 组件菜单
+        /// </summary>
         public ObservableCollection<MenuObject> MenuObj
         {
             get => _MenuObj;
@@ -89,6 +92,7 @@ namespace CandySugar.EntryUI.ViewModels
                 Ctrl.DataContext = Activator.CreateInstance(ViewModel);
                 CandyControl = Ctrl;
                 var MainView = (IndexView)View;
+                //将主窗体的长宽变动通知给子控件
                 GenericDelegate.InformationAction?.Invoke(MainView.Width,MainView.Height);
             });
         }

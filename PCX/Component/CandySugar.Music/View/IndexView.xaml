@@ -25,7 +25,15 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Canvas>
-        <Grid Width="{Binding Width, ElementName=IndexViewCtrl}" Height="{Binding Height, ElementName=IndexViewCtrl}">
+        <Border
+            Canvas.Top="550"
+            Width="{Binding Width, ElementName=IndexViewCtrl}"
+            Height="115"
+            Background="#50FF9090" />
+        <Grid
+            Width="{Binding Width, ElementName=IndexViewCtrl}"
+            Height="{Binding Height, ElementName=IndexViewCtrl}"
+            Panel.ZIndex="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
