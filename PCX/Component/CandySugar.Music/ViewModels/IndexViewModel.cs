@@ -3,11 +3,13 @@ using Sdk.Component.Music.sdk;
 using Sdk.Component.Music.sdk.ViewModel.Enums;
 using Sdk.Component.Music.sdk.ViewModel.Request;
 using Sdk.Component.Music.sdk.ViewModel.Response;
+using System.Windows.Input;
 
 namespace CandySugar.Music.ViewModels
 {
     public class IndexViewModel : PropertyChangedBase
     {
+        private object lockObject = new object();
         public IndexViewModel()
         {
             MenuIndex = new Dictionary<PlatformEnum, string> {
@@ -85,9 +87,9 @@ namespace CandySugar.Music.ViewModels
                 return;
             }
             if (SingleResult == null)
-                OnInSingle();
-            if(SheetResult==null)
-                OnInSheet();
+                OnInitSingle();
+            if (SheetResult == null)
+                OnInitSheet();
         }
         public void ActiveCommand(PlatformEnum platform)
         {
@@ -97,18 +99,35 @@ namespace CandySugar.Music.ViewModels
                 new ScreenNotifyView(CommonHelper.SearckWordErrorInfomartion).Show();
                 return;
             }
-            if(HandleType==1)
-                OnInSingle();
+            SearchPageIndex = SheetPageIndex = 1;
+            if (HandleType == 1)
+                OnInitSingle();
             if (HandleType == 2)
-                OnInSheet();
+                OnInitSheet();
         }
+
+        public RelayCommand<ScrollChangedEventArgs> ScrollCommand => new((obj) =>
+        {
+            if (HandleType == 1)
+                if (SearchPageIndex <= SearchTotal && obj.VerticalOffset + obj.ViewportHeight == obj.ExtentHeight && obj.VerticalChange > 0)
+                {
+                    SearchPageIndex += 1;
+                    OnLoadMoreSingle();
+                }
+            if (HandleType == 2)
+                if (SheetPageIndex <= SheetTotal && obj.VerticalOffset + obj.ViewportHeight == obj.ExtentHeight && obj.VerticalChange > 0)
+                {
+                    SheetPageIndex += 1;
+                    OnLoadMoreSheet();
+                }
+        });
         #endregion
 
         #region Method
         /// <summary>
         /// 单曲查询
         /// </summary>
-        private void OnInSingle()
+        private void OnInitSingle()
         {
             Task.Run(async () =>
             {
@@ -131,6 +150,50 @@ namespace CandySugar.Music.ViewModels
                      }).RunsAsync()).SongResult;
                     SearchTotal = result.Total ?? 0;
                     SingleResult = new ObservableCollection<MusicSongElementResult>(result.ElementResults);
+                    // 这一句很关键，开启集合的异步访问支持
+                    BindingOperations.EnableCollectionSynchronization(SingleResult, lockObject);
+                }
+                catch (Exception ex)
+                {
+                    Log.Logger.Error(ex, "");
+                    ErrorNotify();
+                }
+            });
+        }
+        /// <summary>
+        /// 加载更多单曲
+        /// </summary>
+        private void OnLoadMoreSingle()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    var result = (await MusicFactory.Music(opt =>
+                    {
+                        opt.RequestParam = new Input
+                        {
+                            PlatformType = Platform,
+                            CacheSpan = ComponentBinding.OptionObjectModels.Cache,
+                            ImplType = SdkImpl.Rest,
+                            MusicType = MusicEnum.Song,
+                            Search = new MusicSearch
+                            {
+                                Page = SearchPageIndex,
+                                KeyWord = SearchKeyword
+                            }
+                        };
+                    }).RunsAsync()).SongResult;
+                    lock (lockObject)
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            result.ElementResults.ForEach(item =>
+                            {
+                                SingleResult.Add(item);
+                            });
+                        });
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -142,7 +205,7 @@ namespace CandySugar.Music.ViewModels
         /// <summary>
         /// 歌单查询
         /// </summary>
-        private void OnInSheet()
+        private void OnInitSheet()
         {
             Task.Run(async () =>
             {
@@ -165,6 +228,50 @@ namespace CandySugar.Music.ViewModels
                     }).RunsAsync()).SheetResult;
                     SheetTotal = result.Total ?? 0;
                     SheetResult = new ObservableCollection<MusicSheetElementResult>(result.ElementResults);
+                    // 这一句很关键，开启集合的异步访问支持
+                    BindingOperations.EnableCollectionSynchronization(SheetResult, lockObject);
+                }
+                catch (Exception ex)
+                {
+                    Log.Logger.Error(ex, "");
+                    ErrorNotify();
+                }
+            });
+        }
+        /// <summary>
+        /// 加载更多歌单
+        /// </summary>
+        private void OnLoadMoreSheet()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    var result = (await MusicFactory.Music(opt =>
+                    {
+                        opt.RequestParam = new Input
+                        {
+                            PlatformType = Platform,
+                            CacheSpan = ComponentBinding.OptionObjectModels.Cache,
+                            ImplType = SdkImpl.Rest,
+                            MusicType = MusicEnum.Sheet,
+                            Search = new MusicSearch
+                            {
+                                Page = SheetPageIndex,
+                                KeyWord = SearchKeyword
+                            }
+                        };
+                    }).RunsAsync()).SheetResult;
+                    lock (lockObject)
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            result.ElementResults.ForEach(item =>
+                            {
+                                SheetResult.Add(item);
+                            });
+                        });
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -192,7 +299,7 @@ namespace CandySugar.Music.ViewModels
             SearchKeyword = keyword;
             Platform = PlatformEnum.NeteaseMusic;
             SearchPageIndex = 1;
-            OnInSingle();
+            OnInitSingle();
         }
         #endregion
     }

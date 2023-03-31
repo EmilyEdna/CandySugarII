@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:lib="http://lib.candy.com"
     xmlns:local="clr-namespace:CandySugar.Music.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -67,12 +68,10 @@
                                     Opacity="1" />
                             </Rectangle.Effect>
                         </Rectangle>
-                        <ListBox ItemsSource="{Binding SingleResult}" Style="{DynamicResource CandyListBoxStyle}">
-                            <ListBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <UniformGrid Columns="1" />
-                                </ItemsPanelTemplate>
-                            </ListBox.ItemsPanel>
+                        <ListBox
+                            uc:ListBoxAttach.ScrollCommand="{Binding ScrollCommand}"
+                            ItemsSource="{Binding SingleResult, IsAsync=True}"
+                            Style="{DynamicResource CandyListBoxStyle}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Width="{c:Binding (((Width/2)*0.75)-10), ElementName=IndexViewCtrl}" Margin="2,0,0,10">
@@ -81,16 +80,39 @@
                                                 Style="{DynamicResource TextBlockStyle}"
                                                 Text="{Binding SongName}"
                                                 TextTrimming="CharacterEllipsis" />
+                                            <StackPanel
+                                                Margin="0,0,3,0"
+                                                HorizontalAlignment="Right"
+                                                Orientation="Horizontal">
+                                                <Button
+                                                    Content="{x:Static lib:FontIcon.RecordVinyl}"
+                                                    Cursor="Hand"
+                                                    FontSize="17"
+                                                    Foreground="#ffe4c4"
+                                                    Style="{DynamicResource CandyFontButtonStyle}">
+                                                    <Button.ToolTip>
+                                                        <ToolTip
+                                                            Content="专辑"
+                                                            HorizontalOffset="-15"
+                                                            Style="{DynamicResource ToolTipStyle}" />
+                                                    </Button.ToolTip>
+                                                </Button>
+                                                <Button
+                                                    Content="{x:Static lib:FontIcon.CloudArrowDown}"
+                                                    Cursor="Hand"
+                                                    FontSize="17"
+                                                    Foreground="#ffe4c4"
+                                                    Style="{DynamicResource CandyFontButtonStyle}" />
+                                            </StackPanel>
                                         </UniformGrid>
                                         <TextBlock
-                                            Margin="0,2,0,0"
-                                            Style="{DynamicResource TextBlockStyle}"
-                                            Text="{Binding SongArtistName, Converter={StaticResource ListToCharConverter}, StringFormat=歌手:({0})}" />
-                                        <TextBlock
-                                            Margin="0,2,0,0"
-                                            Style="{DynamicResource TextBlockStyle}"
-                                            Text="{Binding SongAlbumName, StringFormat=专辑:({0})}"
-                                            TextTrimming="CharacterEllipsis" />
+                                            Margin="0"
+                                            Style="{DynamicResource TextBlockChildStyle}"
+                                            TextTrimming="CharacterEllipsis">
+                                            <Run Text="{Binding SongArtistName, Converter={StaticResource ListToCharConverter}}" />
+                                            <Run Text=" - " />
+                                            <Run Text="{Binding SongAlbumName}" />
+                                        </TextBlock>
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
@@ -121,55 +143,46 @@
                                     Opacity="1" />
                             </Rectangle.Effect>
                         </Rectangle>
-                        <ListBox ItemsSource="{Binding SheetResult}" Style="{DynamicResource CandyListBoxStyle}">
-                            <ListBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <UniformGrid />
-                                </ItemsPanelTemplate>
-                            </ListBox.ItemsPanel>
+                        <ListBox
+                            uc:ListBoxAttach.ScrollCommand="{Binding ScrollCommand}"
+                            ItemsSource="{Binding SheetResult}"
+                            Style="{DynamicResource CandyListBoxStyle}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <Grid
+                                        Width="{c:Binding (((Width/2)*0.75)-10),
+                                                          ElementName=IndexViewCtrl}"
                                         Margin="0,0,0,5"
                                         HorizontalAlignment="Left"
                                         Cursor="Hand">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width=".3*" />
-                                            <ColumnDefinition Width=".7*" />
+                                            <ColumnDefinition Width="80" />
+                                            <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
-                                        <Border>
+                                        <uc:CandyBorder BorderType="Warning" Style="{DynamicResource CandyBorderStyle}">
                                             <Image
                                                 Width="80"
                                                 Height="80"
                                                 SnapsToDevicePixels="True"
                                                 Source="{Binding Cover}"
                                                 Stretch="Uniform" />
-                                            <Border.Effect>
-                                                <DropShadowEffect
-                                                    BlurRadius="6"
-                                                    Opacity="1"
-                                                    ShadowDepth="0"
-                                                    Color="#40E2C1C6" />
-                                            </Border.Effect>
-                                        </Border>
-                                        <StackPanel Grid.Column="1" Margin="2,0,0,0">
+                                        </uc:CandyBorder>
+                                        <StackPanel Grid.Column="1" Margin="10,0,0,0">
                                             <TextBlock
-                                                FontSize="12"
+                                                FontSize="15"
+                                                Foreground="#fffafa"
                                                 Text="{Binding SongSheetName, StringFormat=歌单名称:{0}}"
-                                                TextWrapping="WrapWithOverflow" />
+                                                TextTrimming="CharacterEllipsis" />
                                             <TextBlock
                                                 Margin="0,10,0,0"
-                                                FontSize="10"
+                                                FontSize="12"
+                                                Foreground="#fffafa"
                                                 Text="{Binding ListenNumber, StringFormat=播放次数:{0}}" />
                                             <TextBlock
                                                 Margin="0,10,0,0"
-                                                FontSize="10"
+                                                FontSize="12"
+                                                Foreground="#fffafa"
                                                 Text="{Binding CreateTime, StringFormat=创建时间:{0:yyyy-MM-dd}}" />
-                                            <TextBlock
-                                                Margin="0,10,0,0"
-                                                FontSize="10"
-                                                MouseUp="MouseUpChanged"
-                                                Text="查看详情" />
                                         </StackPanel>
                                     </Grid>
                                 </DataTemplate>
@@ -205,6 +218,11 @@
                     </Grid>
                 </uc:CandyBorder>
             </Grid>
+            <Canvas
+                Grid.Column="1"
+                Width="{c:Binding (Width/2),
+                                  ElementName=IndexViewCtrl}"
+                Height="{Binding Height, ElementName=IndexViewCtrl}" />
         </Grid>
         <Button
             x:Name="FloatBtn"

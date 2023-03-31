@@ -109,8 +109,46 @@
 
     <Style x:Key="TextBlockStyle" TargetType="TextBlock">
         <Setter Property="Margin" Value="1,2" />
-        <Setter Property="FontSize" Value="15" />
+        <Setter Property="FontSize" Value="17" />
         <Setter Property="Foreground" Value="#fdf5e6" />
     </Style>
 
+    <Style
+        x:Key="TextBlockChildStyle"
+        BasedOn="{StaticResource TextBlockStyle}"
+        TargetType="TextBlock">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Foreground" Value="#f0f0f0" />
+    </Style>
+
+    <Style x:Key="ToolTipStyle" TargetType="ToolTip">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Path
+                            Margin="0,0,25,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Data="M 6 0 L 0 6 L 12 6 Z"
+                            Fill="#E6333333" />
+                        <Border
+                            Width="50"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Background="#E6333333"
+                            CornerRadius="2">
+                            <TextBlock
+                                Margin="6"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Foreground="White"
+                                LineHeight="20"
+                                Text="{TemplateBinding ContentControl.Content}" />
+                        </Border>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
