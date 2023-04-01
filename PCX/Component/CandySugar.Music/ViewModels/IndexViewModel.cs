@@ -65,6 +65,15 @@ namespace CandySugar.Music.ViewModels
             get => _MenuIndex;
             set => SetAndNotify(ref _MenuIndex, value);
         }
+        private MusicSongElementResult _CurrentPlay;
+        /// <summary>
+        /// 当前播放
+        /// </summary>
+        public MusicSongElementResult CurrentPlay
+        {
+            get => _CurrentPlay;
+            set => SetAndNotify(ref _CurrentPlay, value);
+        }
         private ObservableCollection<MusicSongElementResult> _CollectResult;
         /// <summary>
         /// 播放列表
@@ -104,9 +113,15 @@ namespace CandySugar.Music.ViewModels
         #endregion
 
         #region Command
+        public void PlayCommand(MusicSongElementResult input) 
+        {
+            CurrentPlay = input;
+        }
+
         public void ChangeCommand(int key)
         {
             HandleType = key;
+            if (key == 3) return;
             if (SearchKeyword.IsNullOrEmpty())
             {
                 new ScreenNotifyView(CommonHelper.SearckWordErrorInfomartion).Show();
