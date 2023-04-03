@@ -360,7 +360,7 @@
                             }
                         };
                     }).RunsAsync()).DownResult.Bytes;
-                    result.FileCreate(bookName, FileTypes.Txt, "LightNovel", catalog =>
+                    result.FileCreate(bookName, FileTypes.Txt, "LightNovel", (catalog,fileName) =>
                     {
                         new ScreenDownNofityView(CommonHelper.DownloadFinishInformation, catalog).Show();
                     });

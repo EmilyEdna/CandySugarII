@@ -4,6 +4,7 @@ using NAudio.Dsp;
 using NAudio.Wave;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -115,6 +116,7 @@ namespace CandySugar.Com.Library.Audios
         /// <returns></returns>
         public AudioFactory InitLiveData(Action<AudioLive> LiveAction)
         {
+            SampleArray = new float[1024];
             this.LiveAction = LiveAction;
             return this;
         }
@@ -144,7 +146,7 @@ namespace CandySugar.Com.Library.Audios
             {
                 WaveOutput.Init(AudioReader);
                 AudioInfo.Seconds = AudioReader.TotalTime.TotalSeconds;
-                AudioInfo.TimeSpan = AudioReader.TotalTime.ToString().Split(".").FirstOrDefault();
+                AudioInfo.TimeSpan = AudioReader.TotalTime.ToString().Split(".").FirstOrDefault().Substring(3,5);
                 if (module == EPlay.Play)
                 {
                     WaveOutput.Play();
@@ -242,17 +244,17 @@ namespace CandySugar.Com.Library.Audios
                 #endregion
 
                 #region 获取实时播放时间和长度
-                var CurrentSpan = AudioReader.CurrentTime.ToString().Split(".").FirstOrDefault();
+                var CurrentSpan = AudioReader.CurrentTime.ToString().Split(".").FirstOrDefault().Substring(3, 5);
                 var CurrentSeconds = AudioReader.CurrentTime.TotalSeconds;
                 #endregion
 
                 #region 设置绑定数据
-                var LineData = finalData.Take(16).ToList();
+                var LineData = finalData.Take(32).ToList();
                 #endregion
 
                 return new AudioLive
                 {
-                    LiveData = LineData,
+                    LiveData = new ObservableCollection<double>(LineData),
                     LiveSeconds = CurrentSeconds,
                     LiveSpan = CurrentSpan
                 };

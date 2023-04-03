@@ -1,20 +1,16 @@
-﻿using Sdk.Component.Music.sdk.ViewModel;
-using Sdk.Component.Music.sdk;
-using Sdk.Component.Music.sdk.ViewModel.Enums;
-using Sdk.Component.Music.sdk.ViewModel.Request;
-using Sdk.Component.Music.sdk.ViewModel.Response;
-using System.Windows.Input;
-using XExten.Advance.HttpFramework.MultiFactory;
-using System.Net.Http;
-using CandySugar.Com.Library.FileDown;
+﻿using CandySugar.Com.Library.FFMPeg;
+using NAudio.Wave;
+using System.Reflection.Metadata;
 
 namespace CandySugar.Music.ViewModels
 {
     public class IndexViewModel : PropertyChangedBase
     {
-        private object lockObject = new object();
+        private object LockObject = new object();
+        private object SimpleLocker = new object();
         public IndexViewModel()
         {
+            Handle = false;
             MenuIndex = new Dictionary<PlatformEnum, string> {
                 { PlatformEnum.QQMusic,"QQ音乐"},
                 { PlatformEnum.NeteaseMusic,"网易音乐"},
@@ -23,10 +19,29 @@ namespace CandySugar.Music.ViewModels
                 { PlatformEnum.MiGuMusic,"咪咕音乐"}
             };
             GenericDelegate.SearchAction = new(SearchHandler);
-            CollectResult = new(DownUtil.ReadFile<List<MusicSongElementResult>>("Music", FileTypes.Dat, "Music") ?? new List<MusicSongElementResult>());
+            var LocalDATA = DownUtil.ReadFile<List<MusicSongElementResult>>("Music", FileTypes.Dat, "Music");
+            CollectResult = new ObservableCollection<MusicSongElementResult>();
+            if (LocalDATA != null)
+            {
+                LocalDATA.ForEach(CollectResult.Add);
+            }
+            PlayTimer = new() { Interval = 1000 };
         }
 
         #region Field
+        /// <summary>
+        /// 播放器
+        /// </summary>
+        public AudioFactory AudioFactory => AudioFactory.Instance;
+        private int PlayIndex = 0;
+        /// <summary>
+        /// 1列表循环 2单曲循环
+        /// </summary>
+        private int PlayMoudle = 1;
+        /// <summary>
+        /// 歌曲切换Timer
+        /// </summary>
+        private Timer PlayTimer;
         /// <summary>
         /// 1 单曲 2歌单 3列表
         /// </summary>
@@ -56,6 +71,12 @@ namespace CandySugar.Music.ViewModels
         #endregion
 
         #region Property
+        private bool _Handle;
+        public bool Handle
+        {
+            get => _Handle;
+            set => SetAndNotify(ref _Handle, value);
+        }
         private Dictionary<PlatformEnum, string> _MenuIndex;
         /// <summary>
         /// 平台菜单
@@ -73,6 +94,24 @@ namespace CandySugar.Music.ViewModels
         {
             get => _CurrentPlay;
             set => SetAndNotify(ref _CurrentPlay, value);
+        }
+        private AudioModel _AudioInfo;
+        /// <summary>
+        /// 音频信息
+        /// </summary>
+        public AudioModel AudioInfo
+        {
+            get => _AudioInfo;
+            set => SetAndNotify(ref _AudioInfo, value);
+        }
+        private AudioLive _Live;
+        /// <summary>
+        /// 音频实时数据
+        /// </summary>
+        public AudioLive Live
+        {
+            get => _Live;
+            set => SetAndNotify(ref _Live, value);
         }
         private ObservableCollection<MusicSongElementResult> _CollectResult;
         /// <summary>
@@ -113,11 +152,23 @@ namespace CandySugar.Music.ViewModels
         #endregion
 
         #region Command
-        public void PlayCommand(MusicSongElementResult input) 
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="input"></param>
+        public void TrashCommand(MusicSongElementResult input)
         {
-            CurrentPlay = input;
+            var fileName = $"{input.SongName}-{string.Join(",", input.SongArtistName)}";
+            DownUtil.FileDelete(fileName, FileTypes.Mp3, "Music");
+            CollectResult.Remove(input);
+            CollectResult.ToList().DeleteAndCreate("Music", FileTypes.Dat, "Music");
         }
 
+        /// <summary>
+        /// 切换列表
+        /// </summary>
+        /// <param name="key"></param>
         public void ChangeCommand(int key)
         {
             HandleType = key;
@@ -133,6 +184,10 @@ namespace CandySugar.Music.ViewModels
                 OnInitSheet();
         }
 
+        /// <summary>
+        /// 平台切换
+        /// </summary>
+        /// <param name="platform"></param>
         public void ActiveCommand(PlatformEnum platform)
         {
             Platform = platform;
@@ -148,21 +203,36 @@ namespace CandySugar.Music.ViewModels
                 OnInitSheet();
         }
 
+        /// <summary>
+        /// 专辑
+        /// </summary>
+        /// <param name="albumId"></param>
         public void AlbumCommand(string albumId)
         {
             OnInitAlbum(albumId);
         }
 
+        /// <summary>
+        /// 歌单
+        /// </summary>
+        /// <param name="sheetId"></param>
         public void SheetCommand(dynamic sheetId)
         {
             OnInitLists(sheetId.ToString());
         }
 
+        /// <summary>
+        /// 下载
+        /// </summary>
+        /// <param name="input"></param>
         public void DownCommand(MusicSongElementResult input)
         {
             OnInitDown(input);
         }
 
+        /// <summary>
+        /// 加载更多
+        /// </summary>
         public RelayCommand<ScrollChangedEventArgs> ScrollCommand => new((obj) =>
         {
             if (HandleType == 1)
@@ -178,6 +248,64 @@ namespace CandySugar.Music.ViewModels
                     OnLoadMoreSheet();
                 }
         });
+
+        /// <summary>
+        /// 播放
+        /// </summary>
+        public void PlayCommand()
+        {
+            PlayConditions();
+            if (CollectResult.Count > 0)
+            {
+                Handle = !Handle;
+            }
+        }
+
+        /// <summary>
+        /// 上一首
+        /// </summary>
+        public void SkipPreviousCommand()
+        {
+            PlayIndex -= 1;
+            if (PlayIndex < 0) PlayIndex = CollectResult.Count - 1;
+            if (AudioFactory.WaveOutReadOnly != null)
+            {
+                PlayConditions();
+            }
+        }
+        /// <summary>
+        /// 下一首
+        /// </summary>
+        public void SkipNextCommand()
+        {
+            PlayIndex += 1;
+            if (PlayIndex > CollectResult.Count - 1) PlayIndex = 0;
+            if (AudioFactory.WaveOutReadOnly != null)
+            {
+                PlayConditions();
+            }
+        }
+
+        /// <summary>
+        /// 暂停
+        /// </summary>
+        public void PauseCommand()
+        {
+            Handle = !Handle;
+            if (AudioFactory.WaveOutReadOnly != null)
+                AudioFactory.WaveOutReadOnly.Pause();
+        }
+
+        public void PlayChangeModuleCommand(string key)
+        {
+            if (this.PlayMoudle != key.AsInt())
+                this.PlayMoudle = key.AsInt();
+            if (AudioFactory.WaveOutReadOnly != null) //此时正在播放
+            {
+                if (this.PlayMoudle == 1) ListRuch();
+                if (this.PlayMoudle == 2) Single();
+            }
+        }
         #endregion
 
         #region Method
@@ -203,7 +331,7 @@ namespace CandySugar.Music.ViewModels
                     }).RunsAsync()).SheetDetailResult;
                     BasicResult = new ObservableCollection<MusicSongElementResult>(result.ElementResults);
                     // 这一句很关键，开启集合的异步访问支持
-                    BindingOperations.EnableCollectionSynchronization(BasicResult, lockObject);
+                    BindingOperations.EnableCollectionSynchronization(BasicResult, LockObject);
                     WeakReferenceMessenger.Default.Send(new MessageNotify { SliderStatus = 1 });
                 }
                 catch (Exception ex)
@@ -239,7 +367,7 @@ namespace CandySugar.Music.ViewModels
                     }).RunsAsync()).AlbumResult;
                     BasicResult = new ObservableCollection<MusicSongElementResult>(result.ElementResults);
                     // 这一句很关键，开启集合的异步访问支持
-                    BindingOperations.EnableCollectionSynchronization(BasicResult, lockObject);
+                    BindingOperations.EnableCollectionSynchronization(BasicResult, LockObject);
                     WeakReferenceMessenger.Default.Send(new MessageNotify { SliderStatus = 1 });
                 }
                 catch (Exception ex)
@@ -276,7 +404,7 @@ namespace CandySugar.Music.ViewModels
                     SearchTotal = result.Total ?? 0;
                     SingleResult = new ObservableCollection<MusicSongElementResult>(result.ElementResults);
                     // 这一句很关键，开启集合的异步访问支持
-                    BindingOperations.EnableCollectionSynchronization(SingleResult, lockObject);
+                    BindingOperations.EnableCollectionSynchronization(SingleResult, LockObject);
                 }
                 catch (Exception ex)
                 {
@@ -309,7 +437,7 @@ namespace CandySugar.Music.ViewModels
                             }
                         };
                     }).RunsAsync()).SongResult;
-                    lock (lockObject)
+                    lock (LockObject)
                     {
                         Application.Current.Dispatcher.Invoke(() =>
                         {
@@ -354,7 +482,7 @@ namespace CandySugar.Music.ViewModels
                     SheetTotal = result.Total ?? 0;
                     SheetResult = new ObservableCollection<MusicSheetElementResult>(result.ElementResults);
                     // 这一句很关键，开启集合的异步访问支持
-                    BindingOperations.EnableCollectionSynchronization(SheetResult, lockObject);
+                    BindingOperations.EnableCollectionSynchronization(SheetResult, LockObject);
                 }
                 catch (Exception ex)
                 {
@@ -387,7 +515,7 @@ namespace CandySugar.Music.ViewModels
                             }
                         };
                     }).RunsAsync()).SheetResult;
-                    lock (lockObject)
+                    lock (LockObject)
                     {
                         Application.Current.Dispatcher.Invoke(() =>
                         {
@@ -440,10 +568,12 @@ namespace CandySugar.Music.ViewModels
                     }
                     var fileBytes = await (new HttpClient().GetByteArrayAsync(result.SongURL));
                     var fileName = $"{input.SongName}-{string.Join(",", input.SongArtistName)}";
-                    fileBytes.FileCreate(fileName, FileTypes.Mp3, "Music", catalog =>
+                    fileBytes.FileCreate(fileName, FileTypes.Mp3, "Music", (catalog,fileName) =>
                     {
                         new ScreenDownNofityView(CommonHelper.DownloadFinishInformation, catalog).Show();
-                        CollectResult.Add(input);
+                        fileName.Mp3ToHighMP3(catalog);
+                        if (!CollectResult.Any(t => t.SongId == input.SongId))
+                            CollectResult.Add(input);
                     });
                     CollectResult.ToList().DeleteAndCreate("Music", FileTypes.Dat, "Music");
                 }
@@ -461,6 +591,20 @@ namespace CandySugar.Music.ViewModels
                 new ScreenNotifyView(Info.IsNullOrEmpty() ? CommonHelper.ComponentErrorInformation : Info).Show();
             });
         }
+        private void AudioPlays()
+        {
+            if (AudioFactory.WaveOutReadOnly != null && AudioFactory.WaveOutReadOnly.PlaybackState == PlaybackState.Paused)
+            {
+                AudioFactory.WaveOutReadOnly.Play();
+                return;
+            }
+            AudioFactory.InitAudio(DownUtil.FilePath(FileName(), FileTypes.Mp3, "Music"))
+                .RunPlay(Info => AudioInfo = Info).InitLiveData(Info =>
+                {
+                    Application.Current.Dispatcher.Invoke(() => Live = Info);
+                });
+        }
+        private string FileName() => $"[High]{CurrentPlay.SongName}-{string.Join(",", CurrentPlay.SongArtistName)}";
         #endregion
 
         #region ExternalCalls
@@ -477,6 +621,96 @@ namespace CandySugar.Music.ViewModels
                 OnInitSingle();
             if (HandleType == 2)
                 OnInitSheet();
+        }
+        #endregion
+
+        #region Event
+        private void EventCommon()
+        {
+            CurrentPlay = CollectResult[PlayIndex];
+            if (!DownUtil.FileExists(FileName(), FileTypes.Mp3, "Music"))
+                //播放下一首
+                lock (SimpleLocker)
+                {
+                    OnInitDown(CurrentPlay);
+                }
+            AudioPlays();
+        }
+
+        private void ListRuchEvent(object sender, ElapsedEventArgs e)
+        {
+            if (AudioFactory.WaveOutReadOnly != null && AudioFactory.WaveOutReadOnly.PlaybackState == PlaybackState.Stopped)
+            {
+                var PlayNum = CollectResult.Count;
+                //播放完成
+                if (Math.Truncate(Live.LiveSeconds*10)/10 >= Math.Truncate(AudioInfo.Seconds*10)/10)
+                {
+                    PlayIndex += 1;
+                    if (PlayIndex < PlayNum)
+                    {
+                        EventCommon();
+                    }
+                    else
+                    {
+                        PlayIndex = 0;
+                        EventCommon();
+                    }
+                }
+            }
+        }
+
+        private void SingleEvent(object sender, ElapsedEventArgs e)
+        {
+            if (AudioFactory.WaveOutReadOnly != null && AudioFactory.WaveOutReadOnly.PlaybackState == PlaybackState.Stopped)
+            {
+                //播放完成
+                if (Math.Truncate(Live.LiveSeconds * 10) / 10 >= Math.Truncate(AudioInfo.Seconds * 10) / 10)
+                    EventCommon();
+            }
+        }
+        #endregion
+
+        #region AudioMethod
+        private void PlayConditions()
+        {
+            if (CollectResult.Count <= 0)
+            {
+                ErrorNotify("收藏列表未添加歌曲!");
+                return;
+            }
+            CurrentPlay = CollectResult[PlayIndex];
+            if (PlayMoudle == 1)
+            {
+                if (!DownUtil.FileExists(FileName(), FileTypes.Mp3, "Music"))
+                    OnInitDown(CurrentPlay);
+                AudioPlays();
+                ListRuch();
+            }
+            if (PlayMoudle == 2)
+            {
+                if (!DownUtil.FileExists(FileName(), FileTypes.Mp3, "Music"))
+                    OnInitDown(CurrentPlay);
+                AudioPlays();
+                Single();
+            }
+        }
+        /// <summary>
+        /// 列表循环
+        /// </summary>
+        private void ListRuch()
+        {
+            PlayTimer.Elapsed -= SingleEvent;
+            PlayTimer.Elapsed += ListRuchEvent;
+            PlayTimer.Start();
+        }
+        /// <summary>
+        /// 单曲循环
+        /// </summary>
+        private void Single()
+        {
+            PlayTimer.Elapsed -= ListRuchEvent;
+            PlayTimer.Elapsed += SingleEvent;
+            PlayTimer.Start();
         }
         #endregion
     }

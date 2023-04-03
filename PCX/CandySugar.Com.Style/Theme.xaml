@@ -46,9 +46,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Window">
                     <Border BorderBrush="#e63995" BorderThickness="1.5">
-                        <Border.Background>
+                        <!--<Border.Background>
                             <ImageBrush ImageSource="/CandySugar.Com.Style;component/Resources/Backgroud.jpg" />
-                        </Border.Background>
+                        </Border.Background>-->
                         <Border.Style>
                             <Style TargetType="Border">
                                 <EventSetter Event="MouseLeftButtonDown" Handler="MoveEvent" />
@@ -612,17 +612,18 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ToggleListBoxItem" TargetType="ListBoxItem">
+    <Style x:Key="ToggleListBoxItem" TargetType="uc:CandyListboxItem">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Foreground" Value="#FDF5E6" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UnderLine" Value="True" />
         <Setter Property="HorizontalAlignment" Value="{Binding HorizontalAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
         <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
         <Setter Property="Padding" Value="14,6" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ListBoxItem">
+                <ControlTemplate TargetType="uc:CandyListboxItem">
                     <Border
                         Margin="{TemplateBinding Margin}"
                         Background="#40B3B3B3"
@@ -646,6 +647,7 @@
                                     x:Name="GradientBorder"
                                     Width="80"
                                     Height="3"
+                                    uc:ExtenAttach.Visibility="{TemplateBinding UnderLine}"
                                     Background="#ff8099"
                                     BorderThickness="1"
                                     CornerRadius="5"

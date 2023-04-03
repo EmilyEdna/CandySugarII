@@ -14,6 +14,10 @@ namespace CandySugar.Com.Library
         /// </summary>
         public static string AppPath => AppDomain.CurrentDomain.BaseDirectory;
         /// <summary>
+        /// FFMPEG路径
+        /// </summary>
+        public static string FFMPEG => Path.Combine(AppPath, "ffmpeg", "ffmpeg.exe");
+        /// <summary>
         /// 配置目录
         /// </summary>
         public static string OptionPath => "Component";

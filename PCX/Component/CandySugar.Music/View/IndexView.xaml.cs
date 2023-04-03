@@ -28,6 +28,7 @@ namespace CandySugar.Music.View
         private Storyboard AnimeX1;
         private Storyboard AnimeX2;
         private Storyboard AnimeX3;
+        private int Vol = 0;
         public IndexView()
         {
             InitializeComponent();
@@ -43,6 +44,8 @@ namespace CandySugar.Music.View
             {
                 Canvas.SetTop(FloatBtn, height - 160);
                 Canvas.SetLeft(FloatBtn, width - 100);
+                Canvas.SetTop(InfomationBar, height - 160);
+                Canvas.SetTop(VolSetting, height - 305);
                 this.Width = width;
                 this.Height = height - 35 <= 0 ? 0 : height - 35;
 
@@ -97,6 +100,34 @@ namespace CandySugar.Music.View
             Icon.IsEnabled = false;
             if (ViewModel.SliderStatus == 2) CreateOpenDyamicAmime();
             else CreateCloseDyamicAmime();
+        }
+
+        private void VolumeEvent(object sender, RoutedEventArgs e)
+        {
+            if (Vol == 0)
+            {
+                ((Storyboard)FindResource("VolOpenKey")).Begin();
+                Vol = 1;
+            }
+            else
+            {
+                ((Storyboard)FindResource("VolCloseKey")).Begin();
+                Vol = 0;
+            }
+        }
+
+        private void VolChangeEvent(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            var slider = (sender as Slider);
+            VolumeShow.Content = (int)slider.Value + "%";
+            if (ViewModel != null)
+            {
+                var Audio = ViewModel.AudioFactory;
+                if (Audio != null && Audio.WaveOutReadOnly != null)
+                {
+                    Audio.ChangeVolume((float)(slider.Value / 100f));
+                }
+            }
         }
 
         #region DyamicAmime

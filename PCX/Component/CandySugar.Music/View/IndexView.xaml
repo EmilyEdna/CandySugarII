@@ -25,11 +25,61 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Canvas>
+        <SelectiveScrollingGrid
+            x:Name="VolSetting"
+            Canvas.Left="345"
+            Width="75"
+            Height="220"
+            Panel.ZIndex="2"
+            RenderTransformOrigin="0.5,0.5"
+            Visibility="Collapsed">
+            <SelectiveScrollingGrid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform />
+                    <TranslateTransform />
+                </TransformGroup>
+            </SelectiveScrollingGrid.RenderTransform>
+            <Rectangle
+                Width="75"
+                Height="215"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Fill="#30FFFFFF"
+                RadiusX="14.5"
+                RadiusY="14.5"
+                Stroke="Pink" />
+            <Label
+                x:Name="VolumeShow"
+                Width="75"
+                Height="30"
+                Margin="0,185,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                Background="Transparent"
+                BorderThickness="0"
+                Content="100%"
+                FontSize="18" />
+            <Slider
+                Margin="27,20,21,35"
+                BorderBrush="Transparent"
+                Focusable="False"
+                Foreground="#FF63b3"
+                Maximum="100"
+                Minimum="1"
+                Orientation="Vertical"
+                SmallChange="1"
+                TickFrequency="5"
+                TickPlacement="BottomRight"
+                ValueChanged="VolChangeEvent"
+                Value="100" />
+        </SelectiveScrollingGrid>
         <Grid
-            Canvas.Top="550"
+            x:Name="InfomationBar"
             Width="{Binding Width, ElementName=IndexViewCtrl}"
-            Height="115">
-            <Rectangle Height="115" StrokeThickness="0">
+            Height="125">
+            <Rectangle Height="125" StrokeThickness="0">
                 <Rectangle.Fill>
                     <SolidColorBrush Opacity="0.4" Color="#FFF" />
                 </Rectangle.Fill>
@@ -41,256 +91,146 @@
                 </Rectangle.Effect>
             </Rectangle>
             <!--  信息栏  -->
-            <StackPanel Margin="20,10,0,0">
-                <WrapPanel VerticalAlignment="Center" Orientation="Horizontal">
-                    <TextBlock FontSize="25" Style="{DynamicResource TextBlockStyle}">
-                        <Run Text="{Binding CurrentPlay.SongName}" />
-                        <Run Text="-" />
-                        <Run Text="{Binding CurrentPlay.SongArtistName, Converter={StaticResource ListToCharConverter}}" />
-                    </TextBlock>
-                </WrapPanel>
-                <Label
-                    x:Name="时常"
-                    VerticalAlignment="Center"
-                    FontFamily="14">
-                    <Label.Content>
-                        <WrapPanel>
-                            <TextBlock Text="{Binding CurrentSpan}" />
-                            <TextBlock Text="{Binding Audio.TimeSpan, StringFormat=/{0}}" />
-                        </WrapPanel>
-                    </Label.Content>
-                </Label>
+            <StackPanel
+                Width="400"
+                Margin="20,10,0,0"
+                HorizontalAlignment="Left">
+                <TextBlock
+                    FontSize="18"
+                    Style="{DynamicResource TextBlockStyle}"
+                    TextTrimming="CharacterEllipsis">
+                    <Run Text="{Binding CurrentPlay.SongName, StringFormat={}{0} -}" />
+                    <Run Text="{Binding CurrentPlay.SongArtistName, Converter={StaticResource ListToCharConverter}}" />
+                </TextBlock>
+                <TextBlock
+                    x:Name="TimeLong"
+                    HorizontalAlignment="Right"
+                    FontFamily="14"
+                    Style="{DynamicResource TextBlockStyle}">
+                    <Run Text="{Binding Live.LiveSpan}" />
+                    <Run Text="{Binding AudioInfo.TimeSpan, StringFormat=/{0}}" />
+                </TextBlock>
                 <Slider
-                    x:Name="播放条"
+                    x:Name="PlaySlider"
                     Width="400"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    AutoToolTipPrecision="2"
-                    Cursor="Hand"
-                    Foreground="{DynamicResource SugarThemePink}"
-                    IsEnabled="True"
-                    IsMoveToPointEnabled="True"
-                    Maximum="{Binding Audio.Seconds}"
-                    SmallChange="0.001"
-                    SnapsToDevicePixels="True"
+                    IsEnabled="False"
+                    Maximum="{Binding AudioInfo.Seconds}"
                     Style="{DynamicResource PlaySliderStyle}"
-                    TickFrequency="0.001"
-                    Value="{Binding CurrentSecond}" />
+                    Value="{Binding Live.LiveSeconds}" />
             </StackPanel>
             <!--  控制栏  -->
-            <!--<Canvas>
+            <Canvas>
                 <Button
-                        x:Name="上一首"
-                        Canvas.Left="455"
-                        Canvas.Top="45"
-                        VerticalAlignment="Bottom"
-                        md:ElevationAssist.Elevation="Dp2"
-                        s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
-                        Background="{DynamicResource SugarThemeBlue}"
-                        BorderBrush="Transparent"
-                        Command="{s:Action SkipPreviousAciton}"
-                        Style="{DynamicResource MaterialDesignFloatingActionMiniButton}">
-                    <md:PackIcon
-                            Width="30"
-                            Height="30"
-                            Kind="SkipPrevious" />
-                </Button>
+                    x:Name="SkipPrevious"
+                    Canvas.Left="450"
+                    Canvas.Top="40"
+                    Width="50"
+                    Height="50"
+                    s:View.ActionTarget="{Binding DataContext, ElementName=IndexViewCtrl}"
+                    Command="{s:Action SkipPreviousCommand}"
+                    Content="{x:Static lib:FontIcon.CircleChevronLeft}"
+                    FontSize="50"
+                    Style="{DynamicResource CandyFontButtonStyle}" />
                 <Button
-                        x:Name="下一首"
-                        Canvas.Left="605"
-                        Canvas.Top="45"
-                        VerticalAlignment="Bottom"
-                        md:ElevationAssist.Elevation="Dp2"
-                        s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
-                        Background="{DynamicResource SugarThemeBlue}"
-                        BorderBrush="Transparent"
-                        Command="{s:Action SkipNextAciton}"
-                        Style="{DynamicResource MaterialDesignFloatingActionMiniButton}">
-                    <md:PackIcon
-                            Width="30"
-                            Height="30"
-                            Kind="SkipNext" />
-                </Button>
+                    x:Name="Play"
+                    Canvas.Left="515"
+                    Canvas.Top="30"
+                    Width="70"
+                    Height="70"
+                    s:View.ActionTarget="{Binding DataContext, ElementName=IndexViewCtrl}"
+                    Command="{s:Action PlayCommand}"
+                    Content="{x:Static lib:FontIcon.CirclePlay}"
+                    FontSize="70"
+                    Style="{DynamicResource CandyFontButtonStyle}"
+                    Visibility="{c:Binding (!Handle),
+                                           FalseToVisibility=Collapsed}" />
                 <Button
-                        x:Name="暂停"
-                        Canvas.Left="520"
-                        Canvas.Top="35"
-                        Width="60"
-                        Height="60"
-                        VerticalAlignment="Bottom"
-                        md:ElevationAssist.Elevation="Dp2"
-                        s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
-                        Background="{DynamicResource SugarThemeBlue}"
-                        BorderBrush="Transparent"
-                        Command="{s:Action PauseAciton}"
-                        Style="{DynamicResource MaterialDesignFloatingActionMiniButton}"
-                        Visibility="{Binding NonPlay, Converter={StaticResource ToShow}}">
-                    <md:PackIcon
-                            Width="40"
-                            Height="40"
-                            Kind="Pause" />
-                </Button>
+                    x:Name="Pause"
+                    Canvas.Left="515"
+                    Canvas.Top="30"
+                    Width="70"
+                    Height="70"
+                    s:View.ActionTarget="{Binding DataContext, ElementName=IndexViewCtrl}"
+                    Command="{s:Action PauseCommand}"
+                    Content="{x:Static lib:FontIcon.CirclePause}"
+                    FontSize="70"
+                    Style="{DynamicResource CandyFontButtonStyle}"
+                    Visibility="{c:Binding Handle,
+                                           FalseToVisibility=Collapsed}" />
                 <Button
-                        x:Name="播放"
-                        Canvas.Left="520"
-                        Canvas.Top="35"
-                        Width="60"
-                        Height="60"
-                        VerticalAlignment="Bottom"
-                        md:ElevationAssist.Elevation="Dp2"
-                        s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
-                        Background="{DynamicResource SugarThemeBlue}"
-                        BorderBrush="Transparent"
-                        Command="{s:Action DownPlayAction}"
-                        Style="{DynamicResource MaterialDesignFloatingActionMiniButton}"
-                        Visibility="{Binding IsPlay, Converter={StaticResource ToShow}}">
-                    <md:PackIcon
-                            Width="40"
-                            Height="40"
-                            Kind="play" />
-                </Button>
-            </Canvas>-->
+                    x:Name="SkipNext"
+                    Canvas.Left="600"
+                    Canvas.Top="40"
+                    Width="50"
+                    Height="50"
+                    s:View.ActionTarget="{Binding DataContext, ElementName=IndexViewCtrl}"
+                    Command="{s:Action SkipNextCommand}"
+                    Content="{x:Static lib:FontIcon.CircleChevronRight}"
+                    FontSize="50"
+                    Style="{DynamicResource CandyFontButtonStyle}" />
+            </Canvas>
             <!--  模式  -->
-            <!--<Canvas>
+            <Canvas>
                 <ListBox
-                        x:Name="PlayBoxType"
-                        Canvas.Left="80"
-                        Canvas.Top="90"
-                        Width="{c:Binding (ScreenWidth*0.8),
-                                          Source={x:Static res:CandySoft.Default}}"
-                        Height="30"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Bottom"
-                        Foreground="{DynamicResource SugarThemeWhite}"
-                        Style="{StaticResource MaterialDesignToolToggleListBox}">
-                    <ListBox.Background>
-                        <SolidColorBrush Opacity=".5" Color="{DynamicResource SugarThemeBlueColor}" />
-                    </ListBox.Background>
-                    <ListBoxItem x:Name="单曲循环" MouseUp="EachEvent">
-                        <md:PackIcon Kind="RepeatOnce" />
+                    x:Name="PlayBoxType"
+                    Canvas.Left="180"
+                    Canvas.Top="75"
+                    Style="{DynamicResource ToggleListBox}">
+                    <uc:CandyListboxItem
+                        x:Name="ListRepeat"
+                        Width="80"
+                        Content="{x:Static lib:FontIcon.Repeat}"
+                        FontFamily="{DynamicResource Thin}"
+                        IsSelected="True"
+                        UnderLine="False">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Selected">
                                 <i:InvokeCommandAction
-                                        s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
-                                        Command="{s:Action ChangeModuleAction}"
-                                        CommandParameter="0" />
+                                    s:View.ActionTarget="{Binding DataContext, ElementName=IndexViewCtrl}"
+                                    Command="{s:Action PlayChangeModuleCommand}"
+                                    CommandParameter="1" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </ListBoxItem>
-                    <ListBoxItem
-                            x:Name="列表循环"
-                            IsSelected="True"
-                            MouseUp="EachEvent">
-                        <md:PackIcon Kind="Repeat" />
+                    </uc:CandyListboxItem>
+                    <uc:CandyListboxItem
+                        x:Name="SingleRepeat"
+                        Width="80"
+                        Content="{x:Static lib:FontIcon.Repeat1}"
+                        FontFamily="{DynamicResource Thin}"
+                        UnderLine="False">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Selected">
                                 <i:InvokeCommandAction
-                                        s:View.ActionTarget="{Binding DataContext, ElementName=MusicViewName}"
-                                        Command="{s:Action ChangeModuleAction}"
-                                        CommandParameter="1" />
+                                    s:View.ActionTarget="{Binding DataContext, ElementName=IndexViewCtrl}"
+                                    Command="{s:Action PlayChangeModuleCommand}"
+                                    CommandParameter="2" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </ListBoxItem>
+                    </uc:CandyListboxItem>
                 </ListBox>
                 <Button
-                        x:Name="音量控制"
-                        Canvas.Top="90"
-                        Width="50"
-                        Height="30"
-                        Margin="20,0,0,10"
-                        BorderThickness="0"
-                        Click="VolumeEvent">
-                    <Button.Background>
-                        <SolidColorBrush Opacity=".5" Color="{DynamicResource SugarThemeBlueColor}" />
-                    </Button.Background>
-                    <md:PackIcon Kind="VolumeHigh" />
-                </Button>
-            </Canvas>-->
+                    x:Name="音量控制"
+                    Canvas.Left="340"
+                    Canvas.Top="75"
+                    Click="VolumeEvent"
+                    Content="{x:Static lib:FontIcon.Volume}"
+                    Style="{DynamicResource VolStyle}" />
+            </Canvas>
             <!--  音阶  -->
-            <!--<Grid
-                    Width="200"
-                    Margin="0,0,10,0"
-                    HorizontalAlignment="Right">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <ProgressBar Style="{StaticResource Channel}" Value="{Binding Channel[0]}" />
-                <ProgressBar
-                        Grid.Column="1"
-                        Style="{StaticResource Channel}"
-                        Value="{Binding Channel[1]}" />
-                <ProgressBar
-                        Grid.Column="2"
-                        Style="{StaticResource Channel}"
-                        Value="{Binding Channel[2]}" />
-                <ProgressBar
-                        Grid.Column="3"
-                        Style="{StaticResource Channel}"
-                        Value="{Binding Channel[3]}" />
-                <ProgressBar
-                        Grid.Column="4"
-                        Style="{StaticResource Channel}"
-                        Value="{Binding Channel[4]}" />
-                <ProgressBar
-                        Grid.Column="5"
-                        Style="{StaticResource Channel}"
-                        Value="{Binding Channel[5]}" />
-                <ProgressBar
-                        Grid.Column="6"
-                        Style="{StaticResource Channel}"
-                        Value="{Binding Channel[6]}" />
-                <ProgressBar
-                        Grid.Column="7"
-                        Style="{StaticResource Channel}"
-                        Value="{Binding Channel[7]}" />
-                <ProgressBar
-                        Grid.Column="8"
-                        Style="{StaticResource Channel}"
-                        Value="{Binding Channel[8]}" />
-                <ProgressBar
-                        Grid.Column="9"
-                        Style="{StaticResource Channel}"
-                        Value="{Binding Channel[9]}" />
-                <ProgressBar
-                        Grid.Column="10"
-                        Style="{StaticResource Channel}"
-                        Value="{Binding Channel[10]}" />
-                <ProgressBar
-                        Grid.Column="11"
-                        Style="{StaticResource Channel}"
-                        Value="{Binding Channel[11]}" />
-                <ProgressBar
-                        Grid.Column="12"
-                        Style="{StaticResource Channel}"
-                        Value="{Binding Channel[12]}" />
-                <ProgressBar
-                        Grid.Column="13"
-                        Style="{StaticResource Channel}"
-                        Value="{Binding Channel[13]}" />
-                <ProgressBar
-                        Grid.Column="14"
-                        Style="{StaticResource Channel}"
-                        Value="{Binding Channel[14]}" />
-                <ProgressBar
-                        Grid.Column="15"
-                        Style="{StaticResource Channel}"
-                        Value="{Binding Channel[15]}" />
-            </Grid>-->
+            <Grid Margin="0,0,80,0" HorizontalAlignment="Right">
+                <ListBox ItemsSource="{Binding Live.LiveData, IsAsync=True}" Style="{DynamicResource CandyListBoxStyle}">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="32" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <ProgressBar Style="{DynamicResource Channel}" Value="{Binding .}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
         </Grid>
         <Grid
             Width="{Binding Width, ElementName=IndexViewCtrl}"
@@ -302,16 +242,16 @@
             </Grid.ColumnDefinitions>
             <Grid Margin="0,10,0,0">
                 <ListBox Style="{DynamicResource ToggleListBox}">
-                    <ListBoxItem
+                    <uc:CandyListboxItem
                         Content="单曲"
                         IsSelected="True"
                         MouseUp="MouseUpChanged"
                         Tag="1" />
-                    <ListBoxItem
+                    <uc:CandyListboxItem
                         Content="歌单"
                         MouseUp="MouseUpChanged"
                         Tag="2" />
-                    <ListBoxItem
+                    <uc:CandyListboxItem
                         Content="收藏"
                         MouseUp="MouseUpChanged"
                         Tag="3" />
@@ -322,7 +262,7 @@
                                       ElementName=IndexViewCtrl}"
                     Height="{c:Binding (Height*0.7),
                                        ElementName=IndexViewCtrl}"
-                    Margin="0,0,0,50"
+                    Margin="0,0,0,70"
                     BorderType="Info"
                     Style="{DynamicResource CandyBorderStyle}">
                     <uc:CandyBorder.RenderTransform>
@@ -402,7 +342,7 @@
                                       ElementName=IndexViewCtrl}"
                     Height="{c:Binding (Height*0.7),
                                        ElementName=IndexViewCtrl}"
-                    Margin="0,0,0,50"
+                    Margin="0,0,0,70"
                     BorderType="Info"
                     Style="{DynamicResource CandyBorderStyle}"
                     Visibility="Hidden">
@@ -481,7 +421,7 @@
                                       ElementName=IndexViewCtrl}"
                     Height="{c:Binding (Height*0.7),
                                        ElementName=IndexViewCtrl}"
-                    Margin="0,0,0,50"
+                    Margin="0,0,0,70"
                     BorderType="Info"
                     Style="{DynamicResource CandyBorderStyle}"
                     Visibility="Hidden">
@@ -512,9 +452,9 @@
                                                 Margin="0,0,3,0"
                                                 HorizontalAlignment="Right"
                                                 s:View.ActionTarget="{Binding DataContext, ElementName=IndexViewCtrl}"
-                                                Command="{s:Action PlayCommand}"
+                                                Command="{s:Action TrashCommand}"
                                                 CommandParameter="{Binding .}"
-                                                Content="{x:Static lib:FontIcon.CirclePlay}"
+                                                Content="{x:Static lib:FontIcon.TrashCan}"
                                                 Cursor="Hand"
                                                 FontSize="17"
                                                 Foreground="#ffe4c4"
