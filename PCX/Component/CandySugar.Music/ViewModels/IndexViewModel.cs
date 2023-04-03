@@ -1,6 +1,4 @@
-﻿using CandySugar.Com.Library.FFMPeg;
-using NAudio.Wave;
-using System.Reflection.Metadata;
+﻿using CandySugar.Com.Library.FileDown;
 
 namespace CandySugar.Music.ViewModels
 {
@@ -159,8 +157,8 @@ namespace CandySugar.Music.ViewModels
         /// <param name="input"></param>
         public void TrashCommand(MusicSongElementResult input)
         {
-            var fileName = $"{input.SongName}-{string.Join(",", input.SongArtistName)}";
-            DownUtil.FileDelete(fileName, FileTypes.Mp3, "Music");
+            var FileName = $"[High]{input.SongId}";
+            DownUtil.FileDelete(FileName, FileTypes.Mp3, "Music");
             CollectResult.Remove(input);
             CollectResult.ToList().DeleteAndCreate("Music", FileTypes.Dat, "Music");
         }
@@ -273,6 +271,7 @@ namespace CandySugar.Music.ViewModels
                 PlayConditions();
             }
         }
+
         /// <summary>
         /// 下一首
         /// </summary>
@@ -567,11 +566,15 @@ namespace CandySugar.Music.ViewModels
                         return;
                     }
                     var fileBytes = await (new HttpClient().GetByteArrayAsync(result.SongURL));
-                    var fileName = $"{input.SongName}-{string.Join(",", input.SongArtistName)}";
-                    fileBytes.FileCreate(fileName, FileTypes.Mp3, "Music", (catalog,fileName) =>
+
+                    fileBytes.FileCreate(input.SongId, FileTypes.Mp3, "Music", (catalog, fileName) =>
                     {
-                        new ScreenDownNofityView(CommonHelper.DownloadFinishInformation, catalog).Show();
-                        fileName.Mp3ToHighMP3(catalog);
+                        if (fileName.Mp3ToHighMP3(catalog))
+                        {
+                            //删除文件
+                            SyncStatic.DeleteFile(Path.Combine(catalog, fileName));
+                            new ScreenDownNofityView(CommonHelper.DownloadFinishInformation, catalog).Show();
+                        };
                         if (!CollectResult.Any(t => t.SongId == input.SongId))
                             CollectResult.Add(input);
                     });
@@ -604,7 +607,7 @@ namespace CandySugar.Music.ViewModels
                     Application.Current.Dispatcher.Invoke(() => Live = Info);
                 });
         }
-        private string FileName() => $"[High]{CurrentPlay.SongName}-{string.Join(",", CurrentPlay.SongArtistName)}";
+        private string FileName() => $"[High]{CurrentPlay.SongId}";
         #endregion
 
         #region ExternalCalls
@@ -643,7 +646,7 @@ namespace CandySugar.Music.ViewModels
             {
                 var PlayNum = CollectResult.Count;
                 //播放完成
-                if (Math.Truncate(Live.LiveSeconds*10)/10 >= Math.Truncate(AudioInfo.Seconds*10)/10)
+                if (Math.Truncate(Live.LiveSeconds * 10) / 10 >= Math.Truncate(AudioInfo.Seconds * 10) / 10)
                 {
                     PlayIndex += 1;
                     if (PlayIndex < PlayNum)

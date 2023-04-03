@@ -218,7 +218,7 @@
         <Setter Property="Stylus.IsPressAndHoldEnabled" Value="False" />
         <Setter Property="Background" Value="{x:Null}" />
         <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="Foreground" Value="#FF73b3" />
+        <Setter Property="Foreground" Value="#FFF" />
         <Setter Property="IsMoveToPointEnabled" Value="True" />
         <Setter Property="SmallChange" Value="0.001" />
         <Setter Property="AutoToolTipPrecision" Value="2" />

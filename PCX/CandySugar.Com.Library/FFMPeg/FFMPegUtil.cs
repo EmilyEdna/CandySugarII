@@ -13,7 +13,7 @@ namespace CandySugar.Com.Library.FFMPeg
         {
             Process process = new Process();
             process.StartInfo.FileName = CommonHelper.FFMPEG;
-            process.StartInfo.Arguments = $" -i {Path.Combine(catalog, mp3File)} -ab 320k -ar 44100 -acodec libmp3lame  -y {Path.Combine(catalog, $"[High]{mp3File}")}";
+            process.StartInfo.Arguments = $" -i {Path.Combine(catalog, mp3File)} -ab 320k -acodec libmp3lame  -y {Path.Combine(catalog, $"[High]{mp3File}")}";
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.RedirectStandardOutput = true;
@@ -34,9 +34,7 @@ namespace CandySugar.Com.Library.FFMPeg
 
             if (process.ExitCode == 0)
             {
-                Log.Logger.Information("ffmpeg 转码成功！");
-                //删除文件
-                SyncStatic.DeleteFile(Path.Combine(catalog, mp3File));
+                Log.Logger.Information("ffmpeg 转码成功！");           
                 return true;
             }
             else
