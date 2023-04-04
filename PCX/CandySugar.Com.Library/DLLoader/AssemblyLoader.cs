@@ -16,7 +16,7 @@ namespace CandySugar.Com.Library.DLLoader
         private string _basePath;
         private AssemblyLoadContext context;
         public static ConcurrentQueue<Type> Single = new ConcurrentQueue<Type>();
-        public static List<DLLInfomations> Dll = new List<DLLInfomations>();
+        public static List<DLLInformations> Dll = new List<DLLInformations>();
         public AssemblyLoader(string basePath)
         {
             _basePath = basePath;
@@ -77,7 +77,7 @@ namespace CandySugar.Com.Library.DLLoader
                         Type InstanceType = assembly.GetTypes().FirstOrDefault(t => t.Name.ToLower().Equals(typeName.ToLower()));
                         Type ViewModel = assembly.GetTypes().FirstOrDefault(t => t.Name.ToLower().Contains($"{typeName}Model".ToLower()));
                         Type IocModule = assembly.GetTypes().FirstOrDefault(t => t.Name.ToLower().Equals(ioc.ToLower()));
-                        Dll.Add(new DLLInfomations
+                        Dll.Add(new DLLInformations
                         {
                             InstanceViewModel = ViewModel,
                             InstanceType = InstanceType,

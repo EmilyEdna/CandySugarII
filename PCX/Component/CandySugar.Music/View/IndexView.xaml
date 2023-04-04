@@ -76,7 +76,7 @@
                 Value="100" />
         </SelectiveScrollingGrid>
         <Grid
-            x:Name="InfomationBar"
+            x:Name="InformationBar"
             Width="{Binding Width, ElementName=IndexViewCtrl}"
             Height="125">
             <Rectangle Height="125" StrokeThickness="0">

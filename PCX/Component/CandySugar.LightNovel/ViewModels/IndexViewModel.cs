@@ -12,9 +12,9 @@
         }
 
         #region Field
-        private int InfomationTotal;
-        private string InfomationRoute;
-        private int InfomationPageIndex = 1;
+        private int InformationTotal;
+        private string InformationRoute;
+        private int InformationPageIndex = 1;
         private int SearchTotal;
         private string SearchKeyword;
         private int SearchPageIndex = 1;
@@ -77,8 +77,8 @@
         public void ActiveCommand(string route)
         {
             HandleType = 1;
-            InfomationPageIndex = 1;
-            InfomationRoute = route;
+            InformationPageIndex = 1;
+            InformationRoute = route;
             OnInitInformation();
         }
         public void ChapterCommand(string chapter)
@@ -90,10 +90,10 @@
         public RelayCommand<ScrollChangedEventArgs> ScrollCommand => new((obj) =>
         {
             if (HandleType == 1)
-                if (InfomationPageIndex <= InfomationTotal && obj.VerticalOffset + obj.ViewportHeight == obj.ExtentHeight && obj.VerticalChange > 0)
+                if (InformationPageIndex <= InformationTotal && obj.VerticalOffset + obj.ViewportHeight == obj.ExtentHeight && obj.VerticalChange > 0)
                 {
-                    InfomationPageIndex += 1;
-                    OnLoadMoreInfomation();
+                    InformationPageIndex += 1;
+                    OnLoadMoreInformation();
                 }
             if (HandleType == 2)
                 if (SearchPageIndex <= SearchTotal && obj.VerticalOffset + obj.ViewportHeight == obj.ExtentHeight && obj.VerticalChange > 0)
@@ -153,11 +153,11 @@
                             Category = new LovelCategory
                             {
                                 Page = 1,
-                                Route = InfomationRoute
+                                Route = InformationRoute
                             }
                         };
                     }).RunsAsync()).CategoryResult;
-                    InfomationTotal = result.Total;
+                    InformationTotal = result.Total;
                     InformationElement = new ObservableCollection<LovelCategoryElementResult>(result.ElementResults);
                     // 这一句很关键，开启集合的异步访问支持
                     BindingOperations.EnableCollectionSynchronization(InformationElement, lockObject);
@@ -172,7 +172,7 @@
         /// <summary>
         /// 加载更多分类
         /// </summary>
-        private void OnLoadMoreInfomation()
+        private void OnLoadMoreInformation()
         {
             Task.Run(async () =>
             {
@@ -187,8 +187,8 @@
                             LovelType = LovelEnum.Category,
                             Category = new LovelCategory
                             {
-                                Page = InfomationPageIndex,
-                                Route = InfomationRoute
+                                Page = InformationPageIndex,
+                                Route = InformationRoute
                             }
                         };
                     }).RunsAsync()).CategoryResult;

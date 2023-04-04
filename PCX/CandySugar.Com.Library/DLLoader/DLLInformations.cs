@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CandySugar.Com.Library.DLLoader
 {
-    public class DLLInfomations
+    public class DLLInformations
     {
         public Type IocModule { get; set; }
         public Type InstanceType { get; set; }

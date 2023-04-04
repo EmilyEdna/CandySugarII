@@ -44,7 +44,7 @@ namespace CandySugar.Music.View
             {
                 Canvas.SetTop(FloatBtn, height - 160);
                 Canvas.SetLeft(FloatBtn, width - 100);
-                Canvas.SetTop(InfomationBar, height - 160);
+                Canvas.SetTop(InformationBar, height - 160);
                 Canvas.SetTop(VolSetting, height - 305);
                 this.Width = width;
                 this.Height = height - 35 <= 0 ? 0 : height - 35;
