@@ -79,5 +79,16 @@
             });
         }
         #endregion
+
+        #region Command
+        public void BackCommand() 
+        {
+            WeakReferenceMessenger.Default.Send(new MessageNotify
+            {
+                NotifyType = NotifyType.ChangeControl,
+                ControlType = 1
+            });
+        }
+        #endregion
     }
 }

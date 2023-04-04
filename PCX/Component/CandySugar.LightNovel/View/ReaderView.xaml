@@ -8,6 +8,7 @@
     xmlns:lib="http://lib.candy.com"
     xmlns:local="clr-namespace:CandySugar.LightNovel.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:s="https://github.com/canton7/Stylet"
     xmlns:uc="http://ctrl.candy.com"
     xmlns:vm="clr-namespace:CandySugar.LightNovel.ViewModels"
     x:Name="ReaderViewCtrl"
@@ -22,34 +23,42 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Width="{Binding Width, ElementName=ReaderViewCtrl}" Height="{Binding Height, ElementName=ReaderViewCtrl}">
-        <WrapPanel Margin="50,0,50,35" HorizontalAlignment="Center">
-            <hc:ScrollViewer VerticalScrollBarVisibility="Auto">
-                <TextBlock
-                    x:Name="Word"
-                    Foreground="Black"
-                    ScrollViewer.CanContentScroll="True"
-                    Style="{DynamicResource TextBlockStyle}"
-                    Text="{Binding Words, IsAsync=True}"
-                    TextWrapping="Wrap" />
-            </hc:ScrollViewer>
-            <ListBox ItemsSource="{Binding Picture, IsAsync=True}" Style="{DynamicResource CandyListBoxStyle}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <uc:CandyBorder BorderType="Primary" Style="{DynamicResource CandyBorderStyle}">
-                            <Image
-                                Margin="0,10"
-                                uc:ImageAttach.RenderHeight="{c:Binding (Height*0.9),
-                                                                        ElementName=ReaderViewCtrl}"
-                                uc:ImageAttach.RenderWidth="{c:Binding (Width*0.9),
-                                                                       ElementName=ReaderViewCtrl}"
-                                uc:ImageAttach.SourceAsync="{Binding .}"
-                                Tag="{x:Static lib:EDownload.Light}" />
-                        </uc:CandyBorder>
+    <Canvas>
+        <Button
+            x:Name="FloatBtn"
+            Panel.ZIndex="1"
+            s:View.ActionTarget="{Binding DataContext, ElementName=ReaderViewCtrl}"
+            Command="{s:Action BackCommand}"
+            Style="{DynamicResource FloatButtonStyle}" />
+        <Grid Width="{Binding Width, ElementName=ReaderViewCtrl}" Height="{Binding Height, ElementName=ReaderViewCtrl}">
+            <WrapPanel Margin="50,0,50,35" HorizontalAlignment="Center">
+                <hc:ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <TextBlock
+                        x:Name="Word"
+                        Foreground="Black"
+                        ScrollViewer.CanContentScroll="True"
+                        Style="{DynamicResource TextBlockStyle}"
+                        Text="{Binding Words, IsAsync=True}"
+                        TextWrapping="Wrap" />
+                </hc:ScrollViewer>
+                <ListBox ItemsSource="{Binding Picture, IsAsync=True}" Style="{DynamicResource CandyListBoxStyle}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <uc:CandyBorder BorderType="Primary" Style="{DynamicResource CandyBorderStyle}">
+                                <Image
+                                    Margin="0,10"
+                                    uc:ImageAttach.RenderHeight="{c:Binding (Height*0.9),
+                                                                            ElementName=ReaderViewCtrl}"
+                                    uc:ImageAttach.RenderWidth="{c:Binding (Width*0.9),
+                                                                           ElementName=ReaderViewCtrl}"
+                                    uc:ImageAttach.SourceAsync="{Binding .}"
+                                    Tag="{x:Static lib:EDownload.Light}" />
+                            </uc:CandyBorder>
 
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </WrapPanel>
-    </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </WrapPanel>
+        </Grid>
+    </Canvas>
 </UserControl>
