@@ -567,9 +567,9 @@ namespace CandySugar.Music.ViewModels
                     }
                     var fileBytes = await (new HttpClient().GetByteArrayAsync(result.SongURL));
 
-                    fileBytes.FileCreate(input.SongId, FileTypes.Mp3, "Music", (catalog, fileName) =>
+                    fileBytes.FileCreate(input.SongId, FileTypes.Mp3, "Music", async (catalog, fileName) =>
                     {
-                        if (fileName.Mp3ToHighMP3(catalog))
+                        if (await fileName.Mp3ToHighMP3(catalog))
                         {
                             //删除文件
                             SyncStatic.DeleteFile(Path.Combine(catalog, fileName));
@@ -619,7 +619,7 @@ namespace CandySugar.Music.ViewModels
         {
             SearchKeyword = keyword;
             Platform = PlatformEnum.NeteaseMusic;
-            SearchPageIndex = 1;
+            SearchPageIndex = SheetPageIndex = 1;
             if (HandleType == 1)
                 OnInitSingle();
             if (HandleType == 2)

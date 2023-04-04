@@ -1,13 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
-    <UseWPF>true</UseWPF>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net7.0-windows</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<SatelliteResourceLanguages>zh-Hans</SatelliteResourceLanguages>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\CandySugar.Com.Style\CandySugar.Com.Style.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\CandySugar.Com.Style\CandySugar.Com.Style.csproj" />
+	</ItemGroup>
 
 </Project>
