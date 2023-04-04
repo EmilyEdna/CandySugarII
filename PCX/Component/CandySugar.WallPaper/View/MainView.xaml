@@ -13,7 +13,6 @@
     d:DesignHeight="700"
     d:DesignWidth="1200"
     mc:Ignorable="d">
-
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -22,6 +21,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Canvas>
+        <uc:CandyListBox />
         <ContentControl Content="{Binding ComponentControl}" />
         <Button
             x:Name="FloatBtn"

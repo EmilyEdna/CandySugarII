@@ -66,9 +66,14 @@ namespace CandySugar.Music.ViewModels
         /// 侧边栏开关状态 1 开 2关
         /// </summary>
         public int SliderStatus = 2;
+        /// <summary>
+        /// 歌词
+        /// </summary>
+        private List<MusicLyricElemetResult> LyricResult;
         #endregion
 
         #region Property
+
         private bool _Handle;
         public bool Handle
         {
@@ -146,6 +151,15 @@ namespace CandySugar.Music.ViewModels
         {
             get => _BasicResult;
             set => SetAndNotify(ref _BasicResult, value);
+        }
+        private string _CurrentLyric;
+        /// <summary>
+        /// 当前歌词
+        /// </summary>
+        public string CurrentLyric
+        {
+            get => _CurrentLyric;
+            set => SetAndNotify(ref _CurrentLyric, value);
         }
         #endregion
 
@@ -577,8 +591,37 @@ namespace CandySugar.Music.ViewModels
                         };
                         if (!CollectResult.Any(t => t.SongId == input.SongId))
                             CollectResult.Add(input);
+                        CollectResult.ToList().DeleteAndCreate("Music", FileTypes.Dat, "Music");
                     });
-                    CollectResult.ToList().DeleteAndCreate("Music", FileTypes.Dat, "Music");
+                }
+                catch (Exception ex)
+                {
+                    Log.Logger.Error(ex, "");
+                    ErrorNotify();
+                }
+            });
+        }
+        private void OnInitLyric(MusicSongElementResult input)
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    var result = (await MusicFactory.Music(opt =>
+                    {
+                        opt.RequestParam = new Input
+                        {
+                            PlatformType = input.MusicPlatformType,
+                            CacheSpan = ComponentBinding.OptionObjectModels.Cache,
+                            ImplType = SdkImpl.Rest,
+                            MusicType = MusicEnum.Lyric,
+                            Lyric = new MusicLyricSearch
+                            {
+                                Dynamic = input.SongId
+                            }
+                        };
+                    }).RunsAsync()).LyricResult.Lyrics;
+                    LyricResult = result;
                 }
                 catch (Exception ex)
                 {
@@ -604,7 +647,17 @@ namespace CandySugar.Music.ViewModels
             AudioFactory.InitAudio(DownUtil.FilePath(FileName(), FileTypes.Mp3, "Music"))
                 .RunPlay(Info => AudioInfo = Info).InitLiveData(Info =>
                 {
-                    Application.Current.Dispatcher.Invoke(() => Live = Info);
+                    Application.Current.Dispatcher.Invoke(() => {
+                        Live = Info;
+                        if (LyricResult != null && LyricResult.Count > 0)
+                        {
+                            lock (LockObject)
+                            {
+                                var lyric= LyricResult.FirstOrDefault(item => item.Time.Split(".").FirstOrDefault().Equals(Info.LiveSpan));
+                                CurrentLyric = lyric == null ? CurrentLyric : lyric.Lyric;
+                            }
+                        }
+                    });
                 });
         }
         private string FileName() => $"[High]{CurrentPlay.SongId}";
@@ -631,6 +684,7 @@ namespace CandySugar.Music.ViewModels
         private void EventCommon()
         {
             CurrentPlay = CollectResult[PlayIndex];
+            OnInitLyric(CurrentPlay);
             if (!DownUtil.FileExists(FileName(), FileTypes.Mp3, "Music"))
                 //播放下一首
                 lock (SimpleLocker)
@@ -682,6 +736,7 @@ namespace CandySugar.Music.ViewModels
                 return;
             }
             CurrentPlay = CollectResult[PlayIndex];
+            OnInitLyric(CurrentPlay);
             if (PlayMoudle == 1)
             {
                 if (!DownUtil.FileExists(FileName(), FileTypes.Mp3, "Music"))

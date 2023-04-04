@@ -478,6 +478,19 @@
                     </Grid>
                 </uc:CandyBorder>
             </Grid>
+            <Grid
+                x:Name="LyricRender"
+                Grid.Column="1"
+                Height="{c:Binding (Height-140),
+                                   ElementName=IndexViewCtrl}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom">
+                <TextBlock
+                    FontSize="30"
+                    Foreground="#E63995"
+                    Style="{DynamicResource TextBlockStyle}"
+                    Text="{Binding CurrentLyric}" />
+            </Grid>
             <Canvas
                 x:Name="RightCanvas"
                 Grid.Column="1"
@@ -510,7 +523,6 @@
                         <ListBox
                             Grid.Column="1"
                             ItemsSource="{Binding BasicResult, IsAsync=True}"
-                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                             Style="{DynamicResource CandyListBoxStyle}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
