@@ -1,4 +1,5 @@
 ﻿using CandySugar.Com.Options.ComponentGeneric;
+using CommunityToolkit.Mvvm.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,11 @@ namespace CandySugar.WallPaper.View
                 Canvas.SetLeft(FloatBtn, width - 100);
                 this.Width = width;
                 this.Height = height - 35 <= 0 ? 0 : height - 35;
+                WeakReferenceMessenger.Default.Send(new MessageNotify
+                {
+                    ControlType = 2,
+                    ControlParam =Tuple.Create(this.Width, this.Height)
+                });
             });
         }
 

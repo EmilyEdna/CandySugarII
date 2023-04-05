@@ -28,11 +28,25 @@ namespace CandySugar.Com.Library.DownQueue
                 {
                     case EDownload.Light:
                         return await Light(route);
+                    case EDownload.Wallhav:
+                        return await WallHav(route);
                     default:
                         break;
                 }
             }
             return null;
+        }
+
+        private static async Task<byte[]> WallHav(string route)
+        {
+            var key = route.ToMd5();
+            var cache = await Caches.RunTimeCacheGetAsync<byte[]>(key);
+            if (cache != null)
+                return cache;
+            HttpClient client = new HttpClient();
+            var res = await client.GetByteArrayAsync(route);
+            await Caches.RunTimeCacheSetAsync(key, res);
+            return res;
         }
 
         private static async Task<byte[]> Light(string route)

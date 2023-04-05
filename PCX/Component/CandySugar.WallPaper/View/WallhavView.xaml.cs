@@ -1,4 +1,5 @@
 ﻿using CandySugar.Com.Options.ComponentGeneric;
+using CommunityToolkit.Mvvm.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,19 @@ namespace CandySugar.WallPaper.View
         public WallhavView()
         {
             InitializeComponent();
+            WeakReferenceMessenger.Default.Register<MessageNotify>(this, (recip, notify) =>
+            {
+                if (notify.ControlType == 2)
+                {
+                    var param = (Tuple<double, double>)notify.ControlParam;
+                    this.Width = param.Item1;
+                    this.Height = param.Item2;
+                }
+            });
+        }
+
+        private void MouseUpChanged(object sender, MouseButtonEventArgs e)
+        {
 
         }
     }
