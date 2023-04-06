@@ -31,14 +31,14 @@ namespace CandySugar.EntryUI.ViewModels
         protected override void OnActivate()
         {
             base.OnActivate();
-            var dlls = AssemblyLoader.Dll.Select(item => new MenuObject
+            var dlls = AssemblyLoader.Dll.Select(item => new ComponentMenu
             {
                 InstanceType = item.InstanceType,
                 Name = item.Description,
                 IsEnable = item.IsEnable,
                 ViewModel = item.InstanceViewModel
             });
-            MenuObj = new ObservableCollection<MenuObject>(dlls);
+            MenuObj = new ObservableCollection<ComponentMenu>(dlls);
             ThreadManage.Instance.StartLong(() =>
             {
                 if (!InternetWork.GetNetworkState)
@@ -67,11 +67,11 @@ namespace CandySugar.EntryUI.ViewModels
             set => SetAndNotify(ref _CandyControl, value);
         }
 
-        private ObservableCollection<MenuObject> _MenuObj;
+        private ObservableCollection<ComponentMenu> _MenuObj;
         /// <summary>
         /// 组件菜单
         /// </summary>
-        public ObservableCollection<MenuObject> MenuObj
+        public ObservableCollection<ComponentMenu> MenuObj
         {
             get => _MenuObj;
             set => SetAndNotify(ref _MenuObj, value);

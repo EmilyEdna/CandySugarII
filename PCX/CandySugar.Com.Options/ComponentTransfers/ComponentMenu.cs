@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CandySugar.Com.Library.Transfers
 {
-    public class MenuObject: PropertyChangedBase
+    public class ComponentMenu: PropertyChangedBase
     {
         private Type _InstanceType;
         public Type InstanceType

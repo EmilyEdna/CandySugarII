@@ -23,25 +23,48 @@ namespace CandySugar.WallPaper.ViewModels
         public WallhavViewModel()
         {
             GenericDelegate.SearchAction = new(SearchHandler);
-            OnInit();
+            OnGeneralInit();
         }
 
         #region Field
         private string Keyword;
-        private int Total;
+        private int GeneralTotal;
+        private int GeneralPageIndex = 1;
+        private int AnimeTotal;
+        private int AnimePageIndex = 1;
+        private int PeopleTotal;
+        private int PeoplePageIndex = 1;
+        /// <summary>
+        /// 1：常规 2：动漫 3：人物 4：收藏
+        /// </summary>
+        private int ChangeType = 1;
         #endregion
 
         #region Property
-        private ObservableCollection<WallhavSearchElementResult> _ElementResult;
-        public ObservableCollection<WallhavSearchElementResult> ElementResult
+        private ObservableCollection<WallhavSearchElementResult> _GeneralResult;
+        public ObservableCollection<WallhavSearchElementResult> GeneralResult
         {
-            get => _ElementResult;
-            set => SetAndNotify(ref _ElementResult, value);
+            get => _GeneralResult;
+            set => SetAndNotify(ref _GeneralResult, value);
+        }
+
+        private ObservableCollection<WallhavSearchElementResult> _AnimeResult;
+        public ObservableCollection<WallhavSearchElementResult> AnimeResult
+        {
+            get => _AnimeResult;
+            set => SetAndNotify(ref _AnimeResult, value);
+        }
+
+        private ObservableCollection<WallhavSearchElementResult> _PeopleResult;
+        public ObservableCollection<WallhavSearchElementResult> PeopleResult
+        {
+            get => _PeopleResult;
+            set => SetAndNotify(ref _PeopleResult, value);
         }
         #endregion
 
         #region Method
-        private void OnInit()
+        private void OnGeneralInit()
         {
             Task.Run(async () =>
             {
@@ -64,9 +87,174 @@ namespace CandySugar.WallPaper.ViewModels
 
                         };
                     }).RunsAsync()).SearchResult;
-                    Total = result.Total;
-                    ElementResult = new ObservableCollection<WallhavSearchElementResult>(result.ElementResult);
-                    BindingOperations.EnableCollectionSynchronization(ElementResult, LockObject);
+                    GeneralTotal = result.Total;
+                    GeneralResult = new ObservableCollection<WallhavSearchElementResult>(result.ElementResult);
+                    BindingOperations.EnableCollectionSynchronization(GeneralResult, LockObject);
+                }
+                catch (Exception ex)
+                {
+                    Log.Logger.Error(ex, "");
+                    ErrorNotify();
+                }
+            });
+        }
+        private void OnAnimeInit()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    var result = (await WallhavFactory.Wall(opt =>
+                    {
+                        opt.RequestParam = new Input
+                        {
+
+                            CacheSpan = ComponentBinding.OptionObjectModels.Cache,
+                            ImplType = SdkImpl.Rest,
+                            WallhavType = WallhavEnum.Search,
+                            Search = new WallhavSearch
+                            {
+                                KeyWord = this.Keyword,
+                                PageIndex = 1,
+                                QueryType = QueryEnum.Anime
+                            }
+
+                        };
+                    }).RunsAsync()).SearchResult;
+                    AnimeTotal = result.Total;
+                    AnimeResult = new ObservableCollection<WallhavSearchElementResult>(result.ElementResult);
+                    BindingOperations.EnableCollectionSynchronization(AnimeResult, LockObject);
+                }
+                catch (Exception ex)
+                {
+                    Log.Logger.Error(ex, "");
+                    ErrorNotify();
+                }
+            });
+        }
+        private void OnPeopleInit()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    var result = (await WallhavFactory.Wall(opt =>
+                    {
+                        opt.RequestParam = new Input
+                        {
+
+                            CacheSpan = ComponentBinding.OptionObjectModels.Cache,
+                            ImplType = SdkImpl.Rest,
+                            WallhavType = WallhavEnum.Search,
+                            Search = new WallhavSearch
+                            {
+                                KeyWord = this.Keyword,
+                                PageIndex = 1,
+                                QueryType = QueryEnum.People
+                            }
+
+                        };
+                    }).RunsAsync()).SearchResult;
+                    PeopleTotal = result.Total;
+                    PeopleResult = new ObservableCollection<WallhavSearchElementResult>(result.ElementResult);
+                    BindingOperations.EnableCollectionSynchronization(PeopleResult, LockObject);
+                }
+                catch (Exception ex)
+                {
+                    Log.Logger.Error(ex, "");
+                    ErrorNotify();
+                }
+            });
+        }
+
+        private void OnLoadMoreGeneralInit()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    var result = (await WallhavFactory.Wall(opt =>
+                    {
+                        opt.RequestParam = new Input
+                        {
+
+                            CacheSpan = ComponentBinding.OptionObjectModels.Cache,
+                            ImplType = SdkImpl.Rest,
+                            WallhavType = WallhavEnum.Search,
+                            Search = new WallhavSearch
+                            {
+                                KeyWord = this.Keyword,
+                                PageIndex = this.GeneralPageIndex,
+                                QueryType = QueryEnum.General
+                            }
+
+                        };
+                    }).RunsAsync()).SearchResult;
+                    Application.Current.Dispatcher.Invoke(() => result.ElementResult.ForEach(GeneralResult.Add));
+                }
+                catch (Exception ex)
+                {
+                    Log.Logger.Error(ex, "");
+                    ErrorNotify();
+                }
+            });
+        }
+        private void OnLoadMoreAnimeInit()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    var result = (await WallhavFactory.Wall(opt =>
+                    {
+                        opt.RequestParam = new Input
+                        {
+
+                            CacheSpan = ComponentBinding.OptionObjectModels.Cache,
+                            ImplType = SdkImpl.Rest,
+                            WallhavType = WallhavEnum.Search,
+                            Search = new WallhavSearch
+                            {
+                                KeyWord = this.Keyword,
+                                PageIndex = this.AnimePageIndex,
+                                QueryType = QueryEnum.Anime
+                            }
+
+                        };
+                    }).RunsAsync()).SearchResult;
+                    Application.Current.Dispatcher.Invoke(() => result.ElementResult.ForEach(AnimeResult.Add));
+                }
+                catch (Exception ex)
+                {
+                    Log.Logger.Error(ex, "");
+                    ErrorNotify();
+                }
+            });
+        }
+        private void OnLoadMorePeopleInit()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    var result = (await WallhavFactory.Wall(opt =>
+                    {
+                        opt.RequestParam = new Input
+                        {
+
+                            CacheSpan = ComponentBinding.OptionObjectModels.Cache,
+                            ImplType = SdkImpl.Rest,
+                            WallhavType = WallhavEnum.Search,
+                            Search = new WallhavSearch
+                            {
+                                KeyWord = this.Keyword,
+                                PageIndex = this.PeoplePageIndex,
+                                QueryType = QueryEnum.People
+                            }
+
+                        };
+                    }).RunsAsync()).SearchResult;
+                    Application.Current.Dispatcher.Invoke(() => result.ElementResult.ForEach(PeopleResult.Add));
                 }
                 catch (Exception ex)
                 {
@@ -91,8 +279,43 @@ namespace CandySugar.WallPaper.ViewModels
         /// </summary>
         public RelayCommand<ScrollChangedEventArgs> ScrollCommand => new((obj) =>
         {
-           
+            if (ChangeType == 1)
+            {
+                if (GeneralPageIndex <= GeneralTotal && obj.VerticalOffset + obj.ViewportHeight == obj.ExtentHeight && obj.VerticalChange > 0)
+                {
+                    GeneralPageIndex += 1;
+                    OnLoadMoreGeneralInit();
+                }
+            }
+            if (ChangeType == 2)
+            {
+                if (AnimePageIndex <= AnimeTotal && obj.VerticalOffset + obj.ViewportHeight == obj.ExtentHeight && obj.VerticalChange > 0)
+                {
+                    AnimePageIndex += 1;
+                    OnLoadMoreAnimeInit();
+                }
+            }
+            if (ChangeType == 3)
+            {
+                if (PeoplePageIndex <= PeopleTotal && obj.VerticalOffset + obj.ViewportHeight == obj.ExtentHeight && obj.VerticalChange > 0)
+                {
+                    PeoplePageIndex += 1;
+                    OnLoadMorePeopleInit();
+                }
+            }
         });
+
+        public void ChangeCommand(int type)
+        {
+            ChangeType = type;
+            if (ChangeType == 1 && GeneralResult == null)
+                OnGeneralInit();
+            if (ChangeType == 2 && AnimeResult == null)
+                OnAnimeInit();
+            if (ChangeType == 3 && PeopleResult == null)
+                OnPeopleInit();
+
+        }
         #endregion
 
         #region ExternalCalls
@@ -103,7 +326,13 @@ namespace CandySugar.WallPaper.ViewModels
         private void SearchHandler(string keyword)
         {
             this.Keyword = keyword;
-            OnInit();
+            GeneralPageIndex = AnimePageIndex = PeoplePageIndex = 1;
+            if (ChangeType == 1)
+                OnGeneralInit();
+            if (ChangeType == 2)
+                OnAnimeInit();
+            if (ChangeType == 3)
+                OnPeopleInit();
         }
         #endregion
     }
