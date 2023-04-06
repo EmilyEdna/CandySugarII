@@ -14,6 +14,7 @@ using Sdk.Component.Wallhav.sdk.ViewModel.Response;
 using System.Collections.ObjectModel;
 using System.Windows.Data;
 using CommunityToolkit.Mvvm.Input;
+using CandySugar.Com.Library.FileDown;
 
 namespace CandySugar.WallPaper.ViewModels
 {
@@ -24,6 +25,12 @@ namespace CandySugar.WallPaper.ViewModels
         {
             GenericDelegate.SearchAction = new(SearchHandler);
             OnGeneralInit();
+            var LocalDATA = DownUtil.ReadFile<List<WallhavSearchElementResult>>("Wallhaven", FileTypes.Dat, "WallPaper");
+            CollectResult = new ObservableCollection<WallhavSearchElementResult>();
+            if (LocalDATA != null)
+            {
+                LocalDATA.ForEach(CollectResult.Add);
+            }
         }
 
         #region Field
@@ -60,6 +67,12 @@ namespace CandySugar.WallPaper.ViewModels
         {
             get => _PeopleResult;
             set => SetAndNotify(ref _PeopleResult, value);
+        }
+        private ObservableCollection<WallhavSearchElementResult> _CollectResult;
+        public ObservableCollection<WallhavSearchElementResult> CollectResult
+        {
+            get => _CollectResult;
+            set => SetAndNotify(ref _CollectResult, value);
         }
         #endregion
 
@@ -315,6 +328,12 @@ namespace CandySugar.WallPaper.ViewModels
             if (ChangeType == 3 && PeopleResult == null)
                 OnPeopleInit();
 
+        }
+
+        public void CollectCommand(WallhavSearchElementResult element)
+        {
+            CollectResult.Add(element);
+            CollectResult.ToList().DeleteAndCreate("Wallhaven", FileTypes.Dat, "WallPaper");
         }
         #endregion
 

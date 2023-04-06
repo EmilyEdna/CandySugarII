@@ -97,6 +97,9 @@
                                         <Button
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
+                                            s:View.ActionTarget="{Binding DataContext, ElementName=HavCtrl}"
+                                            Command="{s:Action CollectCommand}"
+                                            CommandParameter="{Binding .}"
                                             Content="{x:Static lib:FontIcon.Star}"
                                             Cursor="Hand"
                                             FontSize="17"
@@ -163,6 +166,9 @@
                                         <Button
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
+                                            s:View.ActionTarget="{Binding DataContext, ElementName=HavCtrl}"
+                                            Command="{s:Action CollectCommand}"
+                                            CommandParameter="{Binding .}"
                                             Content="{x:Static lib:FontIcon.Star}"
                                             Cursor="Hand"
                                             FontSize="17"
@@ -229,6 +235,9 @@
                                         <Button
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
+                                            s:View.ActionTarget="{Binding DataContext, ElementName=HavCtrl}"
+                                            Command="{s:Action CollectCommand}"
+                                            CommandParameter="{Binding .}"
                                             Content="{x:Static lib:FontIcon.Star}"
                                             Cursor="Hand"
                                             FontSize="17"
