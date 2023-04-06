@@ -9,6 +9,7 @@
     xmlns:s="https://github.com/canton7/Stylet"
     xmlns:uc="http://ctrl.candy.com"
     xmlns:vm="clr-namespace:CandySugar.WallPaper.ViewModels"
+    x:Name="MainCtrl"
     d:DataContext="{d:DesignInstance vm:MainViewModel}"
     d:DesignHeight="700"
     d:DesignWidth="1200"
@@ -56,7 +57,7 @@
                 </Rectangle>
                 <ListBox
                     Margin="2"
-                    ItemsSource="{Binding MenuIndex}"
+                    ItemsSource="{Binding MenuIndex, Mode=TwoWay}"
                     Style="{DynamicResource CandyListBoxStyle}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -64,7 +65,7 @@
                                 Width="80"
                                 Height="25"
                                 Margin="1.5"
-                                s:View.ActionTarget="{Binding DataContext, ElementName=IndexViewCtrl}"
+                                s:View.ActionTarget="{Binding DataContext, ElementName=MainCtrl}"
                                 BorderThickness="0"
                                 ButtonType="Primary"
                                 Command="{s:Action ActiveCommand}"

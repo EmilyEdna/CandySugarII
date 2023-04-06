@@ -19,5 +19,9 @@ namespace CandySugar.Com.Options.ComponentGeneric
         /// 搜索通知委托
         /// </summary>
         public static Action<string> SearchAction { get; set; }
+        /// <summary>
+        /// 操作委托
+        /// </summary>
+        public static Action<object> HandleAction { get; set; }
     }
 }

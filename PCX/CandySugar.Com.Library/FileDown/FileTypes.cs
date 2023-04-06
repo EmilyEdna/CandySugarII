@@ -13,5 +13,6 @@ namespace CandySugar.Com.Library.FileDown
         public const string Mp4 = "mp4";
         public const string Dat = "dat";
         public const string Json = "json";
+        public const string Png = "png";
     }
 }

@@ -1,36 +1,19 @@
-﻿using CandySugar.Com.Controls.UIExtenControls;
-using CandySugar.Com.Library;
-using CandySugar.Com.Options.ComponentGeneric;
-using Sdk.Component.Wallhav.sdk.ViewModel;
-using Sdk.Component.Wallhav.sdk.ViewModel.Enums;
-using Sdk.Component.Wallhav.sdk;
-using Serilog;
-using System.Windows;
-using XExten.Advance.LinqFramework;
-using CandySugar.Com.Options.ComponentObject;
-using Sdk.Component.Plugins;
-using Sdk.Component.Wallhav.sdk.ViewModel.Request;
-using Sdk.Component.Wallhav.sdk.ViewModel.Response;
-using System.Collections.ObjectModel;
-using System.Windows.Data;
-using CommunityToolkit.Mvvm.Input;
-using CandySugar.Com.Library.FileDown;
-
-namespace CandySugar.WallPaper.ViewModels
+﻿namespace CandySugar.WallPaper.ViewModels
 {
     public class WallhavViewModel : PropertyChangedBase
     {
         private object LockObject = new object();
+        private List<string> Builder;
         public WallhavViewModel()
         {
             GenericDelegate.SearchAction = new(SearchHandler);
-            OnGeneralInit();
             var LocalDATA = DownUtil.ReadFile<List<WallhavSearchElementResult>>("Wallhaven", FileTypes.Dat, "WallPaper");
             CollectResult = new ObservableCollection<WallhavSearchElementResult>();
             if (LocalDATA != null)
             {
                 LocalDATA.ForEach(CollectResult.Add);
             }
+            Builder = new List<string>();
         }
 
         #region Field
@@ -179,7 +162,6 @@ namespace CandySugar.WallPaper.ViewModels
                 }
             });
         }
-
         private void OnLoadMoreGeneralInit()
         {
             Task.Run(async () =>
@@ -283,6 +265,20 @@ namespace CandySugar.WallPaper.ViewModels
                 new ScreenNotifyView(Info.IsNullOrEmpty() ? CommonHelper.ComponentErrorInformation : Info).Show();
             });
         }
+        private void InitDown(string id)
+        {
+            var Img = CollectResult.FirstOrDefault(t => t.Id == id);
+            Task.Run(async () =>
+            {
+                var fileBytes = await (new HttpClient().GetByteArrayAsync(Img.Original));
+                fileBytes.FileCreate(id, FileTypes.Png, "WallPaper",(catalog, fileName) =>
+                {
+                    new ScreenDownNofityView(CommonHelper.DownloadFinishInformation, catalog).Show();
+                    CollectResult.ToList().DeleteAndCreate("Wallhaven", FileTypes.Dat, "WallPaper");
+                });
+            });
+
+        }
         #endregion
 
         #region Command
@@ -327,13 +323,35 @@ namespace CandySugar.WallPaper.ViewModels
                 OnAnimeInit();
             if (ChangeType == 3 && PeopleResult == null)
                 OnPeopleInit();
-
         }
 
         public void CollectCommand(WallhavSearchElementResult element)
         {
             CollectResult.Add(element);
             CollectResult.ToList().DeleteAndCreate("Wallhaven", FileTypes.Dat, "WallPaper");
+        }
+
+        public void SaveCommand(string id)
+        {
+            InitDown(id);
+        }
+
+        public void TrashCommand(string id)
+        {
+            SyncStatic.DeleteFile(DownUtil.FilePath(id, FileTypes.Png, "WallPaper"));
+            CollectResult.Remove(CollectResult.FirstOrDefault(t => t.Id == id));
+            CollectResult.ToList().DeleteAndCreate("Wallhaven", FileTypes.Dat, "WallPaper");
+        }
+
+        public void CheckCommand(string id)
+        {
+            Builder.Add(id);
+            GenericDelegate.HandleAction?.Invoke(Builder);
+        }
+        public void UnCheckCommand(string id)
+        {
+            Builder.Remove(id);
+            GenericDelegate.HandleAction?.Invoke(Builder);
         }
         #endregion
 

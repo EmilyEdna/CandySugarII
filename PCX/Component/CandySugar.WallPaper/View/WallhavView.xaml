@@ -279,7 +279,7 @@
                                 Opacity="1" />
                         </Rectangle.Effect>
                     </Rectangle>
-                    <ListBox ItemsSource="{Binding AnimeResult, IsAsync=True}" Style="{DynamicResource CandyListBoxStyle}">
+                    <ListBox ItemsSource="{Binding CollectResult, IsAsync=True}" Style="{DynamicResource CandyListBoxStyle}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <UniformGrid Columns="3" />
@@ -298,10 +298,43 @@
                                             uc:ImageAttach.RenderWidth="320"
                                             uc:ImageAttach.SourceAsync="{Binding Preview}"
                                             Tag="{x:Static lib:EDownload.Wallhav}" />
-                                        <Button
+                                        <CheckBox
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
+                                            Background="Transparent">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Checked">
+                                                    <i:InvokeCommandAction
+                                                        s:View.ActionTarget="{Binding DataContext, ElementName=HavCtrl}"
+                                                        Command="{s:Action CheckCommand}"
+                                                        CommandParameter="{Binding Id}" />
+                                                </i:EventTrigger>
+                                                <i:EventTrigger EventName="Unchecked">
+                                                    <i:InvokeCommandAction
+                                                        s:View.ActionTarget="{Binding DataContext, ElementName=HavCtrl}"
+                                                        Command="{s:Action UnCheckCommand}"
+                                                        CommandParameter="{Binding Id}" />
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </CheckBox>
+                                        <Button
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top"
+                                            s:View.ActionTarget="{Binding DataContext, ElementName=HavCtrl}"
+                                            Command="{s:Action TrashCommand}"
+                                            CommandParameter="{Binding Id}"
                                             Content="{x:Static lib:FontIcon.TrashCan}"
+                                            Cursor="Hand"
+                                            FontSize="17"
+                                            Foreground="#ffe4c4"
+                                            Style="{DynamicResource CandyFontButtonStyle}" />
+                                        <Button
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Bottom"
+                                            s:View.ActionTarget="{Binding DataContext, ElementName=HavCtrl}"
+                                            Command="{s:Action SaveCommand}"
+                                            CommandParameter="{Binding Id}"
+                                            Content="{x:Static lib:FontIcon.CloudArrowDown}"
                                             Cursor="Hand"
                                             FontSize="17"
                                             Foreground="#ffe4c4"
