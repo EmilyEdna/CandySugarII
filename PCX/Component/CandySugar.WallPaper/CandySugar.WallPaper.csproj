@@ -25,4 +25,10 @@
 		</Reference>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="View\WallchanView.xaml.cs">
+	    <SubType>Code</SubType>
+	  </Compile>
+	</ItemGroup>
+
 </Project>

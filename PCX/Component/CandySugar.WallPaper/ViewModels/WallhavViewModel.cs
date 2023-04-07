@@ -1,4 +1,6 @@
-﻿namespace CandySugar.WallPaper.ViewModels
+﻿using Sdk.Component.Wallhav.sdk.ViewModel;
+
+namespace CandySugar.WallPaper.ViewModels
 {
     public class WallhavViewModel : PropertyChangedBase
     {

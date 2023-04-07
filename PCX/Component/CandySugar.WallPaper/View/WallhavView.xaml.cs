@@ -44,12 +44,9 @@ namespace CandySugar.WallPaper.View
             AnimeX4.Completed += CompletedEvent;
             WeakReferenceMessenger.Default.Register<MessageNotify>(this, (recip, notify) =>
             {
-                if (notify.ControlType == 2)
-                {
-                    var param = (Tuple<double, double>)notify.ControlParam;
-                    this.Width = param.Item1;
-                    this.Height = param.Item2;
-                }
+                var param = (Tuple<double, double>)notify.ControlParam;
+                this.Width = param.Item1;
+                this.Height = param.Item2;
             });
         }
 

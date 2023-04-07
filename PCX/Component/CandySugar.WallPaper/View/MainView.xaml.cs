@@ -23,6 +23,7 @@ namespace CandySugar.WallPaper.View
     /// </summary>
     public partial class MainView : UserControl
     {
+
         public MainView()
         {
             InitializeComponent();
@@ -32,11 +33,7 @@ namespace CandySugar.WallPaper.View
                 Canvas.SetLeft(FloatBtn, width - 100);
                 this.Width = width;
                 this.Height = height - 35 <= 0 ? 0 : height - 35;
-                WeakReferenceMessenger.Default.Send(new MessageNotify
-                {
-                    ControlType = 2,
-                    ControlParam =Tuple.Create(this.Width, this.Height)
-                });
+                ((MainViewModel)this.DataContext).NotifyScreen(this.Width, this.Height);
             });
         }
 

@@ -30,13 +30,26 @@ namespace CandySugar.Com.Library.DownQueue
                         return await Light(route);
                     case EDownload.Wallhav:
                         return await WallHav(route);
+                    case EDownload.Chan:
+                        return await WallChan(route);
                     default:
                         break;
                 }
             }
             return null;
         }
-
+        private static async Task<byte[]> WallChan(string route)
+        {
+            var key = route.ToMd5();
+            var cache = await Caches.RunTimeCacheGetAsync<byte[]>(key);
+            if (cache != null)
+                return cache;
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Host", "konachan.com");
+            var res = await client.GetByteArrayAsync(route);
+            await Caches.RunTimeCacheSetAsync(key, res);
+            return res;
+        }
         private static async Task<byte[]> WallHav(string route)
         {
             var key = route.ToMd5();

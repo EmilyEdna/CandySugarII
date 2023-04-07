@@ -1,8 +1,11 @@
-﻿namespace CandySugar.WallPaper.ViewModels
+﻿using CommunityToolkit.Mvvm.Messaging;
+
+namespace CandySugar.WallPaper.ViewModels
 {
     public class MainViewModel : PropertyChangedBase
     {
         private List<WallhavSearchElementResult> WallhavBuilder;
+        private List<ImageElementResult> KonachanBuilder;
         private List<string> RealLocal;
         private List<MenuInfo> Default = new List<MenuInfo> {
             new MenuInfo { Key = 3, Value = "下载选中" },
@@ -33,8 +36,22 @@
                             Default.ForEach(item => MenuIndex.Add(item));
                     }
                 }
+                if (obj is List<ImageElementResult> chan)
+                {
+                    KonachanBuilder = chan;
+                    if (KonachanBuilder.Count >= 1)
+                    {
+                        if (!MenuIndex.Any(t => t.Key == 3 || t.Key == 4 || t.Key == 5))
+                            Default.ForEach(item => MenuIndex.Add(item));
+                    }
+                }
             });
         }
+
+        #region Field
+        private double Width;
+        private double Height;
+        #endregion
 
         #region Property
         private Control _ComponentControl;
@@ -57,6 +74,18 @@
         #region Command
         public void ActiveCommand(int key)
         {
+            if (key == 1)
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    ComponentControl = Module.IocModule.Resolve<WallhavView>();
+                    NotifyScreen();
+                });
+            if (key == 2)
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    ComponentControl = Module.IocModule.Resolve<WallchanView>();
+                    NotifyScreen();
+                });
             if (key == 3)
                 DownSelectPicture();
             if (key == 4)
@@ -93,6 +122,30 @@
                     });
                 }
             }
+            if (KonachanBuilder != null)
+            {
+                RealLocal = new List<string>();
+                //判断本地文件是否存在
+                KonachanBuilder.ForEach(item =>
+                {
+                    var fileName = DownUtil.FilePath(item.Id.AsString(), FileTypes.Png, "WallPaper");
+                    if (File.Exists(fileName)) RealLocal.Add(fileName);
+                });
+                //没有被删除真实存在的文件
+                if (RealLocal.Count > 0)
+                {
+                    //异步制作MP4
+                    Task.Run(async () =>
+                    {
+                        var catalog = Path.Combine(CommonHelper.DownloadPath, "WallPaper");
+                        var res = await RealLocal.ImageToVideo(catalog);
+                        if (res) Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            new ScreenDownNofityView(CommonHelper.DownloadFinishInformation, catalog).Show();
+                        });
+                    });
+                }
+            }
         }
         private void DownSelectPicture()
         {
@@ -111,6 +164,21 @@
                 });
                 WallhavBuilder.DeleteAndCreate("Wallhaven", FileTypes.Dat, "WallPaper");
             }
+            if (KonachanBuilder != null && KonachanBuilder.Count > 0)
+            {
+                Task.Run(() =>
+                {
+                    KonachanBuilder.ForEach(async item =>
+                    {
+                        var fileBytes = await (new HttpClient().GetByteArrayAsync(item.OriginalPng));
+                        fileBytes.FileCreate(item.Id.AsString(), FileTypes.Png, "WallPaper", (catalog, fileName) =>
+                        {
+                            new ScreenDownNofityView(CommonHelper.DownloadFinishInformation, catalog).Show();
+                        });
+                    });
+                });
+                KonachanBuilder.DeleteAndCreate("Konachan", FileTypes.Dat, "WallPaper");
+            }
         }
         private void RemoveSelectPicture()
         {
@@ -128,6 +196,33 @@
                     Default.ForEach(item => MenuIndex.Remove(item));
                 WallhavBuilder.DeleteAndCreate("Wallhaven", FileTypes.Dat, "WallPaper");
             }
+            if (KonachanBuilder != null && KonachanBuilder.Count > 0)
+            {
+                KonachanBuilder.ForEach(item =>
+                {
+                    SyncStatic.DeleteFile(DownUtil.FilePath(item.Id.AsString(), FileTypes.Png, "WallPaper"));
+                    if (ComponentControl.DataContext is WallchanViewModel ViewModel)
+                    {
+                        ViewModel.CollectResult.Remove(item);
+                    }
+                });
+                if (WallhavBuilder.Count <= 0)
+                    Default.ForEach(item => MenuIndex.Remove(item));
+                KonachanBuilder.DeleteAndCreate("Konachan", FileTypes.Dat, "WallPaper");
+            }
+        }
+        public void NotifyScreen(double width, double height)
+        {
+            this.Width = width;
+            this.Height = height;
+            NotifyScreen();
+        }
+        private void NotifyScreen()
+        {
+            WeakReferenceMessenger.Default.Send(new MessageNotify
+            {
+                ControlParam = Tuple.Create(this.Width, this.Height)
+            });
         }
         #endregion
     }
