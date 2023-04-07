@@ -229,7 +229,6 @@ namespace CandySugar.WallPaper.ViewModels
                         });
                     });
                 });
-                WallhavBuilder.DeleteAndCreate("Wallhaven", FileTypes.Dat, "WallPaper");
             }
             if (KonachanBuilder != null && KonachanBuilder.Count > 0)
             {
@@ -244,7 +243,6 @@ namespace CandySugar.WallPaper.ViewModels
                         });
                     });
                 });
-                KonachanBuilder.DeleteAndCreate("Konachan", FileTypes.Dat, "WallPaper");
             }
         }
         private void RemoveSelectPicture()
