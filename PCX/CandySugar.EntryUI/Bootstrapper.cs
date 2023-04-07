@@ -39,14 +39,18 @@ namespace CandySugar.EntryUI
             });
             HttpEvent.HttpActionEvent = new Action<HttpClient, Exception>((client, ex) =>
             {
-
+                Log.Logger.Error(ex, "HTTP全局请求异常捕获");
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    new ScreenNotifyView($"HTTP网络内部异常，请看日志!").Show();
+                });
             });
             HttpEvent.RestActionEvent = new Action<RestClient, Exception>((client, ex) =>
             {
-                Log.Logger.Error(ex,"");
+                Log.Logger.Error(ex,"REST全局请求异常捕获");
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    new ScreenNotifyView($"网络内部异常，请看日志!").Show();
+                    new ScreenNotifyView($"REST网络内部异常，请看日志!").Show();
                 });
             });
         }
