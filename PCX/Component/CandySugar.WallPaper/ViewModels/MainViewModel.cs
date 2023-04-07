@@ -109,7 +109,7 @@ namespace CandySugar.WallPaper.ViewModels
                 //判断本地文件是否存在
                 WallhavBuilder.ForEach(item =>
                 {
-                    var fileName = DownUtil.FilePath(item.Id, FileTypes.Png, "WallPaper");
+                    var fileName = DownUtil.FilePath(item.Id, FileTypes.Jpg, "WallPaper");
                     if (File.Exists(fileName)) RealLocal.Add(fileName);
                 });
                 //没有被删除真实存在的文件
@@ -133,7 +133,7 @@ namespace CandySugar.WallPaper.ViewModels
                 //判断本地文件是否存在
                 KonachanBuilder.ForEach(item =>
                 {
-                    var fileName = DownUtil.FilePath(item.Id.AsString(), FileTypes.Png, "WallPaper");
+                    var fileName = DownUtil.FilePath(item.Id.AsString(), FileTypes.Jpg, "WallPaper");
                     if (File.Exists(fileName)) RealLocal.Add(fileName);
                 });
                 //没有被删除真实存在的文件
@@ -171,7 +171,7 @@ namespace CandySugar.WallPaper.ViewModels
                 //判断本地文件是否存在
                 WallhavBuilder.ForEach(item =>
                 {
-                    var fileName = DownUtil.FilePath(item.Id, FileTypes.Png, "WallPaper");
+                    var fileName = DownUtil.FilePath(item.Id, FileTypes.Jpg, "WallPaper");
                     if (File.Exists(fileName)) RealLocal.Add(fileName);
                 });
                 //没有被删除真实存在的文件
@@ -195,7 +195,7 @@ namespace CandySugar.WallPaper.ViewModels
                 //判断本地文件是否存在
                 KonachanBuilder.ForEach(item =>
                 {
-                    var fileName = DownUtil.FilePath(item.Id.AsString(), FileTypes.Png, "WallPaper");
+                    var fileName = DownUtil.FilePath(item.Id.AsString(), FileTypes.Jpg, "WallPaper");
                     if (File.Exists(fileName)) RealLocal.Add(fileName);
                 });
                 //没有被删除真实存在的文件
@@ -223,7 +223,7 @@ namespace CandySugar.WallPaper.ViewModels
                     WallhavBuilder.ForEach(async item =>
                     {
                         var fileBytes = await (new HttpClient().GetByteArrayAsync(item.Original));
-                        fileBytes.FileCreate(item.Id, FileTypes.Png, "WallPaper", (catalog, fileName) =>
+                        fileBytes.FileCreate(item.Id, FileTypes.Jpg, "WallPaper", (catalog, fileName) =>
                         {
                             new ScreenDownNofityView(CommonHelper.DownloadFinishInformation, catalog).Show();
                         });
@@ -238,7 +238,7 @@ namespace CandySugar.WallPaper.ViewModels
                     KonachanBuilder.ForEach(async item =>
                     {
                         var fileBytes = await (new HttpClient().GetByteArrayAsync(item.OriginalPng));
-                        fileBytes.FileCreate(item.Id.AsString(), FileTypes.Png, "WallPaper", (catalog, fileName) =>
+                        fileBytes.FileCreate(item.Id.AsString(), FileTypes.Jpg, "WallPaper", (catalog, fileName) =>
                         {
                             new ScreenDownNofityView(CommonHelper.DownloadFinishInformation, catalog).Show();
                         });
@@ -253,7 +253,7 @@ namespace CandySugar.WallPaper.ViewModels
             {
                 WallhavBuilder.ForEach(item =>
                 {
-                    SyncStatic.DeleteFile(DownUtil.FilePath(item.Id, FileTypes.Png, "WallPaper"));
+                    SyncStatic.DeleteFile(DownUtil.FilePath(item.Id, FileTypes.Jpg, "WallPaper"));
                     if (ComponentControl.DataContext is WallhavViewModel ViewModel)
                     {
                         ViewModel.CollectResult.Remove(item);
@@ -267,7 +267,7 @@ namespace CandySugar.WallPaper.ViewModels
             {
                 KonachanBuilder.ForEach(item =>
                 {
-                    SyncStatic.DeleteFile(DownUtil.FilePath(item.Id.AsString(), FileTypes.Png, "WallPaper"));
+                    SyncStatic.DeleteFile(DownUtil.FilePath(item.Id.AsString(), FileTypes.Jpg, "WallPaper"));
                     if (ComponentControl.DataContext is WallchanViewModel ViewModel)
                     {
                         ViewModel.CollectResult.Remove(item);
