@@ -49,7 +49,7 @@ namespace CandySugar.Com.Library.Audios
         /// <summary>
         /// 音频读取
         /// </summary>
-        private AudioFileReader AudioReader;
+        public AudioFileReader AudioReader;
         /// <summary>
         /// 每个单声道数据样本的位数，例如 16位，24位，32位
         /// </summary>
@@ -273,7 +273,7 @@ namespace CandySugar.Com.Library.Audios
             }
         }
 
-        private void Dispose()
+        public void Dispose()
         {
             AudioInfo = null;
             if (PlayTimer != null)

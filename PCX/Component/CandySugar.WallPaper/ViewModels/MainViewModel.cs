@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿using CandySugar.Com.Library.Audios;
+using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Win32;
 
 namespace CandySugar.WallPaper.ViewModels
 {
@@ -10,7 +12,8 @@ namespace CandySugar.WallPaper.ViewModels
         private List<MenuInfo> Default = new List<MenuInfo> {
             new MenuInfo { Key = 3, Value = "下载选中" },
             new MenuInfo { Key = 4, Value = "删除选中" },
-            new MenuInfo { Key = 5, Value = "制作相册" }
+            new MenuInfo { Key = 5, Value = "无声相册" },
+            new MenuInfo { Key = 6, Value = "音乐相册" }
         };
         public MainViewModel()
         {
@@ -92,6 +95,8 @@ namespace CandySugar.WallPaper.ViewModels
                 RemoveSelectPicture();
             if (key == 5)
                 BuilderVideoPicture();
+            if (key == 6)
+                BuilderVideoAudioPicture();
         }
         #endregion
 
@@ -117,7 +122,7 @@ namespace CandySugar.WallPaper.ViewModels
                         var res = await RealLocal.ImageToVideo(catalog);
                         if (res) Application.Current.Dispatcher.Invoke(() =>
                         {
-                            new ScreenDownNofityView(CommonHelper.DownloadFinishInformation, catalog).Show();
+                            new ScreenDownNofityView(CommonHelper.ConvertFinishInformation, catalog).Show();
                         });
                     });
                 }
@@ -141,7 +146,69 @@ namespace CandySugar.WallPaper.ViewModels
                         var res = await RealLocal.ImageToVideo(catalog);
                         if (res) Application.Current.Dispatcher.Invoke(() =>
                         {
-                            new ScreenDownNofityView(CommonHelper.DownloadFinishInformation, catalog).Show();
+                            new ScreenDownNofityView(CommonHelper.ConvertFinishInformation, catalog).Show();
+                        });
+                    });
+                }
+            }
+        }
+        private void BuilderVideoAudioPicture()
+        {
+            string AudioName = string.Empty;
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Filter = "音频(*.mp3)|*.mp3"
+            };
+            var res = dialog.ShowDialog();
+            if (res == true)
+                AudioName = dialog.FileName;
+            if (AudioName.IsNullOrEmpty()) return;
+            var Time = AudioFactory.Instance.InitAudio(AudioName).AudioReader.TotalTime.TotalSeconds.ToString("F0");
+            AudioFactory.Instance.Dispose();
+            if (WallhavBuilder != null)
+            {
+                RealLocal = new List<string>();
+                //判断本地文件是否存在
+                WallhavBuilder.ForEach(item =>
+                {
+                    var fileName = DownUtil.FilePath(item.Id, FileTypes.Png, "WallPaper");
+                    if (File.Exists(fileName)) RealLocal.Add(fileName);
+                });
+                //没有被删除真实存在的文件
+                if (RealLocal.Count > 0)
+                {
+                    //异步制作MP4
+                    Task.Run(async () =>
+                    {
+                        var catalog = Path.Combine(CommonHelper.DownloadPath, "WallPaper");
+                        var res = await RealLocal.ImageToVideo(AudioName, Time, catalog);
+                        if (res) Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            new ScreenDownNofityView(CommonHelper.ConvertFinishInformation, catalog).Show();
+                        });
+                    });
+                }
+            }
+            if (KonachanBuilder != null)
+            {
+                RealLocal = new List<string>();
+                //判断本地文件是否存在
+                KonachanBuilder.ForEach(item =>
+                {
+                    var fileName = DownUtil.FilePath(item.Id.AsString(), FileTypes.Png, "WallPaper");
+                    if (File.Exists(fileName)) RealLocal.Add(fileName);
+                });
+                //没有被删除真实存在的文件
+                if (RealLocal.Count > 0)
+                {
+                    //异步制作MP4
+                    Task.Run(async () =>
+                    {
+                        var catalog = Path.Combine(CommonHelper.DownloadPath, "WallPaper");
+                        var res = await RealLocal.ImageToVideo(AudioName, Time, catalog);
+                        if (res) Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            new ScreenDownNofityView(CommonHelper.ConvertFinishInformation, catalog).Show();
                         });
                     });
                 }

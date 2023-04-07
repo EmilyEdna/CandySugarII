@@ -75,7 +75,7 @@ namespace CandySugar.Com.Library.FFMPeg
             //-y 关闭询问
             //-threads 4 多线程
             //-c:v libx264 -pix_fmt yuv420p 解码
-            var args = $"-loop 1 -f image2pipe -framerate 0.3 -threads 5 -y -i \"concat:{string.Join("|", fileName)}\" -i {audioFile} -t {audioTime} -c:v libx264 -pix_fmt yuvj420p -aspect 16:9 -b 5000K -r 60 -s 1920*1080 {Path.Combine(videoPath, $"{Guid.NewGuid()}.{FileTypes.Mp4}")}";
+            var args = $"-loop 1 -f image2pipe -framerate 0.3 -threads 5 -y -i \"concat:{string.Join("|", fileName)}\" -i {audioFile} -ab 320k -acodec libmp3lame -t {audioTime} -c:v libx264 -pix_fmt yuvj420p -aspect 16:9 -b:v 5000K -r 60 -s 1920*1080 {Path.Combine(videoPath, $"{Guid.NewGuid()}.{FileTypes.Mp4}")}";
             var cmd = await Cli.Wrap(CommonHelper.FFMPEG)
                 .WithArguments(args)
                      .WithStandardErrorPipe(PipeTarget.ToStringBuilder(Info))
