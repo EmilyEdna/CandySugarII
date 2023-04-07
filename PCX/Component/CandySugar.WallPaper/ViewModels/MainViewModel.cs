@@ -2,8 +2,13 @@
 {
     public class MainViewModel : PropertyChangedBase
     {
-        private List<string> Builder;
+        private List<WallhavSearchElementResult> WallhavBuilder;
         private List<string> RealLocal;
+        private List<MenuInfo> Default = new List<MenuInfo> {
+            new MenuInfo { Key = 3, Value = "下载选中" },
+            new MenuInfo { Key = 4, Value = "删除选中" },
+            new MenuInfo { Key = 5, Value = "制作相册" }
+        };
         public MainViewModel()
         {
             SdkLicense.Register(new SdkLicenseModel
@@ -19,14 +24,15 @@
             };
             GenericDelegate.HandleAction = new(obj =>
             {
-                Builder = ((List<string>)obj);
-                if (Builder.Count >= 1)
+                if (obj is List<WallhavSearchElementResult> wallhav)
                 {
-                    if (!MenuIndex.Any(t => t.Key == 3))
-                        MenuIndex.Add(new MenuInfo { Key = 3, Value = "制作相册" });
+                    WallhavBuilder = wallhav;
+                    if (WallhavBuilder.Count >= 1)
+                    {
+                        if (!MenuIndex.Any(t => t.Key == 3 || t.Key == 4 || t.Key == 5))
+                            Default.ForEach(item => MenuIndex.Add(item));
+                    }
                 }
-                if (Builder.Count <= 0)
-                    MenuIndex.RemoveAt(2);
             });
         }
 
@@ -52,6 +58,10 @@
         public void ActiveCommand(int key)
         {
             if (key == 3)
+                DownSelectPicture();
+            if (key == 4)
+                RemoveSelectPicture();
+            if (key == 5)
                 BuilderVideoPicture();
         }
         #endregion
@@ -59,13 +69,13 @@
         #region Method
         private void BuilderVideoPicture()
         {
-            if (Builder != null)
+            if (WallhavBuilder != null)
             {
                 RealLocal = new List<string>();
                 //判断本地文件是否存在
-                Builder.ForEach(item =>
+                WallhavBuilder.ForEach(item =>
                 {
-                    var fileName = DownUtil.FilePath(item, FileTypes.Png, "WallPaper");
+                    var fileName = DownUtil.FilePath(item.Id, FileTypes.Png, "WallPaper");
                     if (File.Exists(fileName)) RealLocal.Add(fileName);
                 });
                 //没有被删除真实存在的文件
@@ -82,6 +92,41 @@
                         });
                     });
                 }
+            }
+        }
+        private void DownSelectPicture()
+        {
+            if (WallhavBuilder != null && WallhavBuilder.Count > 0)
+            {
+                Task.Run(() =>
+                {
+                    WallhavBuilder.ForEach(async item =>
+                    {
+                        var fileBytes = await (new HttpClient().GetByteArrayAsync(item.Original));
+                        fileBytes.FileCreate(item.Id, FileTypes.Png, "WallPaper", (catalog, fileName) =>
+                        {
+                            new ScreenDownNofityView(CommonHelper.DownloadFinishInformation, catalog).Show();
+                        });
+                    });
+                });
+                WallhavBuilder.DeleteAndCreate("Wallhaven", FileTypes.Dat, "WallPaper");
+            }
+        }
+        private void RemoveSelectPicture()
+        {
+            if (WallhavBuilder != null && WallhavBuilder.Count > 0)
+            {
+                WallhavBuilder.ForEach(item =>
+                {
+                    SyncStatic.DeleteFile(DownUtil.FilePath(item.Id, FileTypes.Png, "WallPaper"));
+                    if (ComponentControl.DataContext is WallhavViewModel ViewModel)
+                    {
+                        ViewModel.CollectResult.Remove(item);
+                    }
+                });
+                if (WallhavBuilder.Count <= 0)
+                    Default.ForEach(item => MenuIndex.Remove(item));
+                WallhavBuilder.DeleteAndCreate("Wallhaven", FileTypes.Dat, "WallPaper");
             }
         }
         #endregion

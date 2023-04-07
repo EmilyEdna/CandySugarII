@@ -47,8 +47,9 @@ namespace CandySugar.Com.Library.FFMPeg
             //-y 关闭询问
             //-threads 4 多线程
             //-c:v libx264 -pix_fmt yuv420p 解码
+            var args = $"-f image2pipe -framerate 0.3 -threads 5 -y -i \"concat:{string.Join("|", fileName)}\" -c:v libx264 -pix_fmt yuvj420p -aspect 16:9 -b:v 5000K -r 60 -s 1920*1080 {Path.Combine(videoPath, $"{Guid.NewGuid()}.{FileTypes.Mp4}")}";
             var cmd = await Cli.Wrap(CommonHelper.FFMPEG)
-                .WithArguments($"-f image2pipe -framerate 0.3 -threads 5 -y -i \"concat:{string.Join("|", fileName)}\" -q 0 -c:v libx264 -pix_fmt yuv420p -aspect 16:9 -b 5000K -r 60 -s 1920*1080 {Path.Combine(videoPath, $"{Guid.NewGuid()}.{FileTypes.Mp4}")}")
+                .WithArguments(args)
                      .WithStandardErrorPipe(PipeTarget.ToStringBuilder(Info))
                      .ExecuteAsync();
             Log.Logger.Information(Info.ToString());
@@ -64,7 +65,9 @@ namespace CandySugar.Com.Library.FFMPeg
         /// <returns></returns>
         public static async Task<bool> ImageToVideo(this List<string> fileName,string audioFile,string audioTime,  string catalog)
         {
+            var videoPath = Path.Combine(catalog, "Video");
             StringBuilder Info = new StringBuilder();
+            if (!Directory.Exists(videoPath)) Directory.CreateDirectory(videoPath);
             //-framerate 0.3 设置帧率(控制每张图片播放时长 相当于每张图片播放3秒)
             //-f image2 1 指定的格式(图片合成视频用以下参数)
             //-r 15 指定输出每秒15帧
@@ -72,8 +75,9 @@ namespace CandySugar.Com.Library.FFMPeg
             //-y 关闭询问
             //-threads 4 多线程
             //-c:v libx264 -pix_fmt yuv420p 解码
+            var args = $"-loop 1 -f image2pipe -framerate 0.3 -threads 5 -y -i \"concat:{string.Join("|", fileName)}\" -i {audioFile} -t {audioTime} -c:v libx264 -pix_fmt yuvj420p -aspect 16:9 -b 5000K -r 60 -s 1920*1080 {Path.Combine(videoPath, $"{Guid.NewGuid()}.{FileTypes.Mp4}")}";
             var cmd = await Cli.Wrap(CommonHelper.FFMPEG)
-                .WithArguments($"-loop 1 -f image2pipe -framerate 0.3 -threads 5 -y -i \"concat:{string.Join("|", fileName)}\" -i {audioFile} -t {audioTime} -q 0 -c:v libx264 -pix_fmt yuv420p -aspect 16:9 -b 5000K -r 60 -s 1920*1080 {Path.Combine(catalog, "Video", $"{Guid.NewGuid()}.{FileTypes.Mp4}")}")
+                .WithArguments(args)
                      .WithStandardErrorPipe(PipeTarget.ToStringBuilder(Info))
                      .ExecuteAsync();
             Log.Logger.Information(Info.ToString());

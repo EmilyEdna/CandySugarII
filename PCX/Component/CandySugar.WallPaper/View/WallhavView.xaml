@@ -307,38 +307,16 @@
                                                     <i:InvokeCommandAction
                                                         s:View.ActionTarget="{Binding DataContext, ElementName=HavCtrl}"
                                                         Command="{s:Action CheckCommand}"
-                                                        CommandParameter="{Binding Id}" />
+                                                        CommandParameter="{Binding .}" />
                                                 </i:EventTrigger>
                                                 <i:EventTrigger EventName="Unchecked">
                                                     <i:InvokeCommandAction
                                                         s:View.ActionTarget="{Binding DataContext, ElementName=HavCtrl}"
                                                         Command="{s:Action UnCheckCommand}"
-                                                        CommandParameter="{Binding Id}" />
+                                                        CommandParameter="{Binding .}" />
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </CheckBox>
-                                        <Button
-                                            HorizontalAlignment="Right"
-                                            VerticalAlignment="Top"
-                                            s:View.ActionTarget="{Binding DataContext, ElementName=HavCtrl}"
-                                            Command="{s:Action TrashCommand}"
-                                            CommandParameter="{Binding Id}"
-                                            Content="{x:Static lib:FontIcon.TrashCan}"
-                                            Cursor="Hand"
-                                            FontSize="17"
-                                            Foreground="#ffe4c4"
-                                            Style="{DynamicResource CandyFontButtonStyle}" />
-                                        <Button
-                                            HorizontalAlignment="Right"
-                                            VerticalAlignment="Bottom"
-                                            s:View.ActionTarget="{Binding DataContext, ElementName=HavCtrl}"
-                                            Command="{s:Action SaveCommand}"
-                                            CommandParameter="{Binding Id}"
-                                            Content="{x:Static lib:FontIcon.CloudArrowDown}"
-                                            Cursor="Hand"
-                                            FontSize="17"
-                                            Foreground="#ffe4c4"
-                                            Style="{DynamicResource CandyFontButtonStyle}" />
                                     </Grid>
                                     <Grid Grid.Row="1">
                                         <TextBlock

@@ -3,7 +3,7 @@
     public class WallhavViewModel : PropertyChangedBase
     {
         private object LockObject = new object();
-        private List<string> Builder;
+        private List<WallhavSearchElementResult> Builder;
         public WallhavViewModel()
         {
             GenericDelegate.SearchAction = new(SearchHandler);
@@ -13,7 +13,7 @@
             {
                 LocalDATA.ForEach(CollectResult.Add);
             }
-            Builder = new List<string>();
+            Builder = new List<WallhavSearchElementResult>();
         }
 
         #region Field
@@ -85,7 +85,6 @@
                     }).RunsAsync()).SearchResult;
                     GeneralTotal = result.Total;
                     GeneralResult = new ObservableCollection<WallhavSearchElementResult>(result.ElementResult);
-                    BindingOperations.EnableCollectionSynchronization(GeneralResult, LockObject);
                 }
                 catch (Exception ex)
                 {
@@ -118,8 +117,7 @@
                         };
                     }).RunsAsync()).SearchResult;
                     AnimeTotal = result.Total;
-                    AnimeResult = new ObservableCollection<WallhavSearchElementResult>(result.ElementResult);
-                    BindingOperations.EnableCollectionSynchronization(AnimeResult, LockObject);
+                    AnimeResult = new ObservableCollection<WallhavSearchElementResult>(result.ElementResult);       
                 }
                 catch (Exception ex)
                 {
@@ -153,7 +151,6 @@
                     }).RunsAsync()).SearchResult;
                     PeopleTotal = result.Total;
                     PeopleResult = new ObservableCollection<WallhavSearchElementResult>(result.ElementResult);
-                    BindingOperations.EnableCollectionSynchronization(PeopleResult, LockObject);
                 }
                 catch (Exception ex)
                 {
@@ -185,6 +182,7 @@
 
                         };
                     }).RunsAsync()).SearchResult;
+                    BindingOperations.EnableCollectionSynchronization(GeneralResult, LockObject);
                     Application.Current.Dispatcher.Invoke(() => result.ElementResult.ForEach(GeneralResult.Add));
                 }
                 catch (Exception ex)
@@ -217,6 +215,7 @@
 
                         };
                     }).RunsAsync()).SearchResult;
+                    BindingOperations.EnableCollectionSynchronization(AnimeResult, LockObject);
                     Application.Current.Dispatcher.Invoke(() => result.ElementResult.ForEach(AnimeResult.Add));
                 }
                 catch (Exception ex)
@@ -249,6 +248,7 @@
 
                         };
                     }).RunsAsync()).SearchResult;
+                    BindingOperations.EnableCollectionSynchronization(PeopleResult, LockObject);
                     Application.Current.Dispatcher.Invoke(() => result.ElementResult.ForEach(PeopleResult.Add));
                 }
                 catch (Exception ex)
@@ -264,20 +264,6 @@
             {
                 new ScreenNotifyView(Info.IsNullOrEmpty() ? CommonHelper.ComponentErrorInformation : Info).Show();
             });
-        }
-        private void InitDown(string id)
-        {
-            var Img = CollectResult.FirstOrDefault(t => t.Id == id);
-            Task.Run(async () =>
-            {
-                var fileBytes = await (new HttpClient().GetByteArrayAsync(Img.Original));
-                fileBytes.FileCreate(id, FileTypes.Png, "WallPaper",(catalog, fileName) =>
-                {
-                    new ScreenDownNofityView(CommonHelper.DownloadFinishInformation, catalog).Show();
-                    CollectResult.ToList().DeleteAndCreate("Wallhaven", FileTypes.Dat, "WallPaper");
-                });
-            });
-
         }
         #endregion
 
@@ -313,7 +299,10 @@
                 }
             }
         });
-
+        /// <summary>
+        /// 切换
+        /// </summary>
+        /// <param name="type"></param>
         public void ChangeCommand(int type)
         {
             ChangeType = type;
@@ -324,33 +313,24 @@
             if (ChangeType == 3 && PeopleResult == null)
                 OnPeopleInit();
         }
-
+        /// <summary>
+        /// 收藏
+        /// </summary>
+        /// <param name="element"></param>
         public void CollectCommand(WallhavSearchElementResult element)
         {
             CollectResult.Add(element);
             CollectResult.ToList().DeleteAndCreate("Wallhaven", FileTypes.Dat, "WallPaper");
         }
 
-        public void SaveCommand(string id)
+        public void CheckCommand(WallhavSearchElementResult wallhav)
         {
-            InitDown(id);
-        }
-
-        public void TrashCommand(string id)
-        {
-            SyncStatic.DeleteFile(DownUtil.FilePath(id, FileTypes.Png, "WallPaper"));
-            CollectResult.Remove(CollectResult.FirstOrDefault(t => t.Id == id));
-            CollectResult.ToList().DeleteAndCreate("Wallhaven", FileTypes.Dat, "WallPaper");
-        }
-
-        public void CheckCommand(string id)
-        {
-            Builder.Add(id);
+            Builder.Add(wallhav);
             GenericDelegate.HandleAction?.Invoke(Builder);
         }
-        public void UnCheckCommand(string id)
+        public void UnCheckCommand(WallhavSearchElementResult wallhav)
         {
-            Builder.Remove(id);
+            Builder.Remove(wallhav);
             GenericDelegate.HandleAction?.Invoke(Builder);
         }
         #endregion
