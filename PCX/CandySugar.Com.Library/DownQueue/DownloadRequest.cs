@@ -1,4 +1,5 @@
 ﻿using CandySugar.Com.Library.Enums;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,9 +45,9 @@ namespace CandySugar.Com.Library.DownQueue
             var cache = await Caches.RunTimeCacheGetAsync<byte[]>(key);
             if (cache != null)
                 return cache;
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Add("Host", "konachan.com");
-            var res = await client.GetByteArrayAsync(route);
+            RestClient client = new RestClient(new RestClientOptions { MaxTimeout = 50000 },
+                opt => opt.Add("Host", "konachan.com"));
+            var res = await client.DownloadDataAsync(new RestRequest(route));
             await Caches.RunTimeCacheSetAsync(key, res);
             return res;
         }
@@ -56,8 +57,8 @@ namespace CandySugar.Com.Library.DownQueue
             var cache = await Caches.RunTimeCacheGetAsync<byte[]>(key);
             if (cache != null)
                 return cache;
-            HttpClient client = new HttpClient();
-            var res = await client.GetByteArrayAsync(route);
+            RestClient client = new RestClient(new RestClientOptions { MaxTimeout = 50000 });
+            var res = await client.DownloadDataAsync(new RestRequest(route));
             await Caches.RunTimeCacheSetAsync(key, res);
             return res;
         }
@@ -68,8 +69,8 @@ namespace CandySugar.Com.Library.DownQueue
             var cache = await Caches.RunTimeCacheGetAsync<byte[]>(key);
             if (cache != null)
                 return cache;
-            HttpClient client = new HttpClient();
-            var res = await client.GetByteArrayAsync(route);
+            RestClient client = new RestClient(new RestClientOptions { MaxTimeout = 50000 });
+            var res = await client.DownloadDataAsync(new RestRequest(route));
             await Caches.RunTimeCacheSetAsync(key, res);
             return res;
         }

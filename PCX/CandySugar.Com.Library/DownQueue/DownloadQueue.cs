@@ -44,7 +44,7 @@ namespace CandySugar.Com.Library.DownQueue
                     {
                         var Bytes = await ResultFunc?.Invoke(Data.Item1, Data.Item2);
                         Data.Item3.Dispatcher
-                            .Invoke(new Action<FrameworkElement, byte[]>((Framework, bytes) => DownEventAction?.Invoke(Framework, bytes)), new object[] { Data.Item3, Bytes });
+                            .BeginInvoke(new Action<FrameworkElement, byte[]>((Framework, bytes) => DownEventAction?.Invoke(Framework, bytes)), new object[] { Data.Item3, Bytes });
                     }
                     catch (Exception ex)
                     {
