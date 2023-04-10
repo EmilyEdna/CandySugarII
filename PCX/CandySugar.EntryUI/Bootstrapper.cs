@@ -2,6 +2,7 @@
 using CandySugar.Com.Library;
 using CandySugar.Com.Library.DLLoader;
 using CandySugar.Com.Library.DownQueue;
+using CandySugar.Com.Library.Lnk;
 using CandySugar.Com.Library.ReadFile;
 using CandySugar.Com.Options.ComponentObject;
 using CandySugar.EntryUI.ViewModels;
@@ -25,6 +26,9 @@ namespace CandySugar.EntryUI
         /// </summary>
         protected override void OnStart()
         {
+            #if RELEASE
+            Shortcut.Instance.CreateLnk("Candy");
+            #endif
             //日志
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
@@ -47,7 +51,7 @@ namespace CandySugar.EntryUI
             });
             HttpEvent.RestActionEvent = new Action<RestClient, Exception>((client, ex) =>
             {
-                Log.Logger.Error(ex,"REST全局请求异常捕获");
+                Log.Logger.Error(ex, "REST全局请求异常捕获");
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     new ScreenNotifyView($"REST网络内部异常，请看日志!").Show();

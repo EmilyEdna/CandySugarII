@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CandySugar.Com.Library.FileDown
+namespace CandySugar.Com.Library.FileWrite
 {
     public class FileTypes
     {

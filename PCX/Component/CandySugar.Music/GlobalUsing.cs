@@ -2,7 +2,7 @@
 global using CandySugar.Com.Library;
 global using CandySugar.Com.Library.Audios;
 global using CandySugar.Com.Library.FFMPeg;
-global using CandySugar.Com.Library.FileDown;
+global using CandySugar.Com.Library.FileWrite;
 global using CandySugar.Com.Options.ComponentGeneric;
 global using CandySugar.Com.Options.ComponentObject;
 global using CandySugar.Music.View;

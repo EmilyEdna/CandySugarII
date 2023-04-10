@@ -9,7 +9,7 @@ using System.Windows;
 using XExten.Advance.LinqFramework;
 using XExten.Advance.StaticFramework;
 
-namespace CandySugar.Com.Library.FileDown
+namespace CandySugar.Com.Library.FileWrite
 {
     public static class DownUtil
     {

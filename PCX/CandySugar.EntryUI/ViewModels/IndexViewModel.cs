@@ -11,6 +11,7 @@ using StyletIoC;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,7 +26,7 @@ namespace CandySugar.EntryUI.ViewModels
         {
             this.Container = Container;
             this.WindowManager = WindowManager;
-            this.Title = "甜糖V1.0.0";
+            this.Title = $"甜糖V{Assembly.GetExecutingAssembly().GetName().Version}";
         }
 
         protected override void OnActivate()
@@ -47,7 +48,7 @@ namespace CandySugar.EntryUI.ViewModels
                     {
                         new ScreenNotifyView(CommonHelper.InternetErrorInformation).Show();
                     });
-                   Thread.Sleep(10000);
+                    Thread.Sleep(10000);
                 }
             }, "InternetWorkCheck", true);
         }
@@ -93,7 +94,7 @@ namespace CandySugar.EntryUI.ViewModels
                 CandyControl = Ctrl;
                 var MainView = (IndexView)View;
                 //将主窗体的长宽变动通知给子控件
-                GenericDelegate.InformationAction?.Invoke(MainView.Width,MainView.Height);
+                GenericDelegate.InformationAction?.Invoke(MainView.Width, MainView.Height);
             });
         }
         /// <summary>

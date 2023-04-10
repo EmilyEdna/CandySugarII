@@ -1,6 +1,6 @@
 ﻿global using CandySugar.Com.Controls.UIExtenControls;
 global using CandySugar.Com.Library;
-global using CandySugar.Com.Library.FileDown;
+global using CandySugar.Com.Library.FileWrite;
 global using CandySugar.Com.Options.ComponentGeneric;
 global using CandySugar.Com.Options.ComponentObject;
 global using CandySugar.WallPaper.View;
