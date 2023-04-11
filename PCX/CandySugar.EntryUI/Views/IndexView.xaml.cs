@@ -1,23 +1,16 @@
-﻿using CandySugar.Com.Library.HotKey;
-using CandySugar.Com.Library.VisualTree;
+﻿using CandySugar.Com.Library.BitConvert;
+using CandySugar.Com.Library.FileWrite;
+using CandySugar.Com.Library.HotKey;
 using CandySugar.Com.Options.ComponentGeneric;
 using CandySugar.Com.Options.NotifyObject;
+using CandySugar.Com.Style;
 using CommunityToolkit.Mvvm.Messaging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace CandySugar.EntryUI.Views
 {
@@ -34,6 +27,7 @@ namespace CandySugar.EntryUI.Views
             _HotKey = new HotKeyAction();
             Loaded += Window_Loaded;
             StateChanged += Window_Stated;
+            Tray.Icon = new System.Drawing.Icon(new MemoryStream(Convert.FromBase64String(ICO.ICOBase64)));
         }
 
         private void Window_Stated(object sender, EventArgs e)

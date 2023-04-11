@@ -46,9 +46,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Window">
                     <Border BorderBrush="#e63995" BorderThickness="1.5">
-                        <Border.Background>
+                        <!--<Border.Background>
                             <ImageBrush ImageSource="/CandySugar.Com.Style;component/Resources/Backgroud.jpg" />
-                        </Border.Background>
+                        </Border.Background>-->
                         <Border.Style>
                             <Style TargetType="Border">
                                 <EventSetter Event="MouseLeftButtonDown" Handler="MoveEvent" />
@@ -726,6 +726,76 @@
                 </Setter>
             </DataTrigger>
         </Style.Triggers>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region ContextMenu-->
+    <Style x:Key="CandyContextMenuStyle" TargetType="ContextMenu">
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Background" Value="#faf0e6" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="hc:MenuAttach.PopupVerticalOffset" Value="-9" />
+        <Setter Property="hc:MenuAttach.PopupHorizontalOffset" Value="10" />
+        <Setter Property="hc:MenuAttach.ItemPadding" Value="0,5" />
+        <Setter Property="hc:BorderElement.CornerRadius" Value="3" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContextMenu">
+                    <Border
+                        MaxHeight="{TemplateBinding MaxHeight}"
+                        Margin="8"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="#e63995"
+                        BorderThickness="1"
+                        CornerRadius="{Binding Path=(hc:BorderElement.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}">
+                        <ScrollViewer Margin="{TemplateBinding Padding}">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="CandyMenuItemStyle" TargetType="MenuItem">
+        <Setter Property="FontFamily" Value="{DynamicResource FontStyle}" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Padding" Value="0,5" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="hc:ScrollViewer.PanningMode" Value="Both" />
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="hc:BorderElement.CornerRadius" Value="3" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="MenuItem">
+                    <Grid>
+                        <Border
+                            x:Name="Bd"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{Binding Path=(hc:BorderElement.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}"
+                            SnapsToDevicePixels="True">
+                            <ContentPresenter
+                                x:Name="ContentPresenter"
+                                Margin="15,8"
+                                ContentSource="Header"
+                                ContentStringFormat="{TemplateBinding HeaderStringFormat}"
+                                ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                RecognizesAccessKey="True"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="#afdfe4" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
     <!--#endregion-->
 </ResourceDictionary>

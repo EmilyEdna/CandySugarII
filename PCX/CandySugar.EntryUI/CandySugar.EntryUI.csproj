@@ -9,7 +9,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Content Include="favicon.ico" />
+	  <Content Include="favicon.ico">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 
 	<ItemGroup>

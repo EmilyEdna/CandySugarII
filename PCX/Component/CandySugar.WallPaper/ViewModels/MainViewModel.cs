@@ -157,7 +157,7 @@ namespace CandySugar.WallPaper.ViewModels
             string AudioName = string.Empty;
             OpenFileDialog dialog = new OpenFileDialog
             {
-                Filter = "音频(*.mp3)|*.mp3"
+                Filter = "音频|*.mp3"
             };
             var res = dialog.ShowDialog();
             if (res == true)

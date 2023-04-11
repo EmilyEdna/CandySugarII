@@ -1,20 +1,27 @@
 ﻿using CandySugar.Com.Controls.UIExtenControls;
 using CandySugar.Com.Library;
+using CandySugar.Com.Library.Audios;
 using CandySugar.Com.Library.DLLoader;
+using CandySugar.Com.Library.Enums;
+using CandySugar.Com.Library.FFMPeg;
 using CandySugar.Com.Library.Internet;
 using CandySugar.Com.Library.Threads;
 using CandySugar.Com.Library.Transfers;
 using CandySugar.Com.Options.ComponentGeneric;
 using CandySugar.EntryUI.Views;
+using Microsoft.Win32;
 using Stylet;
 using StyletIoC;
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using XExten.Advance.LinqFramework;
 
 namespace CandySugar.EntryUI.ViewModels
 {
@@ -107,6 +114,100 @@ namespace CandySugar.EntryUI.ViewModels
             {
                 GenericDelegate.SearchAction?.Invoke(keyword);
             }
+        }
+        /// <summary>
+        /// 托盘功能
+        /// </summary>
+        /// <param name="input"></param>
+        public void SettingCommand(EMenu input)
+        {
+            if (input == EMenu.AudioToHigh) Application.Current.Dispatcher.Invoke(AudioToHighAudio);
+            if (input == EMenu.ImgToVideo) Application.Current.Dispatcher.Invoke(ImageToVideo);
+            if (input == EMenu.ImgToAudio) Application.Current.Dispatcher.Invoke(ImageToAudioVideo);
+        }
+        #endregion
+
+        #region Method
+        /// <summary>
+        /// 临时窗口
+        /// </summary>
+        /// <returns></returns>
+        private Window CreateTempWindow()
+        {
+            Window TempWindow = new Window
+            {
+                Background = Brushes.Transparent,
+                WindowStyle = WindowStyle.None,
+                WindowState = WindowState.Maximized,
+                Visibility = Visibility.Hidden
+            };
+            TempWindow.Show();
+            return TempWindow;
+        }
+        /// <summary>
+        /// 音频转高音质
+        /// </summary>
+        private async void AudioToHighAudio()
+        {
+            string[] FileName = { };
+            var TempWindow = CreateTempWindow();
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Filter = "音频|*.mp3",
+                Multiselect = true
+            };
+            if (dialog.ShowDialog() == true) FileName = dialog.FileNames;
+            TempWindow.Close();
+            if (FileName.Length <= 0) return;
+            var catalog = Path.GetDirectoryName(FileName[0]);
+            for (int Index = 0; Index < FileName.Length; Index++)
+            {
+                await Path.GetFileName(FileName[Index]).Mp3ToHighMP3(catalog);
+            }
+            new ScreenDownNofityView(CommonHelper.DownloadFinishInformation, catalog).Show();
+        }
+        /// <summary>
+        /// 图片转视频
+        /// </summary>
+        private async void ImageToVideo()
+        {
+            string[] FileName = { };
+            var TempWindow = CreateTempWindow();
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Filter = "图片|*.jpg;*.jpeg",
+                Multiselect = true
+            };
+            if (dialog.ShowDialog() == true) FileName = dialog.FileNames;
+            TempWindow.Close();
+            if (FileName.Length <= 0) return;
+            var catalog = Path.GetDirectoryName(FileName[0]);
+            await FileName.ToList().ImageToVideo(catalog);
+            new ScreenDownNofityView(CommonHelper.DownloadFinishInformation, catalog).Show();
+        }
+        /// <summary>
+        /// 图片转视频带音频
+        /// </summary>
+        private async void ImageToAudioVideo()
+        {
+            string[] ImgName = { };
+            string AudioName = string.Empty;
+            var TempWindow = CreateTempWindow();
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Filter = "图片|*.jpg;*.jpeg;",
+                Multiselect = true
+            };
+            if (dialog.ShowDialog() == true) ImgName = dialog.FileNames;
+            if (ImgName.Length <= 0) return;
+            OpenFileDialog dialog2 = new OpenFileDialog { Filter = "音频|*.mp3" };
+            if (dialog2.ShowDialog() == true) AudioName = dialog2.FileName;
+            TempWindow.Close();
+            if (AudioName.IsNullOrEmpty()) return;
+            var catalog = Path.GetDirectoryName(ImgName[0]);
+            var Time = AudioFactory.Instance.InitAudio(AudioName).AudioReader.TotalTime.TotalSeconds.ToString("F0");
+            await ImgName.ToList().ImageToVideo(AudioName, Time, catalog);
+            new ScreenDownNofityView(CommonHelper.DownloadFinishInformation, catalog).Show();
         }
         #endregion
     }

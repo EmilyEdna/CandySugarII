@@ -8,6 +8,7 @@
     xmlns:local="clr-namespace:CandySugar.EntryUI.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:s="https://github.com/canton7/Stylet"
+    xmlns:taskbar="http://www.hardcodet.net/taskbar"
     xmlns:uc="http://ctrl.candy.com"
     xmlns:vm="clr-namespace:CandySugar.EntryUI.ViewModels"
     x:Name="CandyWindow"
@@ -99,5 +100,42 @@
                 </ListBox>
             </Grid>
         </Popup>
+        <taskbar:TaskbarIcon x:Name="Tray">
+            <taskbar:TaskbarIcon.ContextMenu>
+                <ContextMenu FontFamily="{DynamicResource FontStyle}" Style="{DynamicResource CandyContextMenuStyle}">
+                    <MenuItem
+                        s:View.ActionTarget="{Binding DataContext, ElementName=CandyWindow}"
+                        Command="{s:Action SettingCommand}"
+                        CommandParameter="{x:Static lib:EMenu.AudioToHigh}"
+                        Header="音频转换"
+                        Style="{DynamicResource CandyMenuItemStyle}" />
+                    <MenuItem
+                        s:View.ActionTarget="{Binding DataContext, ElementName=CandyWindow}"
+                        Command="{s:Action SettingCommand}"
+                        CommandParameter="{x:Static lib:EMenu.ImgToVideo}"
+                        Header="图片视频"
+                        Style="{DynamicResource CandyMenuItemStyle}" />
+                    <MenuItem
+                        s:View.ActionTarget="{Binding DataContext, ElementName=CandyWindow}"
+                        Command="{s:Action SettingCommand}"
+                        CommandParameter="{x:Static lib:EMenu.ImgToAudio}"
+                        Header="图片音频"
+                        Style="{DynamicResource CandyMenuItemStyle}" />
+                </ContextMenu>
+            </taskbar:TaskbarIcon.ContextMenu>
+            <taskbar:TaskbarIcon.TrayToolTip>
+                <Border
+                    Padding="1"
+                    Background="#FFF"
+                    BorderThickness="0"
+                    CornerRadius="5">
+                    <TextBlock
+                        x:Name="Version"
+                        FontFamily="{DynamicResource FontStyle}"
+                        Foreground="#e63995"
+                        Text="甜糖" />
+                </Border>
+            </taskbar:TaskbarIcon.TrayToolTip>
+        </taskbar:TaskbarIcon>
     </Canvas>
 </Window>

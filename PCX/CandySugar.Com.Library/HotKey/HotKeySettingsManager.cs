@@ -29,7 +29,7 @@ namespace CandySugar.Com.Library.HotKey
         public ObservableCollection<HotKeyModel> LoadDefaultHotKey()
         {
             var hotKeyList = new ObservableCollection<HotKeyModel>();
-            hotKeyList.Add(new HotKeyModel { Name = EHotKeySetting.退出.ToString(), IsUsable = true, IsSelectCtrl = true, IsSelectAlt = true, IsSelectShift = false, SelectKey = EKey.Q });
+            hotKeyList.Add(new HotKeyModel { Name = EHotKeySetting.退出.ToString(), IsUsable = true, IsSelectCtrl = true, IsSelectAlt = false, IsSelectShift = false, SelectKey = EKey.Q });
             return hotKeyList;
         }
 
