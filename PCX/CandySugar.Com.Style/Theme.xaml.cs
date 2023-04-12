@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,19 +25,37 @@ namespace CandySugar.Com.Style
     /// </summary>
     public partial class Theme : ResourceDictionary
     {
-
+        private Stopwatch Watch;
         public Theme()
         {
+            Watch = new();
             CompositionTarget.Rendering += AnimetionEvent;
+            Watch.Start();
         }
 
+        /// <summary>
+        /// 利用关键帧动态切换背景图
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void AnimetionEvent(object sender, EventArgs args)
         {
+            if (Watch.Elapsed.Subtract(TimeSpan.Zero).TotalSeconds <= 30d)
+                return;
             var dispatcher = (Dispatcher)sender;
             dispatcher.Invoke(() =>
             {
                 var style = this["CandyDefaultWindowStyle"] as System.Windows.Style;
                 var template = ((Setter)style.Setters.LastOrDefault()).Value as ControlTemplate;
+                var win = Application.Current.MainWindow;
+                if (win.Name.Equals("CandyWindow"))
+                {
+                    Border border = template.FindName("ImageBackgroud", win) as Border;
+                    if (border != null)
+                    {
+                        Watch.Restart();
+                    }
+                }
             });
         }
 

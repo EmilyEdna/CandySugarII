@@ -49,9 +49,9 @@
                         x:Name="ImageBackgroud"
                         BorderBrush="#e63995"
                         BorderThickness="1.5">
-                        <!--<Border.Background>
+                        <Border.Background>
                             <ImageBrush ImageSource="/CandySugar.Com.Style;component/Resources/Backgroud.jpg" />
-                        </Border.Background>-->
+                        </Border.Background>
                         <Border.Style>
                             <Style TargetType="Border">
                                 <EventSetter Event="MouseLeftButtonDown" Handler="MoveEvent" />
