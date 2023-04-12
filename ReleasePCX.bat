@@ -25,7 +25,7 @@ rd /S /Q PCX\Component\CandySugar.WallPaper\obj PCX\Component\CandySugar.WallPap
 xcopy PCX\CandySugar.EntryUI\bin\Debug\net7.0-windows\ffmpeg 2\Release\ffmpeg /e /s
 
 cd 2\Release
-del *.pdb
+del *.pdb *.json 
 ren CandySugar.EntryUI.exe CandySugar.exe
 @echo 已完成处理
 pause
