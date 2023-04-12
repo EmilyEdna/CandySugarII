@@ -364,3 +364,5 @@ FodyWeavers.xsd
 
 #dll
 Lib/*.dll
+#7z
+FFLib/*.7z
