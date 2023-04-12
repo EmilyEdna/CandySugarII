@@ -9,13 +9,20 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Content Include="favicon.ico">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	  </Content>
+		<Content Include="favicon.ico">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\CandySugar.Com.Style\CandySugar.Com.Style.csproj" />
 	</ItemGroup>
+
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+		<Exec Command="dotnet build ../Component/CandySugar.LightNovel/CandySugar.LightNovel.csproj --no-dependencies  -c $(Configuration)" />
+		<Exec Command="dotnet build ../Component/CandySugar.Music/CandySugar.Music.csproj --no-dependencies -c $(Configuration)" />
+		<Exec Command="dotnet build ../Component/CandySugar.WallPaper/CandySugar.WallPaper.csproj --no-dependencies -c $(Configuration)" />
+	</Target>
+
 
 </Project>
