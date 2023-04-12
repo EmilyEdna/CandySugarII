@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace CandySugar.Com.Style
 {
@@ -23,6 +24,22 @@ namespace CandySugar.Com.Style
     /// </summary>
     public partial class Theme : ResourceDictionary
     {
+
+        public Theme()
+        {
+            CompositionTarget.Rendering += AnimetionEvent;
+        }
+
+        private void AnimetionEvent(object sender, EventArgs args)
+        {
+            var dispatcher = (Dispatcher)sender;
+            dispatcher.Invoke(() =>
+            {
+                var style = this["CandyDefaultWindowStyle"] as System.Windows.Style;
+                var template = ((Setter)style.Setters.LastOrDefault()).Value as ControlTemplate;
+            });
+        }
+
         /// <summary>
         /// 窗体拖拽事件
         /// </summary>
