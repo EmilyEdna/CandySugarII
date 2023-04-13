@@ -53,6 +53,11 @@ namespace CandySugar.EntryUI.ViewModels
         }
         public void CloseCommand(Window window)
         {
+            if (Route.IsNullOrEmpty())
+            {
+                window.Close();
+                return;
+            }
             OptionObjectModel Model = new OptionObjectModel
             {
                 Cache = 5,
