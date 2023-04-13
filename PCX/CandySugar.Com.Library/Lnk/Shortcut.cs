@@ -15,7 +15,7 @@ namespace CandySugar.Com.Library.Lnk
             //快捷方式的描述
             link.SetDescription("甜糖");
             //设置快捷方式的目标所在的位置(源程序完整路径)
-            link.SetPath(Path.Combine(Environment.CurrentDirectory, $"{name}Sugar.exe"));
+            link.SetPath(Path.Combine(CommonHelper.AppPath, $"{name}Sugar.exe"));
             IPersistFile file = (IPersistFile)link;
             var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"{name}.lnk");
             if (!File.Exists(path))

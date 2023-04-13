@@ -64,7 +64,7 @@ namespace CandySugar.EntryUI.ViewModels
                 BackgroudLocation = Route,
                 Interval = Interval
             };
-            var path = Path.Combine(CommonHelper.AppPath, CommonHelper.OptionPath, "SystemOption.json");
+            var path = Path.Combine(CommonHelper.OptionPath, "SystemOption.json");
             SyncStatic.WriteFile(Encoding.Default.GetBytes(new { Option= Model }.ToJson()), path);
             ComponentBinding.ForceRefresh = true;
             window.Close();

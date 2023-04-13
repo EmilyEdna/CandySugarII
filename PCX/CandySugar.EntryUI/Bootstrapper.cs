@@ -30,9 +30,8 @@ namespace CandySugar.EntryUI
             //日志
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
-                .WriteTo.File("Logs/Candy.log", rollingInterval: RollingInterval.Day)
+                .WriteTo.File(CommonHelper.LogPath, rollingInterval: RollingInterval.Day)
                 .CreateLogger();
-
             JsonReader.JsonRead(CommonHelper.OptionPath, CommonHelper.OptionFile);
             AssemblyLoader Loader = new(CommonHelper.AppPath);
             ComponentBinding.ComponentObjectModels.ForEach(Dll =>
