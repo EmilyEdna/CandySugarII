@@ -28,7 +28,7 @@
                     FontFamily="{DynamicResource Thin}"
                     FontSize="18"
                     Foreground="#fdf5e6"
-                    Text="{x:Static lib:FontIcon.Microsoft}" />
+                    Text="{x:Static lib:FontIcon.User}" />
                 <TextBlock
                     Margin="1,2"
                     FontSize="18"
@@ -57,5 +57,35 @@
             Height="1"
             BorderBrush="#fdf5e6"
             BorderThickness="1" />
+        <StackPanel Grid.Row="2">
+            <TextBlock
+                Margin="1,2"
+                FontFamily="Microsoft YaHei"
+                FontSize="18"
+                Foreground="#fdf5e6"
+                Style="{DynamicResource TextBlockStyle}"
+                Text="作者：EmilyEdna" />
+            <TextBlock
+                Margin="1,2"
+                FontFamily="Microsoft YaHei"
+                FontSize="18"
+                Foreground="#fdf5e6"
+                Style="{DynamicResource TextBlockStyle}"
+                Text="主页：https://github.com/EmilyEdna" />
+            <TextBlock
+                Margin="1,2"
+                FontFamily="Microsoft YaHei"
+                FontSize="18"
+                Foreground="#fdf5e6"
+                Style="{DynamicResource TextBlockStyle}"
+                Text="邮箱：847432003@qq.com" />
+            <TextBlock
+                Margin="1,2"
+                FontFamily="Microsoft YaHei"
+                FontSize="18"
+                Foreground="#fdf5e6"
+                Style="{DynamicResource TextBlockStyle}"
+                Text="交流群：12345678" />
+        </StackPanel>
     </Grid>
 </Window>
