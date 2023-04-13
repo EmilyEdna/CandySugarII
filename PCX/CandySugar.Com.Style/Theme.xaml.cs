@@ -38,7 +38,7 @@ namespace CandySugar.Com.Style
         }
 
         /// <summary>
-        /// 利用关键帧动态切换背景图
+        /// 利用关键帧动态切换背景图(呼吸效果动效)
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -56,14 +56,23 @@ namespace CandySugar.Com.Style
                 var win = Application.Current.MainWindow;
                 if (win.Name.Equals("CandyWindow"))
                 {
-                    Grid grid = template.FindName("ImageBackgroud", win) as Grid;
-                    if (grid != null)
-                    {
-                        BackQueue.TryDequeue(out string file);
-                        grid.Background = new ImageBrush(new BitmapImage(new Uri(file)));
-                        grid.BeginAnimation(Grid.OpacityProperty, new DoubleAnimation(0, 1, TimeSpan.FromSeconds(3)));
-                        Watch.Restart();
-                    }
+                    if (template.FindName("ImageBackgroud", win) is Grid grid)
+                        if (grid != null)
+                        {
+                            BackQueue.TryDequeue(out string file);
+                            Storyboard Board = new Storyboard();
+                            var Anime = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(3));
+                            Storyboard.SetTarget(Anime, grid);
+                            Storyboard.SetTargetProperty(Anime, new PropertyPath(Grid.OpacityProperty));
+                            Board.Children.Add(Anime);
+                            Board.Completed += delegate
+                            {
+                                grid.Background = new ImageBrush(new BitmapImage(new Uri(file)));
+                                grid.BeginAnimation(Grid.OpacityProperty, new DoubleAnimation(0, 1, TimeSpan.FromSeconds(3)));
+                            };
+                            Board.Begin();
+                            Watch.Restart();
+                        }
                 }
             });
         }

@@ -3,6 +3,8 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using XExten.Advance.LinqFramework;
 
 namespace CandySugar.Com.Options.ComponentObject
 {
@@ -36,25 +38,32 @@ namespace CandySugar.Com.Options.ComponentObject
         {
             get
             {
-                if (ForceRefresh) ForceRefreshOptionObjectModels();
-                if (_OptionObjectModels != null) return _OptionObjectModels;
-                else
+                lock (locker)
                 {
-                    OptionObjectModel Model = new();
-                    JsonReader.Configuration.Bind("Option", Model);
-                    _OptionObjectModels = Model;
-                    return _OptionObjectModels;
+                    if (ForceRefresh) ForceRefreshOptionObjectModels();
+                    if (_OptionObjectModels != null) return _OptionObjectModels;
+                    else
+                    {
+                        OptionObjectModel Model = new();
+                        JsonReader.Configuration.Bind("Option", Model);
+                        _OptionObjectModels = Model;
+                        return _OptionObjectModels;
+                    }
                 }
             }
         }
-        public static bool ForceRefresh { get; set; } = false;
+        private static readonly object locker = new();
+        public static bool ForceRefresh { get; set; }
         /// <summary>
         /// 强制属性配置
         /// </summary>
         private static void ForceRefreshOptionObjectModels() 
         {
+            Thread.Sleep(500);
             OptionObjectModel Model = new();
             JsonReader.Configuration.Bind("Option", Model);
+            if (Model.BackgroudLocation.IsNullOrEmpty())
+                ForceRefreshOptionObjectModels();
             _OptionObjectModels = Model;
             ForceRefresh = false;
         }
