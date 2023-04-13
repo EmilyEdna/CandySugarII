@@ -23,9 +23,9 @@ namespace CandySugar.EntryUI
         /// 程序启动
         /// </summary>
         protected override void OnStart()
-        {  
+        {
             #if RELEASE
-            Shortcut.Instance.CreateLnk("Candy");
+            Com.Library.Lnk.Shortcut.Instance.CreateLnk("Candy");
             #endif
             //日志
             Log.Logger = new LoggerConfiguration()
