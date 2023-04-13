@@ -19,7 +19,11 @@ namespace CandySugar.Com.Library.Enums
         /// <summary>
         /// 图片转视频带音频
         /// </summary>
-        ImgToAudio
+        ImgToAudio,
+        /// <summary>
+        /// 系统配置
+        /// </summary>
+        SysOption,
 
     }
 }

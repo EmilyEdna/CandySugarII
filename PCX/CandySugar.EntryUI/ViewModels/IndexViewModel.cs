@@ -124,6 +124,7 @@ namespace CandySugar.EntryUI.ViewModels
             if (input == EMenu.AudioToHigh) Application.Current.Dispatcher.Invoke(AudioToHighAudio);
             if (input == EMenu.ImgToVideo) Application.Current.Dispatcher.Invoke(ImageToVideo);
             if (input == EMenu.ImgToAudio) Application.Current.Dispatcher.Invoke(ImageToAudioVideo);
+            if (input == EMenu.SysOption) WindowManager.ShowWindow(Container.Get<OptionViewModel>());
         }
         #endregion
 

@@ -2,7 +2,6 @@
 using CandySugar.Com.Library;
 using CandySugar.Com.Library.DLLoader;
 using CandySugar.Com.Library.DownQueue;
-using CandySugar.Com.Library.Lnk;
 using CandySugar.Com.Library.ReadFile;
 using CandySugar.Com.Options.ComponentObject;
 using CandySugar.EntryUI.ViewModels;
@@ -11,7 +10,6 @@ using Serilog;
 using Stylet;
 using StyletIoC;
 using System;
-using System.Linq;
 using System.Net.Http;
 using System.Windows;
 using System.Windows.Threading;
@@ -61,6 +59,7 @@ namespace CandySugar.EntryUI
 
         protected override void ConfigureIoC(IStyletIoCBuilder builder)
         {
+            builder.Bind<OptionViewModel>().ToSelf();
             AssemblyLoader.Dll.ForEach(item =>
             {
                 if (item.IocModule != null)

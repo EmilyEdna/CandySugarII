@@ -1,4 +1,5 @@
 ﻿using CandySugar.Com.Library;
+using CandySugar.Com.Options.ComponentObject;
 using CandySugar.Com.Options.NotifyObject;
 using CommunityToolkit.Mvvm.Messaging;
 using System;
@@ -43,14 +44,11 @@ namespace CandySugar.Com.Style
         /// <param name="args"></param>
         private void AnimetionEvent(object sender, EventArgs args)
         {
-
-            if (Watch.Elapsed.Subtract(TimeSpan.Zero).TotalSeconds <= 30d)
-                return;
-            SyncStatic.CreateDir(CommonHelper.BackgourdResource);
-            var files = Directory.GetFiles(CommonHelper.BackgourdResource);
+            if (Watch.Elapsed.Subtract(TimeSpan.Zero).TotalSeconds <= ComponentBinding.OptionObjectModels.Interval) return;
+            if (ComponentBinding.OptionObjectModels.BackgroudLocation.IsNullOrEmpty()) return;
+            var files = Directory.GetFiles(ComponentBinding.OptionObjectModels.BackgroudLocation);
             if (files.Length <= 0) return;
-            if (BackQueue.IsEmpty)
-                files.ForArrayEach<string>(BackQueue.Enqueue);
+            if (BackQueue.IsEmpty) files.ForArrayEach<string>(BackQueue.Enqueue);
             ((Dispatcher)sender).Invoke(() =>
             {
                 var style = this["CandyDefaultWindowStyle"] as System.Windows.Style;
@@ -62,8 +60,8 @@ namespace CandySugar.Com.Style
                     if (grid != null)
                     {
                         BackQueue.TryDequeue(out string file);
-                        grid.BeginAnimation(Grid.OpacityProperty, new DoubleAnimation(0, 1, TimeSpan.FromSeconds(3)));
                         grid.Background = new ImageBrush(new BitmapImage(new Uri(file)));
+                        grid.BeginAnimation(Grid.OpacityProperty, new DoubleAnimation(0, 1, TimeSpan.FromSeconds(3)));
                         Watch.Restart();
                     }
                 }

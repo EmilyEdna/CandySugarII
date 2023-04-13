@@ -8,6 +8,7 @@ namespace CandySugar.Com.Options.ComponentObject
 {
     public class ComponentBinding
     {
+
         private static List<ComponentObjectModel> _ComponentObjectModels;
         /// <summary>
         /// 组件信息
@@ -35,6 +36,7 @@ namespace CandySugar.Com.Options.ComponentObject
         {
             get
             {
+                if (ForceRefresh) ForceRefreshOptionObjectModels();
                 if (_OptionObjectModels != null) return _OptionObjectModels;
                 else
                 {
@@ -44,6 +46,17 @@ namespace CandySugar.Com.Options.ComponentObject
                     return _OptionObjectModels;
                 }
             }
+        }
+        public static bool ForceRefresh { get; set; } = false;
+        /// <summary>
+        /// 强制属性配置
+        /// </summary>
+        private static void ForceRefreshOptionObjectModels() 
+        {
+            OptionObjectModel Model = new();
+            JsonReader.Configuration.Bind("Option", Model);
+            _OptionObjectModels = Model;
+            ForceRefresh = false;
         }
     }
 }

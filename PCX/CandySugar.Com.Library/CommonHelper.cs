@@ -22,10 +22,6 @@ namespace CandySugar.Com.Library
         /// </summary>
         public static string OptionPath => "Component";
         /// <summary>
-        /// 背景资源
-        /// </summary>
-        public static string BackgourdResource => Path.Combine(AppPath, "Backgourd");
-        /// <summary>
         /// 下载目录
         /// </summary>
         public static string DownloadPath => Path.Combine(AppPath, "download");
@@ -52,7 +48,7 @@ namespace CandySugar.Com.Library
         /// <summary>
         /// 配置文件
         /// </summary>
-        public static List<string> OptionFile = new List<string> 
+        public static List<string> OptionFile = new List<string>
         {
             "Component.json",
             "SystemOption.json"
