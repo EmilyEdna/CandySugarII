@@ -121,6 +121,7 @@ namespace CandySugar.EntryUI.ViewModels
         /// <param name="input"></param>
         public void SettingCommand(EMenu input)
         {
+            if (input == EMenu.About) WindowManager.ShowWindow(Container.Get<AboutViewModel>());
             if (input == EMenu.AudioToHigh) Application.Current.Dispatcher.Invoke(AudioToHighAudio);
             if (input == EMenu.ImgToVideo) Application.Current.Dispatcher.Invoke(ImageToVideo);
             if (input == EMenu.ImgToAudio) Application.Current.Dispatcher.Invoke(ImageToAudioVideo);

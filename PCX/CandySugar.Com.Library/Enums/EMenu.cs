@@ -8,14 +8,15 @@ namespace CandySugar.Com.Library.Enums
 {
     public enum EMenu
     {
+        About = 1,
         /// <summary>
         /// 音频转高音质
         /// </summary>
-        AudioToHigh=1,
+        AudioToHigh,
         /// <summary>
         /// 图片转视频
         /// </summary>
-        ImgToVideo ,
+        ImgToVideo,
         /// <summary>
         /// 图片转视频带音频
         /// </summary>

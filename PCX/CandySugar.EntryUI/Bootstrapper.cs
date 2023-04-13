@@ -60,6 +60,7 @@ namespace CandySugar.EntryUI
         protected override void ConfigureIoC(IStyletIoCBuilder builder)
         {
             builder.Bind<OptionViewModel>().ToSelf();
+            builder.Bind<AboutViewModel>().ToSelf();
             AssemblyLoader.Dll.ForEach(item =>
             {
                 if (item.IocModule != null)
