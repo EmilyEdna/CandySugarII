@@ -22,6 +22,10 @@ namespace CandySugar.Com.Library
         /// </summary>
         public static string OptionPath => "Component";
         /// <summary>
+        /// 背景资源
+        /// </summary>
+        public static string BackgourdResource => Path.Combine(AppPath, "Backgourd");
+        /// <summary>
         /// 下载目录
         /// </summary>
         public static string DownloadPath => Path.Combine(AppPath, "download");
