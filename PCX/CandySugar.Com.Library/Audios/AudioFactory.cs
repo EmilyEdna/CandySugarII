@@ -97,8 +97,8 @@ namespace CandySugar.Com.Library.Audios
         {
             Dispose();
 
-            WaveOutput = new();
             PlayTimer = new() { Interval = 100 };
+            WaveOutput = new();
             AudioReader = new(path);
             AudioInfo = new();
 
@@ -116,7 +116,7 @@ namespace CandySugar.Com.Library.Audios
         /// <returns></returns>
         public AudioFactory InitLiveData(Action<AudioLive> LiveAction)
         {
-            SampleArray = new float[1024];
+            SampleArray = new float[512];
             this.LiveAction = LiveAction;
             return this;
         }
@@ -146,7 +146,7 @@ namespace CandySugar.Com.Library.Audios
             {
                 WaveOutput.Init(AudioReader);
                 AudioInfo.Seconds = AudioReader.TotalTime.TotalSeconds;
-                AudioInfo.TimeSpan = AudioReader.TotalTime.ToString().Split(".").FirstOrDefault().Substring(3,5);
+                AudioInfo.TimeSpan = AudioReader.TotalTime.ToString().Split(".").FirstOrDefault().Substring(3, 5);
                 if (module == EPlay.Play)
                 {
                     WaveOutput.Play();
@@ -178,87 +178,87 @@ namespace CandySugar.Com.Library.Audios
         /// </summary>
         private async void GetSampleArray()
         {
-            await Task.Run(() => { AudioReader.Read(SampleArray, 0, 1024); });
+            await Task.Run(() => { AudioReader.Read(SampleArray, 0, 512); });
         }
         /// <summary>
         /// 傅里叶变换FTF
         /// </summary>
         private async Task<AudioLive> FourierTransform()
         {
-           return await Task.Run(() =>
-            {
-                #region 分离左右通道
-                //分离后的通道采样数据
-                float[][] ChannelSimpleArray;
-                //防止未分离完左右通道就进入下一次调用
-                lock (SampleLock)
-                {
-                    ChannelSimpleArray = Enumerable.Range(0, ChannelCount)//分离通道
-                       .Select(channel => Enumerable.Range(0, SampleArray.Length / ChannelCount) //对每个通过的数据进行处理
-                       .Select(item => SampleArray[channel + item * ChannelCount]).ToArray())//每个通道的数组长度 左右左右，这样读取
-                       .ToArray();
-                }
-                #endregion
+            return await Task.Run(() =>
+             {
+                 #region 分离左右通道
+                 //分离后的通道采样数据
+                 float[][] ChannelSimpleArray;
+                 //防止未分离完左右通道就进入下一次调用
+                 lock (SampleLock)
+                 {
+                     ChannelSimpleArray = Enumerable.Range(0, ChannelCount)//分离通道
+                        .Select(channel => Enumerable.Range(0, SampleArray.Length / ChannelCount) //对每个通过的数据进行处理
+                        .Select(item => SampleArray[channel + item * ChannelCount]).ToArray())//每个通道的数组长度 左右左右，这样读取
+                        .ToArray();
+                 }
+                 #endregion
 
-                #region 合并左右通道并取平均值
-                float[] ChannelAverageSample = Enumerable.Range(0, ChannelSimpleArray[0].Length)
-                //每次读取一个左右数据合并、取平均值
-                .Select(item => Enumerable.Range(0, ChannelCount).Select(channel => ChannelSimpleArray[channel][item]).Average())
-                .ToArray();
-                #endregion
+                 #region 合并左右通道并取平均值
+                 float[] ChannelAverageSample = Enumerable.Range(0, ChannelSimpleArray[0].Length)
+                 //每次读取一个左右数据合并、取平均值
+                 .Select(item => Enumerable.Range(0, ChannelCount).Select(channel => ChannelSimpleArray[channel][item]).Average())
+                 .ToArray();
+                 #endregion
 
-                #region 傅里叶变换
-                //NAudio 提供了快速傅里叶变换的方法, 通过傅里叶变换, 可以将时域数据转换为频域数据
-                // 取对数并向上取整
-                int log = (int)Math.Ceiling(Math.Log(ChannelAverageSample.Length, 2));
-                //对于快速傅里叶变换算法, 需要数据长度为 2 的 n 次方
-                int length = (int)Math.Pow(2, log);
-                float[] filledSample = new float[length];
-                //拷贝到新数组
-                Array.Copy(ChannelAverageSample, filledSample, ChannelAverageSample.Length);
-                //将采样转化为复数
-                Complex[] complexArray = filledSample
-                    .Select((value, index) => new Complex() { X = value })
-                    .ToArray();
-                //进行傅里叶变换
-                FastFourierTransform.FFT(false, log, complexArray);
-                #endregion
+                 #region 傅里叶变换
+                 //NAudio 提供了快速傅里叶变换的方法, 通过傅里叶变换, 可以将时域数据转换为频域数据
+                 // 取对数并向上取整
+                 int log = (int)Math.Ceiling(Math.Log(ChannelAverageSample.Length, 2));
+                 //对于快速傅里叶变换算法, 需要数据长度为 2 的 n 次方
+                 int length = (int)Math.Pow(2, log);
+                 float[] filledSample = new float[length];
+                 //拷贝到新数组
+                 Array.Copy(ChannelAverageSample, filledSample, ChannelAverageSample.Length);
+                 //将采样转化为复数
+                 Complex[] complexArray = filledSample
+                     .Select((value, index) => new Complex() { X = value })
+                     .ToArray();
+                 //进行傅里叶变换
+                 FastFourierTransform.FFT(false, log, complexArray);
+                 #endregion
 
-                #region 提取需要的频域信息
+                 #region 提取需要的频域信息
 
-                Complex[] halfComeplexArray = complexArray
-                    .Take(complexArray.Length / 2)//数据是左右对称的，所以只取一半
-                    .ToArray();
+                 Complex[] halfComeplexArray = complexArray
+                     .Take(complexArray.Length / 2)//数据是左右对称的，所以只取一半
+                     .ToArray();
 
-                //这个已经是频域数据了
-                double[] resultArray = complexArray
-                    .Select(value => Math.Sqrt(value.X * value.X + value.Y * value.Y))//复数取模
-                    .ToArray();
+                 //这个已经是频域数据了
+                 double[] resultArray = complexArray
+                     .Select(value => Math.Sqrt(value.X * value.X + value.Y * value.Y))//复数取模
+                     .ToArray();
 
-                //我们取 最小频率 ~ 20000Hz
-                //对于变换结果, 每两个数据之间所差的频率计算公式为 采样率/采样数, 那么我们要取的个数也可以由 20000 / (采样率 / 采样数) 来得出
-                //当然，因为我这里并没有指定频率与幅值，所以顺便取几个数就行，若有需要可以再去细分各个频率的幅值
-                int count = 20000 / (this.SampleRate / length);
-                double[] finalData = resultArray.Take(count).ToArray();
+                 //我们取 最小频率 ~ 20000Hz
+                 //对于变换结果, 每两个数据之间所差的频率计算公式为 采样率/采样数, 那么我们要取的个数也可以由 20000 / (采样率 / 采样数) 来得出
+                 //当然，因为我这里并没有指定频率与幅值，所以顺便取几个数就行，若有需要可以再去细分各个频率的幅值
+                 int count = 44100 / (this.SampleRate / length);
+                 double[] finalData = resultArray.Take(count).ToArray();
 
-                #endregion
+                 #endregion
 
-                #region 获取实时播放时间和长度
-                var CurrentSpan = AudioReader.CurrentTime.ToString().Split(".").FirstOrDefault().Substring(3, 5);
-                var CurrentSeconds = AudioReader.CurrentTime.TotalSeconds;
-                #endregion
+                 #region 获取实时播放时间和长度
+                 var CurrentSpan = AudioReader.CurrentTime.ToString().Split(".").FirstOrDefault().Substring(3, 5);
+                 var CurrentSeconds = AudioReader.CurrentTime.TotalSeconds;
+                 #endregion
 
-                #region 设置绑定数据
-                var LineData = finalData.Take(32).ToList();
-                #endregion
+                 #region 设置绑定数据
+                 var LineData = finalData.Take(32).ToList();
+                 #endregion
 
-                return new AudioLive
-                {
-                    LiveData = new ObservableCollection<double>(LineData),
-                    LiveSeconds = CurrentSeconds,
-                    LiveSpan = CurrentSpan
-                };
-            });
+                 return new AudioLive
+                 {
+                     LiveData = new ObservableCollection<double>(LineData),
+                     LiveSeconds = CurrentSeconds,
+                     LiveSpan = CurrentSpan
+                 };
+             });
         }
 
         private async void PlayEvent(object sender, ElapsedEventArgs e)
@@ -278,7 +278,8 @@ namespace CandySugar.Com.Library.Audios
             AudioInfo = null;
             if (PlayTimer != null)
             {
-                PlayTimer.Stop();
+                PlayTimer.Close();
+                PlayTimer.Dispose();
             }
 
             if (WaveOutput != null)
