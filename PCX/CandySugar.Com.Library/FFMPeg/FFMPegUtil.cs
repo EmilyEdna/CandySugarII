@@ -12,6 +12,8 @@ namespace CandySugar.Com.Library.FFMPeg
 {
     public static class FFMPegUtil
     {
+        private static string Cmd = "-user_agent \"User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36 Edg/112.0.1722.39\" -headers \"referer:https://www.bilibili.com/\"";
+
         /// <summary>
         /// MP3音质提升
         /// </summary>
@@ -78,6 +80,58 @@ namespace CandySugar.Com.Library.FFMPeg
             var args = $"-loop 1 -f image2pipe -framerate 0.3 -threads 5 -y -i \"concat:{string.Join("|", fileName)}\" -i {audioFile} -ab 320k -acodec libmp3lame -t {audioTime} -c:v libx264 -pix_fmt yuvj420p -aspect 16:9 -b:v 5000K -r 60 -s 1920*1080 {Path.Combine(videoPath, $"{Guid.NewGuid()}.{FileTypes.Mp4}")}";
             var cmd = await Cli.Wrap(CommonHelper.FFMPEG)
                 .WithArguments(args)
+                     .WithStandardErrorPipe(PipeTarget.ToStringBuilder(Info))
+                     .ExecuteAsync();
+            Log.Logger.Information(Info.ToString());
+            return cmd.ExitCode == 0;
+        }
+        /// <summary>
+        /// 下载M4S流转视频无声音
+        /// </summary>
+        /// <param name="m4path"></param>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public static async Task<bool> M4Video(this string m4path, string file)
+        {
+            StringBuilder Info = new StringBuilder();
+
+            var cmd = await Cli.Wrap(CommonHelper.FFMPEG)
+                    .WithArguments($"-threads 5 -y {Cmd} -i {m4path} {file}")
+                     .WithStandardErrorPipe(PipeTarget.ToStringBuilder(Info))
+                     .ExecuteAsync();
+            Log.Logger.Information(Info.ToString());
+            return cmd.ExitCode == 0;
+        }
+        /// <summary>
+        /// 下载M4S流转音频无画面
+        /// </summary>
+        /// <param name="m4path"></param>
+        /// <param name="catalog"></param>
+        /// <returns></returns>
+        public static async Task<bool> M4Audio(this string m4path, string file)
+        {
+            StringBuilder Info = new StringBuilder();
+
+            var cmd = await Cli.Wrap(CommonHelper.FFMPEG)
+                    .WithArguments($"-threads 5 -y {Cmd} -i {m4path} -ab 320k -acodec libmp3lame {file}")
+                     .WithStandardErrorPipe(PipeTarget.ToStringBuilder(Info))
+                     .ExecuteAsync();
+            Log.Logger.Information(Info.ToString());
+            return cmd.ExitCode == 0;
+        }
+        /// <summary>
+        /// M4S流音频画面合并
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="m4audio"></param>
+        /// <param name="m4video"></param>
+        /// <returns></returns>
+        public static async Task<bool> M4VAMerge(this string file, string m4audio, string m4video)
+        {
+            StringBuilder Info = new StringBuilder();
+
+            var cmd = await Cli.Wrap(CommonHelper.FFMPEG)
+                    .WithArguments($"-threads 5 -y {Cmd} -i {m4video} {Cmd} -i {m4audio} -codec copy -c:v libx264 {file}")
                      .WithStandardErrorPipe(PipeTarget.ToStringBuilder(Info))
                      .ExecuteAsync();
             Log.Logger.Information(Info.ToString());
