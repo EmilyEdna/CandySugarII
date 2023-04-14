@@ -64,9 +64,9 @@
                                 x:Name="ImageBackgroud"
                                 Width="{TemplateBinding Width}"
                                 Height="{TemplateBinding Height}">
-                                <Grid.Background>
+                                <!--<Grid.Background>
                                     <ImageBrush ImageSource="/CandySugar.Com.Style;component/Resources/Backgroud.jpg" />
-                                </Grid.Background>
+                                </Grid.Background>-->
                             </Grid>
                             <Grid>
                                 <Rectangle
@@ -837,6 +837,35 @@
                             <Setter TargetName="Bd" Property="Background" Value="#afdfe4" />
                         </Trigger>
                     </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region TextBox-->
+    <Style x:Key="CandyTextboxStyle" TargetType="TextBox">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Height" Value="35" />
+        <Setter Property="Width" Value="600" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border BorderBrush="#fdf5e6" BorderThickness="0,0,0,1">
+                        <Grid>
+                            <Rectangle
+                                Width="{TemplateBinding Width}"
+                                Height="{TemplateBinding Height}"
+                                Fill="#401e90ff"
+                                Opacity=".5" />
+                            <TextBox
+                                Width="{TemplateBinding Width}"
+                                Height="{TemplateBinding Height}"
+                                Background="{TemplateBinding Background}"
+                                BorderThickness="{TemplateBinding BorderThickness}" />
+                        </Grid>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

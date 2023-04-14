@@ -17,6 +17,12 @@
       "Bootstrapper": "MainView",
       "Ioc": "Module",
       "Description": "壁纸"
+    },
+    {
+      "Plugin": "CandySugar.Bilibili.dll",
+      "Bootstrapper": "MainView",
+      "Ioc": "Module",
+      "Description": "B站"
     }
   ]
 }
