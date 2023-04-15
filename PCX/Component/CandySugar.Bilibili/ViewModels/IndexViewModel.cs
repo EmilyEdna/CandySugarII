@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace CandySugar.Bilibili.ViewModels
+﻿namespace CandySugar.Bilibili.ViewModels
 {
     public class IndexViewModel : PropertyChangedBase
     {
@@ -11,7 +9,7 @@ namespace CandySugar.Bilibili.ViewModels
             ReadCookie();
         }
 
-        private string CookiePath = Path.Combine(CommonHelper.DownloadPath, "Bilibili", "Cookie.dat");
+        private string CookiePath = Path.Combine(CommonHelper.DownloadPath, "Bilibili", "Cookie.txt");
         private string SessionCode;
 
         #region Property
@@ -119,77 +117,64 @@ namespace CandySugar.Bilibili.ViewModels
                 });
             });
         }
-        private void OnInitData()
+        private async void OnInitData()
         {
-            Task.Run(async () =>
+            try
             {
-                try
+                var result = (await BilibiliFactory.Bili(opt =>
                 {
-                    var result = (await BilibiliFactory.Bili(opt =>
+                    opt.RequestParam = new Input
                     {
-                        opt.RequestParam = new Input
+                        BiliType = BiliEnum.VideoData,
+                        CacheSpan = ComponentBinding.OptionObjectModels.Cache,
+                        ImplType = SdkImpl.Rest,
+                        VideoData = new BiliVideoData
                         {
-                            BiliType = BiliEnum.VideoData,
-                            CacheSpan = ComponentBinding.OptionObjectModels.Cache,
-                            ImplType = SdkImpl.Rest,
-                            VideoData = new BiliVideoData
-                            {
-                                Session = SessionCode,
-                                BVID = InfoResult.BVID,
-                                CID = InfoResult.CID,
-                            }
-                        };
-                    }).RunsAsync()).DataResult;
-                    DataResult = result;
-                }
-                catch (Exception ex)
-                {
-                    Log.Logger.Error(ex, "");
-                    ErrorNotify();
-                }
-            });
-        }
-        private void OnInitVideo()
-        {
-            Task.Run(async () =>
+                            Session = SessionCode,
+                            BVID = InfoResult.BVID,
+                            CID = InfoResult.CID,
+                        }
+                    };
+                }).RunsAsync()).DataResult;
+                DataResult = result;
+            }
+            catch (Exception ex)
             {
-                try
+                Log.Logger.Error(ex, "");
+                ErrorNotify();
+            }
+        }
+        private async void OnInitVideo()
+        {
+            try
+            {
+                var result = (await BilibiliFactory.Bili(opt =>
                 {
-                    var result = (await BilibiliFactory.Bili(opt =>
-                     {
-                         opt.RequestParam = new Input
-                         {
-                             BiliType = BiliEnum.VideoInfo,
-                             CacheSpan = ComponentBinding.OptionObjectModels.Cache,
-                             ImplType = SdkImpl.Rest,
-                             VideoInfo = new BiliVideoInfo
-                             {
-                                 Route = Route,
-                             }
-                         };
-                     }).RunsAsync()).InfoResult;
-                    InfoResult = result;
-                    OnInitData();
-                }
-                catch (Exception ex)
-                {
-                    Log.Logger.Error(ex, "");
-                    ErrorNotify();
-                }
-            });
+                    opt.RequestParam = new Input
+                    {
+                        BiliType = BiliEnum.VideoInfo,
+                        CacheSpan = ComponentBinding.OptionObjectModels.Cache,
+                        ImplType = SdkImpl.Rest,
+                        VideoInfo = new BiliVideoInfo
+                        {
+                            Route = Route,
+                        }
+                    };
+                }).RunsAsync()).InfoResult;
+                InfoResult = result;
+                OnInitData();
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "");
+                ErrorNotify();
+            }
         }
         private void ReadCookie() 
         {
             if (File.Exists(CookiePath))
             {
-                StringBuilder sb = new StringBuilder();
-                byte[] bt = new byte[1024];
-                using var fs = File.OpenRead(CookiePath);
-                while (fs.Read(bt, 0, bt.Length) > 0)
-                {
-                    sb.Append(Encoding.UTF8.GetString(bt));
-                }
-                SessionCode = sb.ToString();
+                SessionCode= File.ReadAllText(CookiePath);
             }
         }
         private void ErrorNotify()
