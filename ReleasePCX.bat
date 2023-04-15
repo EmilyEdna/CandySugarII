@@ -5,6 +5,7 @@ dotnet publish PCX\CandySugar.EntryUI\CandySugar.EntryUI.csproj -c Release -o ..
 dotnet publish PCX\Component\CandySugar.LightNovel\CandySugar.LightNovel.csproj -c Release -o ..\CandySugarII\2\Release -f net7.0-windows --sc true -r win-x64
 dotnet publish PCX\Component\CandySugar.Music\CandySugar.Music.csproj -c Release -o ..\CandySugarII\2\Release -f net7.0-windows --sc true -r win-x64
 dotnet publish PCX\Component\CandySugar.WallPaper\CandySugar.WallPaper.csproj -c Release -o ..\CandySugarII\2\Release -f net7.0-windows --sc true -r win-x64
+dotnet publish PCX\Component\CandySugar.Bilibili\CandySugar.Bilibili.csproj -c Release -o ..\CandySugarII\2\Release -f net7.0-windows --sc true -r win-x64
 
 rd /S /Q PCX\CandySugar.EntryUI\obj PCX\CandySugar.EntryUI\bin\Release
 
@@ -21,6 +22,8 @@ rd /S /Q PCX\Component\CandySugar.LightNovel\obj PCX\Component\CandySugar.LightN
 rd /S /Q PCX\Component\CandySugar.Music\obj PCX\Component\CandySugar.Music\bin\Release
 
 rd /S /Q PCX\Component\CandySugar.WallPaper\obj PCX\Component\CandySugar.WallPaper\bin\Release
+
+rd /S /Q PCX\Component\CandySugar.Bilibili\obj PCX\Component\CandySugar.Bilibili\bin\Release
 
 xcopy PCX\CandySugar.EntryUI\bin\Debug\net7.0-windows\ffmpeg 2\Release\ffmpeg /e /s
 
