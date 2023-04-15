@@ -41,6 +41,17 @@
                 Content="设置Cookie"
                 Style="{DynamicResource CandyButtonStyle}" />
         </StackPanel>
+        <Grid Grid.Row="1">
+            <uc:CandyBorder
+                Width="800"
+                Height="500"
+                BorderType="Info"
+                Style="{DynamicResource CandyBorderStyle}"
+                Visibility="{c:Binding '(InfoResult!=null?true:false)',
+                                       FalseToVisibility=Collapsed}">
+                <Image Source="{Binding InfoResult.Cover}" Stretch="Fill" />
+            </uc:CandyBorder>
+        </Grid>
         <StackPanel
             Grid.Row="1"
             Width="500"

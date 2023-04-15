@@ -1,13 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace CandySugar.Bilibili.ViewModels
 {
     public class IndexViewModel : PropertyChangedBase
     {
+
+        public IndexViewModel()
+        {
+            SessionCode = string.Empty;
+            ReadCookie();
+        }
+
+        private string CookiePath = Path.Combine(CommonHelper.DownloadPath, "Bilibili", "Cookie.dat");
+        private string SessionCode;
+
         #region Property
         private string _Route;
         public string Route
@@ -25,12 +31,24 @@ namespace CandySugar.Bilibili.ViewModels
             get => _InfoResult;
             set => SetAndNotify(ref _InfoResult, value);
         }
+
+        private BiliVideoDataResult _DataResult;
+        /// <summary>
+        /// 视频数据
+        /// </summary>
+        public BiliVideoDataResult DataResult
+        {
+            get => _DataResult;
+            set => SetAndNotify(ref _DataResult, value);
+        }
         #endregion
 
         #region Command
         public void CookieCommand()
         {
-
+            var pro = Process.Start("notepad.exe", SyncStatic.CreateFile(CookiePath));
+            pro.WaitForExit();
+            ReadCookie();
         }
         public void QeuryCommand()
         {
@@ -41,13 +59,55 @@ namespace CandySugar.Bilibili.ViewModels
         {
             var condition = key.AsInt();
             if (condition == 1) OnDownload();
-            if (condition == 2) { }
-            if (condition == 3) { }
-            if (condition == 4) { }
+            if (condition == 2) SaveVideo();
+            if (condition == 3) SaveAudio();
+            if (condition == 4) SaveAMerge();
         }
         #endregion
 
         #region Method
+        private void SaveVideo()
+        {
+            if (DataResult == null) return;
+            Task.Run(async () =>
+            {
+                var catalog = Path.Combine(CommonHelper.DownloadPath, "Bilibili");
+                var res = await DataResult.VideoDash.M4Video(Path.Combine(catalog, $"{InfoResult.BVID}.mp4"));
+                if (res)
+                {
+                    File.Move(Path.Combine(catalog, $"{InfoResult.BVID}.mp4"), Path.Combine(catalog, $"{InfoResult.Title}.mp4"));
+                    Application.Current.Dispatcher.Invoke(() => new ScreenDownNofityView(CommonHelper.DownloadFinishInformation, catalog).Show());
+                }
+            });
+        }
+        private void SaveAudio()
+        {
+            if (DataResult == null) return;
+            Task.Run(async () =>
+            {
+                var catalog = Path.Combine(CommonHelper.DownloadPath, "Bilibili");
+                var res = await DataResult.AudioDash.M4Audio(Path.Combine(catalog, $"{InfoResult.BVID}.mp3"));
+                if (res)
+                {
+                    File.Move(Path.Combine(catalog, $"{InfoResult.BVID}.mp3"), Path.Combine(catalog, $"{InfoResult.Title}.mp3"));
+                    Application.Current.Dispatcher.Invoke(() => new ScreenDownNofityView(CommonHelper.DownloadFinishInformation, catalog).Show());
+                }
+            });
+        }
+        private void SaveAMerge()
+        {
+            if (DataResult == null) return;
+            Task.Run(async () =>
+            {
+                var catalog = Path.Combine(CommonHelper.DownloadPath, "Bilibili");
+                var res = await Path.Combine(catalog, $"{InfoResult.BVID}.mp4").M4VAMerge(DataResult.AudioDash, DataResult.VideoDash);
+                if (res)
+                {
+                    File.Move(Path.Combine(catalog, $"{InfoResult.BVID}.mp4"), Path.Combine(catalog, $"{InfoResult.Title}.mp4"));
+                    Application.Current.Dispatcher.Invoke(() => new ScreenDownNofityView(CommonHelper.DownloadFinishInformation, catalog).Show());
+                }
+            });
+        }
         private void OnDownload()
         {
             Task.Run(async () =>
@@ -57,6 +117,36 @@ namespace CandySugar.Bilibili.ViewModels
                 {
                     Application.Current.Dispatcher.Invoke(() => new ScreenDownNofityView(CommonHelper.DownloadFinishInformation, catalog).Show());
                 });
+            });
+        }
+        private void OnInitData()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    var result = (await BilibiliFactory.Bili(opt =>
+                    {
+                        opt.RequestParam = new Input
+                        {
+                            BiliType = BiliEnum.VideoData,
+                            CacheSpan = ComponentBinding.OptionObjectModels.Cache,
+                            ImplType = SdkImpl.Rest,
+                            VideoData = new BiliVideoData
+                            {
+                                Session = SessionCode,
+                                BVID = InfoResult.BVID,
+                                CID = InfoResult.CID,
+                            }
+                        };
+                    }).RunsAsync()).DataResult;
+                    DataResult = result;
+                }
+                catch (Exception ex)
+                {
+                    Log.Logger.Error(ex, "");
+                    ErrorNotify();
+                }
             });
         }
         private void OnInitVideo()
@@ -79,6 +169,7 @@ namespace CandySugar.Bilibili.ViewModels
                          };
                      }).RunsAsync()).InfoResult;
                     InfoResult = result;
+                    OnInitData();
                 }
                 catch (Exception ex)
                 {
@@ -86,6 +177,20 @@ namespace CandySugar.Bilibili.ViewModels
                     ErrorNotify();
                 }
             });
+        }
+        private void ReadCookie() 
+        {
+            if (File.Exists(CookiePath))
+            {
+                StringBuilder sb = new StringBuilder();
+                byte[] bt = new byte[1024];
+                using var fs = File.OpenRead(CookiePath);
+                while (fs.Read(bt, 0, bt.Length) > 0)
+                {
+                    sb.Append(Encoding.UTF8.GetString(bt));
+                }
+                SessionCode = sb.ToString();
+            }
         }
         private void ErrorNotify()
         {

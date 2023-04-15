@@ -97,7 +97,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CandySugar.Com.Options", "P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CandySugar.WallPaper", "PCX\Component\CandySugar.WallPaper\CandySugar.WallPaper.csproj", "{8EEA7DE0-80BC-4105-8AE8-83F856E3D866}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CandySugar.Bilibili", "PCX\Component\CandySugar.Bilibili\CandySugar.Bilibili.csproj", "{19E8CADE-CE77-41E5-96AA-36B8F8C903FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CandySugar.Bilibili", "PCX\Component\CandySugar.Bilibili\CandySugar.Bilibili.csproj", "{19E8CADE-CE77-41E5-96AA-36B8F8C903FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
