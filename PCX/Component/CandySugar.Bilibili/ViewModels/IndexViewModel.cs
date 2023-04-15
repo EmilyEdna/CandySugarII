@@ -44,6 +44,7 @@
         #region Command
         public void CookieCommand()
         {
+            SyncStatic.CreateDir(Path.Combine(CommonHelper.DownloadPath, "Bilibili"));
             var pro = Process.Start("notepad.exe", SyncStatic.CreateFile(CookiePath));
             pro.WaitForExit();
             ReadCookie();
