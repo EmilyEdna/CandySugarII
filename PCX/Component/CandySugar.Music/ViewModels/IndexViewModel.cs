@@ -662,7 +662,7 @@ namespace CandySugar.Music.ViewModels
                     });
                 });
         }
-        private string FileName() => $"[High]{CurrentPlay.SongId}";
+        private string FileName() => $"{string.Join(",", CurrentPlay.SongArtistName)}-{CurrentPlay.SongName}";
         #endregion
 
         #region ExternalCalls
