@@ -587,6 +587,7 @@ namespace CandySugar.Music.ViewModels
                         {
                             //删除文件
                             SyncStatic.DeleteFile(Path.Combine(catalog, fileName));
+                            File.Move(Path.Combine(catalog, $"[High]{fileName}"), Path.Combine(catalog, $"{string.Join(",", input.SongArtistName)}-{input.SongName}"));
                             new ScreenDownNofityView(CommonHelper.DownloadFinishInformation, catalog).Show();
                         };
                         if (!CollectResult.Any(t => t.SongId == input.SongId))
@@ -647,13 +648,14 @@ namespace CandySugar.Music.ViewModels
             AudioFactory.InitAudio(DownUtil.FilePath(FileName(), FileTypes.Mp3, "Music"))
                 .RunPlay(Info => AudioInfo = Info).InitLiveData(Info =>
                 {
-                    Application.Current.Dispatcher.Invoke(() => {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
                         Live = Info;
                         if (LyricResult != null && LyricResult.Count > 0)
                         {
                             lock (LockObject)
                             {
-                                var lyric= LyricResult.FirstOrDefault(item => item.Time.Split(".").FirstOrDefault().Equals(Info.LiveSpan));
+                                var lyric = LyricResult.FirstOrDefault(item => item.Time.Split(".").FirstOrDefault().Equals(Info.LiveSpan));
                                 CurrentLyric = lyric == null ? CurrentLyric : lyric.Lyric;
                             }
                         }
