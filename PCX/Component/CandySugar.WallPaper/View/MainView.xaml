@@ -22,7 +22,6 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Canvas>
-        <uc:CandyListBox />
         <ContentControl Content="{Binding ComponentControl}" />
         <Button
             x:Name="FloatBtn"
